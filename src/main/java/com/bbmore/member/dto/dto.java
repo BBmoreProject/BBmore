@@ -1,4 +1,4 @@
-package com.bbmore.delivery.dto;
+package com.bbmore.member.dto;
 
 public class dto {
     public static void main(String[] args) {
