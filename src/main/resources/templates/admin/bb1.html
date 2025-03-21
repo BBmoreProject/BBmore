@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=devioce-width, initial-scale=1.0">
+    <title>공지사항 관리</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        /* 여백 초기화 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 폰트 변경 완료 */
+        body {
+            font-family: "Noto Sans KR", sans-serif;
+            display: flex;
+            flex-direction: row;
+            /* 좌우로 배치 */
+            min-height: 100vh;
+        }
+
+        /* 좌측 관리자 사이드바 */
+        .nav {
+            width: 200px;
+            background: #D9D9D9;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* 사이드바 상단 로고틀*/
+        li.nav-logo {
+            position: fixed;
+            width: 200px;
+            height: 160px;
+            /*건드리지말것*/
+
+        }
+
+        /* 사이드바 상단 로고이미지 */
+        li.nav-logo img {
+            width: 100%;
+            height: 100%;
+            padding: 10%;
+            /*로고크기*/
+            object-fit: contain;
+        }
+
+        /* 사이드바 상위 메뉴 */
+        .nav ul {
+            list-style: none;
+        }
+
+        /* 사이드바 하위 메뉴 */
+        .nav ul li {
+            margin: 15px 0;
+            position: relative;
+        }
+
+        /* 사이드바-공지사항 관리 텍스트 */
+        .nav ul li a {
+            color: rgb(0, 0, 0);
+            font-size: 20px;
+            text-decoration: none;
+            display: block;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        /* 사이드바-서브메뉴 틀 */
+        .nav ul .submenu {
+            display: none;
+            list-style: none;
+            padding: 0;
+            background: #444;
+            width: 200px;
+        }
+
+        .nav ul .submenu li {
+            margin: 0;
+        }
+
+        /* 사이드바 하위 메뉴 텍스트(공지사항, 자주묻는질문) */
+        .nav ul .submenu li a {
+            padding: 10px;
+            color: #ffffff;
+            font-size: 15px;
+            display: block;
+            background-color: #9B9B9B;
+        }
+
+        .nav ul li.active .submenu {
+            display: block;
+        }
+
+        /* 메인 컨텐츠 영역 */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        /* 상위 메뉴 (공지사항 관리) */
+        .header {
+            /* background: #fff5e2; */
+            color: rgb(0, 0, 0);
+            font-size: 20px;
+            font-weight: bold;
+            padding: 50px 0 10px 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .main {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 글쓰기 버튼 () */
+        .write-button {
+            position: relative;
+            /*notice-box기준*/
+            background-color: #F28C25;
+            top: 30px;
+            width: 70px;
+            height: 25px;
+            left: 92%;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* 글쓰기 텍스트 (버튼박스 높이와 동일하게 지정하면 가운데정렬됨)*/
+        #write {
+            font-size: 12px;
+            text-align: center;
+            line-height: 25px;
+            color: white;
+        }
+
+        /* 좌측 상단 • 공지사항 목록 */
+        /* 03-19 수정 */
+        .menu-detail {
+            margin: 10px;
+        }
+
+        .notice-list {
+            border-collapse: collapse;
+            width: 1100px;        /*길이*/
+            margin: 10px;        /*테이블 주변여백*/
+            background-color: #f0f0f0;
+        }
+
+        /* 공지사항 제목,작성일,조회수 */
+        .notice-list th {
+            font-size: 13px;
+            border-bottom: 1px solid #C2C2C2;
+            padding: 9px 9px 9px 30px;          /*칸 높이*/
+        }
+
+        /* 공지사항 목록 글들 */
+        .notice-list td {
+            font-size: 13px;
+            border-bottom: 1px solid #C2C2C2;
+            padding: 8px 8px 8px 30px;
+        }
+
+        /* 제목 열 너비 */
+        .notice-list th:nth-child(1),
+        .notice-list td:nth-child(1) {
+            text-align: left;
+            width: 40%;
+        }
+
+
+        /* 작성일 열 너비 */
+        .notice-list th:nth-child(2),
+        .notice-list td:nth-child(2) {
+            text-align: center;
+            width: 10%;
+        }
+
+        /* 조회수 열 너비 */
+        .notice-list th:nth-child(3),
+        .notice-list td:nth-child(3) {
+            text-align: center;
+            width: 8%;
+        }
+
+        /* 사이드바 하단 로고 틀 */
+        .bottom-logo {
+            position: absolute;
+            /*건드리지말것*/
+            bottom: 3px;
+            /* 하단쪽에 고정 */
+            margin-top: auto;
+            width: 200px;
+            /* 전체 너비 */
+            height: 50px;
+            /* 고정된 높이 (변경가능) */
+            overflow: hidden;
+            /*넘칠 경우 숨김 처리*/
+        }
+
+        /* 사이드바 하단 로고 이미지 */
+        .bottom-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* 바닥 사업자정보 */
+        .footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            font-size: 10px;
+            margin-top: auto;
+        }
+
+          /*회원검색*/
+          .search-box {
+            /* display: flex;
+            align-items: center; */
+            height: 120px;
+            margin-bottom: 20px;
+            margin: 50px 0 0 50px;
+
+        }
+
+        .search-box-div {
+            display: flex;
+            align-items: center;
+            width: 1600px;
+            padding: 0 0 0 30px;
+            background-color: #F4F4F4;
+            border-radius: 10px;
+            border-style: none;
+            height: 100px;
+            gap: 20px;
+        }
+
+        /*회원검색*/
+        #search-box-input {
+            padding: 5px;
+            width: 250px;
+            height: 40px;
+            background-color: #F4F4F4;
+            border-radius: 7px;
+            border-style: none;
+            border: 1px solid #7a7a7a;
+        }
+
+        /*검색 버튼*/
+        .search-box-button {
+            color: white;
+            cursor: pointer;
+            /* position: absolute; */
+            width: 100px;
+            height: 40px;
+            background-color: #F28C25;
+            border-radius: 5px;
+            border-style: none;
+        }
+
+        .info-container {
+            width: 1600px;
+            /* 고정 너비 */
+            max-width: 100%;
+            min-width: 1000px;
+            background: white;
+            border-radius: 10px;
+            flex: 1;
+            padding: 30px 50px 50px 30px;
+            background-color: #F4F4F4;
+            margin: 20px 0 0 50px;
+            flex-shrink: 0;
+            /* 크기가 줄어들지 않도록 설정 */
+        }
+
+        .info-box {
+            /* width: 100%; */
+            display: flex;
+            flex-wrap: wrap;
+            /* gap: 30px; */
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            width: 150px;
+            /* 고정 너비 */
+            min-width: 100px;
+            /* 최소 너비 설정 */
+            height: 35px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            text-align: center;
+            flex-shrink: 0;
+            /* 크기가 줄어들지 않도록 설정 */
+        }
+
+        .info-item:nth-child(1) {
+            width: 10%;
+            margin: 10px 15px 0 0;
+        }
+
+        .info-item:nth-child(2) {
+            width: 10%;
+            margin: 10px 20px 0 5px;
+        }
+
+        .info-item:nth-child(3) {
+            width: 15%;
+            margin: 10px 20px 0 5px;
+        }
+
+        .info-item:nth-child(4) {
+            width: 10%;
+            margin: 10px 20px 0 5px;
+        }
+
+        .info-item:nth-child(5) {
+            width: 10%;
+            margin: 10px 20px 0 5px;
+        }
+
+        .info-item:nth-child(6) {
+            width: 30%;
+            margin: 10px 20px 0 5px;
+        }
+
+        .text-row {
+            display: flex;
+            /* align-items: center; */
+            flex-wrap: wrap;
+            /* margin-bottom: 10px; */
+        }
+
+        /* .text-row div {
+            font-weight: bold;
+        } */
+
+        /* info-box의 nth-child 스타일을 동일하게 적용 */
+        .text-row div:nth-child(1) {
+            width: 10%;
+            margin: 0 15px 0 0;
+        }
+
+        .text-row div:nth-child(2) {
+            width: 10%;
+            margin: 0 20px 0 5px;
+        }
+
+        .text-row div:nth-child(3) {
+            width: 15%;
+            margin: 0 20px 0 5px;
+        }
+
+        .text-row div:nth-child(4) {
+            width: 10%;
+            margin: 0 20px 0 5px;
+        }
+
+        .text-row div:nth-child(5) {
+            width: 10%;
+            margin: 0 20px 0 5px;
+        }
+
+        .text-row div:nth-child(6) {
+            width: 30%;
+            margin: 0 20px 0 5px;
+        }
+    </style>
+
+    <!-- 사이드바 하위메뉴 한 개씩 열리게하기 (메뉴가 열려있을때 다른 메뉴 열면 닫히게) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {  // HTML 문서가 모두 로드된 후 실행되도록
+            const menuItems = document.querySelectorAll(".nav ul li > a");  // 모든 메뉴(1~6) 선택
+            menuItems.forEach(menu => {     // a 태그의 메뉴마다 이벤트 리스너 추가
+                menu.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    // 클릭할때마다 모든 메뉴의 active 클래스 제거 (기존에 열린 메뉴가 있다면 닫히게끔)
+                    document.querySelectorAll(".nav ul li").forEach(item => {
+                        item.classList.remove("active");
+                    });
+                    // 클릭한 메뉴의 부모 요소 li에 active 클래스 추가 (해당 메뉴 열기)
+                    this.parentElement.classList.toggle("active");
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <nav class="nav">
+        <ul>
+            <li class="nav-logo" style="margin: 0;"><img id="b1" src="/static/b1.png" alt="로고"></li>
+            <li class="menu-1">
+                <a href="#">회원 관리 </a>
+                <ul class="submenu">
+                    <li><a href="user_list.html">회원 관리</a></li>
+                </ul>
+            </li>
+            <li class="menu-2">
+                <a href="#">상품 관리</a>
+                <ul class="submenu">
+                    <li><a href="product-1.html">상품 등록</a></li>
+                    <li><a href="product_2.html">상품 조회</a></li>
+                </ul>
+            </li>
+            <li class="menu-3">
+                <a href="#">판매 관리</a>
+                <ul class="submenu">
+                    <li><a href="order-1.html">주문 조회</a></li>
+                    <li><a href="order-2.html">반품 관리</a></li>
+                    <li><a href="order-3.html">교환 관리</a></li>
+                </ul>
+            </li>
+            <li class="menu-4">
+                <a href="#">배송 관리</a>
+                <ul class="submenu">
+                    <li><a href="delivery-1.html">주문 조회</a></li>
+                    <li><a href="delivery-2.html">주문 현황</a></li>
+                </ul>
+            </li>
+            <li class="menu-5">
+                <a href="#">리뷰 관리</a>
+                <ul class="submenu">
+                    <li><a href="notice_5.html">리뷰 목록</a></li>
+                </ul>
+            </li>
+            <li class="menu-6">
+                <a href="#">공지사항 관리</a>
+                <ul class="submenu">
+                    <li><a href="notice_5.html">공지사항</a></li>
+                    <li><a href="faq_5.html">자주 묻는 질문</a></li>
+                </ul>
+            </li>
+            <div class="bottom-logo"><img id="b2" src="/static/b2.png" alt="로고"></div>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <header class="header">화원 관리</header>
+        <div class="container1">
+            <div class="search-box">
+                <div class="search-box-div">
+                    <input id="search-box-input" type="text" placeholder="이름">
+                    <input id="search-box-input" type="text" placeholder="전화번호">
+                    <input id="search-box-input" type="text" placeholder="등급">
+                    <button class="search-box-button">검색</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-container">
+            <div class="text-row">
+                <div>코드</div>
+                <div>이름</div>
+                <div>전화번호</div>
+                <div>반려동물</div>
+                <div>등급</div>
+                <div>주소</div>
+            </div>
+            <div class="info-box">
+                <div class="info-item"></div>
+                <div class="info-item"></div>
+                <div class="info-item"></div>
+                <div class="info-item"></div>
+                <div class="info-item"></div>
+                <div class="info-item"></div>
+            </div>
+        </div>
+
+        <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
+    </div>
+</body>
+
+</html>
