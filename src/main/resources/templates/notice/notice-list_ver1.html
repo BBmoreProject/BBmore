@@ -357,10 +357,11 @@
       </div>
       <table class="notice-list">
         <thead>
-        <tr>
-          <th>제목</th>
-          <th>등록일</th>
-          <th>조회수</th>
+        <tr th:each="adminNotice : ${adminNoticeList}">
+          <th th:text="${adminNotice.notice_code}">제목</th>
+          <th th:text="${adminNotice.notice_title}">제목</th>
+          <th th:text="${adminNotice.notice_created_date}">등록일</th>
+          <th th:text="${adminNotice.notice_view}">조회수</th>
         </tr>
         </thead>
         <tbody>
