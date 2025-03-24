@@ -73,6 +73,16 @@ public class NoticeService {
 //                .toList();
 //    }
 
+/* JPQL or Native Query */
+//    public List<MenuDTO> findAllCategory() {
+//        List<Menu> categoryList = menuRepository.findAllMenu();
+//
+//        return categoryList.stream()
+//                .map(category -> modelMapper.map(category, MenuDTO.class))
+//                .toList();
+//    }
+
+
 
     /* save */
     @Transactional

@@ -294,7 +294,7 @@
 <body>
 <nav class="nav">
   <ul>
-    <li class="nav-logo" style="margin: 0;"><img id="b1" src="@{/img/b1.png}" alt="로고"></li>
+    <li class="nav-logo" style="margin: 0;"><img id="b1" src="/img/b1.png" alt="로고"></li>
     <li class="menu-1">
       <a href="#">회원 관리 </a>
       <ul class="submenu">
@@ -336,7 +336,7 @@
         <li><a href="">자주 묻는 질문</a></li>
       </ul>
     </li>
-    <div class="bottom-logo"><img id="b2" src="@{/img/b2.png}" alt="로고"></div>
+    <div class="bottom-logo"><img id="b2" src="/img/b2.png" alt="로고"></div>
   </ul>
 </nav>
 
@@ -349,7 +349,7 @@
     </div>
     <!--• 공지사항 목록-->
     <div class="notice-box">
-      <div class="write-button" onclick="location.href='notice-write_ver1.html'">
+      <div class="write-button" onclick="">
         <p id="write">글쓰기</p>
       </div>
       <div class="menu-detail">
@@ -357,11 +357,10 @@
       </div>
       <table class="notice-list">
         <thead>
-        <tr th:each="adminNotice : ${adminNoticeList}">
-          <th th:text="${adminNotice.notice_code}">제목</th>
-          <th th:text="${adminNotice.notice_title}">제목</th>
-          <th th:text="${adminNotice.notice_created_date}">등록일</th>
-          <th th:text="${adminNotice.notice_view}">조회수</th>
+        <tr>
+          <th>제목</th>
+          <th>등록일</th>
+          <th>조회수</th>
         </tr>
         </thead>
         <tbody>
@@ -373,9 +372,41 @@
         </tbody>
       </table>
     </div>
+      <!--페이징 시작-->
+    <div id="paging" >
+      <!-- 맨 앞으로 이동 -->
+      <button
+              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.startPage}} + '\''">
+        <<
+      </button>
+      <!-- 이전 페이지로 이동 -->
+      <button
+              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.currentPage - 1}} + '\''"
+              th:disabled="${ noticeList.first }">
+        <
+      </button>
+      <!-- 숫자 버튼 -->
+      <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
+        <button th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${page}} + '\''"
+                th:text="${ page }"
+                th:disabled="${ paging.currentPage eq page }">
+        </button>
+      </th:block>
+      <!-- 다음 페이지로 이동 -->
+      <button
+              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.currentPage + 1}} + '\''"
+              th:disabled="${ noticeList.last }">
+        >
+      </button>
+      <!-- 맨 끝으로 이동 -->
+      <button
+              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.endPage}} + '\''">
+        >>
+      </button>
+    </div> <!--페이징 끝-->
+
   </main>
   <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
 </div>
 </body>
-
 </html>
