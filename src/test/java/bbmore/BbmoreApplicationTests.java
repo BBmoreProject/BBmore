@@ -10,8 +10,6 @@ class BbmoreApplicationTests {
 
     @Test
     void contextLoads() {
-
-
     }
 
 }
