@@ -34,15 +34,15 @@ public class NoticeService {
 //    }
 
     /* findAll : sort 사용 */
-    public List<NoticeDTO> findNoticeList() {
-        List<Notice> noticeList = adminNoticeRepository.findAll(Sort.by("noticeCreatedDate").descending());
-        // 리스트 -> 스트림 -> 모델맵퍼의 map 이용해서 DTO 로 -> 다시 리스트로
-        return noticeList.stream()
-                .map(notice -> modelMapper.map(notice, NoticeDTO.class))
-                .toList();
-    }
+//    public List<NoticeDTO> findNoticeList() {
+//        List<Notice> noticeList = adminNoticeRepository.findAll(Sort.by("noticeCreatedDate").descending());
+//        // 리스트 -> 스트림 -> 모델맵퍼의 map 이용해서 DTO 로 -> 다시 리스트로
+//        return noticeList.stream()
+//                .map(notice -> modelMapper.map(notice, NoticeDTO.class))
+//                .toList();
+//    }
 
-    /* findAll : Pageable*/
+    /* findAll : Pageable 사용*/
     // Pageable 객체 : 스프링 data domain 에서 제공
     // PageRequest.of : PageNumber, PageSize, sort 3가지 전달 필요
     // PageNumber 는 0부터
