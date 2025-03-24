@@ -13,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.*;
 import java.util.List;
 
 @Service
@@ -26,13 +25,13 @@ public class NoticeService {
 
 
     /* findById */
-    public NoticeDTO findNoticeByNoticeCode(int noticeCode) {
-
-        Notice foundNotice = adminNoticeRepository.findById(noticeCode).orElseThrow(IllegalArgumentException::new);
-
-        // modelMapper라는 라이브러리가 map 메서드를 이용해서 foundMenu 엔티티에 담긴 값들을 MenuDTO 타입으로
-        return modelMapper.map(foundNotice, NoticeDTO.class);
-    }
+//    public NoticeDTO findNoticeByNoticeCode(int noticeCode) {
+//
+//        Notice foundNotice = adminNoticeRepository.findById(noticeCode).orElseThrow(IllegalArgumentException::new);
+//
+//        // modelMapper라는 라이브러리가 map 메서드를 이용해서 foundMenu 엔티티에 담긴 값들을 MenuDTO 타입으로
+//        return modelMapper.map(foundNotice, NoticeDTO.class);
+//    }
 
     /* findAll : sort 사용 */
     public List<NoticeDTO> findNoticeList() {
