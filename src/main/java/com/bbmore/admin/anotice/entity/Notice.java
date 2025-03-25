@@ -5,6 +5,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -14,7 +16,7 @@ import java.util.Date;
 @Table(name = "tbl_notice")
 public class Notice {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int noticeCode;
 
     @Column(nullable = false, length = 255)
@@ -23,8 +25,18 @@ public class Notice {
     @Column(nullable = false, length = 255)
     private String noticeTitle;
 
-    @Column(nullable = false)
-    private Date noticeCreatedDate;
+    @Column(name = "notice_created_date", nullable = false, updatable = false)
+    private LocalDate noticeCreatedDate;    // 등록일자
+
+
+    // 엔티티가 DB에 저장되기 전에 자동으로 등록일자를 설정하는 메서드
+    @PrePersist
+    public void onPrePersist() {
+        if (noticeCreatedDate == null) {
+            noticeCreatedDate = LocalDate.now();  // 엔티티가 DB에 저장되기 전에 현재 날짜와 시간 설정
+        }
+    }
+
 
 //    조회수
     @Column(nullable = false)

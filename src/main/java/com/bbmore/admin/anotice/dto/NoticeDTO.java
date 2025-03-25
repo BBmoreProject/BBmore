@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -14,7 +15,7 @@ public class NoticeDTO {
     private int noticeCode;
     private String noticeType;
     private String noticeTitle;
-    private Date noticeCreatedDate;
+    private LocalDate noticeCreatedDate;
     private int noticeView;
     private String noticeContent;
 

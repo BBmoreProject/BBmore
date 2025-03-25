@@ -22,13 +22,20 @@ public class AdminNoticeController {
 
   private final NoticeService noticeService;
 
+  // 제목 검색
+//  @GetMapping("/{noticeTitle}")
+//  public String findNoticeByTitle(@PathVariable String noticeTitle, Model model) {
+//
+//    // 메뉴 서비스에서 DTO 값으로 변환되서 담긴 값을 resultMenu 에 담는다
+//    NoticeDTO resultNotice = noticeService.findNoticeByTitle(noticeTitle);
+//    model.addAttribute("notice", resultNotice);
+//
+//    return "menu/detail";    // 뷰를 반환
+//  }
+
   // @PageableDefault Pageable pageable :
   @GetMapping("/notice-list_ver1")
   public String findNoticeList(Model model, @PageableDefault Pageable pageable){
-
-    /* 페이징 처리 이전 */
-//        List<MenuDTO> menuList = menuService.findMenuList();
-//        model.addAttribute("menuList", menuList);
 
     /* 페이징 처리 이후 */
     // {}: 위치홀더라고 생각할 것
@@ -55,54 +62,51 @@ public class AdminNoticeController {
     return "notice/notice-list_ver1";
   }
 
-  //    @GetMapping("/querymethod")
-//    public void querymethoddPage(){}
+  // 공지사항 상세보기 페이지
+  @GetMapping("/notice-view/{noticeCode}")
+  public String viewNotice(@PathVariable int noticeCode, Model model) {
+    // noticeCode로 공지사항 조회
+    NoticeDTO noticeDTO = noticeService.findNoticeByNoticeCode(noticeCode);
 
-//    @GetMapping("/search")
-//    public String findByMenuPrice(@RequestParam Integer menuPrice, Model model){
-//
-//        List<MenuDTO> menuList = menuService.findByMenuPrice(menuPrice);
-//
-//        model.addAttribute("menuList", menuList);
-//
-//        return "menu/searchResult";
-//    }
+    model.addAttribute("notice", noticeDTO); // 조회된 공지사항을 모델에 추가
+    return "notice/notice-view"; // 공지사항 상세보기 페이지로 이동
+  }
 
-  // 요청 url 이 뷰가 되도록 void 로 작성
+
+
+
+
+
+  // 공지사항 등록 시 요청 url 이 뷰가 되도록 void 로 작성
     @GetMapping("/notice-write_ver1")
-    public void registPage(){}
+    public void registPage(){};
 
-//    @GetMapping("/category")
-//    @ResponseBody
-//    public List <MenuDTO> findCategoryList(){
-//        return menuService.findAllCategory();
-//    }
-
+    // 공지사항 등록
     @PostMapping("/notice-write_ver1")
     public String registNotice(@ModelAttribute NoticeDTO noticeDTO){
         noticeService.registNotice(noticeDTO);
-        return "redirect:/notice/notice-write_ver1";
+        return "redirect:/notice/notice-list_ver1";
     }
 
 
-
-
+  // 공지사항 수정
   @GetMapping("/modify")
   public void modifyPage(){}
 
   @PostMapping("/modify")
   public String modifyNotice(@ModelAttribute NoticeDTO noticeDTO){
     noticeService.modifyNotice(noticeDTO);
-    return "redirect:notice/notice-list_ver1" + noticeDTO.getNoticeCode();
+    return "redirect:/notice/notice-list_ver1" + noticeDTO.getNoticeCode();
   }
 
+  // 공지사항 수정
   @GetMapping("/delete")
   public void deletePage(){}
 
   @PostMapping("/delete")
   public String deleteNotice(@RequestParam Integer noticeCode){
     noticeService.deleteNotice(noticeCode);
-    return "redirect:notice/notice-list_ver1";       // 삭제 후 메뉴 리스트를 보여줌
+    return "redirect:/notice/notice-list_ver1";       // 삭제 후 메뉴 리스트를 보여줌
   }
 
 }

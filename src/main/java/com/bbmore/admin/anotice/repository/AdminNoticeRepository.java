@@ -14,11 +14,11 @@ import java.util.List;
 public interface AdminNoticeRepository extends JpaRepository<Notice, Integer> {
 
 
-    @Query(
-            value = "SELECT notice_code, notice_type, notice_title, notice_created_date , notice_view FROM tbl_notice ORDER BY notice_code",
-            nativeQuery = true
-    )
-    List<Notice> findAllMenu();
+//    @Query(
+//            value = "SELECT notice_code, notice_type, notice_title, notice_created_date , notice_view FROM tbl_notice ORDER BY notice_code",
+//            nativeQuery = true
+//    )
+//    List<Notice> findAllMenu();
 
 
 
