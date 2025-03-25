@@ -13,6 +13,7 @@ import java.util.Date;
 @Entity
 @Table(name = "tbl_notice")
 public class Notice {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int noticeCode;

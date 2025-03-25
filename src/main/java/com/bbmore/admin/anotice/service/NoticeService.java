@@ -32,6 +32,9 @@ public class NoticeService {
 //        return modelMapper.map(foundNotice, NoticeDTO.class);
 //    }
 
+     /* findAll*/
+
+
     /* findAll : sort 사용 */
 //    public List<NoticeDTO> findNoticeList() {
 //        List<Notice> noticeList = adminNoticeRepository.findAll(Sort.by("noticeCreatedDate").descending());
