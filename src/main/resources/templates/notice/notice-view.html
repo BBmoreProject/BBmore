@@ -182,8 +182,6 @@
     #title  {
       width: 100%;
       /* 건드리지말것*/
-      padding: 15px;
-      /*입력창 크기 건드리지말것*/
       /* border: 1px solid #C2C2C2; */
       border-bottom: none;
       font-size: 15px;
@@ -232,7 +230,6 @@
     }
 
     #next{
-
       width: 10%;
       /* border-right: #c70707; */
       text-align: center;
@@ -393,12 +390,11 @@
           <td class="label" id="date" th:text="${notice.noticeCreatedDate}">날짜</td>
         </tr>
         <tr>
-          <td colspan="2" class="label" id="notice" th:text="${notice.noticeContent}">
-            <!-- <div>내용</div> -->
+          <td class="label" id="notice" th:text="${notice.noticeContent}">
           </td>
         </tr>
         <tr>
-          <td class="label" id="next">다음글</td>
+          <td colspan="2" class="label" id="next">다음글</td>
           <td class="label" id="next-notice">값 가져오기</td>
         </tr>
       </table>
