@@ -178,66 +178,88 @@
       font-size: 15px;
     }
 
-    /* 제목 입력창 */
-    #title  {
+    /* 공지사항 제목~다음글 전체 틀 */
+    .notice-box {
+      width: 1100px;
+      margin: 10px;
+      border: 1px solid #ddd;
+    }
+
+    /* 제목,날짜,내용,다음글 틀 */
+    .title-box,
+    .date-box,
+    .content-box
+    {
       width: 100%;
-      /* 건드리지말것*/
-      /* border: 1px solid #C2C2C2; */
-      border-bottom: none;
+      padding: 10px;
+      margin: 0;
+      background: #f1f1f1;
+    }
+
+    /* 제목 */
+    .title  {
       font-size: 15px;
-      /* text-align: left; */
+      height: 30px;
     }
 
     /* 날짜 */
-    #date{
-      width: 100%;
-      /* 건드리지말것*/
-      border-top: none;
+    .date-box{
       font-size: 13px;
     }
 
-    /* 내용 */
-    #notice {
+    /* 날짜,내용 아래 선 */
+    .date-box ,
+    .content-box{
+      border-bottom: 1px solid #ddd;
+    }
+
+    .date{
+      font-size: 13px;
+    }
+
+    /* 불러와지는 내용 틀 */
+    .content-box {
       width: 100%;
       height: 300px;
-      padding: 25px;
       font-size: 15px;
-      /* text-align: top; */
+
     }
 
-    /*  추가부분 */
-
-    /* 공지사항 글쓰기 틀 */
-    .notice-table {
-      width: 1100px;
-      border-collapse: collapse;
-      margin: 10px;
-    }
-
-    /* #next,#next-notice 다음글 행 */
-    .notice-table td {
-      border: 1px solid #ddd; /*아래쪽 선 사라짐 없애지말것*/
-      padding: 5px;
-      font-size: 15px;
-      height: 40px;
-    }
-
-    /* 제목,내용 틀 */
-    .notice-table .label {
-      width: 150px;
+    /* 다음글 행 수평 정렬 */
+    .next-title-box1,
+    .next-title-box2
+    {
+      display: flex;
+      width: 100%;
       background: #f1f1f1;
-      text-align: center;
+      font-size: 13px;
     }
 
-    #next{
-      width: 10%;
-      /* border-right: #c70707; */
-      text-align: center;
+
+    /* 이전글(1),다음글(2) 행*/
+    .next-box1,
+    .next-box2,
+    .next-content-box1,
+    .next-content-box2
+    {
+      height: 100%;
+      padding: 10px;
     }
 
-    #next-notice {
-      text-align: left;
+    /* 이전글(1),다음글(2) 틀 */
+    .next-box1,
+    .next-box2
+    {
+      border-right: 1px solid #ddd;
     }
+
+    /* 이전글(1),다음글(2) 제목 */
+    .next-content1,
+    .next-content2{
+      width: 100%;
+    }
+
+
 
 
 
@@ -265,6 +287,7 @@
     /* .buttons button:hover {
         background: darkorange;
     } */
+
 
     /* 사이드바 하단 로고 틀 */
     .bottom-logo {
@@ -382,22 +405,47 @@
       </div>
 
       <!-- 공지사항 작성 큰 틀 -->
-      <table class="notice-table">
-        <tr>
-          <td class="label" id="title" th:text="${notice.noticeTitle}">제목</td>
-        </tr>
-        <tr>
-          <td class="label" id="date" th:text="${notice.noticeCreatedDate}">날짜</td>
-        </tr>
-        <tr>
-          <td class="label" id="notice" th:text="${notice.noticeContent}">
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2" class="label" id="next">다음글</td>
-          <td class="label" id="next-notice">값 가져오기</td>
-        </tr>
-      </table>
+      <div class="notice-box">
+
+        <div class="title-box">
+          <div class="title" th:text="${notice.noticeTitle}"></div>
+        </div><!--title-box끝-->
+
+        <div class="date-box">
+          <div class="date" th:text="${notice.noticeCreatedDate}"></div>
+        </div>
+
+
+        <div class="content-box">
+          <div th:text="${notice.noticeContent}"></div>
+        </div>
+
+        <div class="next-title-box1">
+          <div class="next-box1">
+            <div class="next">이전글</div>
+          </div>
+
+          <div th:if="${previousNotice == null}" class="next-content-box1" >
+              <a th:href="@{notice/notice-view.html/{noticeCode}(noticeCode=${previousNotice.noticeCode})}">
+            <button class="next-content1">제목값
+              <span th:text="${previousNotice.noticeTitle}">
+              </span>
+            </button>
+              </a>
+          </div>
+        </div>
+
+        <div class="next-title-box2">
+          <div class="next-box2">
+            <div class="next">다음글</div>
+          </div>
+          <div class="next-content-box2">
+            <button class="next-content2" onclick="location.href='' ">다음글 제목 불러오기</button>
+          </div>
+        </div>
+
+      </div> <!--notice-box끝-->
+
     </div> <!--"• 공지사항 글쓰기" + 글쓰기 틀 끝-->
   </main>
   <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>

@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)  /*생성자가 없어도 인스턴스 생성 가능 */
@@ -19,10 +17,10 @@ public class Notice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int noticeCode;
 
-    @Column(nullable = false, length = 255)
+    @Column(name = "notice_type", nullable = false, length = 255)
     private String noticeType;
 
-    @Column(nullable = false, length = 255)
+    @Column(name = "notice_title", nullable = false, length = 255)
     private String noticeTitle;
 
     @Column(name = "notice_created_date", nullable = false, updatable = false)

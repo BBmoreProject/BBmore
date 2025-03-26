@@ -4,6 +4,8 @@ package com.bbmore.admin.anotice.controller;
 import com.bbmore.admin.anotice.common.Pagenation;
 import com.bbmore.admin.anotice.common.PagingButton;
 import com.bbmore.admin.anotice.dto.NoticeDTO;
+import com.bbmore.admin.anotice.entity.Notice;
+import com.bbmore.admin.anotice.repository.AdminNoticeRepository;
 import com.bbmore.admin.anotice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Slf4j
 @Controller
 @RequestMapping("/notice")
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminNoticeController {
 
   private final NoticeService noticeService;
+  private final AdminNoticeRepository adminNoticeRepository;
 
   // 제목 검색
 //  @GetMapping("/{noticeTitle}")
@@ -73,13 +78,10 @@ public class AdminNoticeController {
   }
 
 
-
-
-
-
   // 공지사항 등록 시 요청 url 이 뷰가 되도록 void 로 작성
     @GetMapping("/notice-write_ver1")
-    public void registPage(){};
+    public void registPage(){
+};
 
     // 공지사항 등록
     @PostMapping("/notice-write_ver1")
@@ -88,25 +90,43 @@ public class AdminNoticeController {
         return "redirect:/notice/notice-list_ver1";
     }
 
+    // 이전글 조회
+    @GetMapping("/notice/{noticeCode}")
+  public String getNoticeDetails(@PathVariable int noticeCode, Model model) {
+
+      Notice previousNotice = noticeService.getPreviousNotice(noticeCode);
+      Notice nextNotice = noticeService.getNextNotice(noticeCode);
+
+      model.addAttribute("previousNotice", previousNotice);
+      model.addAttribute("nextNotice", nextNotice);
+
+      return "notice/notice-view"; // 공지사항 상세페이지로 이동
+
+    }
+
+
+
+
+
 
   // 공지사항 수정
-  @GetMapping("/modify")
-  public void modifyPage(){}
+//  @GetMapping("/modify")
+//  public void modifyPage(){}
+//
+//  @PostMapping("/modify")
+//  public String modifyNotice(@ModelAttribute NoticeDTO noticeDTO){
+//    noticeService.modifyNotice(noticeDTO);
+//    return "redirect:/notice/notice-list_ver1" + noticeDTO.getNoticeCode();
+//  }
 
-  @PostMapping("/modify")
-  public String modifyNotice(@ModelAttribute NoticeDTO noticeDTO){
-    noticeService.modifyNotice(noticeDTO);
-    return "redirect:/notice/notice-list_ver1" + noticeDTO.getNoticeCode();
-  }
-
-  // 공지사항 수정
-  @GetMapping("/delete")
-  public void deletePage(){}
-
-  @PostMapping("/delete")
-  public String deleteNotice(@RequestParam Integer noticeCode){
-    noticeService.deleteNotice(noticeCode);
-    return "redirect:/notice/notice-list_ver1";       // 삭제 후 메뉴 리스트를 보여줌
-  }
+  // 공지사항 삭제
+//  @GetMapping("/delete")
+//  public void deletePage(){}
+//
+//  @PostMapping("/delete")
+//  public String deleteNotice(@RequestParam Integer noticeCode){
+//    noticeService.deleteNotice(noticeCode);
+//    return "redirect:/notice/notice-list_ver1";       // 삭제 후 메뉴 리스트를 보여줌
+//  }
 
 }

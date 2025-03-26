@@ -5,6 +5,7 @@ import com.bbmore.admin.anotice.dto.NoticeDTO;
 import com.bbmore.admin.anotice.entity.Notice;
 import com.bbmore.admin.anotice.repository.AdminNoticeRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,7 +14,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class NoticeService {
@@ -22,15 +26,6 @@ public class NoticeService {
     private final AdminNoticeRepository adminNoticeRepository;
     private final ModelMapper modelMapper;
 
-
-    /* findById  제목 검색할때 쓰면 될듯 */
-//    public NoticeDTO findNoticeByTitle(String noticeTitle) {
-//
-//        Notice foundNotice = adminNoticeRepository.findById(noticeTitle).orElseThrow(IllegalArgumentException::new);
-//
-//        // modelMapper라는 라이브러리가 map 메서드를 이용해서 foundMenu 엔티티에 담긴 값들을 MenuDTO 타입으로
-//        return modelMapper.map(foundNotice, NoticeDTO.class);
-//    }
 
     /* findAll : Pageable 사용*/
     // Pageable 객체 : 스프링 data domain 에서 제공
@@ -64,6 +59,27 @@ public class NoticeService {
         return modelMapper.map(foundNotice, NoticeDTO.class);
     }
 
+    // 이전글 조회
+    public Notice getPreviousNotice(int noticeCode){
+        Optional<Notice> previousNotice = adminNoticeRepository.findPreviousNotice(noticeCode);
+//        if (!previousNotice.isPresent()) {
+//            log.info("이전글이 없습니다. noticeCode: {}", noticeCode);
+//        } else {
+//            log.info("이전글 제목: {}", previousNotice.get().getNoticeTitle());
+//        }
+        return previousNotice.orElseThrow(() -> new IllegalArgumentException("이전글을 찾을 수 없습니다."));
+    }
+
+
+     // 다음글 조회
+    public Notice getNextNotice(int noticeCode){
+        Optional<Notice> nextNotice = adminNoticeRepository.findNextNotice(noticeCode);
+        return nextNotice.orElseThrow(() -> new IllegalArgumentException("다음글을 찾을 수 없습니다."));
+
+    }
+
+
+
     /* 수정(엔티티 객체의 필드 값 변경) */
     @Transactional
     public void modifyNotice(NoticeDTO noticeDTO) {
@@ -76,7 +92,7 @@ public class NoticeService {
 
     /* deleteById */
     @Transactional
-    public void deleteNotice(Integer noticeCode) {
+    public void deleteNotice(int noticeCode) {
         adminNoticeRepository.deleteById(noticeCode);
     }
 
