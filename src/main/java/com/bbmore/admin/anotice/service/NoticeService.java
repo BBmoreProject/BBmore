@@ -4,6 +4,7 @@ package com.bbmore.admin.anotice.service;
 import com.bbmore.admin.anotice.dto.NoticeDTO;
 import com.bbmore.admin.anotice.entity.Notice;
 import com.bbmore.admin.anotice.repository.AdminNoticeRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -41,7 +42,6 @@ public class NoticeService {
         // map 함수로 menu를 하나 하나 ㅏ다 꺼내서 modelMapper.. DTO 타입으로
         return noticeList.map(notice -> modelMapper.map(notice, NoticeDTO.class));
     }
-    
 
 
     /* 공지사항 등록 save */
@@ -59,23 +59,20 @@ public class NoticeService {
         return modelMapper.map(foundNotice, NoticeDTO.class);
     }
 
-    // 이전글 조회
-    public Notice getPreviousNotice(int noticeCode){
-        Optional<Notice> previousNotice = adminNoticeRepository.findPreviousNotice(noticeCode);
-//        if (!previousNotice.isPresent()) {
-//            log.info("이전글이 없습니다. noticeCode: {}", noticeCode);
-//        } else {
-//            log.info("이전글 제목: {}", previousNotice.get().getNoticeTitle());
-//        }
-        return previousNotice.orElseThrow(() -> new IllegalArgumentException("이전글을 찾을 수 없습니다."));
+    // noticeCode로 찾아오기, 예외 설정 getNoticeDetail:메서드명
+    public Notice getNoticeDetail(int noticeCode) {
+        return adminNoticeRepository.findById(noticeCode)
+                .orElseThrow(() -> new EntityNotFoundException("공지사항을 찾을 수 없습니다."));
     }
 
+    // 이전글
+    public Optional<Notice> getPrevNotice(int noticeCode) {
+        return adminNoticeRepository.findTopByNoticeCodeLessThanOrderByNoticeCodeDesc(noticeCode);
+    }
 
-     // 다음글 조회
-    public Notice getNextNotice(int noticeCode){
-        Optional<Notice> nextNotice = adminNoticeRepository.findNextNotice(noticeCode);
-        return nextNotice.orElseThrow(() -> new IllegalArgumentException("다음글을 찾을 수 없습니다."));
-
+    // 다음글
+    public Optional<Notice> getNextNotice(int noticeCode){
+        return adminNoticeRepository.findTopByNoticeCodeGreaterThanOrderByNoticeCodeAsc(noticeCode);
     }
 
 
@@ -83,7 +80,7 @@ public class NoticeService {
     /* 수정(엔티티 객체의 필드 값 변경) */
     @Transactional
     public void modifyNotice(NoticeDTO noticeDTO) {
-       Notice foundNotice = adminNoticeRepository.findById(noticeDTO.getNoticeCode()).orElseThrow(IllegalArgumentException::new);
+        Notice foundNotice = adminNoticeRepository.findById(noticeDTO.getNoticeCode()).orElseThrow(IllegalArgumentException::new);
 
         /* setter 사용 지양 , 기능에 맞는 메소드를 정의해서 사용할 것 */
         foundNotice.modifyNoticeTitle(noticeDTO.getNoticeTitle());

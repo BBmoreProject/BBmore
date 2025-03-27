@@ -1,6 +1,7 @@
 package com.bbmore.admin.anotice.repository;
 
 import com.bbmore.admin.anotice.entity.Notice;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,19 +18,10 @@ public interface AdminNoticeRepository extends JpaRepository<Notice, Integer> {
 
 
     // 이전글 조회 (현재 noticeCode보다 작은 값 중 가장 큰 값을 찾기)
-    @Transactional
-    @Query(
-            value = "SELECT n.notice_title FROM tbl_notice n WHERE n.notice_code < :noticeCode ORDER BY n.notice_code ASC LIMIT 1",
-            nativeQuery = true)
-    Optional<Notice> findPreviousNotice(int noticeCode);
-
+    Optional<Notice> findTopByNoticeCodeLessThanOrderByNoticeCodeDesc(int noticeCode);
 
     // 다음글 조회 (현재 noticeCode보다 작은 값 중 가장 큰 값을 찾기)
-    @Transactional
-    @Query(
-            value = "SELECT n.notice_title, n.notice_created_date , n.notice_view FROM tbl_notice n WHERE n.notice_code > :notice_code ORDER BY n.notice_code ASC LIMIT 1",
-            nativeQuery = true)
-    Optional<Notice> findNextNotice(int noticeCode);
+    Optional<Notice> findTopByNoticeCodeGreaterThanOrderByNoticeCodeAsc(int noticeCode);
 
 
 }
