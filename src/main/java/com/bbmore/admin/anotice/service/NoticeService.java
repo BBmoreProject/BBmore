@@ -34,9 +34,9 @@ public class NoticeService {
     // PageNumber 는 0부터
     public Page<NoticeDTO> findNoticeList(Pageable pageable) {
         pageable = PageRequest.of(
-                pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
-                pageable.getPageSize(),
-                Sort.by("noticeCreatedDate").descending()
+            pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+            pageable.getPageSize(),
+            Sort.by("noticeCreatedDate").descending()
         );
         Page<Notice> noticeList = adminNoticeRepository.findAll(pageable);
         // map 함수로 menu를 하나 하나 ㅏ다 꺼내서 modelMapper.. DTO 타입으로
@@ -54,16 +54,11 @@ public class NoticeService {
     // noticeCode로 공지사항 조회
     public NoticeDTO findNoticeByNoticeCode(int noticeCode) {
         Notice foundNotice = adminNoticeRepository.findById(noticeCode)
-                .orElseThrow(() -> new IllegalArgumentException("공지사항을 찾을 수 없습니다."));
+            .orElseThrow(() -> new IllegalArgumentException("공지사항을 찾을 수 없습니다."));
 
         return modelMapper.map(foundNotice, NoticeDTO.class);
     }
 
-    // noticeCode로 찾아오기, 예외 설정 getNoticeDetail:메서드명
-    public Notice getNoticeDetail(int noticeCode) {
-        return adminNoticeRepository.findById(noticeCode)
-                .orElseThrow(() -> new EntityNotFoundException("공지사항을 찾을 수 없습니다."));
-    }
 
     // 이전글
     public Optional<Notice> getPrevNotice(int noticeCode) {
