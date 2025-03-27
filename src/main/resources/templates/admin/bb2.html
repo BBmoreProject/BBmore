@@ -2,516 +2,713 @@
 <html lang="ko">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=devioce-width, initial-scale=1.0">
-    <title>공지사항 관리</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원 관리</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
-        /* 여백 초기화 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    /* 여백 초기화 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        /* 폰트 변경 완료 */
-        body {
-            font-family: "Noto Sans KR", sans-serif;
-            display: flex;
-            flex-direction: row;
-            /* 좌우로 배치 */
-            min-height: 100vh;
-        }
+    /* 폰트 변경 완료 */
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      display: flex;
+      flex-direction: row;
+      /* 좌우로 배치 */
+      min-height: 100vh;
+    }
 
-        /* 좌측 관리자 사이드바 */
-        .nav {
-            width: 200px;
-            background: #D9D9D9;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
+    /* 좌측 관리자 사이드바 */
+    .nav {
+      width: 200px;
+      background: #D9D9D9;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
 
-        /* 사이드바 상단 로고틀*/
-        li.nav-logo {
-            position: fixed;
-            width: 200px;
-            height: 160px;
-            /*건드리지말것*/
+    /* 사이드바 상단 로고틀*/
+    li.nav-logo {
+      position: fixed;
+      width: 200px;
+      height: 160px;
+      /*건드리지말것*/
 
-        }
+    }
 
-        /* 사이드바 상단 로고이미지 */
-        li.nav-logo img {
-            width: 100%;
-            height: 100%;
-            padding: 10%;
-            /*로고크기*/
-            object-fit: contain;
-        }
+    /* 사이드바 상단 로고이미지 */
+    li.nav-logo img {
+      width: 100%;
+      height: 100%;
+      padding: 10%;
+      /*로고크기*/
+      object-fit: contain;
+    }
 
-        /* 사이드바 상위 메뉴 */
-        .nav ul {
-            list-style: none;
-        }
+    /* 사이드바 상위 메뉴 */
+    .nav ul {
+      list-style: none;
+    }
 
-        /* 사이드바 하위 메뉴 */
-        .nav ul li {
-            margin: 15px 0;
-            position: relative;
-        }
+    /* 사이드바 하위 메뉴 */
+    .nav ul li {
+      margin: 15px 0;
+      position: relative;
+    }
 
-        /* 사이드바-공지사항 관리 텍스트 */
-        .nav ul li a {
-            color: rgb(0, 0, 0);
-            font-size: 20px;
-            text-decoration: none;
-            display: block;
-            padding: 8px;
-            cursor: pointer;
-        }
+    /* 사이드바-공지사항 관리 텍스트 */
+    .nav ul li a {
+      color: rgb(0, 0, 0);
+      font-size: 20px;
+      text-decoration: none;
+      display: block;
+      padding: 8px;
+      cursor: pointer;
+    }
 
-        /* 사이드바-서브메뉴 틀 */
-        .nav ul .submenu {
-            display: none;
-            list-style: none;
-            padding: 0;
-            background: #444;
-            width: 200px;
-        }
+    /* 사이드바-서브메뉴 틀 */
+    .nav ul .submenu {
+      display: none;
+      list-style: none;
+      padding: 0;
+      background: #444;
+      width: 200px;
+    }
 
-        .nav ul .submenu li {
-            margin: 0;
-        }
+    .nav ul .submenu li {
+      margin: 0;
+    }
 
-        /* 사이드바 하위 메뉴 텍스트(공지사항, 자주묻는질문) */
-        .nav ul .submenu li a {
-            padding: 10px;
-            color: #ffffff;
-            font-size: 15px;
-            display: block;
-            background-color: #9B9B9B;
-        }
+    /* 사이드바 하위 메뉴 텍스트(공지사항, 자주묻는질문) */
+    .nav ul .submenu li a {
+      padding: 10px;
+      color: #ffffff;
+      font-size: 15px;
+      display: block;
+      background-color: #9B9B9B;
+    }
 
-        .nav ul li.active .submenu {
-            display: block;
-        }
+    .nav ul li.active .submenu {
+      display: block;
+    }
 
-        /* 메인 컨텐츠 영역 */
-        .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
+    /* 메인 컨텐츠 영역 */
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
 
-        /* 상위 메뉴 (공지사항 관리) */
-        .header {
-            /* background: #fff5e2; */
-            color: rgb(0, 0, 0);
-            font-size: 20px;
-            font-weight: bold;
-            padding: 50px 0 10px 50px;
-            display: flex;
-            align-items: center;
-        }
+    /* 상위 메뉴 (공지사항 관리) */
+    .header {
+      /* background: #fff5e2; */
+      color: rgb(0, 0, 0);
+      font-size: 20px;
+      font-weight: bold;
+      padding: 50px 0 10px 50px;
+      display: flex;
+      align-items: center;
+    }
 
-        .main {
-            flex: 1;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+    .main {
+      flex: 1;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-        /* 글쓰기 버튼 () */
-        .write-button {
-            position: relative;
-            /*notice-box기준*/
-            background-color: #F28C25;
-            top: 30px;
-            width: 70px;
-            height: 25px;
-            left: 92%;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    /* 글쓰기 버튼 () */
+    .write-button {
+      position: relative;
+      /*notice-box기준*/
+      background-color: #F28C25;
+      top: 30px;
+      width: 70px;
+      height: 25px;
+      left: 92%;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-        /* 글쓰기 텍스트 (버튼박스 높이와 동일하게 지정하면 가운데정렬됨)*/
-        #write {
-            font-size: 12px;
-            text-align: center;
-            line-height: 25px;
-            color: white;
-        }
+    /* 글쓰기 텍스트 (버튼박스 높이와 동일하게 지정하면 가운데정렬됨)*/
+    #write {
+      font-size: 12px;
+      text-align: center;
+      line-height: 25px;
+      color: white;
+    }
 
-        /* 좌측 상단 • 공지사항 목록 */
-        /* 03-19 수정 */
-        .menu-detail {
-            margin: 10px;
-        }
+    /* 좌측 상단 • 공지사항 목록 */
+    /* 03-19 수정 */
+    .menu-detail {
+      margin: 10px;
+    }
 
-        /* 공지사항 목록 테이블(글쓰기 버튼 포함) 
-    (공지사항 목록, 테이블 간격 margin으로 조절)*/
-        /* 03-19  */
-        .notice-list {
-            border-collapse: collapse;
-            width: 1100px;
-            /*길이*/
-            margin: 10px;
-            /*테이블 주변여백*/
-            background-color: #f0f0f0;
-        }
+    .notice-list {
+      border-collapse: collapse;
+      width: 1100px;        /*길이*/
+      margin: 10px;        /*테이블 주변여백*/
+      background-color: #f0f0f0;
+    }
 
-        /* 공지사항 제목,작성일,조회수 */
-        .notice-list th {
-            font-size: 13px;
-            border-bottom: 1px solid #C2C2C2;
-            padding: 9px 9px 9px 30px;
-            /*칸 높이*/
-        }
+    /* 공지사항 제목,작성일,조회수 */
+    .notice-list th {
+      font-size: 13px;
+      border-bottom: 1px solid #C2C2C2;
+      padding: 9px 9px 9px 30px;          /*칸 높이*/
+    }
 
-        /* 공지사항 목록 글들 */
-        .notice-list td {
-            font-size: 13px;
-            border-bottom: 1px solid #C2C2C2;
-            padding: 8px 8px 8px 30px;
-        }
+    /* 공지사항 목록 글들 */
+    .notice-list td {
+      font-size: 13px;
+      border-bottom: 1px solid #C2C2C2;
+      padding: 8px 8px 8px 30px;
+    }
 
-        /* 제목 열 너비 */
-        .notice-list th:nth-child(1),
-        .notice-list td:nth-child(1) {
-            text-align: left;
-            width: 40%;
-        }
+    /* 제목 열 너비 */
+    .notice-list th:nth-child(1),
+    .notice-list td:nth-child(1) {
+      text-align: left;
+      width: 40%;
+    }
 
 
-        /* 작성일 열 너비 */
-        .notice-list th:nth-child(2),
-        .notice-list td:nth-child(2) {
-            text-align: center;
-            width: 10%;
-        }
+    /* 작성일 열 너비 */
+    .notice-list th:nth-child(2),
+    .notice-list td:nth-child(2) {
+      text-align: center;
+      width: 10%;
+    }
 
-        /* 조회수 열 너비 */
-        .notice-list th:nth-child(3),
-        .notice-list td:nth-child(3) {
-            text-align: center;
-            width: 8%;
-        }
+    /* 조회수 열 너비 */
+    .notice-list th:nth-child(3),
+    .notice-list td:nth-child(3) {
+      text-align: center;
+      width: 8%;
+    }
 
-        /* 사이드바 하단 로고 틀 */
-        .bottom-logo {
-            position: absolute;
-            /*건드리지말것*/
-            bottom: 3px;
-            /* 하단쪽에 고정 */
-            margin-top: auto;
-            width: 200px;
-            /* 전체 너비 */
-            height: 50px;
-            /* 고정된 높이 (변경가능) */
-            overflow: hidden;
-            /*넘칠 경우 숨김 처리*/
-        }
+    /* 사이드바 하단 로고 틀 */
+    .bottom-logo {
+      position: absolute;
+      /*건드리지말것*/
+      bottom: 3px;
+      /* 하단쪽에 고정 */
+      margin-top: auto;
+      width: 200px;
+      /* 전체 너비 */
+      height: 50px;
+      /* 고정된 높이 (변경가능) */
+      overflow: hidden;
+      /*넘칠 경우 숨김 처리*/
+    }
 
-        /* 사이드바 하단 로고 이미지 */
-        .bottom-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
+    /* 사이드바 하단 로고 이미지 */
+    .bottom-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
 
-        /* 바닥 사업자정보 */
-        .footer {
-            background: #222;
-            color: white;
-            text-align: center;
-            padding: 5px;
-            font-size: 10px;
-            margin-top: auto;
-        }
+    /* 바닥 사업자정보 */
+    .footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 5px;
+      font-size: 10px;
+      margin-top: auto;
+    }
 
-        /* .container1 {
-            height: 150px;
-            flex: 1;
-            padding: 30px 50px 50px 50px;
-        } */
+    /*회원검색*/
+    .search-box {
+      /* display: flex;
+      align-items: center; */
+      height: 120px;
+      margin-bottom: 20px;
+      margin: 50px 0 0 50px;
 
-        .search-box-div {
-            width: 100%;
-            padding: 10px;
-            background-color: #ececec;
-            border-radius: 10px;
-            border-style: none;
-            height: 100px;
-        }
+    }
 
-        .search-box-div {
-            display: flex;
-            align-items: center;
-            width: 1600px;
-            padding: 0 0 0 30px;
-            background-color: #F4F4F4;
-            border-radius: 10px;
-            border-style: none;
-            height: 100px;
-            gap: 20px;
-        }
+    .search-box-div {
+      display: flex;
+      align-items: center;
+      width: 1600px;
+      padding: 0 0 0 30px;
+      background-color: #F4F4F4;
+      border-radius: 10px;
+      border-style: none;
+      height: 100px;
+      gap: 20px;
+    }
 
-        /*회원검색*/
-        .search-box {
-            /* display: flex;
-            align-items: center; */
-            height: 120px;
-            margin-bottom: 20px;
-            margin: 50px 0 0 50px;
+    /*회원검색*/
+    .search-box-input {
+      padding: 5px;
+      width: 250px;
+      height: 40px;
+      background-color: #F4F4F4;
+      border-radius: 7px;
+      border-style: none;
+      border: 1px solid #7a7a7a;
+    }
 
-        }
+    /*검색 버튼*/
+    .search-box-button {
+      color: white;
+      cursor: pointer;
+      /* position: absolute; */
+      width: 100px;
+      height: 40px;
+      background-color: #F28C25;
+      border-radius: 5px;
+      border-style: none;
+    }
 
-        /*회원검색*/
-        #search-box-input {
-            padding: 5px;
-            width: 250px;
-            height: 40px;
-            background-color: #F4F4F4;
-            border-radius: 7px;
-            border-style: none;
-            border: 1px solid #7a7a7a;
-        }
+    .info-container {
+      width: 1600px;
+      /* 고정 너비 */
+      max-width: 100%;
+      min-width: 1000px;
+      background: white;
+      border-radius: 10px;
+      flex: 1;
+      padding: 30px 50px 50px 30px;
+      background-color: #F4F4F4;
+      margin: 20px 0 0 50px;
+      flex-shrink: 0;
+      /* 크기가 줄어들지 않도록 설정 */
+    }
 
-        /*검색 버튼*/
-        .search-box-button {
-            color: white;
-            cursor: pointer;
-            /* position: absolute; */
-            width: 100px;
-            height: 40px;
-            background-color: #F28C25;
-            border-radius: 5px;
-            border-style: none;
-        }
+    .info-box {
+      /* width: 100%; */
+      display: flex;
+      flex-wrap: wrap;
+      /* gap: 30px; */
+      align-items: center;
+      margin-bottom: 30px;
+    }
 
-        .user-body {
-            width: 1600px;
-            padding: 10px;
-            background-color: #F4F4F4;
-            border-radius: 10px;
-            border-style: none;
-            margin-bottom: 20px;
-            margin: 0 0 0 50px;
-        }
+    .info-item {
+      width: 150px;
+      /* 고정 너비 */
+      min-width: 100px;
+      /* 최소 너비 설정 */
+      height: 35px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f0f0f0;
+      text-align: center;
+      flex-shrink: 0;
+      /* 크기가 줄어들지 않도록 설정 */
+    }
 
-        .user-container {
-            /* background: white; */
-            padding: 20px;
-            border-radius: 8px;
-            width: 600px;
-            /* margin: auto; */
-        }
+    .info-item:nth-child(1) {
+      width: 10%;
+      margin: 10px 15px 0 0;
+    }
 
-        .user-container h2 {
-            text-align: center;
-        }
+    .info-item:nth-child(2) {
+      width: 10%;
+      margin: 10px 20px 0 5px;
+    }
 
-        .user-form-group {
-            margin-bottom: 10px;
-        }
+    .info-item:nth-child(3) {
+      width: 15%;
+      margin: 10px 20px 0 5px;
+    }
 
-        .user-form-group label {
-            display: block;
-            /* font-weight: bold; */
-            margin-bottom: 5px;
-        }
+    .info-item:nth-child(4) {
+      width: 10%;
+      margin: 10px 20px 0 5px;
+    }
 
-        .user-form-group input {
-            /* width: 300px; */
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            /* display: flex; */
-        }
+    .info-item:nth-child(5) {
+      width: 10%;
+      margin: 10px 20px 0 5px;
+    }
 
-        .www {
-            display: flex;
-        }
+    .info-item:nth-child(6) {
+      width: 37%;
+      margin: 10px 0 0 5px;
+    }
 
-        #username {
-            width: 300px;
-        }
+    .text-row {
+      display: flex;
+      /* align-items: center; */
+      flex-wrap: wrap;
+      /* margin-bottom: 10px; */
+    }
 
-        #username1 {
-            width: 180px;
-            margin: 0 0 0 20px;
-        }
+    /* .text-row div {
+        font-weight: bold;
+    } */
+
+    /* info-box의 nth-child 스타일을 동일하게 적용 */
+    .text-row div:nth-child(1) {
+      width: 10%;
+      margin: 0 15px 0 0;
+    }
+
+    .text-row div:nth-child(2) {
+      width: 10%;
+      margin: 0 20px 0 5px;
+    }
+
+    .text-row div:nth-child(3) {
+      width: 15%;
+      margin: 0 20px 0 5px;
+    }
+
+    .text-row div:nth-child(4) {
+      width: 10%;
+      margin: 0 20px 0 5px;
+    }
+
+    .text-row div:nth-child(5) {
+      width: 10%;
+      margin: 0 20px 0 5px;
+    }
+
+    .text-row div:nth-child(6) {
+      width: 30%;
+      margin: 0 20px 0 5px;
+    }
+    /* 팝업 모달부분 */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      border-radius: 10px;
+    }
+
+    .memberForm {
+      width: 100%; /* 폼 전체 너비 */
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background: #f9f9f9;
+    }
+
+    .memberForm label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .memberForm input {
+      width: 100%; /* 입력 필드를 폼 너비에 맞춤 */
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      box-sizing: border-box; /* 패딩 포함한 크기 계산 */
+    }
 
 
+    /* 모달 내용 */
+    .modal-content {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 500px;
+      height: 600px;
+      margin: 10% auto;
+      position: relative;
+    }
 
-        #email, #petname, #age, #breed, #weight, #medical {
-            width: 500px;
-        }
+    /* 닫기 버튼 */
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      cursor: pointer;
+    }
 
-        .user-button-group {
-            display: flex;
-            /* justify-content: space-between; */
-            margin: 0 0 0 340px;
-        }
+    #saveMember {
+      width: 100%; /* 버튼을 폼 너비에 맞춤 */
+      padding: 10px;
+      margin-top: 15px;
+      background-color: #F28C25;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
 
-        .user-button-group button {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            
-        }
+    #saveMember:hover {
+      background-color: #dc143c;
+    }
+  </style>
 
-        .user-save-button {
-            background-color: #F28C25;
-            color: rgb(255, 255, 255);
-
-        }
-
-        .user-cancel-button {
-            background-color: #747474;
-            color: rgb(255, 255, 255);
-            margin: 0 0 0 20px;
-            width: 60px;
-    
-        }
-
-        
-    </style>
-
-    <!-- 사이드바 하위메뉴 한 개씩 열리게하기 (메뉴가 열려있을때 다른 메뉴 열면 닫히게) -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {  // HTML 문서가 모두 로드된 후 실행되도록
-            const menuItems = document.querySelectorAll(".nav ul li > a");  // 모든 메뉴(1~6) 선택
-            menuItems.forEach(menu => {     // a 태그의 메뉴마다 이벤트 리스너 추가
-                menu.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    // 클릭할때마다 모든 메뉴의 active 클래스 제거 (기존에 열린 메뉴가 있다면 닫히게끔)
-                    document.querySelectorAll(".nav ul li").forEach(item => {
-                        item.classList.remove("active");
-                    });
-                    // 클릭한 메뉴의 부모 요소 li에 active 클래스 추가 (해당 메뉴 열기)
-                    this.parentElement.classList.toggle("active");
-                });
-            });
+  <!-- 사이드바 하위메뉴 한 개씩 열리게하기 (메뉴가 열려있을때 다른 메뉴 열면 닫히게) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {  // HTML 문서가 모두 로드된 후 실행되도록
+      const menuItems = document.querySelectorAll(".nav ul li > a");  // 모든 메뉴(1~6) 선택
+      menuItems.forEach(menu => {     // a 태그의 메뉴마다 이벤트 리스너 추가
+        menu.addEventListener("click", function (event) {
+          event.preventDefault();
+          // 클릭할때마다 모든 메뉴의 active 클래스 제거 (기존에 열린 메뉴가 있다면 닫히게끔)
+          document.querySelectorAll(".nav ul li").forEach(item => {
+            item.classList.remove("active");
+          });
+          // 클릭한 메뉴의 부모 요소 li에 active 클래스 추가 (해당 메뉴 열기)
+          this.parentElement.classList.toggle("active");
         });
-    </script>
+      });
+    });
+  </script>
 </head>
 
 <body>
-    <nav class="nav">
-        <ul>
-            <li class="nav-logo" style="margin: 0;"><img id="b1" src="/static/b1.png" alt="로고"></li>
-            <li class="menu-1">
-                <a href="#">회원 관리 </a>
-                <ul class="submenu">
-                    <li><a href="user_list.html">회원 관리</a></li>
-                </ul>
-            </li>
-            <li class="menu-2">
-                <a href="#">상품 관리</a>
-                <ul class="submenu">
-                    <li><a href="product-1.html">상품 등록</a></li>
-                    <li><a href="product_2.html">상품 조회</a></li>
-                </ul>
-            </li>
-            <li class="menu-3">
-                <a href="#">판매 관리</a>
-                <ul class="submenu">
-                    <li><a href="order-1.html">주문 조회</a></li>
-                    <li><a href="order-2.html">반품 관리</a></li>
-                    <li><a href="order-3.html">교환 관리</a></li>
-                </ul>
-            </li>
-            <li class="menu-4">
-                <a href="#">배송 관리</a>
-                <ul class="submenu">
-                    <li><a href="delivery-1.html">주문 조회</a></li>
-                    <li><a href="delivery-2.html">주문 현황</a></li>
-                </ul>
-            </li>
-            <li class="menu-5">
-                <a href="#">리뷰 관리</a>
-                <ul class="submenu">
-                    <li><a href="notice_5.html">리뷰 목록</a></li>
-                </ul>
-            </li>
-            <li class="menu-6">
-                <a href="#">공지사항 관리</a>
-                <ul class="submenu">
-                    <li><a href="notice_5.html">공지사항</a></li>
-                    <li><a href="faq_5.html">자주 묻는 질문</a></li>
-                </ul>
-            </li>
-            <div class="bottom-logo"><img id="b2" src="/static/b2.png" alt="로고"></div>
-        </ul>
-    </nav>
+<nav class="nav">
+  <ul>
+    <li class="nav-logo" style="margin: 0;"><img id="b1" src="/static/b1.png" alt="로고"></li>
+    <li class="menu-1">
+      <a href="#">회원 관리 </a>
+      <ul class="submenu">
+        <li><a href="user_list.html">회원 관리</a></li>
+      </ul>
+    </li>
+    <li class="menu-2">
+      <a href="#">상품 관리</a>
+      <ul class="submenu">
+        <li><a href="product-1.html">상품 등록</a></li>
+        <li><a href="product_2.html">상품 조회</a></li>
+      </ul>
+    </li>
+    <li class="menu-3">
+      <a href="#">판매 관리</a>
+      <ul class="submenu">
+        <li><a href="order-1.html">주문 조회</a></li>
+        <li><a href="order-2.html">반품 관리</a></li>
+        <li><a href="order-3.html">교환 관리</a></li>
+      </ul>
+    </li>
+    <li class="menu-4">
+      <a href="#">배송 관리</a>
+      <ul class="submenu">
+        <li><a href="delivery-1.html">주문 조회</a></li>
+        <li><a href="delivery-2.html">주문 현황</a></li>
+      </ul>
+    </li>
+    <li class="menu-5">
+      <a href="#">리뷰 관리</a>
+      <ul class="submenu">
+        <li><a href="notice_5.html">리뷰 목록</a></li>
+      </ul>
+    </li>
+    <li class="menu-6">
+      <a href="#">공지사항 관리</a>
+      <ul class="submenu">
+        <li><a href="notice_5.html">공지사항</a></li>
+        <li><a href="faq_5.html">자주 묻는 질문</a></li>
+      </ul>
+    </li>
+    <div class="bottom-logo"><img id="b2" src="/static/b2.png" alt="로고"></div>
+  </ul>
+</nav>
 
-    <div class="container">
-        <header class="header">화원 관리</header>
-        <div class="container1">
-            <div class="search-box">
-                <div class="search-box-div">
-                    <input id="search-box-input" type="text" placeholder="이름">
-                    <input id="search-box-input" type="text" placeholder="전화번호">
-                    <input id="search-box-input" type="text" placeholder="등급">
-                    <button class="search-box-button">검색</button>
-                </div>
-            </div>
-        </div>
-        <div class="user-body">
-            <div class="user-container">
-                <form> 
-                    <div class="www">
-                        <div class="user-form-group" >
-                            <label for="username">이름</label>
-                            <input type="text" id="username" name="username" required>
-                        </div>
-                        <div class="user-form-group">
-                            <label for="username1" style="margin: 0 0 5px 20px">등급</label>
-                            <input type="text" id="username1" name="username1" required>
-                        </div>
-                    </div>
-                    <div class="user-form-group">
-                        <label for="email">이메일</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="user-form-group">
-                        <label for="petname">반려동물 이름</label>
-                        <input type="text" id="petname" name="petname" required>
-                    </div>
-                    <div class="user-form-group">
-                        <label for="age">반려동물 나이</label>
-                        <input type="number" id="age" name="age" required>
-                    </div>
-                    <div class="user-form-group">
-                        <label for="breed">반려동물 품종</label>
-                        <input type="text" id="breed" name="breed" required>
-                    </div>
-                    <div class="user-form-group">
-                        <label for="weight">반려동물 몸무게 (kg)</label>
-                        <input type="number" id="weight" name="weight" required>
-                    </div>
-                    <div class="user-form-group">
-                        <label for="medical">병력</label>
-                        <input type="text" id="medical" name="medical">
-                    </div>
-                    <div class="user-button-group">
-                        <button type="submit" class="user-save-button">수정하기</button>
-                        <button type="button" class="user-cancel-button" onclick="window.location.href='/'">취소</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
+<div class="container">
+  <header class="header">화원 관리</header>
+  <div class="container1">
+    <div class="search-box">
+      <div class="search-box-div">
+        <input class="search-box-input" type="text" placeholder="이름">
+        <input class="search-box-input" type="text" placeholder="전화번호">
+        <input class="search-box-input" type="text" placeholder="등급">
+        <button class="search-box-button">검색</button>
+      </div>
     </div>
+  </div>
+  <table>
+    <tbody>
+    <tr th:each="member : ${members}">
+      <td th:text="${member.userCode}"></td>
+      <td th:text="${member.userName}"></td>
+      <td th:text="${member.userPhoneNumber}"></td>
+      <td th:text="${member.animalBreed}"></td>
+      <td th:text="${member.userMembershipLevel}"></td>
+      <td th:text="${member.userAddress}"></td>
+    </tr>
+    </tbody>
+  </table>
+  <div class="info-container">
+    <div class="text-row">
+      <div>코드</div>
+      <div>이름</div>
+      <div>전화번호</div>
+      <div>반려동물</div>
+      <div>등급</div>
+      <div>주소</div>
+    </div>
+    <div class="info-box">
+      <div class="info-item"></div>
+      <div class="info-item"></div>
+      <div class="info-item"></div>
+      <div class="info-item"></div>
+      <div class="info-item"></div>
+      <div class="info-item"></div>
+    </div>
+  </div>
+  <div id="memberModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>회원 정보 수정</h2>
+      <form class="memberForm">
+        <label>코드:</label>
+        <input type="text" id="memberId" disabled><br>
+        <label>이름:</label>
+        <input type="text" id="memberName"><br>
+        <label>전화번호:</label>
+        <input type="text" id="memberPhone"><br>
+        <label>반려동물:</label>
+        <input type="text" id="memberPet"><br>
+        <label>등급:</label>
+        <input type="text" id="memberGrade"><br>
+        <label>주소:</label>
+        <input type="text" id="memberAddress"><br>
+        <button type="button" id="saveMember">저장</button>
+      </form>
+    </div>
+  </div>
+  <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
+</div>
+
+<script>
+  // 회원 목록을 가져와서 화면에 렌더링하는 함수
+  async function fetchMembers() {
+    try {
+      const response = await fetch('/api/members');  // REST API 호출
+      const members = await response.json();         // JSON 데이터로 변환
+      renderMembers(members);                        // 화면에 회원 목록 렌더링
+    } catch (error) {
+      console.error("Failed to fetch members", error);
+    }
+  }
+
+  // 이름, 전화번호, 등급으로 필터링된 회원 목록을 화면에 렌더링하는 함수
+  async function searchMembersByName() {
+    const searchInput = document.querySelectorAll('.search-box-input'); // 이름, 전화번호, 등급 입력 필드 값 가져오기
+    const searchName = searchInput[0].value;
+    const searchPhone = searchInput[1].value;
+    const searchGrade = searchInput[2].value;
+
+    try {
+      const response = await fetch
+      (`/api/members/search?name=${searchName}&phone=${searchPhone}&grade=${searchGrade}`);
+      const filteredMembers = await response.json();
+      renderMembers(filteredMembers);  // 검색된 결과 렌더링
+    } catch (error) {
+      console.error("Failed to search members", error);
+    }
+  }
+
+  // 화면에 회원 목록 렌더링
+  function renderMembers(members) {
+    const infoContainer = document.querySelector(".info-container");
+    infoContainer.innerHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>코드</th>
+                        <th>이름</th>
+                        <th>전화번호</th>
+                        <th>반려동물</th>
+                        <th>등급</th>
+                        <th>주소</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+    // 필터링된 회원 목록 렌더링
+    members.forEach(member => {
+      infoContainer.innerHTML += `
+                <tr class="info-box">
+                    <td>${member.userCode}</td>
+                    <td>${member.userName}</td>
+                    <td>${member.userPhoneNumber}</td>
+                    <td>${member.animalBreed}</td>
+                    <td>${member.userMembershipLevel}</td>
+                    <td>${member.userAddress}</td>
+                </tr>
+            `;
+    });
+
+    infoContainer.innerHTML += `</tbody></table>`;
+  }
+
+  // 모달 창 열기
+  function openModal(member) {
+    document.getElementById("memberId").value = member.userCode;
+    document.getElementById("memberName").value = member.userName;
+    document.getElementById("memberPhone").value = member.userPhoneNumber;
+    document.getElementById("memberPet").value = member.animalBreed;
+    document.getElementById("memberGrade").value = member.userMembershipLevel;
+    document.getElementById("memberAddress").value = member.userAddress;
+
+    document.getElementById("memberModal").style.display = "block";
+  }
+
+  // 회원 정보 저장 및 수정
+  document.getElementById("saveMember").addEventListener("click", async function () {
+    const updatedMember = {
+      id: document.getElementById("memberId").value,
+      name: document.getElementById("memberName").value,
+      phone: document.getElementById("memberPhone").value,
+      pet: document.getElementById("memberPet").value,
+      grade: document.getElementById("memberGrade").value,
+      address: document.getElementById("memberAddress").value
+    };
+
+    try {
+      const response = await fetch(`/api/members/${updatedMember.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedMember)
+      });
+
+      if (response.ok) {
+        alert("회원 정보가 수정되었습니다.");
+        document.getElementById("memberModal").style.display = "none";
+        fetchMembers(); // 수정 후 새로 회원 목록 가져오기
+      } else {
+        alert("회원 정보 수정에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("Failed to save member", error);
+    }
+  });
+
+  // 검색 버튼 클릭 시 검색 실행
+  const searchButton = document.querySelector(".search-box-button");
+  searchButton.addEventListener("click", searchMembersByName);
+
+  // 모달 창 닫기
+  document.querySelector(".close").addEventListener("click", function () {
+    document.getElementById("memberModal").style.display = "none";
+  });
+
+  // 페이지 로드 시 회원 목록 가져오기
+  window.addEventListener("DOMContentLoaded", fetchMembers);
+</script>
+
+
 </body>
 
 </html>
