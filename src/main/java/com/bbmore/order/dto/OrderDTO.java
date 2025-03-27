@@ -5,13 +5,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Getter
 @Setter
 @ToString
 public class OrderDTO {
     private int orderCode;
     private int orderTotalPrice;
-    private String orderDate;
+    private LocalDate orderDate;
     private String orderStatus;
     private String recipientName;
     private String recipientAddress;

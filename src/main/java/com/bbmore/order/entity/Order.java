@@ -4,6 +4,8 @@ package com.bbmore.order.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "tbl_order")
 @Getter
@@ -15,7 +17,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderCode;
     private int orderTotalPrice;
-    private String orderDate;
+    private LocalDate orderDate;
     private String orderStatus;
     private String recipientName;
     private String recipientAddress;
@@ -23,11 +25,8 @@ public class Order {
     private String orderDeliveryRequest;
     private String productName;
     private int productQuantity;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userCode")
-    private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orderDetailCode") // OrderDetail의 orderDetailCode와 연결
-    private OrderDetail orderDetail;
+    private int userCode;
+    private int orderDetailCode;
+
 }

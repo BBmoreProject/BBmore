@@ -1,22 +1,13 @@
-package com.bbmore.order.entity;
+package com.bbmore.order.dto;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@Table(name = "tbl_member")
 @Getter
+@Setter
 @ToString
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-
-public class Member {
-    @Id
+public class MemberDTO {
     private int userCode;
     private String userId;
     private String userPassword;
@@ -25,8 +16,9 @@ public class Member {
     private String userMembershipLevel;
     private String userPhoneNumber;
     private String userEmail;
-    private Boolean userIsdeleted;
+    private int userIsDeleted;
     private String userAccessLevel;
     private int membershipCode;
     private int petCode;
+
 }

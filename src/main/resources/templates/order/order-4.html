@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=devioce-width, initial-scale=1.0" />
+    <title>교환 관리</title>
+
+<body>
+<h1> 메뉴 목록 </h1>
+<table>
+    <tr th:each="order : ${orderList}">
+        <td th:text="${order.orderCode}"></td>
+        <td th:text="${order.orderTotalPrice}"></td>
+        <td th:text="${order.orderDate}"></td>
+        <td th:text="${order.orderStatus}"></td>
+        <td th:text="${order.recipientName}"></td>
+        <td th:text="${order.recipientAddress}"></td>
+        <td th:text="${order.recipientPhone}"></td>
+        <td th:text="${order.orderDeliveryRequest}"></td>
+        <td th:text="${order.productName}"></td>
+        <td th:text="${order.productQuantity}"></td>
+        <td th:text="${order.userCode}"></td>
+        <td th:text="${order.orderDetailCode}"></td>
+    </tr>
+</table>
+
+<div id="paging">
+    <!-- 맨 앞으로 이동 -->
+    <button th:onclick="|location.href='@{/order/order-4(page=${paging.startPage})}'|">
+        <<
+    </button>
+    <!-- 이전 페이지로 이동 -->
+    <button th:onclick="|location.href='@{/order/order-4(page=${paging.currentPage - 1})}'|"
+            th:disabled="${orderList.first}">
+        <
+    </button>
+    <!-- 숫자 버튼 -->
+    <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+        <button th:onclick="|location.href='@{/order/order-4(page=${page})}'|"
+                th:text="${page}"
+                th:disabled="${paging.currentPage eq page}">
+        </button>
+    </th:block>
+    <!-- 다음 페이지로 이동 -->
+    <button th:onclick="|location.href='@{/order/order-4(page=${paging.currentPage + 1})}'|"
+            th:disabled="${orderList.last}">
+        >
+    </button>
+    <!-- 맨 끝으로 이동 -->
+    <button th:onclick="|location.href='@{/order/order-4(page=${paging.endPage})}'|">
+        >>
+    </button>
+</div>
+
+
+</body>
+</html>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=devioce-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=devioce-width, initial-scale=1.0"/>
     <title>판매관리</title>
 
     <style>
@@ -79,15 +79,16 @@
             outline: none;
             width: 180px;
         }
+
         /* 포커스 효과 */
         input[type="date"]:focus {
             border-color: #007bff;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
+
         /* 캘린더 아이콘 커스텀 */
         input[type="date"]::-webkit-calendar-picker-indicator {
-            background: url("https://cdn-icons-png.flaticon.com/512/747/747310.png")
-            no-repeat center;
+            background: url("https://cdn-icons-png.flaticon.com/512/747/747310.png") no-repeat center;
             background-size: contain;
             cursor: pointer;
             width: 20px;
@@ -212,7 +213,7 @@
             box-sizing: border-box;
             position: relative;
             width: 1500px;
-            height: 150px;
+            height: 116px;
             top: 3%;
             background: #f4f4f4;
             border: 1px solid #edf0f5;
@@ -250,14 +251,17 @@
             width: 75px;
             height: 35px;
         }
+
         #search-day2 {
             width: 75px;
             height: 35px;
         }
+
         #search-day3 {
             width: 75px;
             height: 35px;
         }
+
         #search-day4 {
             width: 75px;
             height: 35px;
@@ -300,10 +304,11 @@
             display: flex;
             box-sizing: border-box;
             position: relative;
-            width: 1500px;
-            height: 450px;
-            top: 15%;
-            background: #f4f4f4;
+            width: 1474px;
+            height: 511px;
+            top: -3%;
+            right: -1%;
+            background: #ffffff;
             border: 1px solid #edf0f5;
         }
 
@@ -320,35 +325,44 @@
             cursor: pointer;
         }
 
-        .all-orderbox {
-            background: #fff5e2;
-            position: relative;
-            width: 1472px;
-            height: 55px;
-            top: -3%;
-            left: 1%;
-        }
+
 
         .all-order {
             display: flex;
             box-sizing: border-box;
             position: relative;
             width: 1474px;
-            height: 415px;
+            height: 509px;
             top: -3%;
             right: -1%;
             background: #ffffff;
             border: 1px solid #edf0f5;
         }
 
-        .all-order-details {
+        #paging {
             display: flex;
             position: absolute;
-            top: 24%;
-            left: 2%;
-            flex-direction: row;
-            gap: 120px;
+            top: 101%;
+            left: 44%;
         }
+
+        .all-order-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center; /* 가운데 정렬 */
+        }
+
+        .all-order-table th, .all-order-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        /* 테이블 헤더 스타일 */
+        .all-order-table thead {
+            background-color: #fff5e2;
+            font-weight: bold;
+        }
+
 
         /* 사이드바 하단 로고 틀 */
         .bottom-logo {
@@ -402,7 +416,7 @@
 <nav class="nav">
     <ul>
         <li class="nav-logo" style="margin: 0">
-            <img id="b1" src="/img/black-logo.png" alt="로고" />
+            <img id="b1" src="/img/black-logo.png" alt="로고"/>
         </li>
         <li class="menu-1">
             <a href="#">회원 관리 </a>
@@ -446,7 +460,7 @@
             </ul>
         </li>
         <div class="bottom-logo">
-            <img id="b2" src="/img/sidebar-bottomlogo.png" alt="로고" />
+            <img id="b2" src="/img/sidebar-bottomlogo.png" alt="로고"/>
         </div>
     </ul>
 </nav>
@@ -467,7 +481,7 @@
             </div>
 
             <div class="calendar">
-                <input type="date" /> &nbsp; ~ &nbsp; <input type="date" />
+                <input type="date"/> &nbsp; ~ &nbsp; <input type="date"/>
             </div>
 
             <div class="search-write2">
@@ -482,15 +496,13 @@
                 <div class="dropdown-menu">
                     <div onclick="selectOption(this)">전체</div>
                     <div onclick="selectOption(this)">구매자명</div>
-                    <div onclick="selectOption(this)">구매자연락처</div>
                     <div onclick="selectOption(this)">주문번호</div>
-                    <div onclick="selectOption(this)">상품주문번호</div>
-                    <div onclick="selectOption(this)">송장번호</div>
+
                 </div>
             </div>
 
             <div>
-                <input class="searchbox-text" type="text" placeholder="제목 입력" />
+                <input class="searchbox-text" type="text" placeholder="제목 입력"/>
             </div>
 
             <div>
@@ -499,23 +511,71 @@
         </div>
 
 
-
         <div class="order-box">
             <div class="order-searchtext"><p>주문조회</p></div>
-            <div class="all-orderbox">
-                <div class="all-order-details">
-                    <p>주문고유번호</p>
-                    <p>제품명</p>
-                    <p>총결제금액</p>
-                    <p>주문상태</p>
-                    <p>받는분성함</p>
-                    <p>받는분전화번호</p>
-                    <p>받는분주소</p>
-                    <p></p>
-                </div>
+
+            <div class="all-order">
+                <table class="all-order-table">
+                    <!-- 테이블 헤더 -->
+                    <thead>
+                    <tr>
+                        <th>주문고유번호</th>
+                        <th>주문날짜</th>
+                        <th>제품명</th>
+                        <th>총결제금액</th>
+                        <th>주문상태</th>
+                        <th>받는분 성함</th>
+                        <th>받는분 전화번호</th>
+                        <th>받는분 주소</th>
+                        <th>요청사항</th>
+                    </tr>
+                    </thead>
+                    <!-- 테이블 본문 -->
+                    <tbody>
+                    <tr th:each="order : ${orderList}">
+                        <td th:text="${order.orderCode}"></td>
+                        <td th:text="${order.orderDate}"></td>
+                        <td th:text="${order.productName}"></td>
+                        <td th:text="${order.orderTotalPrice}"></td>
+                        <td th:text="${order.orderStatus}"></td>
+                        <td th:text="${order.recipientName}"></td>
+                        <td th:text="${order.recipientPhone}"></td>
+                        <td th:text="${order.recipientAddress}"></td>
+                        <td th:text="${order.orderDeliveryRequest}"></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="all-order"></div>
+
+            <div id="paging">
+                <!-- 맨 앞으로 이동 -->
+                <button th:onclick="|location.href='@{/order/order-1(page=${paging.startPage})}'|">
+                    <<
+                </button>
+                <!-- 이전 페이지로 이동 -->
+                <button th:onclick="|location.href='@{/order/order-1(page=${paging.currentPage - 1})}'|"
+                        th:disabled="${orderList.first}">
+                    <
+                </button>
+                <!-- 숫자 버튼 -->
+                <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+                    <button th:onclick="|location.href='@{/order/order-1(page=${page})}'|"
+                            th:text="${page}"
+                            th:disabled="${paging.currentPage eq page}">
+                    </button>
+                </th:block>
+                <!-- 다음 페이지로 이동 -->
+                <button th:onclick="|location.href='@{/order/order-1(page=${paging.currentPage + 1})}'|"
+                        th:disabled="${orderList.last}">
+                    >
+                </button>
+                <!-- 맨 끝으로 이동 -->
+                <button th:onclick="|location.href='@{/order/order-1(page=${paging.endPage})}'|">
+                    >>
+                </button>
+            </div>
         </div>
+
     </main>
 
     <footer class="footer">
@@ -556,5 +616,7 @@
         }
     });
 </script>
+
+
 </body>
 </html>

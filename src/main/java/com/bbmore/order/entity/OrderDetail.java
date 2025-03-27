@@ -20,6 +20,7 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderDetailCode;
     private int orderDetailPrice;
-    @OneToMany(mappedBy = "orderDetail")
-    private List<Order> orderList;
+    private int orderDetailQuantity;
+    private int orderCode;
+
 }
