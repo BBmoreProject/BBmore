@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
-
+<!--이전글,다음글 적용 완료. 수정,삭제 버튼 적용전-->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -424,16 +424,19 @@
 
 <div class="container">
   <header class="header">공지사항 관리</header>
+
   <main class="main">
     <div class="search-box"> <!--검색창-->
       <input type="text" placeholder="제목 입력" name="noticeTitle">
       <button class="search-button" type="submit">조회</button>
     </div>
+
     <!--"• 공지사항 글쓰기" + 글쓰기 틀-->
     <div class="write-box">
       <div class="menu-detail">
         <p>• 공지사항</p>
       </div>
+
 
       <!-- 공지사항 작성 큰 틀 -->
       <div class="notice-box">
@@ -464,7 +467,6 @@
           </div>
         </div>
 
-
         <div class="next-title-box2">
           <div class="next-box2">
             <div class="next">다음글</div>
@@ -476,18 +478,11 @@
               <a href="#" th:href="@{'/notice/notice-view/' + ${nextNotice.noticeCode}}" th:text="${nextNotice.noticeTitle}">다음글 제목</a>
             </button>
           </div>
-
-<!--          <div class="next-content-box2">-->
-<!--            <button class="next-content2" onclick="location.href='' ">다음글 제목 불러오기</button>-->
-<!--          </div>-->
         </div>
-
       </div> <!--notice-box끝-->
-
     </div> <!--"• 공지사항 글쓰기" + 글쓰기 틀 끝-->
   </main>
   <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
 </div>
 </body>
-
 </html>
