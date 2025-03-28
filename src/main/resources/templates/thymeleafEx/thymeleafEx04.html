@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>상품 리스트를 출력할거야!!</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>상품 번호</th>
+        <th>상품 이름</th>
+        <th>상품 상세</th>
+        <th>상품 등록일</th>
+        <th>상품 가격</th>
+    </tr>
+    </thead>
+    <tbody>
+
+<!-- status.odd 를 쓸 수도 있고 (!)부정 연산자는 못 씀, unless , not 사용 -->
+
+    <tr th:each="product, status: ${productDTOList}">
+        <td th:if ="${status.even}" th:text="짝짝이"></td>
+        <td th:unless ="${status.even}" th:text="홀홀이"></td>
+        <td th:text="${product.productName}">상품 이름</td>
+        <td th:text="${product.productDetail}">상품 상세</td>
+        <td th:text="${product.regTime}">상품 등록일</td>
+        <td th:text="${product.price}">상품 가격</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

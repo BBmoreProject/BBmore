@@ -1,0 +1,52 @@
+<div th:fragment="header">
+  <!-- 상단 네비게이션 메뉴 -->
+  <div class="bg-warning">
+    <div class="container">
+      <ul class="nav justify-content-end small">
+        <li class="nav-item"><a class="nav-link text-white" href="/admin/item/new">상품 등록</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="/admin/items">상품 관리</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="/cart">장바구니</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="/orders">구매이력</a></li>
+        <li class="nav-item" sec:authorize="isAnonymous()">
+          <a class="nav-link text-white" href="/members/login">로그인</a>
+        </li>
+        <li class="nav-item" sec:authorize="isAuthenticated()">
+          <a class="nav-link text-white" href="/members/logout">로그아웃</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- 헤더 컨테이너 -->
+  <div class="bg-white shadow-sm py-3">
+    <div class="container">
+      <div class="row align-items-center">
+        <!-- 로고 -->
+        <div class="col-md-4 d-flex align-items-center mb-3 mb-md-0">
+          <div class="d-flex align-items-center">
+            <!-- 원형 로고 부분 -->
+            <div class="bg-light rounded-circle p-2 me-2">
+              <img src="/images/bbmore-logo.png" alt="BBMORE 로고" th:src="@{/images/bbmore-logo.png}"
+                   class="img-fluid" style="height: 30px; width: 30px; object-fit: contain;"
+                   onerror="this.style.display='none'">
+              <span class="fw-bold text-muted" style="display: none;">BB</span>
+            </div>
+            <span class="fw-bold fs-5">BBMORE</span>
+          </div>
+        </div>
+
+        <!-- 검색창 -->
+        <div class="col-md-8 mb-3 mb-md-0">
+          <form class="d-flex" th:action="@{/}" method="get">
+            <div class="input-group">
+              <input name="searchQuery" class="form-control bg-light border-0" type="search"
+                     placeholder="검색어를 입력하세요" aria-label="Search">
+              <button class="btn btn-warning text-white" type="submit">검색</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

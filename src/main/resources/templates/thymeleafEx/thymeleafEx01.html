@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- th:text 타임리프의 속성으로
+서버에서 처리될 때
+HTML 요소의 텍스트 내용을 동적(data)으로 생성한다.
+만약 data 변수 값이 Welcome 이면
+최종 렌더링 결과는
+<p>Welcome</p>를 예상 할 수 있다
+
+th가 없으면? 템플릿 엔진이 처리하지 않고 원문 그대로 출력-->
+
+    <p th:text="${data}">Hello Thymeleaf!</p>
+</body>
+</html>

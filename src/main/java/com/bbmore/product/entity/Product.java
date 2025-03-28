@@ -37,7 +37,7 @@ public class Product {
     private ProductSellStatus productSellStatus;
 
     ///  생성시간, 수정시간
-    private LocalDateTime productCreateTime;
+    private LocalDateTime productRegTime;
 
     private LocalDateTime productUpdateTime;
 

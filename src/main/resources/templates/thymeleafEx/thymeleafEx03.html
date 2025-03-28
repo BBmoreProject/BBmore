@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<h1>상품 리스트를 출력할거야!!</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+        <th>상품 번호</th>
+        <th>상품 이름</th>
+        <th>상품 상세</th>
+        <th>상품 등록일</th>
+        <th>상품 가격</th>
+    </tr>
+  </thead>
+  <tbody>
+<!--  얜 foreach 문이다. thymeleaf는 반복문도 가능하다!
+status 변수를 추가했다.
+1. product는 여전히 반복 중 아이템을 가리킨다
+2. status의 역할? 인덱스와 같다. 반복 상태의 정보를 담았다.
+반복에 대한 메타데이터를 제공하는데, 인덱스, 카운트 등을 처리해준다.-->
+
+    <tr th:each="product, status: ${productDTOList}">
+        <td th:text="${status.index}">상품 번호</td>
+        <td th:text="${product.productName}">상품 이름</td>
+        <td th:text="${product.productDetail}">상품 상세</td>
+        <td th:text="${product.regTime}">상품 등록일</td>
+        <td th:text="${product.price}">상품 가격</td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

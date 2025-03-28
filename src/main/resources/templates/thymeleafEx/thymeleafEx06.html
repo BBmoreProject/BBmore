@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>Thymeleaf 링크를 처리할거야!!!@!@!@</h1>
+    <div>
+<!--        그냥 a태그를 쓰면
+<a href="/thymeleaf/ex01">링크</a>
+배포환경에서 절대경로가 빠져서 에러날 수 있는데
+th를 쓰면 올바른 경로를 자동으로 생성해줘서 컨텍스트 일일히 매칭 안시켜도 댐
+
+@{/경로} 형식으로 작성된 URL을 발견하면
+현재 애플리케이션의 컨텍스트 경로를 확인함
+기본 URL 앞에 해당 컨텍스트 경로를 자동으로 추가함
+
+스프링에선 기본 루트가 /임
+명시적으로 설정 가능하긴 해
+만약
+server.servlet.context-path=/gimochi로 하면
+모든 경로는 /gimochi로 시작함
+http://localhost:8080/gimochi/
+겟매핑을 gimchi로 하면
+http://localhost:8080/gimochi/gimchi가 되는거임 ㅇㅇ
+-->
+        <a th:href="@{/thymeleaf/ex01}">1페이지로 돌아가겠다.</a>
+    </div>
+
+    <div>
+        <a th:href="@{https://www.thymeleaf.org/}">Thymeleaf 공식 홈페이지로 가겠다.</a>
+    </div>
+<!-- 이건 @{/thymeleaf/ex07은 URL 생성하는 표현식이란 거임
+괄호 안에 뭐냐? URL 파라미터를 설정하고 있다 이말이야
+그러면 클릭하면 무슨 현상이 발생하냐
+URL(주소)와 함께 파라미터라는 택배를 전달해주는거임 ㅇㅇ 이말이 틀림?-->
+    <div>
+        <a th:href="@{/thymeleaf/ex07(parakilometer1='파라미터의 데이터1이 전달되었다',
+
+        parakilometer2='파라미터의 데이터2가 전달되었다')}">나는 thymeleaf의 파라미터를 전달할 수 있다!</a>
+    </div>
+
+
+
+</body>
+</html>

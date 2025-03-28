@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- 이건 강력한 템플릿 엔진이 맞다.. -->
+    <h1>상품 데이터를 출력할거야!!</h1>
+    <div>
+        상품의 이름 : <span th:text="${ModelInProductDTO.productName}"></span><br>
+    </div>
+    <div>
+        상품의 상세이름 : <span th:text="${ModelInProductDTO.productDetail}"></span><br>
+    </div>
+    <div>
+        상품의 등록일 : <span th:text="${ModelInProductDTO.regTime}"></span><br>
+    </div>
+    <div>
+        상품의 가격 : <span th:text="${ModelInProductDTO.price}"></span><br>
+    </div>
+
+</body>
+</html>

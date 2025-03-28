@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>상품 리스트를 출력할거야!!</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>상품 번호</th>
+        <th>상품 이름</th>
+        <th>상품 상세</th>
+        <th>상품 등록일</th>
+        <th>상품 가격</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <!-- 이런 식으로 switch문을 사용해 boolean 값을 사용할 수도 있다
+    중요한 것은 switch문 안에 들어가는 것 !-->
+
+    <tr th:each="product, status: ${productDTOList}">
+        <td th:switch="${status.even}">
+            <span th:case=true>짝수</span>
+            <span th:case=false>홀수</span>
+        </td>
+
+        <td th:text="${product.productName}">상품 이름</td>
+        <td th:text="${product.productDetail}">상품 상세</td>
+        <td th:text="${product.regTime}">상품 등록일</td>
+        <td th:text="${product.price}">상품 가격</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
