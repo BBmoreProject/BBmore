@@ -71,16 +71,15 @@ public class NoticeService {
     }
 
 
-
     /* 수정(엔티티 객체의 필드 값 변경) */
-    @Transactional
-    public void modifyNotice(NoticeDTO noticeDTO) {
-        Notice foundNotice = adminNoticeRepository.findById(noticeDTO.getNoticeCode()).orElseThrow(IllegalArgumentException::new);
-
-        /* setter 사용 지양 , 기능에 맞는 메소드를 정의해서 사용할 것 */
-        foundNotice.modifyNoticeTitle(noticeDTO.getNoticeTitle());
-        foundNotice.modifyNoticeContent(noticeDTO.getNoticeContent());
-    }
+//    @Transactional
+//    public void modifyNotice(NoticeDTO noticeDTO) {
+//        Notice foundNotice = adminNoticeRepository.findById(noticeDTO.getNoticeCode()).orElseThrow(IllegalArgumentException::new);
+//
+//        /* setter 사용 지양 , 기능에 맞는 메소드를 정의해서 사용할 것 */
+//        foundNotice.modifyNoticeTitle(noticeDTO.getNoticeTitle());
+//        foundNotice.modifyNoticeContent(noticeDTO.getNoticeContent());
+//    }
 
     /* deleteById */
     @Transactional

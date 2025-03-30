@@ -94,16 +94,32 @@ public class AdminNoticeController {
     noticeService.registNotice(noticeDTO);
     return "redirect:/notice/notice-list_ver1";
   }
-
+  
   // 공지사항 수정
-  @GetMapping("/notice-write_ver1{noticeCode}")
-  public void modifyPage(){}
 
-  @PostMapping("/notice-write_ver1{noticeCode}")
-  public String modifyNotice(@ModelAttribute NoticeDTO noticeDTO){
-    noticeService.modifyNotice(noticeDTO);
-    return "redirect:/notice/notice-list_ver1" + noticeDTO.getNoticeCode();
-  }
+  @GetMapping("/noticemodify/{id}")
+    public String noticeModify(@PathVariable("id") int noticeCode, Model model) {
+
+    model.addAttribute("notice", noticeService.findNoticeByNoticeCode(noticeCode));
+
+    return "notice/noticemodify";     // 글쓰기 html과 동일
+    }
+  
+    // 공지사항 수정 진행
+    @PostMapping("/update/{id}")
+  public String noticeUpdate(@PathVariable("id") int noticeCode, NoticeDTO noticedto) {
+
+    NoticeDTO noticeDTO1 = noticeService.findNoticeByNoticeCode(noticeCode); // 기존내용 찾기
+    noticeDTO1.setNoticeTitle(noticedto.getNoticeTitle());  // 덮어씌우기
+    noticeDTO1.setNoticeContent(noticedto.getNoticeContent());
+
+    noticeService.registNotice(noticeDTO1);
+    
+    return "redirect:/notice/notice-list_ver1";
+    }
+
+
+
 
 }
 

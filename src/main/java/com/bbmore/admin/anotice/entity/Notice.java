@@ -35,21 +35,23 @@ public class Notice {
         }
     }
 
+    // 공지사항 제목 수정
+    public void modifyNoticeTitle(String noticeTitle) {
+        this.noticeTitle = noticeTitle;
+    }
+
+    // 공지사항 내용 수정
+    public void modifyNoticeContent(String noticeContent) {
+        this.noticeContent = noticeContent;
+    }
 
 //    조회수
+
     @Column(nullable = false)
     private int noticeView;
 
     @Column(nullable = false, length = 255)
     private String noticeContent;
-
-    public void modifyNoticeTitle(String noticeTitle) {
-        this.noticeTitle = noticeTitle;
-    }
-
-    public void modifyNoticeContent(String noticeContent) {
-        this.noticeContent = noticeContent;
-    }
 
 
 
