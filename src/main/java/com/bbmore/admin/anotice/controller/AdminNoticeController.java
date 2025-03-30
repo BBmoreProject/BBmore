@@ -67,7 +67,7 @@ public class AdminNoticeController {
     Optional<Notice> prevNotice = noticeService.getPrevNotice(noticeCode);
     Optional<Notice> nextNotice = noticeService.getNextNotice(noticeCode);
 
-    // 조회수 증가
+    // 조회수 증가(같은 트랜젝션 안에서 조회수 증가되도록 @Transactional 사용)
     noticeService.increaseViewCount(noticeCode);
     
     // 조회된 공지사항을 모델에 추가
