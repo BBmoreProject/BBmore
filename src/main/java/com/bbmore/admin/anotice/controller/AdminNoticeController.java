@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,16 +60,21 @@ public class AdminNoticeController {
 
   // 공지사항 상세보기
   @GetMapping("/notice-view/{noticeCode}")
+  @Transactional
   public String viewNotice(@PathVariable Integer noticeCode, Model model) {
     // noticeCode로 공지사항 조회
     NoticeDTO noticeDTO = noticeService.findNoticeByNoticeCode(noticeCode);
     Optional<Notice> prevNotice = noticeService.getPrevNotice(noticeCode);
     Optional<Notice> nextNotice = noticeService.getNextNotice(noticeCode);
 
+    // 조회수 증가
+    noticeService.increaseViewCount(noticeCode);
+    
     // 조회된 공지사항을 모델에 추가
     model.addAttribute("notice", noticeDTO);
     prevNotice.ifPresent(n -> model.addAttribute("prevNotice", n)); // 이전 글 추가
     nextNotice.ifPresent(n -> model.addAttribute("nextNotice", n)); // 다음 글 추가
+
     return "notice/notice-view"; // 공지사항 상세보기 페이지로 이동
   }
 
@@ -87,7 +93,6 @@ public class AdminNoticeController {
   }
   
   // 공지사항 수정
-
   @GetMapping("/modify/{id}")
     public String noticeModify(@PathVariable("id") Integer noticeCode, Model model) {
 

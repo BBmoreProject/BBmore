@@ -60,6 +60,16 @@ public class NoticeService {
         return modelMapper.map(foundNotice, NoticeDTO.class);
     }
 
+    @Transactional
+    public void increaseViewCount(Integer noticeCode) {
+        Notice notice = adminNoticeRepository.findById(noticeCode)
+            .orElseThrow(() -> new RuntimeException("공지사항을 찾을 수 없습니다."));
+
+        notice.setNoticeView(notice.getNoticeView() + 1); // Getter를 활용한 조회수 증가
+    }
+
+
+
 
     // 이전글
     public Optional<Notice> getPrevNotice(Integer noticeCode) {
@@ -88,6 +98,8 @@ public class NoticeService {
 
         adminNoticeRepository.deleteById(noticeCode);
     }
+
+
 
 
 }

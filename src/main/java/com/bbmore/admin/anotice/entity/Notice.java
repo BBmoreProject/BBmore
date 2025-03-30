@@ -27,8 +27,13 @@ public class Notice {
     private LocalDate noticeCreatedDate;    // 등록일자
 
     //    조회수
-    @Column(name = "notice_view",nullable = false)
-    private Integer noticeView = 0;
+    @Column(name = "notice_view" , columnDefinition = "Integer default 0", nullable = false)
+    private Integer noticeView;
+
+    public void setNoticeView(Integer noticeView) {  // Setter 추가
+        this.noticeView = noticeView;
+    }
+
 
     @Column(nullable = false, length = 255)
     private String noticeContent;
@@ -46,12 +51,14 @@ public class Notice {
 
     }
 
-    // 공지사항 제목 수정
+
+
+    // 수정 - 공지사항 제목 수정
     public void modifyNoticeTitle(String noticeTitle) {
         this.noticeTitle = noticeTitle;
     }
 
-    // 공지사항 내용 수정
+    // 수정 - 공지사항 내용 수정
     public void modifyNoticeContent(String noticeContent) {
         this.noticeContent = noticeContent;
     }
