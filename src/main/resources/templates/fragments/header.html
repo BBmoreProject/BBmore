@@ -1,12 +1,12 @@
-<div th:fragment="header">
+<div th:fragment="header" xmlns:sec="http://www.w3.org/1999/xhtml">
   <!-- 상단 네비게이션 메뉴 -->
   <div class="bg-warning">
     <div class="container">
       <ul class="nav justify-content-end small">
-        <li class="nav-item"><a class="nav-link text-white" href="/admin/item/new">상품 등록</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="/admin/items">상품 관리</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="/cart">장바구니</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="/orders">구매이력</a></li>
+        <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a class="nav-link text-white" href="/admin/product/new">상품 등록</a></li>
+        <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a class="nav-link text-white" href="/admin/products">상품 관리</a></li>
+        <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link text-white" href="/cart">장바구니</a></li>
+        <li class="nav-item" sec:authorize="isAuthenticated()"><a class="nav-link text-white" href="/orders">구매이력</a></li>
         <li class="nav-item" sec:authorize="isAnonymous()">
           <a class="nav-link text-white" href="/members/login">로그인</a>
         </li>
@@ -16,6 +16,23 @@
       </ul>
     </div>
   </div>
+
+<!--  ec:authorize="hasAnyAuthority('ROLE_ADMIN')"-->
+
+<!--  현재 로그인한 사용자가 'ROLE_ADMIN' 권한을 가지고 있는 경우에만 해당 요소를 표시합니다.-->
+<!--  "상품 등록"과 "상품 관리" 링크는 관리자에게만 보입니다.-->
+
+
+<!--  sec:authorize="isAuthenticated()"-->
+
+<!--  사용자가 로그인(인증)되어 있는 경우에만 해당 요소를 표시합니다.-->
+<!--  "장바구니", "구매이력", "로그아웃" 링크는 로그인한 사용자에게만 보입니다.-->
+
+
+<!--  sec:authorize="isAnonymous()"-->
+
+<!--  사용자가 로그인하지 않은 익명 상태인 경우에만 해당 요소를 표시합니다.-->
+<!--  "로그인" 링크는 로그인하지 않은 사용자에게만 보입니다.-->
 
 
   <!-- 헤더 컨테이너 -->
