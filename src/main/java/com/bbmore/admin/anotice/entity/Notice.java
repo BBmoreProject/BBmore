@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "tbl_notice")
 public class Notice {
-    @Id
+    @Id // jpa에서는 jakarta.persistence.* 선택할 것
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer noticeCode;
 

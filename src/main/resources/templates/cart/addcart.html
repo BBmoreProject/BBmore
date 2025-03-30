@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장바구니</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>장바구니에 상품 추가하기</h1>
+
+<!-- 상품 선택 및 수량 입력 -->
+<form id="add-to-cart-form">
+    <label for="productCode">상품 코드:</label>
+    <input type="number" id="productCode" required><br>
+
+    <label for="userCode">회원 코드:</label>
+    <input type="number" id="userCode" required><br>
+
+    <label for="quantity">수량:</label>
+    <input type="number" id="quantity" required><br>
+
+    <button type="submit">장바구니에 추가</button>
+</form>
+
+<script>
+    // 장바구니에 상품을 추가하는 함수
+    $("#add-to-cart-form").on("submit", function(event) {
+        event.preventDefault();
+
+        // 폼 데이터를 가져옴
+        const productCode = $("#productCode").val();
+        const userCode = $("#userCode").val();
+        const quantity = $("#quantity").val();
+
+        const cartData = {
+            productCode: productCode,
+            userCode: userCode,
+            cartProductQuantity: quantity
+        };
+
+        // API 호출 (장바구니에 상품 추가)
+        $.ajax({
+            url: '/api/cart/add',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(cartData),
+            success: function(response) {
+                alert("장바구니에 상품이 추가되었습니다!");
+                // 폼 초기화
+                $("#productCode").val('');
+                $("#userCode").val('');
+                $("#quantity").val('');
+            },
+            error: function(xhr, status, error) {
+                alert("장바구니에 추가하는데 실패했습니다.");
+            }
+        });
+    });
+</script>
+</body>
+</html>
