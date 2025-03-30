@@ -168,11 +168,14 @@
 
         .write-box {
             margin-top: 20px;
+            position: relative;
         }
 
+
+
         /* 수정,삭제버튼 */
-        .modify-button,
-        .delete-button {
+        .modify-button
+        {
             position: relative;
             /*notice-box기준*/
             background-color: #F28C25;
@@ -180,6 +183,18 @@
             width: 70px;
             height: 25px;
             left: 85%;
+            border-radius: 5px;
+            border-style: none;
+            cursor: pointer;
+        }
+
+        .delete-button{
+            position: absolute;
+            top: 32px;
+            right: 15px;
+            background-color: #F28C25;
+            width: 70px;
+            height: 25px;
             border-radius: 5px;
             border-style: none;
             cursor: pointer;
@@ -344,6 +359,9 @@
             padding: 5px;
             font-size: 10px;
         }
+
+
+
     </style>
 
     <script>
@@ -457,13 +475,18 @@
 
         <!--"• 공지사항 글쓰기" + 글쓰기 틀-->
         <div class="write-box">
-            <!--수정 버튼-->
-            <button class="modify-button">
-                <a th:href="@{/notice/noticemodify/{id}(id= ${notice.noticeCode})}" id="modify">수정</a>
-            </button>
-            <button class="delete-button" onclick="location.href='notice-write_ver1.html'">
-                <span id="delete">삭제</span>
-            </button>
+            <div class="button-group">
+                <!--수정 버튼-->
+                <button class="modify-button">
+                    <a th:href="@{/notice/modify/{id}(id= ${notice.noticeCode})}" id="modify">수정</a>
+                </button>
+                <!--삭제버튼-->
+                <form id="deleteForm" action="/notice/delete" method="post" >
+                    <input type="hidden" name="noticeCode" th:value="${notice.noticeCode}">
+                    <button type="submit" class="delete-button" id="delete">삭제</button>
+                </form>
+            </div>
+
 
             <div class="menu-detail">
                 <p>• 공지사항</p>

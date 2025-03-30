@@ -26,17 +26,7 @@ public class AdminNoticeController {
 
   private final NoticeService noticeService;
   private final AdminNoticeRepository adminNoticeRepository;
-
-  // 제목 검색
-//  @GetMapping("/{noticeTitle}")
-//  public String findNoticeByTitle(@PathVariable String noticeTitle, Model model) {
-//
-//    // 메뉴 서비스에서 DTO 값으로 변환되서 담긴 값을 resultMenu 에 담는다
-//    NoticeDTO resultNotice = noticeService.findNoticeByTitle(noticeTitle);
-//    model.addAttribute("notice", resultNotice);
-//
-//    return "menu/detail";    // 뷰를 반환
-//  }
+  
 
   // @PageableDefault Pageable pageable :
   @GetMapping("/notice-list_ver1")
@@ -64,7 +54,7 @@ public class AdminNoticeController {
     model.addAttribute("noticeList", noticeList);
     model.addAttribute("paging", paging);
 
-    return "notice/notice-list_ver1";
+    return "notice/notice-list_ver1"; //목록으로
   }
 
   // 공지사항 상세보기
@@ -92,12 +82,13 @@ public class AdminNoticeController {
   @PostMapping("/notice-write_ver1")
   public String registNotice(@ModelAttribute NoticeDTO noticeDTO) {
     noticeService.registNotice(noticeDTO);
+
     return "redirect:/notice/notice-list_ver1";
   }
   
   // 공지사항 수정
 
-  @GetMapping("/noticemodify/{id}")
+  @GetMapping("/modify/{id}")
     public String noticeModify(@PathVariable("id") int noticeCode, Model model) {
 
     model.addAttribute("notice", noticeService.findNoticeByNoticeCode(noticeCode));
@@ -117,19 +108,18 @@ public class AdminNoticeController {
     
     return "redirect:/notice/notice-list_ver1";
     }
+    
+    // 공지사항 삭제
+    @PostMapping("/delete")
+    public String deleteNotice(@RequestParam("noticeCode") int noticeCode) {
+      noticeService.deleteNotice(noticeCode);
+      return "redirect:/notice/notice-list_ver1";
+    }
+
+  }
 
 
 
 
-}
 
-// 공지사항 삭제
-//  @GetMapping("/delete")
-//  public void deletePage(){}
-//
-//  @PostMapping("/delete")
-//  public String deleteNotice(@RequestParam Integer noticeCode){
-//    noticeService.deleteNotice(noticeCode);
-//    return "redirect:/notice/notice-list_ver1";       // 삭제 후 메뉴 리스트를 보여줌
-//  }
 

@@ -81,9 +81,10 @@ public class NoticeService {
 //        foundNotice.modifyNoticeContent(noticeDTO.getNoticeContent());
 //    }
 
-    /* deleteById */
+    /* 특정게시글 삭제 */
     @Transactional
     public void deleteNotice(int noticeCode) {
+
         adminNoticeRepository.deleteById(noticeCode);
     }
 
