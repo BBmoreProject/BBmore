@@ -60,6 +60,27 @@ public class NoticeService {
         return modelMapper.map(foundNotice, NoticeDTO.class);
     }
 
+    // 검색 기능: 검색어로 제목을 포함하는 공지사항 조회
+    public Page<NoticeDTO> noticeSearchList(String searchKeyword, Pageable pageable) {
+        Page<Notice> notices = adminNoticeRepository.findByNoticeTitleContaining(searchKeyword, pageable);
+
+        // Notice 엔티티를 NoticeDTO로 변환
+        return notices.map(this::convertToDTO);
+    }
+
+    // Notice -> NoticeDTO 변환 메서드
+    private NoticeDTO convertToDTO(Notice notice) {
+        return new NoticeDTO(
+            notice.getNoticeCode(),
+            notice.getNoticeTitle(),
+            notice.getNoticeContent(),
+            notice.getNoticeCreatedDate(),
+            notice.getNoticeView()
+        );
+    }
+
+
+    // 조회수 증가
     @Transactional
     public void increaseViewCount(Integer noticeCode) {
         Notice notice = adminNoticeRepository.findById(noticeCode)
@@ -67,7 +88,6 @@ public class NoticeService {
 
         notice.setNoticeView(notice.getNoticeView() + 1); // Getter를 활용한 조회수 증가
     }
-
 
 
 

@@ -31,14 +31,24 @@ public class AdminNoticeController {
 
   // @PageableDefault Pageable pageable :
   @GetMapping("/notice-list_ver1")
-  public String findNoticeList(Model model, @PageableDefault Pageable pageable) {
+  public String findNoticeList(Model model, @PageableDefault Pageable pageable,
+                               @RequestParam(value = "searchKeyword", required = false)String searchKeyword) {
+
+    // 검색어가 있을 때와 없을 때 처리
+    Page<NoticeDTO> noticeList;
+
+    if (searchKeyword == null || searchKeyword.trim().isEmpty()) {
+      noticeList = noticeService.findNoticeList(pageable);  // 검색어가 없으면 전체 리스트 조회
+    } else {
+      // 검색어가 있을 경우 해당 검색어로 필터링하여 조회
+      noticeList = noticeService.noticeSearchList(searchKeyword, pageable);  // 검색어로 필터링
+    }
+
+//    Page<NoticeDTO> noticeList = noticeService.findNoticeList(pageable);
 
     /* 페이징 처리 이후 */
     // {}: 위치홀더라고 생각할 것
     log.info("pageable: {}", pageable);
-
-    Page<NoticeDTO> noticeList = noticeService.findNoticeList(pageable);
-
     log.info("{}", noticeList.getContent());
     log.info("{}", noticeList.getTotalPages());
     log.info("{}", noticeList.getTotalElements());
@@ -49,11 +59,14 @@ public class AdminNoticeController {
     log.info("{}", noticeList.getSort());
     log.info("{}", noticeList.getNumber());
 
-
+    // 페이지네이션 정보 추가
     PagingButton paging = Pagenation.getPagingButtonInfo(noticeList);
 
+    // 모델에 전달
     model.addAttribute("noticeList", noticeList);
     model.addAttribute("paging", paging);
+    model.addAttribute("searchKeyword", searchKeyword); // 검색어도 함께 전달
+
 
     return "notice/notice-list_ver1"; //목록으로
   }
@@ -120,6 +133,8 @@ public class AdminNoticeController {
       noticeService.deleteNotice(noticeCode);
       return "redirect:/notice/notice-list_ver1";
     }
+
+
 
   }
 
