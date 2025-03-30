@@ -59,7 +59,7 @@ public class AdminNoticeController {
 
   // 공지사항 상세보기
   @GetMapping("/notice-view/{noticeCode}")
-  public String viewNotice(@PathVariable int noticeCode, Model model) {
+  public String viewNotice(@PathVariable Integer noticeCode, Model model) {
     // noticeCode로 공지사항 조회
     NoticeDTO noticeDTO = noticeService.findNoticeByNoticeCode(noticeCode);
     Optional<Notice> prevNotice = noticeService.getPrevNotice(noticeCode);
@@ -89,7 +89,7 @@ public class AdminNoticeController {
   // 공지사항 수정
 
   @GetMapping("/modify/{id}")
-    public String noticeModify(@PathVariable("id") int noticeCode, Model model) {
+    public String noticeModify(@PathVariable("id") Integer noticeCode, Model model) {
 
     model.addAttribute("notice", noticeService.findNoticeByNoticeCode(noticeCode));
 
@@ -98,7 +98,7 @@ public class AdminNoticeController {
   
     // 공지사항 수정 진행
     @PostMapping("/update/{id}")
-  public String noticeUpdate(@PathVariable("id") int noticeCode, NoticeDTO noticedto) {
+  public String noticeUpdate(@PathVariable("id") Integer noticeCode, NoticeDTO noticedto) {
 
     NoticeDTO noticeDTO1 = noticeService.findNoticeByNoticeCode(noticeCode); // 기존내용 찾기
     noticeDTO1.setNoticeTitle(noticedto.getNoticeTitle());  // 덮어씌우기
@@ -111,7 +111,7 @@ public class AdminNoticeController {
     
     // 공지사항 삭제
     @PostMapping("/delete")
-    public String deleteNotice(@RequestParam("noticeCode") int noticeCode) {
+    public String deleteNotice(@RequestParam("noticeCode") Integer noticeCode) {
       noticeService.deleteNotice(noticeCode);
       return "redirect:/notice/notice-list_ver1";
     }

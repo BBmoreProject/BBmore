@@ -14,11 +14,11 @@ import java.util.Date;
 @Data
 public class NoticeDTO {
 
-    private int noticeCode;
+    private Integer noticeCode;
     private String noticeType;
     private String noticeTitle;
     private LocalDate noticeCreatedDate;
-    private int noticeView;
+    private Integer noticeView;
     private String noticeContent;
 
 

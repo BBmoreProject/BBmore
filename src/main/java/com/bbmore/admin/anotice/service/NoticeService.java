@@ -48,11 +48,12 @@ public class NoticeService {
     @Transactional
     public void registNotice(NoticeDTO noticeDTO) {
         adminNoticeRepository.save(modelMapper.map(noticeDTO, Notice.class));  // DTO를 Entity로 가공
+
     }
 
 
     // noticeCode로 공지사항 조회
-    public NoticeDTO findNoticeByNoticeCode(int noticeCode) {
+    public NoticeDTO findNoticeByNoticeCode(Integer noticeCode) {
         Notice foundNotice = adminNoticeRepository.findById(noticeCode)
             .orElseThrow(() -> new IllegalArgumentException("공지사항을 찾을 수 없습니다."));
 
@@ -61,12 +62,12 @@ public class NoticeService {
 
 
     // 이전글
-    public Optional<Notice> getPrevNotice(int noticeCode) {
+    public Optional<Notice> getPrevNotice(Integer noticeCode) {
         return adminNoticeRepository.findTopByNoticeCodeLessThanOrderByNoticeCodeDesc(noticeCode);
     }
 
     // 다음글
-    public Optional<Notice> getNextNotice(int noticeCode){
+    public Optional<Notice> getNextNotice(Integer noticeCode){
         return adminNoticeRepository.findTopByNoticeCodeGreaterThanOrderByNoticeCodeAsc(noticeCode);
     }
 
@@ -83,7 +84,7 @@ public class NoticeService {
 
     /* 특정게시글 삭제 */
     @Transactional
-    public void deleteNotice(int noticeCode) {
+    public void deleteNotice(Integer noticeCode) {
 
         adminNoticeRepository.deleteById(noticeCode);
     }

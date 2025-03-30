@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Notice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int noticeCode;
+    private Integer noticeCode;
 
     @Column(name = "notice_type", nullable = false, length = 255)
     private String noticeType;
@@ -26,6 +26,13 @@ public class Notice {
     @Column(name = "notice_created_date", nullable = false, updatable = false)
     private LocalDate noticeCreatedDate;    // 등록일자
 
+    //    조회수
+    @Column(name = "notice_view",nullable = false)
+    private Integer noticeView = 0;
+
+    @Column(nullable = false, length = 255)
+    private String noticeContent;
+
 
     // 엔티티가 DB에 저장되기 전에 자동으로 등록일자를 설정하는 메서드
     @PrePersist
@@ -33,6 +40,10 @@ public class Notice {
         if (noticeCreatedDate == null) {
             noticeCreatedDate = LocalDate.now();  // 엔티티가 DB에 저장되기 전에 현재 날짜와 시간 설정
         }
+        if (noticeView == null) {  // 조회수가 null이면 기본값 0 설정
+            noticeView = 0;
+        }
+
     }
 
     // 공지사항 제목 수정
@@ -45,13 +56,6 @@ public class Notice {
         this.noticeContent = noticeContent;
     }
 
-//    조회수
-
-    @Column(nullable = false)
-    private int noticeView;
-
-    @Column(nullable = false, length = 255)
-    private String noticeContent;
 
 
 
