@@ -3,7 +3,301 @@
       xmlns:layout=http://www.ultraq.net.nz/thymeleaf/layout
       layout:decorate="~{layouts/layout1}">
 
+<!-- CSS 스타일 섹션 -->
+<th:block layout:fragment="css">
+    <style>
+        .product-form-section {
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            background-color: #ffffff;
+        }
+
+        .section-title {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .section-content {
+            padding: 15px;
+        }
+
+        .input-row {
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 6px 8px;
+            border: 1px solid #d5d5d5;
+            font-size: 13px;
+        }
+
+        select {
+            height: 32px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .guide-text {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .fieldError {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .image-upload-area {
+            margin-top: 10px;
+        }
+
+        .image-upload-box {
+            margin-bottom: 10px;
+        }
+
+        .custom-file {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .custom-file-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .custom-file-label {
+            display: block;
+            padding: 6px 12px;
+            border: 1px dashed #d5d5d5;
+            background-color: #f9f9f9;
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 13px;
+            color: #666;
+            height: 31px;
+            line-height: 18px;
+        }
+
+        .button-area {
+            text-align: right;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 6px 15px;
+            font-size: 13px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .btn-cancel {
+            background-color: #f1f1f1;
+            border: 1px solid #d5d5d5;
+            color: #666;
+            margin-right: 5px;
+        }
+
+        .btn-secondary {
+            background-color: #999;
+            border: 1px solid #888;
+            color: white;
+            margin-right: 5px;
+        }
+
+        .btn-primary {
+            background-color: #f76707;
+            border: 1px solid #e45e00;
+            color: white;
+        }
+
+        /* 이미지 미리보기 스타일 추가 */
+        .image-preview {
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .image-preview img {
+            max-width: 150px;
+            max-height: 150px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</th:block>
+
+<!-- 스크립트 섹션 -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            const errorMessage = [[${errorMessage}]];
+            if(errorMessage) {
+                alert(errorMessage);
+            }
+
+            bindDomEvent();
+        });
+
+        const bindDomEvent = () => {
+            document.querySelectorAll('.custom-file-input').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    const fileName = e.target.value.split('\\').pop();
+                    let fileExt = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
+
+                    const allowedExtensions = ['jpg', 'jpeg', 'gif', 'png', 'bmp'];
+                    if(!allowedExtensions.includes(fileExt)) {
+                        alert('이미지 파일만 등록이 가능합니다.');
+                        return;
+                    }
+
+                    // 파일명을 라벨에 표시
+                    const label = e.target.nextElementSibling;
+                    if(label) {
+                        label.textContent = fileName;
+                    }
+
+                    // 이미지 미리보기 표시 추가
+                    const uploadBox = e.target.closest('.image-upload-box');
+                    let previewDiv = uploadBox.querySelector('.image-preview');
+
+                    // 미리보기 영역이 없으면 생성
+                    if (!previewDiv) {
+                        previewDiv = document.createElement('div');
+                        previewDiv.className = 'image-preview';
+                        const img = document.createElement('img');
+                        previewDiv.appendChild(img);
+                        uploadBox.appendChild(previewDiv);
+                    }
+
+                    // 이미지 미리보기 설정
+                    const img = previewDiv.querySelector('img');
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            img.src = event.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            });
+        };
+    </script>
+</th:block>
+
+<!-- 컨텐츠 섹션 -->
 <div layout:fragment="content">
-    <h1>상품 등록 페이지</h1>
+    <h2 class="page-title">상품 등록</h2>
+
+    <form role="form" method="post" enctype="multipart/form-data" th:object="${productFormDTO}">
+        <input type="hidden" th:field="*{id}">
+
+        <!-- 카테고리 섹션 -->
+        <div class="product-form-section">
+            <div class="section-title">카테고리</div>
+            <div class="section-content">
+                <div class="input-row">
+                    <select th:field="*{productSellStatus}" class="form-select">
+                        <option value="SELL">판매중</option>
+                        <option value="SOLD_OUT">품절</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 상품정보 섹션 -->
+        <div class="product-form-section">
+            <div class="section-title">상품정보</div>
+            <div class="section-content">
+                <div class="input-row">
+                    <input type="text" th:field="*{productName}" placeholder="상품명을 입력해주세요">
+                    <p th:if="${#fields.hasErrors('productName')}" th:errors="*{productName}" class="fieldError"></p>
+                </div>
+
+                <div class="input-row">
+                    <input type="number" th:field="*{price}" placeholder="상품의 가격을 입력해주세요">
+                    <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="fieldError"></p>
+                </div>
+
+                <div class="input-row">
+                    <input type="number" th:field="*{stockNumber}" placeholder="상품의 재고를 입력해주세요">
+                    <p th:if="${#fields.hasErrors('stockNumber')}" th:errors="*{stockNumber}" class="fieldError"></p>
+                </div>
+
+                <div class="input-row">
+                    <textarea th:field="*{productDetail}" placeholder="상품 상세 내용을 입력해주세요"></textarea>
+                    <p th:if="${#fields.hasErrors('productDetail')}" th:errors="*{productDetail}" class="fieldError"></p>
+                    <p class="guide-text">상품의 특징이나 사용방법 등 상세한 정보를 입력해주세요. 구매자의 이해를 돕는 상세한 설명은 구매 결정에 도움이 됩니다.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 상품 이미지 섹션 -->
+        <div class="product-form-section">
+            <div class="section-title">상품 이미지</div>
+            <div class="section-content">
+                <p class="guide-text">첫번째 이미지가 대표 이미지로 사용됩니다. 최대 5개까지 등록 가능합니다.</p>
+
+                <!-- 신규 등록시 빈 이미지 업로드 영역 -->
+                <div th:if="${#lists.isEmpty(productFormDTO.productImgDTOList)}">
+                    <div class="image-upload-box" th:each="num: ${#numbers.sequence(1,5)}">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="productImgFile">
+                            <label class="custom-file-label" th:text="'상품이미지 ' + ${num}"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 수정시 기존 이미지 표시 -->
+                <div th:if="${not #lists.isEmpty(productFormDTO.productImgDTOList)}">
+                    <div class="image-upload-box" th:each="productImgDTO, status: ${productFormDTO.productImgDTOList}">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="productImgFile">
+                            <input type="hidden" name="productImgIds" th:value="${productImgDTO.id}">
+                            <label class="custom-file-label"
+                                   th:text="${not #strings.isEmpty(productImgDTO.originalImgName)} ? ${productImgDTO.originalImgName} : '상품이미지 ' + ${status.index+1}"></label>
+                        </div>
+                        <!-- 기존 이미지 미리보기 영역 추가 -->
+                        <div class="image-preview" th:if="${not #strings.isEmpty(productImgDTO.productImgUrl)}">
+                            <img th:src="${productImgDTO.productImgUrl}" alt="상품 이미지">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 버튼 영역 -->
+        <div class="button-area">
+            <button type="button" class="btn btn-cancel" onclick="history.back();">취소</button>
+            <div th:if="${#strings.isEmpty(productFormDTO.id)}" style="display: inline-block;">
+                <button th:formaction="@{/admin/product/new}" type="submit" class="btn btn-primary">등록</button>
+            </div>
+            <div th:unless="${#strings.isEmpty(productFormDTO.id)}" style="display: inline-block;">
+                <button th:formaction="@{'/admin/product/' + ${productFormDTO.id} }" type="submit" class="btn btn-primary">수정</button>
+            </div>
+        </div>
+
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    </form>
 </div>
 </html>

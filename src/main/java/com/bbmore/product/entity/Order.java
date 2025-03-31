@@ -1,5 +1,6 @@
 package com.bbmore.product.entity;
 
+import com.bbmore.product.config.BaseEntity;
 import com.bbmore.product.constant.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -14,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 
-public class Order {
+public class Order extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "order_id")

@@ -1,6 +1,8 @@
 package com.bbmore.product.controller;
 
+import com.bbmore.product.dto.ProductFormDTO;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
@@ -15,7 +17,8 @@ public class productController {
      */
 
     @GetMapping(value = "/admin/product/new")
-    public String productForm() {
+    public String productForm(Model model) {
+        model.addAttribute("productFormDTO", new ProductFormDTO());
         return "/product/productForm";
     }
 }
