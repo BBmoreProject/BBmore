@@ -16,14 +16,16 @@ public class OrderDTO {
     private int orderTotalPrice;
     private LocalDate orderDate;
     private String orderStatus;
-    private String recipientName;
     private String recipientAddress;
-    private int recipientPhone;
+    private String recipientPhone;
     private String orderDeliveryRequest;
     private String productName;
     private int productQuantity;
+
     private int userCode;
     private int orderDetailCode;
+
+    private MemberDTO member;
 
 
 }

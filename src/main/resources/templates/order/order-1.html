@@ -524,10 +524,9 @@
                         <th>제품명</th>
                         <th>총결제금액</th>
                         <th>주문상태</th>
-                        <th>받는분 성함</th>
-                        <th>받는분 전화번호</th>
-                        <th>받는분 주소</th>
-                        <th>요청사항</th>
+                        <th>성함</th>
+                        <th>전화번호</th>
+                        <th>주소</th>
                     </tr>
                     </thead>
                     <!-- 테이블 본문 -->
@@ -538,10 +537,9 @@
                         <td th:text="${order.productName}"></td>
                         <td th:text="${order.orderTotalPrice}"></td>
                         <td th:text="${order.orderStatus}"></td>
-                        <td th:text="${order.recipientName}"></td>
-                        <td th:text="${order.recipientPhone}"></td>
-                        <td th:text="${order.recipientAddress}"></td>
-                        <td th:text="${order.orderDeliveryRequest}"></td>
+                        <td th:text="${order.member.userName}"></td>
+                        <td th:text="${order.member.userPhoneNumber}"></td>
+                        <td th:text="${order.member.userAddress}"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -577,7 +575,6 @@
         </div>
 
     </main>
-
     <footer class="footer">
         &copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234
         주소: 서울시 종로구 어쩌고저쩌고

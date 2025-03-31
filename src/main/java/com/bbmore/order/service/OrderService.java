@@ -1,5 +1,6 @@
 package com.bbmore.order.service;
 
+import com.bbmore.order.dto.MemberDTO;
 import com.bbmore.order.dto.OrderDTO;
 import com.bbmore.order.entity.Order;
 import com.bbmore.order.repository.OrderRepository;
@@ -45,7 +46,12 @@ public class OrderService {
                 pageable.getPageSize(),
                 Sort.by("OrderCode").descending()
         );
-        Page<Order> OrderList = orderRepository.findAll(pageable);
-        return OrderList.map(order -> modelMapper.map(order, OrderDTO.class));
+        Page<Order> orderList = orderRepository.findAll(pageable);
+        return orderList.map(order -> {
+            OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+            // MemberDTO 매핑
+            orderDTO.setMember(modelMapper.map(order.getMember(), MemberDTO.class));
+            return orderDTO;
+        });
     }
 }

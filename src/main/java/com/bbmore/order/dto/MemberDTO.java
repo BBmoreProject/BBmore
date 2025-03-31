@@ -16,9 +16,18 @@ public class MemberDTO {
     private String userMembershipLevel;
     private String userPhoneNumber;
     private String userEmail;
-    private int userIsDeleted;
-    private String userAccessLevel;
+
+    private boolean userIsDeleted;
+    private boolean userAccessLevel;
+
+
+    private String userPetName;
+    private int userPetAge;
+    private int userPerWeight;
+    private String userPetMedicalHistory;
+
     private int membershipCode;
-    private int petCode;
+    private int animalCode;
+
 
 }

@@ -18,9 +18,19 @@ public class OrderDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_detail_code")
     private int orderDetailCode;
+
+    @Column(name = "order_detail_price")
     private int orderDetailPrice;
+
+    @Column(name = "order_detail_quantity")
     private int orderDetailQuantity;
-    private int orderCode;
+
+    @ManyToOne
+    @JoinColumn(name = "order_code", referencedColumnName = "order_code")
+    private Order order; // Order 테이블과 관계 설정
+
+    // Getters and setters
 
 }
