@@ -21,7 +21,7 @@ public class NoticeDTO {
 
     public NoticeDTO() {}
 
-//    convertToDTO 때문에 추가함 왜
+//    convertToDTO 때문에 추가함
     public NoticeDTO(Integer noticeCode, String noticeTitle, String noticeContent, LocalDate noticeCreatedDate, Integer noticeView) {
         this.noticeCode = noticeCode;
         this.noticeTitle = noticeTitle;

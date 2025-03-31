@@ -15,4 +15,8 @@ public interface UserCartRepository extends JpaRepository<UserCart, Integer> {
   // 장바구니 상품 제거
   void deleteById(Integer cartCode);
 
+  // 특정 사용자와 상품 코드로 장바구니 항목을 찾는 메서드
+  UserCart findByMember_UserCodeAndProduct_ProductCode(Integer userCode, Integer productCode);
+
+
 }

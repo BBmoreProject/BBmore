@@ -461,6 +461,70 @@
 
 
   </style>
+  <script>
+    const userCode = 1;  // 사용자 고유번호 (로그인한 사용자에 맞게 변경)
+
+    // 1. 장바구니 목록 조회
+    function loadCartList() {
+      $.ajax({
+        url: `/api/cart/${userCode}`,
+        method: 'GET',
+        success: function(data) {
+          let html = '';
+          data.forEach(cart => {
+            html += `
+                            <div>
+                                <input type="checkbox" class="cart-checkbox" data-cart-code="${cart.cartCode}">
+                                <span>${cart.product.productName}</span>
+                                <input type="number" class="quantity" value="${cart.cartProductQuantity}" data-cart-code="${cart.cartCode}">
+                            </div>
+                        `;
+          });
+          $('#cartList').html(html);
+        }
+      });
+    }
+
+    // 2. 장바구니 상품 수량 조정
+    $(document).on('change', '.quantity', function() {
+      const cartCode = $(this).data('cart-code');
+      const quantity = $(this).val();
+
+      $.ajax({
+        url: `/api/cart/${cartCode}?quantity=${quantity}`,
+        method: 'PUT',
+        success: function(response) {
+          alert(response);
+        }
+      });
+    });
+
+    // 3. 장바구니 상품 삭제
+    $('#deleteSelected').click(function() {
+      const selectedCartCodes = [];
+      $('.cart-checkbox:checked').each(function() {
+        selectedCartCodes.push($(this).data('cart-code'));
+      });
+
+      $.ajax({
+        url: '/api/cart',
+        method: 'DELETE',
+        data: { cartCodes: selectedCartCodes },
+        traditional: true,
+        success: function(response) {
+          alert(response);
+          loadCartList();  // 삭제 후 장바구니 목록 다시 로드
+        }
+      });
+    });
+
+    // 페이지 로드 시 장바구니 목록 조회
+    loadCartList();
+  </script>
+
+
+
+
 </head>
 
 <body>
@@ -471,7 +535,7 @@
   <a class="nav-link" id="login" href="#">로그아웃</a>
   <a class="nav-link" id="signup" href="#">회원가입</a>
   <a class="nav-link" id="cart" href="#">
-    <img src="/img/cart.png" alt="장바구니 이미지" id="cart_img">
+    <img src="/img/cart.png" alt="장바구니 이미지" id="cartimg">
   </a>
 </nav>
 <!-- navbar -->
@@ -529,7 +593,7 @@
             </input>
           </div> <!--product-select끝-->
           <a href="//www.coupang.com/vp/products/7493440093?vendorItemId=91736865725" class="moveProduct">
-            <img src="/img/상품1.png" alt="상품1" class="product-img-img">
+            <img src="/img/p1.png" alt="상품1" class="product-img-img"></a>
         </div><!-- 제품 이미지 틀 끝 -->
 
         <div class="product-box">
@@ -538,12 +602,12 @@
               <!-- 상품명에 링크삽입 -->
               <a href="//www.coupang.com/vp/products/7493440093?vendorItemId=91736865725"
                  class="moveProduct">
-                                    <span class="product-name modify-color">3651 바이츠 동결건조 대용량 고양이 트릿, 북어, 240g,
+                                    <span th:${} class="product-name modify-color">3651 바이츠 동결건조 대용량 고양이 트릿, 북어, 240g,
                                         2개</span>
               </a>
             </div> <!--product-name-part-content끝-->
 
-            <a href="/mypage-cart_test.html" class="delete-option">삭제</a>
+            <a href="#" type="button" class="delete-option">삭제</a>
           </div> <!--product-name-part 끝-->
 
           <!-- 상품 가격 부분 -->
@@ -594,7 +658,7 @@
           </div> <!--cart-total-price__inner끝-->
           <div id="finalOrderPrice" class="cart-final-order-price"></div>
           <div class="order-buttons">
-            <a href="javascript:void(0);" class="goPayment narrow" id="btnPay"
+            <a href="javascript:void(0);" type="button" class="goPayment narrow" id="btnPay"
                data-pay-url="/cart/orderV3?isAllChecked=false">
               구매하기
               <span>&nbsp;(0)</span></a>

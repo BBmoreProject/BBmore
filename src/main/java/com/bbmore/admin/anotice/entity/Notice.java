@@ -52,7 +52,6 @@ public class Notice {
     }
 
 
-
     // 수정 - 공지사항 제목 수정
     public void modifyNoticeTitle(String noticeTitle) {
         this.noticeTitle = noticeTitle;
