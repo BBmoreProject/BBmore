@@ -164,6 +164,10 @@
       cursor: pointer;
     }
 
+    .search-button:hover{
+      background: #ea7f00;
+    }
+
     /* 글쓰기 버튼 */
     .write-button {
       position: relative;
@@ -176,6 +180,10 @@
       border-radius: 5px;
       border-style: none;
       cursor: pointer; /*보더 */
+    }
+
+    .write-button:hover{
+      background: #ea7f00;
     }
 
     /* 글쓰기 텍스트 (버튼박스 높이와 동일하게 지정하면 가운데정렬됨)*/
@@ -191,6 +199,11 @@
     .menu-detail {
       margin: 10px;
     }
+
+    .notice-box{
+      margin-top: 20px;
+    }
+
 
     /* 공지사항 목록 테이블(글쓰기 버튼 포함)
 (공지사항 목록, 테이블 간격 margin으로 조절)*/
@@ -333,7 +346,7 @@
     <li class="menu-6">
       <a href="#">공지사항 관리</a>
       <ul class="submenu">
-        <li><a href="">공지사항</a></li>
+        <li><a onclick="location.href='/notice/notice-list_ver1'">공지사항</a></li>
         <li><a href="">자주 묻는 질문</a></li>
       </ul>
     </li>
@@ -344,16 +357,19 @@
 <div class="container">
   <header class="header">공지사항 관리</header>
   <main class="main">
+    <form th:action="@{/notice/notice-list_ver1}" method="get" >
     <div class="search-box">
-      <input type="text" placeholder="제목 입력">
-      <button class="search-button">조회</button>
+      <input type="text" placeholder="제목 입력" name="searchKeyword">
+      <button class="search-button" type="submit">조회</button>
+    </form>
     </div>
     <!--• 공지사항 목록-->
     <div class="notice-box">
+      <!--글쓰기버튼-->
       <button class="write-button" onclick="location.href='/notice/notice-write_ver1'">
-<!--        th:onclick="|location.href='@{/notice/notice-view.html}'|"-->
         <p id="write">글쓰기</p>
       </button>
+
       <div class="menu-detail">
         <p>• 공지사항 목록</p>
       </div>
@@ -367,42 +383,42 @@
         </thead>
         <tbody>
         <tr th:each="notice : ${noticeList}">
-          <td th:text="${notice.noticeTitle}"></td>
+          <td><a th:href="@{/notice/notice-view/{noticeCode}(noticeCode=${notice.noticeCode})}" th:text="${notice.noticeTitle}"></a></td>
           <td th:text="${notice.noticeCreatedDate}"></td>
           <td th:text="${notice.noticeView}"></td>
         </tr>
         </tbody>
       </table>
     </div>
-      <!--페이징 시작-->
+    <!--페이징 시작-->
     <div id="paging" >
       <!-- 맨 앞으로 이동 -->
       <button
-              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.startPage}} + '\''">
+              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + ${paging.startPage} + '\''">
         <<
       </button>
       <!-- 이전 페이지로 이동 -->
       <button
-              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.currentPage - 1}} + '\''"
+              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + (${paging.currentPage - 1}) + '\''"
               th:disabled="${ noticeList.first }">
         <
       </button>
       <!-- 숫자 버튼 -->
       <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
-        <button th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${page}} + '\''"
+        <button th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + ${page} + '\''"
                 th:text="${ page }"
                 th:disabled="${ paging.currentPage eq page }">
         </button>
       </th:block>
       <!-- 다음 페이지로 이동 -->
       <button
-              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.currentPage + 1}} + '\''"
+              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + (${paging.currentPage + 1}) + '\''"
               th:disabled="${ noticeList.last }">
         >
       </button>
       <!-- 맨 끝으로 이동 -->
       <button
-              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.endPage}} + '\''">
+              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + ${paging.endPage} + '\''">
         >>
       </button>
     </div> <!--페이징 끝-->

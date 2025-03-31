@@ -193,6 +193,7 @@
       height: 250px;
       border: 1px solid #C2C2C2;
       font-size: 15px;
+      padding: 10px;
     }
 
     /*  추가부분 */
@@ -223,7 +224,9 @@
     }
 
     /* 조회,저장 버튼 */
-    .buttons button {
+    .buttons #btnCancel,
+    .buttons #btnSave
+    {
       width: 52px;
       height: 25px;
       border: none;
@@ -236,8 +239,10 @@
     }
 
     /* 취소,저장 버튼 (색반전) - 글쓰기 화면에 안썼음 */
-    .buttons button:hover {
-      background: darkorange;
+    #btnSave:hover,
+    #btnCancel:hover,
+    .search-button:hover {
+      background: #ea7f00;
     }
 
     /* 사이드바 하단 로고 틀 */
@@ -271,6 +276,8 @@
       padding: 5px;
       font-size: 10px;
     }
+
+
   </style>
 
   <script>
@@ -334,7 +341,7 @@
     <li class="menu-6">
       <a href="#">공지사항 관리</a>
       <ul class="submenu">
-        <li><a href="notice_5.html">공지사항</a></li>
+        <li><a onclick="location.href='/notice/notice-list_ver1'">공지사항</a></li>
         <li><a href="faq_5.html">자주 묻는 질문</a></li>
       </ul>
     </li>
@@ -346,37 +353,52 @@
   <header class="header">공지사항 관리</header>
   <main class="main">
     <div class="search-box"> <!--검색창-->
-      <input type="text" placeholder="제목 입력">
-      <button class="search-button">조회</button>
+      <input type="text" placeholder="제목 입력" name="noticeTitle">
+      <button class="search-button" type="submit">조회</button>
     </div>
-    <!--"• 공지사항 글쓰기" + 글쓰기 틀-->
+
+    <!--" write-box •공지사항 글쓰기" + 글쓰기 틀-->
     <div class="write-box">
       <div class="menu-detail">
         <p>• 공지사항 글쓰기</p>
       </div>
 
       <!-- 공지사항 작성 큰 틀 -->
+      <div class="notice-form">
+        <form id="noticeForm" method="post" action="/notice/notice-write_ver1">
       <table class="notice-table">
+        <!--제목 행-->
         <tr>
           <td class="label">제목</td>
           <td>
-            <input type="text" id="title">
-            <input type="checkbox" id="important"> <label for="important">중요 공지사항으로 등록</label>
+            <select name="noticeType">
+              <option value="공지사항">공지사항</option>
+              <option value="자주묻는질문">자주묻는질문</option>
+            </select> <br>
+            <input type="text" id="title" name="noticeTitle">
+                <!--중요공지사항등록 사용하려면 테이블 컬럼 수정 필요-->
+          <!-- <input type="checkbox" id="important"> <label for="important">중요 공지사항으로 등록</label>-->
           </td>
         </tr>
+
+        <!-- 내용 행-->
         <tr>
-          <td class="label" id="notice">내용</td>
-          <td><textarea id="content" rows="8"></textarea></td>
+          <td class="label" id="notice" >내용</td>
+          <td>
+            <textarea id="content" rows="8" name="noticeContent"></textarea>
+          </td>
         </tr>
       </table>
-    </div> <!--"• 공지사항 글쓰기" + 글쓰기 틀 끝-->
+
     <div class="buttons">
-      <button type="button" id="btnCancel">취소</button> <!-- 취소시 #id 사용하기-->
-      <button type="button" id="btnSave">저장</button> <!-- 저장시 #id 사용하기-->
+      <button type="button" id="btnCancel" >취소</button> <!-- 취소시 #id 사용하기-->
+      <button type="submit" id="btnSave">저장</button> <!-- 저장시 #id 사용하기-->
     </div>
+        </form>
+    </div> <!--" write-box •공지사항 글쓰기" + 글쓰기 틀 끝-->
+</div>
   </main>
   <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
 </div>
 </body>
-
 </html>

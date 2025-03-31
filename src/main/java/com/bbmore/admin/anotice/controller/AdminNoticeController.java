@@ -4,6 +4,8 @@ package com.bbmore.admin.anotice.controller;
 import com.bbmore.admin.anotice.common.Pagenation;
 import com.bbmore.admin.anotice.common.PagingButton;
 import com.bbmore.admin.anotice.dto.NoticeDTO;
+import com.bbmore.admin.anotice.entity.Notice;
+import com.bbmore.admin.anotice.repository.AdminNoticeRepository;
 import com.bbmore.admin.anotice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +13,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -21,21 +26,29 @@ import org.springframework.web.bind.annotation.*;
 public class AdminNoticeController {
 
   private final NoticeService noticeService;
+  private final AdminNoticeRepository adminNoticeRepository;
+  
 
   // @PageableDefault Pageable pageable :
   @GetMapping("/notice-list_ver1")
-  public String findNoticeList(Model model, @PageableDefault Pageable pageable){
+  public String findNoticeList(Model model, @PageableDefault Pageable pageable,
+                               @RequestParam(value = "searchKeyword", required = false)String searchKeyword) {
 
-    /* 페이징 처리 이전 */
-//        List<MenuDTO> menuList = menuService.findMenuList();
-//        model.addAttribute("menuList", menuList);
+    // 검색어가 있을 때와 없을 때 처리
+    Page<NoticeDTO> noticeList;
+
+    if (searchKeyword == null || searchKeyword.trim().isEmpty()) {
+      noticeList = noticeService.findNoticeList(pageable);  // 검색어가 없으면 전체 리스트 조회
+    } else {
+      // 검색어가 있을 경우 해당 검색어로 필터링하여 조회
+      noticeList = noticeService.noticeSearchList(searchKeyword, pageable);  // 검색어로 필터링
+    }
+
+//    Page<NoticeDTO> noticeList = noticeService.findNoticeList(pageable);
 
     /* 페이징 처리 이후 */
     // {}: 위치홀더라고 생각할 것
     log.info("pageable: {}", pageable);
-
-    Page<NoticeDTO> noticeList = noticeService.findNoticeList(pageable);
-
     log.info("{}", noticeList.getContent());
     log.info("{}", noticeList.getTotalPages());
     log.info("{}", noticeList.getTotalElements());
@@ -46,63 +59,87 @@ public class AdminNoticeController {
     log.info("{}", noticeList.getSort());
     log.info("{}", noticeList.getNumber());
 
-
+    // 페이지네이션 정보 추가
     PagingButton paging = Pagenation.getPagingButtonInfo(noticeList);
 
+    // 모델에 전달
     model.addAttribute("noticeList", noticeList);
     model.addAttribute("paging", paging);
+    model.addAttribute("searchKeyword", searchKeyword); // 검색어도 함께 전달
 
-    return "notice/notice-list_ver1";
+
+    return "notice/notice-list_ver1"; //목록으로
   }
 
-  //    @GetMapping("/querymethod")
-//    public void querymethoddPage(){}
+  // 공지사항 상세보기
+  @GetMapping("/notice-view/{noticeCode}")
+  @Transactional
+  public String viewNotice(@PathVariable Integer noticeCode, Model model) {
+    // noticeCode로 공지사항 조회
+    NoticeDTO noticeDTO = noticeService.findNoticeByNoticeCode(noticeCode);
+    Optional<Notice> prevNotice = noticeService.getPrevNotice(noticeCode);
+    Optional<Notice> nextNotice = noticeService.getNextNotice(noticeCode);
 
-//    @GetMapping("/search")
-//    public String findByMenuPrice(@RequestParam Integer menuPrice, Model model){
-//
-//        List<MenuDTO> menuList = menuService.findByMenuPrice(menuPrice);
-//
-//        model.addAttribute("menuList", menuList);
-//
-//        return "menu/searchResult";
-//    }
+    // 조회수 증가(같은 트랜젝션 안에서 조회수 증가되도록 @Transactional 사용)
+    noticeService.increaseViewCount(noticeCode);
+    
+    // 조회된 공지사항을 모델에 추가
+    model.addAttribute("notice", noticeDTO);
+    prevNotice.ifPresent(n -> model.addAttribute("prevNotice", n)); // 이전 글 추가
+    nextNotice.ifPresent(n -> model.addAttribute("nextNotice", n)); // 다음 글 추가
 
-  // 요청 url 이 뷰가 되도록 void 로 작성
-    @GetMapping("/notice-write_ver1")
-    public void registPage(){}
+    return "notice/notice-view"; // 공지사항 상세보기 페이지로 이동
+  }
 
-//    @GetMapping("/category")
-//    @ResponseBody
-//    public List <MenuDTO> findCategoryList(){
-//        return menuService.findAllCategory();
-//    }
 
-    @PostMapping("/notice-write_ver1")
-    public String registNotice(@ModelAttribute NoticeDTO noticeDTO){
-        noticeService.registNotice(noticeDTO);
-        return "redirect:/notice/notice-write_ver1";
+  // 공지사항 등록 시 요청 url 이 뷰가 되도록 void 로 작성
+  @GetMapping("/notice-write_ver1")
+  public void registPage() {
+  }
+
+  // 공지사항 등록
+  @PostMapping("/notice-write_ver1")
+  public String registNotice(@ModelAttribute NoticeDTO noticeDTO) {
+    noticeService.registNotice(noticeDTO);
+
+    return "redirect:/notice/notice-list_ver1";
+  }
+  
+  // 공지사항 수정
+  @GetMapping("/modify/{id}")
+    public String noticeModify(@PathVariable("id") Integer noticeCode, Model model) {
+
+    model.addAttribute("notice", noticeService.findNoticeByNoticeCode(noticeCode));
+
+    return "notice/noticemodify";     // 글쓰기 html과 동일
+    }
+  
+    // 공지사항 수정 진행
+    @PostMapping("/update/{id}")
+  public String noticeUpdate(@PathVariable("id") Integer noticeCode, NoticeDTO noticedto) {
+
+    NoticeDTO noticeDTO1 = noticeService.findNoticeByNoticeCode(noticeCode); // 기존내용 찾기
+    noticeDTO1.setNoticeTitle(noticedto.getNoticeTitle());  // 덮어씌우기
+    noticeDTO1.setNoticeContent(noticedto.getNoticeContent());
+
+    noticeService.registNotice(noticeDTO1);
+    
+    return "redirect:/notice/notice-list_ver1";
+    }
+    
+    // 공지사항 삭제
+    @PostMapping("/delete")
+    public String deleteNotice(@RequestParam("noticeCode") Integer noticeCode) {
+      noticeService.deleteNotice(noticeCode);
+      return "redirect:/notice/notice-list_ver1";
     }
 
 
 
-
-  @GetMapping("/modify")
-  public void modifyPage(){}
-
-  @PostMapping("/modify")
-  public String modifyNotice(@ModelAttribute NoticeDTO noticeDTO){
-    noticeService.modifyNotice(noticeDTO);
-    return "redirect:notice/notice-list_ver1" + noticeDTO.getNoticeCode();
   }
 
-  @GetMapping("/delete")
-  public void deletePage(){}
 
-  @PostMapping("/delete")
-  public String deleteNotice(@RequestParam Integer noticeCode){
-    noticeService.deleteNotice(noticeCode);
-    return "redirect:notice/notice-list_ver1";       // 삭제 후 메뉴 리스트를 보여줌
-  }
 
-}
+
+
+

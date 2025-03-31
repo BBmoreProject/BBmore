@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>장바구니</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+    /* 여백 초기화 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      display: flex;
+      flex-direction: column;
+      /*상하 배치*/
+    }
+
+    /* navbar 스타일 지정 */
+    .nav {
+      /* width: 1920px; */
+      width: 100%;
+      height: 60px;
+      background-color: #F28C25;
+      left: 0px;
+      top: 0px;
+      display: flex;
+      flex-direction: column;
+      /*추가*/
+      text-align: center;
+      position: fixed;
+    }
+
+    .nav a {
+      color: white;
+    }
+
+    .nav a:hover {
+      color: rgb(72, 35, 0);
+    }
+
+    #cart_img {
+      height: 33px;
+      margin: 6px 0px 0px 20px;
+    }
+
+    /* navbar 스타일 지정 */
+
+    #selectMenu {
+      /* 해당 페이지 메뉴명 글씨 두껍게!! */
+      font-weight: 800;
+    }
+
+    #post {
+      /* 공지사항 */
+      position: absolute;
+      width: 180px;
+      height: 20px;
+      /* padding: 20px 40px; */
+      margin: 10px 100px;
+      font-weight: 100;
+      font-size: 18px;
+      line-height: 20px;
+    }
+
+    #question {
+      /* 자주묻는질문 */
+      position: absolute;
+      width: 180px;
+      height: 20px;
+      /* padding: 20px 40px; */
+      margin: 10px 230px;
+      font-weight: 100;
+      font-size: 18px;
+      line-height: 20px;
+    }
+
+    #login {
+      /*  로그아웃 */
+      position: absolute;
+      width: 180px;
+      height: 20px;
+      /* padding: 20px 40px; */
+      margin: 10px 1420px;
+      font-weight: 100;
+      font-size: 18px;
+      line-height: 20px;
+    }
+
+    #signup {
+      /*  회원가입 */
+      position: absolute;
+      width: 180px;
+      height: 20px;
+      /* padding: 20px 40px; */
+      margin: 10px 1530px;
+      font-weight: 100;
+      font-size: 18px;
+      line-height: 20px;
+    }
+
+    #cart {
+      /* 장바구니 */
+      position: absolute;
+      width: 180px;
+      height: 20px;
+      /* padding: 20px 40px; */
+      margin: 0px 1600px;
+      font-weight: 100;
+      font-size: 18px;
+      line-height: 20px;
+    }
+
+    h3 {
+      /* "마이페이지" */
+      font-weight: 800;
+      font-size: 35px;
+      padding: 0px 0px 30px 0px;
+    }
+
+    .menuPage {
+      /* 왼쪽 메뉴 공간 스타일 지정 */
+      width: 400px;
+      padding: 150px 0px 0px 150px;
+      margin: 60px 0px 0px 0px;
+
+    }
+
+    .menuName {
+      /* 왼쪽 메뉴 이름 간격 조정 */
+      padding: 7px 0px;
+      display: block;
+      cursor: pointer;
+    }
+
+    .menuName:hover {
+      color: #F28C25;
+      font-weight: 800;
+    }
+
+    .Logo {
+      display: flex;
+      padding: 200px 0px 0px 0px;
+      align-items: center;
+      /* 세로 중앙 정렬 */
+    }
+
+    #logo_img {
+      /* 왼쪽 메뉴 맨 아래 로고 이미지 */
+      width: 100px;
+    }
+
+    .main {
+      /* navbar 아래 */
+      display: flex;
+      flex: 1;
+    }
+
+    .main_detail {
+      display: block;
+      /* width: 68%; */
+      width: 1300px;
+      padding: 70px 0px 0px 60px;
+      margin: 60px 0px 0px 0px;
+    }
+
+    .Modify_page {
+      font-size: 30px;
+      font-weight: 800;
+    }
+
+    .product {
+      width: 100%;
+    }
+
+    .boxOut {
+      /* display: flex; */
+      width: 100%;
+    }
+
+    /* 전체선택,전체삭제 틀 */
+    .select-all-box {
+      /* flex-grow: 1; */
+      margin: 20px auto;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .delete-button {
+      background-color: #F0F0F0;
+      border-style: none;
+      border-radius: 5px;
+      padding: 6px;
+
+    }
+
+    /* "전체선택" 전체삭제 버튼 사이 간격  */
+    .select-all {
+      padding-right: 20px;
+    }
+
+    /* 체크박스와 "전체선택" 간격 */
+    .select-all input {
+      margin-right: 10px;
+      /* 체크박스와 텍스트 사이의 간격 */
+    }
+
+    .boxIn {
+      /* width: 1080px; */
+      width: 100%;
+      height: 200px;
+      display: flex;
+      /* justify-content: space-between; */
+      align-items: center;
+      padding: 20px;
+      margin: 10px 0;
+      border: 1px solid #c0c0c0;
+      border-radius: 7px;
+    }
+
+    /* 제품 이미지 틀 */
+    .product-img-box {
+      width: auto;
+      /* margin: 30px 20px; */
+      /* border: solid #c0c0c0 1px; */
+      border-radius: 5px;
+      display: flex;
+    }
+
+    /* 이미지 파일 설정 */
+    .product-img-img {
+      width: 180px;
+      height: 180px;
+
+    }
+
+    .button1,
+    .button2,
+    .button3 {
+      width: 170px;
+      height: 35px;
+      padding: 5px 0px;
+      margin: 15px;
+      font-size: 15px;
+      text-align: center;
+      border: solid black 1px;
+      /* #F28C25; => 주황색 */
+      border-radius: 7px;
+    }
+
+    .button1 {
+      border: solid #F28C25 1px;
+    }
+
+
+    .footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 5px;
+      font-size: 10px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* 체크박스 틀 */
+    .product-select {
+      align-self: center;
+      border-bottom: 0;
+      margin-right: 8px;
+      width: 20px;
+      /* text-align: left; */
+    }
+
+    /* 체크박스 자체 설정 */
+    .product-select input[type=checkbox] {
+      position: relative;
+      width: 15px;
+      height: 15px;
+    }
+
+    .product-box {
+      width: fit-content;
+      height: fit-content;
+      align-self: baseline;
+    }
+
+    /* 상품명+삭제버튼 틀 */
+    .product-name-part {
+      padding-bottom: 0;
+      line-height: 3;
+      /* 상품명이랑 금액 간격 */
+      display: flex;
+      align-items: center;
+    }
+
+    /* 상품명 틀 */
+    .product-name-part-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      text-align: right;
+      font-style: normal;
+      font-weight: 400;
+      color: rgb(1, 1, 1);
+    }
+
+    /* moveProduct a 링크 */
+    .product-name-part-content a {
+      display: block;
+      margin-right: 12px;
+      text-align: left;
+    }
+
+    /* 상품명 */
+    .product-name {
+      color: black;
+      /* 폰트색상*/
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 17px;
+      text-align: left;
+    }
+
+    .delete-option {
+      width: fit-content;
+      height: fit-content;
+      /* line-height: 17px; */
+      text-decoration: underline;
+      position: relative;
+    }
+
+    /* 상품 가격 틀 */
+    /* 상품가격 위치 추후 수정 */
+    .price-area {
+      padding: 10px 0 0 10px;
+    }
+
+    /* 상품가격 */
+    .product-price {
+      /* width: fit-content; */
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .quantity-input-container {
+      display: flex;
+      position: relative;
+      width: 100%;
+      align-items: center;
+      left: 10px;
+    }
+
+    .quantity-input-content .quantity-input {
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: 1px solid;
+      width: 80px;
+      /*수량박스크기*/
+      height: 30px;
+      line-height: 32px;
+      /* display: flex; */
+      align-items: center;
+      gap: 2px;
+    }
+
+    .quantity-input-icon {
+      position: relative;
+      border-radius: 10px;
+      border-style: none;
+      top: 1px;
+      cursor: default;
+      width: 25px;
+      height: 27px;
+      /* background-size: cover; */
+    }
+
+    /* 수량 인풋box */
+    .quantity-input {
+      border: 0;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 17px;
+      vertical-align: middle;
+      width: 60px;
+    }
+
+    /* 총 금액(주문하기) 박스 */
+    .cart-total-price {
+      flex: 1;
+      margin: 130px 0px 130px 130px;
+      height: fit-content;
+      padding: 20px 16px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      position: sticky;
+      top: 10px;
+
+    }
+
+    .cart-total-price__inner {
+      width: 100%;
+      display: inline-block;
+      margin: 0 auto;
+      vertical-align: top;
+    }
+
+    .cart-total-price-title {
+      font-size: 18px;
+      font-weight: 700;
+      text-align: left;
+      margin-bottom: 12px;
+      color: #212b36;
+    }
+
+    .cart-total-price-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+    }
+
+    .cart-total-price-item-title {
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .cart-total-price-item-price {
+      font-size: 16px;
+    }
+
+    .price-panel-price-area {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+    }
+
+    /* .shopping-cart-layout{ */
+    /* display: flex; */
+    /* } */
+
+
+  </style>
+</head>
+
+<body>
+<!-- navbar -->
+<nav class="nav">
+  <a class="nav-link" id="post" href="#">공지사항</a>
+  <a class="nav-link" id="question" href="#">자주묻는질문</a>
+  <a class="nav-link" id="login" href="#">로그아웃</a>
+  <a class="nav-link" id="signup" href="#">회원가입</a>
+  <a class="nav-link" id="cart" href="#">
+    <img src="/img/cart.png" alt="장바구니 이미지" id="cart_img">
+  </a>
+</nav>
+<!-- navbar -->
+
+<div class="line"></div>
+
+<div class="main"> <!-- main -->
+
+  <!-- 메뉴 -->
+  <div class="menuPage">
+    <div class="mypage">
+      <h3>마이페이지</h3>
+    </div>
+    <div class="menu">
+      <div class="menuName" id="selectMenu" onclick="location.href='user_구매목록.html';">구매목록</div>
+      <div class="menuName">주문/배송 상태</div>
+      <div class="menuName">장바구니</div>
+      <div class="menuName">교환/반품</div>
+      <div class="menuName">교환/반품 신청 목록 이동</div>
+      <div class="menuName" onclick="location.href='user_리뷰작성.html';">리뷰 작성</div>
+      <div class="menuName" onclick="location.href='user_작성한리뷰.html';">작성한 리뷰</div>
+      <div class="menuName" onclick="location.href='user_회원정보수정.html';">회원 정보 수정</div>
+      <div class="menuName">배송지 관리</div>
+      <div class="Logo">
+        <div class="menuName">
+          <img src="/img/b2.png" alt="BBmore 로고" id="logo_img">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 메뉴 -->
+
+  <div class="main_detail">
+
+    <!--아래 Modify_page 이거 바꾸고 class 이름 바꾸기-->
+    <div class="Modify_page">장바구니</div>
+
+    <!-- 전체선택부분+상품전체틀 -->
+    <div class="shopping-cart-layout">
+      <div class="boxOut"> <!-- 상품 박스 밖 -->
+        <div class="select-all-box">
+          <label> <!--글씨 눌러도 체크박스 눌러지게끔-->
+            <span class="select-all"><input type="checkbox" name="전체선택">전체선택</span>
+          </label>
+          <button class="delete-button" type="button" id="select-all-delete">전체삭제</button>
+        </div>
+        <!-- <div>주문 상세보기 > </div> -->
+
+      </div> <!-- 상품 박스 밖 -->
+
+      <div class="boxIn"> <!-- 상품+총금액 전체틀 -->
+        <div class="product-img-box"> <!-- 제품 이미지 틀 -->
+          <div class="product-select"> <!--체크박스 틀-->
+            <input type="checkbox" title="3651 바이츠 동결건조 대용량 고양이 트릿 상품을 결제상품으로 설정" class="selectChk">
+            </input>
+          </div> <!--product-select끝-->
+          <a href="//www.coupang.com/vp/products/7493440093?vendorItemId=91736865725" class="moveProduct">
+            <img src="/img/상품1.png" alt="상품1" class="product-img-img">
+        </div><!-- 제품 이미지 틀 끝 -->
+
+        <div class="product-box">
+          <div class="product-name-part">
+            <div class="product-name-part-content">
+              <!-- 상품명에 링크삽입 -->
+              <a href="//www.coupang.com/vp/products/7493440093?vendorItemId=91736865725"
+                 class="moveProduct">
+                                    <span class="product-name modify-color">3651 바이츠 동결건조 대용량 고양이 트릿, 북어, 240g,
+                                        2개</span>
+              </a>
+            </div> <!--product-name-part-content끝-->
+
+            <a href="/mypage-cart_test.html" class="delete-option">삭제</a>
+          </div> <!--product-name-part 끝-->
+
+          <!-- 상품 가격 부분 -->
+          <div class="price-area">
+            <div class="product-price">20,555원</div> <!--가격 불러오기-->
+          </div>
+          <!--<a href="/~~ 쿠팡은 링크를 걸었던데.."-->
+          <br>
+
+          <!-- 상품 수량조정 부분-->
+          <div class="quantity-input-container">
+            <div class="quantity-input-content">
+              <button class="quantity-input-icon minus-button">-</button>
+              <input data-max-quantity="50" data-url="/memberCartItem/quantity/34378850526/"
+                     class="quantity-input" type="text" value="1">
+              <!-- 이미지 넣기 -->
+              <button class="quantity-input-icon plus-button">+</button>
+            </div> <!--quantity-input-content-->
+          </div> <!--quantity-input-container끝-->
+          <!-- <div style="display: none;" class="quantit-input-max-quantity-tooltip">최대 구매 가능한 수량으로 변경됐습니다.</div>/ -->
+        </div> <!---->
+
+        <!-- 우측 총 금액 박스 -->
+        <div class="cart-total-price">
+          <div class="cart-total-price__inner">
+            <div class="cart-total-price-title"> 주문 예상 금액 </div>
+            <div class="cart-total-price-item">
+              <div class="cart-total-price-item-title"> 총 상품 가격 </div>
+              <div class="cart-total-price-item-price total-sale-price">
+                            <span class="price-panel-price-area">
+                                <em class="final-product-price">0</em>
+                                "원 "</span> <!--0원-->
+              </div> <!--total-sale-price-->
+            </div> <!--cart-total-price-item-->
+
+            <!-- 할인 만들어야되나 -->
+
+            <div class="cart-total-price-item total-delivery-fee">
+              <div class="cart-total-price-item-title"> 총 배송비 </div>
+              <div class="cart-total-price-item-price">
+                            <span id="totalDeliveryPrice" class="price-panel-price-area">
+                                <em class="operator">+</em>
+                                <em class="final-product-price">0</em>
+                                "원 "
+                            </span>
+              </div> <!--price-item-price끝-->
+            </div> <!--total-delivery-fee끝-->
+          </div> <!--cart-total-price__inner끝-->
+          <div id="finalOrderPrice" class="cart-final-order-price"></div>
+          <div class="order-buttons">
+            <a href="javascript:void(0);" class="goPayment narrow" id="btnPay"
+               data-pay-url="/cart/orderV3?isAllChecked=false">
+              구매하기
+              <span>&nbsp;(0)</span></a>
+            <div class="item-disabled" style="display: none;"></div>
+          </div> <!--order-buttons끝-->
+        </div> <!--cart-total-price끝-->
+
+      </div> <!--상품 박스안 boxIn 끝-->
+    </div> <!--shopping-cart-layout 전체선택부분~상품틀-->
+
+  </div> <!--main_detail끝-->
+
+</div> <!--main끝-->
+<!-- <div class="showMore">더보기</div> -->
+<!-- main -->
+<footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
+</body>
+
+</html>
