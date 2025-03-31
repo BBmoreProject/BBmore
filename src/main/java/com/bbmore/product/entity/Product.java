@@ -19,7 +19,7 @@ public class Product extends BaseTimeEntity {
     @Id
     ///  기본키 생성 전략 AUTO -> IDENTITY
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_code")
+//    @Column(name = "product_code")
     private Long productId;
 
     /// 항상 값이 있어야 하는 필드는 Not Null 설정
