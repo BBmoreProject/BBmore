@@ -1,5 +1,7 @@
 package com.bbmore.product.entity;
 
+import com.bbmore.product.config.BaseEntity;
+import com.bbmore.product.config.BaseTimeEntity;
 import com.bbmore.product.constant.Role;
 import com.bbmore.product.dto.MemberFormDTO;
 import jakarta.persistence.*;
@@ -17,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * 회원 정보를 정리하는 MemberEntity
  * 관리할 회원 정보는 이름, 이메일, 비밀번호, 주소, 역할
  */
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @Column(name="member_id")

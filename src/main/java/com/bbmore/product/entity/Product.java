@@ -1,5 +1,6 @@
 package com.bbmore.product.entity;
 
+import com.bbmore.product.config.BaseTimeEntity;
 import com.bbmore.product.constant.ProductSellStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @Table(name = "tbl_product")
-public class Product {
+public class Product extends BaseTimeEntity {
 
     @Id
     ///  기본키 생성 전략 AUTO -> IDENTITY
@@ -36,10 +37,6 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private ProductSellStatus productSellStatus;
 
-    ///  생성시간, 수정시간
-    private LocalDateTime productRegTime;
-
-    private LocalDateTime productUpdateTime;
 
 
 

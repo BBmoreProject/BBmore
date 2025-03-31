@@ -1,5 +1,6 @@
 package com.bbmore.product.entity;
 
+import com.bbmore.product.config.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Cart {
+public class Cart extends BaseTimeEntity {
 
     @Id
     @Column(name = "cart_id")
