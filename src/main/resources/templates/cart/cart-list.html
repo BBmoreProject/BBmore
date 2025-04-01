@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>장바구니</title>
+  <title>장바구니test2</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -22,7 +22,7 @@
 
     html,
     body {
-      height: 100%;
+      min-height: 100vh;
     }
 
     body {
@@ -129,6 +129,7 @@
 
     h3 {
       /* "마이페이지" */
+      width: 250px;
       font-weight: 800;
       font-size: 35px;
       padding: 0px 0px 30px 0px;
@@ -222,8 +223,7 @@
     }
 
     .boxIn {
-      /* width: 1080px; */
-      width: 100%;
+      width: 1100px;
       height: 200px;
       display: flex;
       /* justify-content: space-between; */
@@ -232,6 +232,7 @@
       margin: 10px 0;
       border: 1px solid #c0c0c0;
       border-radius: 7px;
+      position: absolute;
     }
 
     /* 제품 이미지 틀 */
@@ -239,14 +240,20 @@
       width: auto;
       /* margin: 30px 20px; */
       /* border: solid #c0c0c0 1px; */
-      border-radius: 5px;
+      /* border-radius: 5px; */
       display: flex;
+      position: absolute;
+
     }
 
     /* 이미지 파일 설정 */
     .product-img-img {
+      position: relative;
       width: 180px;
-      height: 180px;
+      height: fit-content;
+      left: 30px;
+      top: 5px;
+
 
     }
 
@@ -283,9 +290,9 @@
 
     /* 체크박스 틀 */
     .product-select {
+      position: absolute;
       align-self: center;
-      border-bottom: 0;
-      margin-right: 8px;
+      /* margin-right: 20px; */
       width: 20px;
       /* text-align: left; */
     }
@@ -298,36 +305,46 @@
     }
 
     .product-box {
-      width: fit-content;
-      height: fit-content;
-      align-self: baseline;
+      position: relative;
     }
 
     /* 상품명+삭제버튼 틀 */
     .product-name-part {
+      position: relative;
       padding-bottom: 0;
-      line-height: 3;
+      line-height: 2;
       /* 상품명이랑 금액 간격 */
-      display: flex;
+      /* display: flex; */
       align-items: center;
     }
 
     /* 상품명 틀 */
     .product-name-part-content {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      text-align: right;
+      /* flex: 1; */
+      /* display: flex; */
+      background-color: chartreuse;
+      position: relative;
+      /* align-items: center; */
+      /* text-align: right; */
       font-style: normal;
       font-weight: 400;
+      top: 30px;
       color: rgb(1, 1, 1);
+      left: 230px;
+      width: fit-content;
+      /* bottom: 100px; */
     }
 
     /* moveProduct a 링크 */
     .product-name-part-content a {
-      display: block;
-      margin-right: 12px;
-      text-align: left;
+      position: relative;
+      /* left: 230px;
+      bottom: 100px; */
+      /* text-align: center;
+      justify-content: center; */
+      /* display: block; */
+      /* margin-right: 12px; */
+      /* text-align: center; */
     }
 
     /* 상품명 */
@@ -341,33 +358,43 @@
     }
 
     .delete-option {
-      width: fit-content;
-      height: fit-content;
+      /* width: fit-content;
+      height: fit-content; */
       /* line-height: 17px; */
       text-decoration: underline;
-      position: relative;
+      position: absolute;
+      left: 600px;
     }
 
     /* 상품 가격 틀 */
     /* 상품가격 위치 추후 수정 */
     .price-area {
-      padding: 10px 0 0 10px;
+      /* padding: 10px 0 0 10px; */
+      position: relative;
+      background-color: #F28C25;
+      width: 130px;
+      left: 230px;
+      top: 50px;
     }
 
     /* 상품가격 */
     .product-price {
-      /* width: fit-content; */
+
       font-size: 20px;
       font-weight: 700;
       margin: 0;
+      left: 230px;
+      top: 50px;
     }
 
     .quantity-input-container {
-      display: flex;
+      /* display: flex; */
       position: relative;
-      width: 100%;
-      align-items: center;
-      left: 10px;
+      width: 30%;
+      background-color: aquamarine;
+      /* align-items: center; */
+      left: 230px;
+      top: 45px;
     }
 
     .quantity-input-content .quantity-input {
@@ -407,15 +434,14 @@
 
     /* 총 금액(주문하기) 박스 */
     .cart-total-price {
-      flex: 1;
-      margin: 130px 0px 130px 130px;
+      position: relative;
+      width: 350px;
+      margin: 0px 0px 0px 0px;
       height: fit-content;
       padding: 20px 16px;
       border: 1px solid #ddd;
       border-radius: 4px;
-      position: sticky;
-      top: 10px;
-
+      left: 60px;
     }
 
     .cart-total-price__inner {
@@ -459,72 +485,13 @@
     /* display: flex; */
     /* } */
 
-
-  </style>
-  <script>
-    const userCode = 1;  // 사용자 고유번호 (로그인한 사용자에 맞게 변경)
-
-    // 1. 장바구니 목록 조회
-    function loadCartList() {
-      $.ajax({
-        url: `/api/cart/${userCode}`,
-        method: 'GET',
-        success: function(data) {
-          let html = '';
-          data.forEach(cart => {
-            html += `
-                            <div>
-                                <input type="checkbox" class="cart-checkbox" data-cart-code="${cart.cartCode}">
-                                <span>${cart.product.productName}</span>
-                                <input type="number" class="quantity" value="${cart.cartProductQuantity}" data-cart-code="${cart.cartCode}">
-                            </div>
-                        `;
-          });
-          $('#cartList').html(html);
-        }
-      });
+    .half {
+      position: relative;
+      width: 650px;
+      height: 200px;
+      border: solid 5px #d71313;
     }
-
-    // 2. 장바구니 상품 수량 조정
-    $(document).on('change', '.quantity', function() {
-      const cartCode = $(this).data('cart-code');
-      const quantity = $(this).val();
-
-      $.ajax({
-        url: `/api/cart/${cartCode}?quantity=${quantity}`,
-        method: 'PUT',
-        success: function(response) {
-          alert(response);
-        }
-      });
-    });
-
-    // 3. 장바구니 상품 삭제
-    $('#deleteSelected').click(function() {
-      const selectedCartCodes = [];
-      $('.cart-checkbox:checked').each(function() {
-        selectedCartCodes.push($(this).data('cart-code'));
-      });
-
-      $.ajax({
-        url: '/api/cart',
-        method: 'DELETE',
-        data: { cartCodes: selectedCartCodes },
-        traditional: true,
-        success: function(response) {
-          alert(response);
-          loadCartList();  // 삭제 후 장바구니 목록 다시 로드
-        }
-      });
-    });
-
-    // 페이지 로드 시 장바구니 목록 조회
-    loadCartList();
-  </script>
-
-
-
-
+  </style>
 </head>
 
 <body>
@@ -535,7 +502,7 @@
   <a class="nav-link" id="login" href="#">로그아웃</a>
   <a class="nav-link" id="signup" href="#">회원가입</a>
   <a class="nav-link" id="cart" href="#">
-    <img src="/img/cart.png" alt="장바구니 이미지" id="cartimg">
+    <img src="/img/cart.png" alt="장바구니 이미지" id="cart_img">
   </a>
 </nav>
 <!-- navbar -->
@@ -587,48 +554,72 @@
       </div> <!-- 상품 박스 밖 -->
 
       <div class="boxIn"> <!-- 상품+총금액 전체틀 -->
-        <div class="product-img-box"> <!-- 제품 이미지 틀 -->
-          <div class="product-select"> <!--체크박스 틀-->
-            <input type="checkbox" title="3651 바이츠 동결건조 대용량 고양이 트릿 상품을 결제상품으로 설정" class="selectChk">
-            </input>
-          </div> <!--product-select끝-->
-          <a href="//www.coupang.com/vp/products/7493440093?vendorItemId=91736865725" class="moveProduct">
-            <img src="/img/p1.png" alt="상품1" class="product-img-img"></a>
-        </div><!-- 제품 이미지 틀 끝 -->
+<!-- mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm -->
+        <!-- 장바구니 목록이 있을 경우 -->
+<!--        <div th:if="${#lists.isEmpty(cartList)}">-->
+<!--          <p>장바구니에 아이템이 없습니다.</p>-->
+<!--        </div>-->
 
-        <div class="product-box">
-          <div class="product-name-part">
-            <div class="product-name-part-content">
-              <!-- 상품명에 링크삽입 -->
-              <a href="//www.coupang.com/vp/products/7493440093?vendorItemId=91736865725"
-                 class="moveProduct">
-                                    <span th:${} class="product-name modify-color">3651 바이츠 동결건조 대용량 고양이 트릿, 북어, 240g,
-                                        2개</span>
-              </a>
-            </div> <!--product-name-part-content끝-->
+<!--        <div th:if="${!#lists.isEmpty(cartList)}">-->
+<!--          <ul>-->
+<!--            &lt;!&ndash; 장바구니 아이템 목록을 반복문으로 출력 &ndash;&gt;-->
+<!--            <li th:each="cart : ${cartList}">&ndash;&gt;-->
+<!--              <p>상품명: <span th:text="${cart.product.productName}"></span></p>&ndash;&gt;-->
+<!--              <p>수량: <span th:text="${cart.product.productQuantity}"></span></p>&ndash;&gt;-->
+<!--              <p>가격: <span th:text="${cart.product.productPrice}"></span> 원</p>&ndash;&gt;-->
+<!--            </li>&ndash;&gt;-->
+<!--          </ul>&ndash;&gt;-->
+<!--        </div>&ndash;&gt;-->
 
-            <a href="#" type="button" class="delete-option">삭제</a>
-          </div> <!--product-name-part 끝-->
+<!-- mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm -->
 
-          <!-- 상품 가격 부분 -->
-          <div class="price-area">
-            <div class="product-price">20,555원</div> <!--가격 불러오기-->
-          </div>
-          <!--<a href="/~~ 쿠팡은 링크를 걸었던데.."-->
-          <br>
 
-          <!-- 상품 수량조정 부분-->
-          <div class="quantity-input-container">
-            <div class="quantity-input-content">
-              <button class="quantity-input-icon minus-button">-</button>
-              <input data-max-quantity="50" data-url="/memberCartItem/quantity/34378850526/"
-                     class="quantity-input" type="text" value="1">
-              <!-- 이미지 넣기 -->
-              <button class="quantity-input-icon plus-button">+</button>
-            </div> <!--quantity-input-content-->
-          </div> <!--quantity-input-container끝-->
-          <!-- <div style="display: none;" class="quantit-input-max-quantity-tooltip">최대 구매 가능한 수량으로 변경됐습니다.</div>/ -->
-        </div> <!---->
+        <div th:each="cart : ${cartList}" class="half" >
+          <div class="product-img-box"> <!-- 제품 이미지 틀 -->
+            <div class="product-select"> <!--체크박스 틀-->
+              <input type="checkbox" title="상품명?" class="selectChk">
+              </input>
+            </div> <!--product-select끝-->
+            <a href="//www.coupang.com/vp/products/7493440093?vendorItemId=91736865725"
+               class="moveProduct"></a>
+              <img src="/img/상품1.png" alt="상품1" class="product-img-img">
+          </div> <!-- 제품 이미지 틀 끝 -->
+
+          <div class="product-box" >
+            <div class="product-name-part">
+              <div class="product-name-part-content">
+                <!-- 상품명에 링크삽입 -->
+                <a href="//www.coupang.com/vp/products/7493440093?vendorItemId=91736865725"
+                   class="moveProduct">
+                  <p class="product-name modify-color"><span th:text="${cart.product.productName}"></span> 개껌칫솔</p>
+                </a>
+              </div> <!--product-name-part-content끝-->
+
+              <a href="/mypage-cart_test.html" class="delete-option">삭제</a>
+            </div> <!--product-name-part 끝 -->
+
+            <!-- 상품 가격 부분 -->
+            <div class="price-area">
+              <div class="product-price"><span th:text="${cart.product.productPrice}"></span></div> <!--가격 불러오기-->
+            </div>
+            <!--<a href="/~~ 쿠팡은 링크를 걸었던데.."-->
+            <br>
+
+            <!-- 상품 수량조정 부분-->
+            <!-- 원래 -->
+            <div class="quantity-input-container">
+              <div class="quantity-input-content">
+                <button class="quantity-input-icon minus-button" >-</button>
+                <input data-max-quantity="50" class="quantity-input" type="text">
+                <span th:text="${cart.product.productQuantity}"></span>
+                <!-- 이미지 넣기 -->
+                <button class="quantity-input-icon plus-button">+</button>
+              </div> <!--quantity-input-content-->
+            </div> <!--quantity-input-container끝-->
+            <!-- <div style="display: none;" class="quantit-input-max-quantity-tooltip">최대 구매 가능한 수량으로 변경됐습니다.</div>/ -->
+          </div> <!-- product-box끝 -->
+        </div> <!--새로 추가-->
+
 
         <!-- 우측 총 금액 박스 -->
         <div class="cart-total-price">
@@ -637,9 +628,9 @@
             <div class="cart-total-price-item">
               <div class="cart-total-price-item-title"> 총 상품 가격 </div>
               <div class="cart-total-price-item-price total-sale-price">
-                            <span class="price-panel-price-area">
-                                <em class="final-product-price">0</em>
-                                "원 "</span> <!--0원-->
+                                    <span class="price-panel-price-area">
+                                        <em class="final-product-price">0</em>
+                                        "원 "</span> <!--0원-->
               </div> <!--total-sale-price-->
             </div> <!--cart-total-price-item-->
 
@@ -648,28 +639,29 @@
             <div class="cart-total-price-item total-delivery-fee">
               <div class="cart-total-price-item-title"> 총 배송비 </div>
               <div class="cart-total-price-item-price">
-                            <span id="totalDeliveryPrice" class="price-panel-price-area">
-                                <em class="operator">+</em>
-                                <em class="final-product-price">0</em>
-                                "원 "
-                            </span>
+                                    <span id="totalDeliveryPrice" class="price-panel-price-area">
+                                        <em class="operator">+</em>
+                                        <em class="final-product-price">0</em>
+                                        "원 "
+                                    </span>
               </div> <!--price-item-price끝-->
             </div> <!--total-delivery-fee끝-->
           </div> <!--cart-total-price__inner끝-->
           <div id="finalOrderPrice" class="cart-final-order-price"></div>
           <div class="order-buttons">
-            <a href="javascript:void(0);" type="button" class="goPayment narrow" id="btnPay"
+            <a href="javascript:void(0);" class="goPayment narrow" id="btnPay"
                data-pay-url="/cart/orderV3?isAllChecked=false">
               구매하기
               <span>&nbsp;(0)</span></a>
             <div class="item-disabled" style="display: none;"></div>
           </div> <!--order-buttons끝-->
-        </div> <!--cart-total-price끝-->
+        </div>
+      </div> <!--cart-total-price끝-->
 
-      </div> <!--상품 박스안 boxIn 끝-->
-    </div> <!--shopping-cart-layout 전체선택부분~상품틀-->
+    </div> <!--상품 박스안 boxIn 끝-->
+  </div> <!--shopping-cart-layout 전체선택부분~상품틀-->
 
-  </div> <!--main_detail끝-->
+</div> <!--main_detail끝-->
 
 </div> <!--main끝-->
 <!-- <div class="showMore">더보기</div> -->

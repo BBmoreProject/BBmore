@@ -30,7 +30,7 @@ public class UserCart {
   @Column(name = "cart_product_quantity", nullable = false)
   private Integer cartProductQuantity;  // 장바구니 상품수량
 
-  @OneToOne // 회원들은 각자 자신의 장바구니 갖고있고(일대일), 장바구니 입장에서도 자신과 매핑되는 1명의 회원을 가짐(일대일)
+  @ManyToOne  // 하나의 장바구니에는 하나의 회원이 연결된다.
   @JoinColumn(name = "user_code", nullable = false)
   private Member member; // FK 회원
 
@@ -38,12 +38,6 @@ public class UserCart {
   @JoinColumn(name = "product_code", nullable = false)
   private Product product; // FK 상품
 
-  // 생성자에서 모든 필드 초기화
-  public UserCart(int cartProductQuantity, Member member, Product product) {
-    this.cartProductQuantity = cartProductQuantity;
-    this.member = member;
-    this.product = product;
-  }
 
   // 수량을 설정하는 setter 메서드
   public void setCartProductQuantity(Integer cartProductQuantity) {

@@ -3,6 +3,8 @@ package com.bbmore.member.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 
 @Entity
 @Data
@@ -15,8 +17,11 @@ public class Member {
   private Integer userCode;  // 회원 고유 번호 (Primary Key)
 
   // 장바구니와 1:1 관계
-  @OneToOne(mappedBy = "member")  // 이 관계는 `UserCart` 엔티티에 의해 관리됨
-  private UserCart userCart; // 회원이 가질 수 있는 장바구니
+//  @OneToOne(mappedBy = "member")  // 이 관계는 `UserCart` 엔티티에 의해 관리됨
+//  private UserCart userCart; // 회원이 가질 수 있는 장바구니
+
+  @OneToMany(mappedBy = "member") // 회원은 여러 개의 장바구니 항목을 가질 수 있다.
+  private List<UserCart> userCarts; // 장바구니 항목 리스트
 
 
   private String userName;  // 회원 이름
