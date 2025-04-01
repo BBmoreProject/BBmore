@@ -226,6 +226,7 @@
             width: 1100px;
             height: 200px;
             display: flex;
+            /*flex-direction: column;*/
             /* justify-content: space-between; */
             align-items: center;
             padding: 20px;
@@ -497,23 +498,7 @@
         }
     </style>
 </head>
-<script>
-    /*수량변경함수*/
-    function updateQuantity(delta) {
-        var quantityInput = document.getElementById("quantity-input");
-        var currentQuantity = parseInt(quantityInput.value);   /*현재 수량 가져오기*/
-        var maxQuantity = parseInt(quantityInput.getAttribute("data-max-quantity"));  /*최대 수량 가져오기*/
-        /*수량 변경*/
-        var newQuantity = currentQuantity + delta;
 
-    /*수량이 0 이상, 최대 수량 이하로 제한*/
-if (newQuantity >= 0 && newQuantity <= maxQuantity) {
-    quantityInput.value = newQuantity;  /* input 박스에 새로운 수량을 설정*/
-    document.getElementById("quantity-display").innerText = newQuantity;  /*span에 수량을 표시*/
-    }
-    }
-
-</script>
 
 <body>
 <!-- navbar -->
@@ -598,10 +583,13 @@ if (newQuantity >= 0 && newQuantity <= maxQuantity) {
                 <!--half 새로 추가-->
                 <div th:each="cart : ${cartList}" class="half">
                     <div class="product-img-box"> <!-- 제품 이미지 틀 -->
-                        <div class="product-select"> <!--체크박스 틀-->
+
+                        <!--상품 체크박스 틀-->
+                        <div class="product-select">
                             <input type="checkbox" title="상품명?" class="selectChk">
-                            </input>
                         </div> <!--product-select끝-->
+
+                        <!-- moveProduct 상품 이미지에 걸린 링크-->
                         <a href="//www.coupang.com/vp/products/7493440093?vendorItemId=91736865725"
                            class="moveProduct"></a>
                         <img src="/img/p1.png" alt="상품1" class="product-img-img">
@@ -618,6 +606,7 @@ if (newQuantity >= 0 && newQuantity <= maxQuantity) {
                                 </a>
                             </div> <!--product-name-part-content끝-->
 
+                            <!--상품 개별 삭제 버튼(삭제 후 리다이렉트: 장바구니 목록)-->
                             <a href="/mypage-cart_test.html" src="" class="delete-option">삭제</a>
                         </div> <!--product-name-part 끝 -->
 
@@ -633,23 +622,35 @@ if (newQuantity >= 0 && newQuantity <= maxQuantity) {
                         <!-- 원래 -->
                         <div class="quantity-input-container">
                             <div class="quantity-input-content">
-                                <!-- 수량 감소 버튼 -->
-                                <button class="quantity-input-icon minus-button"
-                                        onclick="updateQuantity(-1)">-</button>
-                                <!-- 수량 표시용 input -->
-                                <input id="quantity-input" data-max-quantity="50" class="quantity-input" type="number" value="0">
-                                <!-- 수량 표시용 span -->
-                                <span id="quantity-display" th:text="${cart.cartProductQuantity}"></span>
+                                <!-- 수량 감소 버튼 수정중 ver3 안됨-->
+<!--                                <button type="button" class="quantity-input-icon minus-button" data-cart-code="${cart.cartCode}" onclick="updateQuantity(this, -1)">-</button>-->
 
-                                <!-- 수량 증가 버튼 -->
-                                <button class="quantity-input-icon plus-button"
-                                        onclick="updateQuantity(1)">+</button>
+
+
+                                <!--  수량 감소 버튼 원본-->
+                                <button class="quantity-input-icon minus-button" onclick="updateQuantity(-1)">-</button>
+
+                                <!-- 수량 표시용 input -->
+<!--                                <input id="quantity-input" data-max-quantity="50" class="quantity-input" type="number" value="0">-->
+
+                                <!-- 수량 표시용 span -->
+                                <span id=quantity-display th:text="${cart.cartProductQuantity}" data-cart-code="${cart.cartCode}"></span>
+
+
+
+                                <!-- 수량 증가 버튼 수정 ver3 안됨 -->
+<!--                                <button type="button" class="quantity-input-icon plus-button" data-cart-code="${cart.cartCode}" onclick="updateQuantity(this, 1)">+</button>-->
+
+
+
+                                <!-- 수량 증가 버튼 원본 -->
+                                <button class="quantity-input-icon plus-button" onclick="updateQuantity(1)">+</button>
+
                             </div> <!--quantity-input-content-->
                         </div> <!--quantity-input-container 끝-->
                     </div> <!-- product-box 끝 -->
                 </div> <!--half 새로 추가-->
                 <!-- <div style="display: none;" class="quantit-input-max-quantity-tooltip">최대 구매 가능한 수량으로 변경됐습니다.</div>/ -->
-
 
 
                 <!-- 우측 총 금액 박스 -->
@@ -695,6 +696,103 @@ if (newQuantity >= 0 && newQuantity <= maxQuantity) {
 <!-- <div class="showMore">더보기</div> -->
 <!-- main -->
 <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
+
+<script>
+    /*수량변경함수 (ver.1- db반영안됨)*/
+    // function updateQuantity(delta) {
+    //     var quantityInput = document.getElementById("quantity-input");
+    //     var currentQuantity = parseInt(quantityInput.value);   /*현재 수량 가져오기*/
+    //     var maxQuantity = parseInt(quantityInput.getAttribute("data-max-quantity"));  /*최대 수량 가져오기*/
+    //     /*수량 변경*/
+    //     var newQuantity = currentQuantity + delta;
+    //
+    // /*수량이 0 이상, 최대 수량 이하로 제한*/
+    // if (newQuantity >= 0 && newQuantity <= maxQuantity) {
+    //     quantityInput.value = newQuantity;  /* input 박스에 새로운 수량을 설정*/
+    //     document.getElementById("quantity-display").innerText = newQuantity;  /*span에 수량을 표시*/
+    //     }
+    //     }
+
+    /* 수량 변경 함수(ver.2 - db반영되도록, 숫자는 불러와짐(이게 그나마 나은 버전임)) */
+    function updateQuantity(delta) {
+        var quantityDisplay = document.getElementById("quantity-display");
+        var cartCode = quantityDisplay.getAttribute("data-cart-code");   // 해당 장바구니 ID 가져오기
+        var currentQuantity = parseInt(quantityDisplay.innerText);  // 현재 수량 가져오기
+        var maxQuantity = 50;  // 최대 수량 지정
+        var newQuantity = currentQuantity + delta;
+
+        // 수량이 1 이상, 최대 수량 이하일 때만 변경
+        if (newQuantity >= 1 && newQuantity <= maxQuantity) {
+            // 화면에 새로운 수량 적용
+            quantityDisplay.innerText = newQuantity;
+
+            // 서버에 수량 업데이트 요청 (AJAX)
+            // fetch 경로 수정하지말것
+            console.log("Sending cartCode: ", cartCode);    // 로그 확인용
+            fetch('cart-list/updateQuantity', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    cartCode: Number(cartCode),
+                    newQuantity: Number(newQuantity)
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log("수량 업데이트 성공");
+                    } else {
+                        console.error("수량 업데이트 실패");
+                    }
+                }).catch(error => {
+                console.error("에러 발생:", error);
+            });
+        }
+    }
+
+    // 수량 변경 함수(ver.3 - 버튼은 눌림, db반영안됨, 개수가 2배씩 늘어남)
+    // function updateQuantity(button, delta) {
+    //     var cartCode = button.getAttribute("data-cart-code");
+    //     var quantityDisplay = document.getElementById("quantity-display-" + cartCode);
+    //     var currentQuantity = parseInt(quantityDisplay.innerText);
+    //     var maxQuantity = 50;
+    //     var newQuantity = currentQuantity + delta;
+    //
+    //     if (newQuantity >= 1 && newQuantity <= maxQuantity) {
+    //         quantityDisplay.innerText = newQuantity;
+    //
+    //         fetch('cart-list/updateQuantity', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({
+    //                 cartCode: Number(cartCode),
+    //                 newQuantity: Number(newQuantity)
+    //             })
+    //         }).then(response => response.json())
+    //             .then(data => {
+    //                 if (data.success) {
+    //                     console.log("수량 업데이트 성공");
+    //                 } else {
+    //                     console.error("수량 업데이트 실패");
+    //                 }
+    //             }).catch(error => {
+    //             console.error("에러 발생:", error);
+    //         });
+    //     }
+    // }
+    //
+    // document.querySelectorAll('.quantity-input-icon').forEach(function(button) {
+    //     button.addEventListener('click', function() {
+    //         var delta = this.classList.contains('plus-button') ? 1 : -1;
+    //         updateQuantity(this, delta);
+    //     });
+    // });
+
+</script>
 </body>
+
 
 </html>

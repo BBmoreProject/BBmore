@@ -30,27 +30,33 @@ public class UserCart {
   @Column(name = "cart_product_quantity", nullable = false)
   private Integer cartProductQuantity;  // 장바구니 상품수량
 
-  @OneToOne  // 하나의 장바구니에는 하나의 회원이 연결된다.
+//  @OneToOne  // 하나의 장바구니에는 하나의 회원이 연결된다.
+//  @JoinColumn(name = "user_code", nullable = false)
+//  private Member member; // FK 회원
+
+
+  @ManyToOne  // 장바구니 고유번호 1개당 하나의 회원이 연결된다.(AI 걸어놔서 이렇게 해야됨)
   @JoinColumn(name = "user_code", nullable = false)
   private Member member; // FK 회원
 
-  @ManyToOne    // 하나의 장바구니에는 여러 개의 상품이 들어갈 수 있음
+
+  @ManyToOne  // 하나? 여러개?의 장바구니에는 여러 개의 상품이 들어갈 수 있음 (장바구니1,상품1)
   @JoinColumn(name = "product_code", nullable = false)
   private Product product; // FK 상품
 
 
   // 수량을 설정하는 setter 메서드
-  public void setCartProductQuantity(Integer cartProductQuantity) {
-    if (cartProductQuantity < 0) {
-      throw new IllegalArgumentException("수량은 0보다 작을 수 없습니다.");
-    }
-    this.cartProductQuantity = cartProductQuantity;
-  }
+//  public void setCartProductQuantity(Integer cartProductQuantity) {
+//    if (cartProductQuantity < 0) {
+//      throw new IllegalArgumentException("수량은 0보다 작을 수 없습니다.");
+//    }
+//    this.cartProductQuantity = cartProductQuantity;
+//  }
 
   // 수량을 가져오는 getter 메서드
-  public Integer getCartProductQuantity() {
-    return this.cartProductQuantity;
-  }
+//  public Integer getCartProductQuantity() {
+//    return this.cartProductQuantity;
+//  }
 
 
 }

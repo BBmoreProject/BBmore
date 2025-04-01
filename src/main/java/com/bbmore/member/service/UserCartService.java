@@ -1,18 +1,15 @@
 package com.bbmore.member.service;
 
-import com.bbmore.member.dto.UserCartDTO;
-import com.bbmore.member.entity.Member;
-import com.bbmore.member.entity.Product;
+
 import com.bbmore.member.entity.UserCart;
 import com.bbmore.member.repository.MemberRepository;
 import com.bbmore.member.repository.ProductRepository;
 import com.bbmore.member.repository.UserCartRepository;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.Optional;
 
@@ -20,6 +17,9 @@ import java.util.List;
 @Slf4j
 @Service
 public class UserCartService {
+
+//    @Autowired  // ver.1 수량은 불러와짐
+//    private  UserCartRepository userCartRepository;
 
     @Autowired
     private UserCartRepository userCartRepository;
@@ -37,14 +37,19 @@ public class UserCartService {
         return userCartRepository.findByMember_UserCode(userCode);
     }
 
-    // 2. 장바구니 상품 수량 업데이트
-    public void updateCartQuantity(Integer cartCode, Integer quantity) {
-        UserCart cart = userCartRepository.findById(cartCode)
-            .orElseThrow(() -> new IllegalArgumentException("장바구니가 존재하지 않습니다."));
-
-        cart.setCartProductQuantity(quantity);
-        userCartRepository.save(cart);  // 수량 업데이트 후 저장
+    // 장바구니 상품 수량 업데이트
+    public void updateCartQuantity(Integer cartCode, Integer newQuantity) {
+        userCartRepository.updateQuantity(cartCode, newQuantity);
     }
+
+    // 2. 장바구니 상품 수량 업데이트
+//    public void updateCartQuantity(Integer cartCode, Integer quantity) {
+//        UserCart cart = userCartRepository.findById(cartCode)
+//            .orElseThrow(() -> new IllegalArgumentException("장바구니가 존재하지 않습니다."));
+//
+//        cart.setCartProductQuantity(quantity);
+//        userCartRepository.save(cart);  // 수량 업데이트 후 저장
+//    }
 
 
     // 3. 장바구니에서 선택된 상품 삭제
