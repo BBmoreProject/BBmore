@@ -18,6 +18,8 @@
       flex-direction: row;
       min-height: 100vh;
     }
+
+    /* 좌측 관리자 사이드바 */
     .nav {
       width: 200px;
       background: #D9D9D9;
@@ -26,25 +28,35 @@
       flex-direction: column;
       position: relative;
     }
-    li.nav-logo {
+
+    /* 사이드바 상단 로고틀*/
+    li.nav-logo{
       position: fixed;
       width: 200px;
-      height: 160px;
+      height: 160px; /*건드리지말것*/
+
     }
-    li.nav-logo img {
+
+    /* 사이드바 상단 로고이미지 */
+    li.nav-logo img{
       width: 100%;
       height: 100%;
-      padding: 10%;
+      padding: 10%;  /*로고크기*/
       object-fit: contain;
     }
+
+    /* 사이드바 상위 메뉴 */
     .nav ul {
       list-style: none;
-      padding: 0;
     }
+
+    /* 사이드바 하위 메뉴 */
     .nav ul li {
       margin: 15px 0;
       position: relative;
     }
+
+    /* 사이드바-공지사항 관리 텍스트 */
     .nav ul li a {
       color: rgb(0, 0, 0);
       font-size: 20px;
@@ -53,6 +65,8 @@
       padding: 8px;
       cursor: pointer;
     }
+
+    /* 사이드바-서브메뉴 틀 */
     .nav ul .submenu {
       display: none;
       list-style: none;
@@ -60,6 +74,12 @@
       background: #444;
       width: 200px;
     }
+
+    .nav ul .submenu li {
+      margin: 0;
+    }
+
+    /* 사이드바 하위 메뉴 텍스트(공지사항, 자주묻는질문) */
     .nav ul .submenu li a {
       padding: 10px;
       color: #ffffff;
@@ -67,9 +87,24 @@
       display: block;
       background-color: #9B9B9B;
     }
+
     .nav ul li.active .submenu {
       display: block;
     }
+
+    li.nav-logo {
+      position: fixed;
+      width: 200px;
+      height: 160px;
+    }
+
+    li.nav-logo img {
+      width: 100%;
+      height: 100%;
+      padding: 10%;
+      object-fit: contain;
+    }
+
     .bottom-logo {
       position: absolute;
       bottom: 3px;
@@ -143,7 +178,7 @@
       flex-shrink: 0;
     }
 
-    /* info-item 기본 스타일 */
+
     table {
       width: 100%;
       table-layout: fixed;
@@ -169,7 +204,7 @@
     }
 
     table th:nth-child(4), table td:nth-child(4) {
-      width: 10%;
+      width: 13%;
     }
 
     table th:nth-child(5), table td:nth-child(5) {
@@ -180,17 +215,6 @@
       width: 35%;
     }
 
-    /*table {*/
-    /*  width: 100%;*/
-    /*  table-layout: fixed;*/
-    /*}*/
-    /*table th, table td {*/
-    /*  padding: 10px;*/
-    /*  border: 1px solid #ccc;*/
-    /*  text-align: center;*/
-    /*  border-radius: 7px;*/
-    /*}*/
-    /* 기존 CSS + 모달 개선 */
     .modal {
       display: none;
       position: fixed;
@@ -280,44 +304,57 @@
       cursor: pointer;
     }
 
-
-
   </style>
 </head>
 
 <body>
-<nav class="nav">
-  <ul>
-    <li class="nav-logo"><img id="b1" src="/static/b1.png" alt="로고"></li>
-    <li class="menu-1">
-      <a href="#">회원 관리</a>
-      <ul class="submenu">
-        <li><a href="/members">회원 관리</a></li>
+    <nav class="nav">
+      <ul>
+        <li class="nav-logo" style="margin: 0;"><img id="b1" src="/b1.png" alt="로고"></li>
+        <li class="menu-1">
+          <a href="#">회원 관리</a>
+          <ul class="submenu">
+            <li><a onclick="location.href='/members/list'">회원 관리</a></li>
+          </ul>
+        </li>
+        <li class="menu-2">
+          <a href="#">상품 관리</a>
+          <ul class="submenu">
+            <li><a href="product-1.html">상품 등록</a></li>
+            <li><a href="product_2.html">상품 조회</a></li>
+          </ul>
+        </li>
+        <li class="menu-3">
+          <a href="#">판매 관리</a>
+          <ul class="submenu">
+            <li><a href="order-1.html">주문 조회</a></li>
+            <li><a href="order-2.html">반품 관리</a></li>
+            <li><a href="order-3.html">교환 관리</a></li>
+          </ul>
+        </li>
+        <li class="menu-4">
+          <a href="#">배송 관리</a>
+          <ul class="submenu">
+            <li><a onclick="location.href='/members/delivery-1'">주문 조회</a></li>
+<!--            <li><a href="delivery-2.html">주문 현황</a></li>-->
+          </ul>
+        </li>
+        <li class="menu-5">
+          <a href="#">리뷰 관리</a>
+          <ul class="submenu">
+            <li><a href="notice_5.html">리뷰 목록</a></li>
+          </ul>
+        </li>
+        <li class="menu-6">
+          <a href="#">공지사항 관리</a>
+          <ul class="submenu">
+            <li><a href="notice_5.html">공지사항</a></li>
+            <li><a href="faq_5.html">자주 묻는 질문</a></li>
+          </ul>
+        </li>
+        <div class="bottom-logo"><img id="b2" src="/b2.png" alt="로고"></div>
       </ul>
-    </li>
-    <li class="menu-2">
-      <a href="#">상품 관리</a>
-      <ul class="submenu">
-        <li><a href="#">상품 등록</a></li>
-        <li><a href="#">상품 조회</a></li>
-      </ul>
-    </li>
-    <li class="menu-3">
-      <a href="#">리뷰 관리</a>
-      <ul class="submenu">
-        <li><a href="#">리뷰 목록</a></li>
-      </ul>
-    </li>
-    <li class="menu-4">
-      <a href="#">공지사항</a>
-      <ul class="submenu">
-        <li><a href="#">공지사항 목록</a></li>
-        <li><a href="#">FAQ</a></li>
-      </ul>
-    </li>
-    <div class="bottom-logo"><img id="b2" src="/static/b2.png" alt="하단로고"></div>
-  </ul>
-</nav>
+    </nav>
 
 <div class="container">
   <header class="header">회원 관리</header>
@@ -331,9 +368,9 @@
   </div>
 
   <div class="info-container">
-    <table class="info-item">
-      <thead>
-      <tr>
+    <table class="info-item" >
+      <thead style="background-color: #363636">
+      <tr style="color: #f0f0f0">
         <th>코드</th>
         <th>이름</th>
         <th>전화번호</th>
@@ -380,7 +417,6 @@
     loadMembers(); // 회원 목록 로드
   });
 
-  // 🔁 테이블 한 줄만 수정
   function updateTableRow(id, updatedData) {
     const rows = document.querySelectorAll("#memberTableBody tr");
     rows.forEach(row => {
@@ -394,14 +430,12 @@
     });
   }
 
-  // 🔄 전체 회원 목록 렌더링
   async function loadMembers() {
     const res = await fetch("/api/members");
     const data = await res.json();
     renderMembers(data);
   }
 
-  // 📋 테이블 구성
   function renderMembers(members) {
     const tbody = document.getElementById("memberTableBody");
     tbody.innerHTML = "";
@@ -420,7 +454,6 @@
     });
   }
 
-  // ✏️ 모달 열기
   function openModal(member) {
     document.getElementById("memberId").value = member.userCode;
     document.getElementById("memberName").value = member.userName;
@@ -431,12 +464,10 @@
     document.getElementById("memberModal").classList.add("show");
   }
 
-  // ❌ 모달 닫기
   function closeModal() {
     document.getElementById("memberModal").classList.remove("show");
   }
 
-  // ✅ 회원 정보 수정
   async function updateMember() {
     const id = document.getElementById("memberId").value;
     const body = {
@@ -455,15 +486,13 @@
     closeModal();
   }
 
-  // 🗑️ 회원 삭제
   async function deleteMember() {
     const id = document.getElementById("memberId").value;
     await fetch(`/api/members/${id}`, { method: "DELETE" });
     closeModal();
-    loadMembers(); // 전체 갱신
+    loadMembers();
   }
 
-  // 🔍 검색
   async function searchMembersByName() {
     const name = document.getElementById("searchName").value;
     const phone = document.getElementById("searchPhone").value;
@@ -473,7 +502,6 @@
     renderMembers(data);
   }
 
-  // ⎋ ESC 눌러도 모달 닫기
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") {
       closeModal();

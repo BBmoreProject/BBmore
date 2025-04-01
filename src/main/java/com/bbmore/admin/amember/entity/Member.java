@@ -12,20 +12,20 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userCode;
-
     private String userName;
     private String userAddress;
     private String userMembershipLevel;
     private String userPhoneNumber;
 
-    @Column(name = "animal_breed")
-    private String animalBreed;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "animal_code", referencedColumnName = "animalCode")
+    private Animal animal;
 
     public MemberDTO toDTO() {
         return MemberDTO.builder()
@@ -34,7 +34,7 @@ public class Member {
                 .userAddress(this.userAddress)
                 .userMembershipLevel(this.userMembershipLevel)
                 .userPhoneNumber(this.userPhoneNumber)
-                .animalBreed(this.animalBreed)
+                .animalBreed(this.animal != null ? this.animal.getAnimalBreed() : null)
                 .build();
     }
 }
