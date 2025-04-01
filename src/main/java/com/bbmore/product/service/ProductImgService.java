@@ -2,6 +2,7 @@ package com.bbmore.product.service;
 
 import com.bbmore.product.entity.ProductImg;
 import com.bbmore.product.repository.ProductImgRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -45,5 +46,41 @@ public class ProductImgService {
         ///  ProductImg 객체에 파일명과 URL 정보를 업데이트합니다.
         productImg.updateProductImg(originalFilename, productImgName, productImgUrl);
         productImgRepository.save(productImg);
+
+
+    }
+    public void updateProductImg(Long productImgId, MultipartFile productImgFile)
+            throws Exception {
+
+        ///  update img id, new imgFile Object,
+
+
+        /**
+         * 1. productImgidRep to find
+         * 2. if id is not null, delete old file
+         * 3. upload new file
+         *  3.1. uploadFile() = file Upload
+         *  3.2. original file,
+         *  3.3. file actual data: ByteArray
+         * 4. update productImg object
+         */
+        if(!productImgFile.isEmpty()) {
+            ProductImg savedProductImg = productImgRepository.findById(productImgId)
+                    .orElseThrow(EntityNotFoundException::new);
+
+            if(!StringUtils.isEmpty(savedProductImg.getProductImgName())) {
+                fileService.deleteFile(productImgLocation + "/" +
+                        savedProductImg.getProductImgName());
+
+            }
+
+            String originalImgName = productImgFile.getOriginalFilename();
+            String productImgName = fileService.uploadFile(productImgLocation,
+                    originalImgName, productImgFile.getBytes());
+            String productImgUrl = "/images/products/" + productImgName;
+            savedProductImg.updateProductImg(originalImgName, productImgName, productImgUrl);
+
+
+        }
     }
 }

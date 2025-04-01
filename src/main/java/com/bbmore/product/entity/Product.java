@@ -1,20 +1,19 @@
 package com.bbmore.product.entity;
 
-import com.bbmore.product.config.BaseTimeEntity;
+import com.bbmore.product.config.BaseEntity;
 import com.bbmore.product.constant.ProductSellStatus;
+import com.bbmore.product.dto.ProductFormDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @ToString
 @Table(name = "tbl_product")
-public class Product extends BaseTimeEntity {
+public class Product extends BaseEntity {
 
     @Id
     ///  기본키 생성 전략 AUTO -> IDENTITY
@@ -36,6 +35,14 @@ public class Product extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private ProductSellStatus productSellStatus;
+
+    public void updateProduct(ProductFormDTO productFormDTO){
+        this.productName = productFormDTO.getProductName();
+        this.productPrice = productFormDTO.getPrice();
+        this.productStock = productFormDTO.getStockNumber();
+        this.productDetail = productFormDTO.getProductDetail();
+        this.productSellStatus = productFormDTO.getProductSellStatus();
+    }
 
 
 

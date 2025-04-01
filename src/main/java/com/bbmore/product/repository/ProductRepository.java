@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long>, QuerydslPredicateExecutor<Product> {
+public interface ProductRepository extends JpaRepository<Product, Long>,
+        QuerydslPredicateExecutor<Product>, ProductRepositoryCustom {
 
     List<Product> findByProductName(String productName);
 

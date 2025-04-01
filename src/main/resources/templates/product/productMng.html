@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchBtn = document.getElementById('searchBtn');
+            searchBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                page(0);
+            });
+        });
+
+        const page = (page) => {
+            const searchDateType = document.getElementById('searchDateType').value;
+            const searchSellStatus = document.getElementById('searchSellStatus').value;
+            const searchBy = document.getElementById('searchBy').value;
+            const searchQuery = document.getElementById('searchQuery').value;
+
+            location.href = `/admin/products/${page}?searchDateType=${searchDateType}&searchSellStatus=${searchSellStatus}&searchBy=${searchBy}&searchQuery=${searchQuery}`;
+        };
+    </script>
+</th:block>
+
+<th:block layout:fragment="css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .product-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0;
+        }
+
+        .product-header {
+            margin-bottom: 20px;
+        }
+
+        .product-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .card {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            background-color: #f8f8f8;
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 600;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .table {
+            width: 100%;
+            margin-bottom: 0;
+            border-collapse: collapse;
+        }
+
+        .table thead {
+            background-color: #f8f8f8;
+        }
+
+        .table thead td {
+            font-weight: 600;
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .table tbody td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            vertical-align: middle;
+            font-size: 14px;
+        }
+
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .product-link {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .product-link:hover {
+            text-decoration: underline;
+        }
+
+        .product-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-selling {
+            background-color: #e3f2fd;
+            color: #0d47a1;
+        }
+
+        .status-soldout {
+            background-color: #ffebee;
+            color: #b71c1c;
+        }
+
+        .pagination {
+            margin: 20px 0;
+        }
+
+        .page-item.active .page-link {
+            background-color: #ff6b01;
+            border-color: #ff6b01;
+        }
+
+        .page-link {
+            color: #333;
+            cursor: pointer;
+        }
+
+        .page-link:hover {
+            color: #ff6b01;
+        }
+
+        .search-container {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-label {
+            display: block;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .search-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .search-group {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        select.form-control, input.form-control {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 8px 10px;
+            font-size: 14px;
+            color: #333;
+            background-color: #fff;
+        }
+
+        select.form-control {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8.825L1.175 4 2.05 3.125 6 7.075 9.95 3.125 10.825 4 6 8.825z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        select.form-control:focus, input.form-control:focus {
+            border-color: #ff6b01;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 107, 1, 0.1);
+        }
+
+        .search-button {
+            background-color: #ff6b01;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 20px;
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            min-width: 80px;
+        }
+
+        .search-button:hover {
+            background-color: #e86000;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-cancel {
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .btn-submit {
+            background-color: #ff6b01;
+            color: #fff;
+            border: 1px solid #ff6b01;
+        }
+
+        .btn-cancel:hover {
+            background-color: #e0e0e0;
+        }
+
+        .btn-submit:hover {
+            background-color: #e86000;
+        }
+
+        @media (max-width: 768px) {
+            .search-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-group {
+                width: 100%;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</th:block>
+
+<div layout:fragment="content" class="product-container">
+    <div class="product-header">
+        <h1 class="product-title">상품 관리</h1>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <td>상품아이디</td>
+                    <td>상품명</td>
+                    <td>상태</td>
+                    <td>등록자</td>
+                    <td>등록일</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product, status: ${products.getContent()}">
+                    <td th:text="${product.productId}"></td>
+                    <td>
+                        <a class="product-link" th:href="'/admin/product/'+${product.productId}" th:text="${product.productName}"></a>
+                    </td>
+                    <td>
+                            <span class="product-status" th:classappend="${product.productSellStatus == T(com.bbmore.product.constant.ProductSellStatus).SELL} ? 'status-selling' : 'status-soldout'"
+                                  th:text="${product.productSellStatus == T(com.bbmore.product.constant.ProductSellStatus).SELL} ? '판매중' : '품절'"></span>
+                    </td>
+                    <td th:text="${product.createdBy}"></td>
+                    <td th:text="${product.regTime}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div th:with="start=${(products.number/maxPage)*maxPage + 1}, end=(${(products.totalPages == 0) ? 1 : (start + (maxPage - 1) < products.totalPages ? start + (maxPage - 1) : products.totalPages)})" >
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${products.first}?'disabled'">
+                <a th:onclick="'javascript:page(' + ${products.number - 1} + ')'" aria-label='Previous' class="page-link">
+                    <span aria-hidden='true'>&laquo;</span>
+                </a>
+            </li>
+
+            <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${products.number == page-1}?'active':''">
+                <a th:onclick="'javascript:page(' + ${page - 1} + ')'" th:inline="text" class="page-link">[[${page}]]</a>
+            </li>
+
+            <li class="page-item" th:classappend="${products.last}?'disabled'">
+                <a th:onclick="'javascript:page(' + ${products.number + 1} + ')'" aria-label='Next' class="page-link">
+                    <span aria-hidden='true'>&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            검색조건
+        </div>
+        <div class="card-body">
+            <form class="search-row" th:object="${productSearchDTO}">
+                <div class="search-group">
+                    <label class="search-label">기간</label>
+                    <select th:field="*{searchDateType}" class="form-control">
+                        <option value="all">전체기간</option>
+                        <option value="1d">1일</option>
+                        <option value="1w">1주</option>
+                        <option value="1m">1개월</option>
+                        <option value="6m">6개월</option>
+                    </select>
+                </div>
+                <div class="search-group">
+                    <label class="search-label">판매상태</label>
+                    <select th:field="*{searchSellStatus}" class="form-control">
+                        <option value="">전체</option>
+                        <option value="SELL">판매</option>
+                        <option value="SOLD_OUT">품절</option>
+                    </select>
+                </div>
+                <div class="search-group">
+                    <label class="search-label">검색유형</label>
+                    <select th:field="*{searchBy}" class="form-control">
+                        <option value="productName">상품명</option>
+                        <option value="createdBy">등록자</option>
+                    </select>
+                </div>
+                <div class="search-group">
+                    <label class="search-label">검색어</label>
+                    <input th:field="*{searchQuery}" type="text" class="form-control" placeholder="검색어를 입력해주세요">
+                </div>
+                <div class="search-group" style="flex-basis: 100px; flex-grow: 0;">
+                    <button id="searchBtn" type="submit" class="search-button">검색</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 상품 등록 버튼 제거됨 -->
+</div>
+
+</html>
