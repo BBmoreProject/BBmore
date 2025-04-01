@@ -30,7 +30,7 @@ public class UserCart {
   @Column(name = "cart_product_quantity", nullable = false)
   private Integer cartProductQuantity;  // 장바구니 상품수량
 
-  @ManyToOne  // 하나의 장바구니에는 하나의 회원이 연결된다.
+  @OneToOne  // 하나의 장바구니에는 하나의 회원이 연결된다.
   @JoinColumn(name = "user_code", nullable = false)
   private Member member; // FK 회원
 

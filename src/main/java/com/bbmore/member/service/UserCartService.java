@@ -40,7 +40,7 @@ public class UserCartService {
     // 2. 장바구니 상품 수량 업데이트
     public void updateCartQuantity(Integer cartCode, Integer quantity) {
         UserCart cart = userCartRepository.findById(cartCode)
-                .orElseThrow(() -> new IllegalArgumentException("장바구니가 존재하지 않습니다."));
+            .orElseThrow(() -> new IllegalArgumentException("장바구니가 존재하지 않습니다."));
 
         cart.setCartProductQuantity(quantity);
         userCartRepository.save(cart);  // 수량 업데이트 후 저장
@@ -59,9 +59,9 @@ public class UserCartService {
 //    public String addProductToCart(Integer productCode, Integer userCode, Integer quantity) {
 //        // 회원과 상품 조회
 //        Member member = memberRepository.findById(userCode)
-//                .orElseThrow(() -> new RuntimeException("회원이 존재하지 않습니다."));
+//            .orElseThrow(() -> new RuntimeException("회원이 존재하지 않습니다."));
 //        Product product = productRepository.findById(productCode)
-//                .orElseThrow(() -> new RuntimeException("상품이 존재하지 않습니다."));
+//            .orElseThrow(() -> new RuntimeException("상품이 존재하지 않습니다."));
 //
 //        // 이미 장바구니에 해당 상품이 존재하는지 확인
 //        UserCart existingCart = userCartRepository.findByMember_UserCodeAndProduct_ProductCode(userCode, productCode);
@@ -77,6 +77,7 @@ public class UserCartService {
 //            userCartRepository.save(newCart);
 //            return "상품이 장바구니에 추가되었습니다.";
 //        }
-    }
+//    }
+}
 
 
