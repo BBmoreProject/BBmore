@@ -4,18 +4,22 @@ package com.bbmore.order.controller;
 import com.bbmore.order.common.Pagenation;
 import com.bbmore.order.common.PagingButton;
 import com.bbmore.order.dto.OrderDTO;
+import com.bbmore.order.entity.Order;
 import com.bbmore.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j      // 로거 객체 선언을 위한 어노테이션
 @Controller
@@ -86,4 +90,62 @@ public class OrderController {
 
         return "order/order-1";
     }
+
+
+    @GetMapping("/order-1-data")
+    public String searchOrders(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            Model model, @PageableDefault Pageable pageable
+    ) {
+        List<Order> orders = new ArrayList<>();
+
+        if (username != null && startDate != null && endDate != null) {
+            orders = orderService.getOrdersByUsernameAndDate(username, startDate, endDate);
+        }
+
+        model.addAttribute("orders", orders);
+
+        log.info("pageable: {}", pageable);
+
+        Page<OrderDTO> orderList = orderService.findOrderList(pageable);
+
+        log.info("{}", orderList.getContent());
+        log.info("{}", orderList.getTotalPages());
+        log.info("{}", orderList.getTotalElements());
+        log.info("{}", orderList.getSize());
+        log.info("{}", orderList.getNumberOfElements());
+        log.info("{}", orderList.isFirst());
+        log.info("{}", orderList.isLast());
+        log.info("{}", orderList.getSort());
+        log.info("{}", orderList.getNumber());
+
+
+        PagingButton paging = Pagenation.getPagingButtonInfo(orderList);
+
+        model.addAttribute( "orderList", orderList);
+        model.addAttribute("paging", paging);
+
+        return "order/order-1-data";
+    }
+
+
+    @GetMapping("/order-4")
+    public String searchOrders1(
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            Model model
+    ) {
+        List<Order> orders = new ArrayList<>();
+
+        if (username != null && startDate != null && endDate != null) {
+            orders = orderService.getOrdersByUsernameAndDate(username, startDate, endDate);
+        }
+
+        model.addAttribute("orders", orders);
+        return "order/order-4";
+    }
+
 }

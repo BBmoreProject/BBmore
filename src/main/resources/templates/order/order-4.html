@@ -4,46 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=devioce-width, initial-scale=1.0" />
     <title>교환 관리</title>
-
+</head>
 <body>
-<h1> 메뉴 목록 </h1>
-<table>
-    <tr th:each="order : ${orderList}">
-        <td th:text="${order.orderCode}"></td>
-        <td th:text="${order.orderTotalPrice}"></td>
-        <td th:text="${order.orderDate}"></td>
-        <td th:text="${order.orderStatus}"></td>
-    </tr>
-</table>
 
-<div id="paging">
-    <!-- 맨 앞으로 이동 -->
-    <button th:onclick="|location.href='@{/order/order-1(page=${paging.startPage})}'|">
-        <<
-    </button>
-    <!-- 이전 페이지로 이동 -->
-    <button th:onclick="|location.href='@{/order/order-1(page=${paging.currentPage - 1})}'|"
-            th:disabled="${orderList.first}">
-        <
-    </button>
-    <!-- 숫자 버튼 -->
-    <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
-        <button th:onclick="|location.href='@{/order/order-1(page=${page})}'|"
-                th:text="${page}"
-                th:disabled="${paging.currentPage eq page}">
-        </button>
-    </th:block>
-    <!-- 다음 페이지로 이동 -->
-    <button th:onclick="|location.href='@{/order/order-1(page=${paging.currentPage + 1})}'|"
-            th:disabled="${orderList.last}">
-        >
-    </button>
-    <!-- 맨 끝으로 이동 -->
-    <button th:onclick="|location.href='@{/order/order-1(page=${paging.endPage})}'|">
-        >>
-    </button>
+<div class="container mt-5">
+    <h2>주문 조회</h2>
+    <form action="/order/order-4" method="get" class="mb-4">
+        <div class="row">
+            <div class="col-md-3">
+                <label>구매자 이름</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <label>시작 날짜</label>
+                <input type="date" name="startDate" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <label>종료 날짜</label>
+                <input type="date" name="endDate" class="form-control" required>
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">조회</button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>주문 ID</th>
+            <th>구매자명</th>
+            <th>주문 날짜</th>
+            <th>총 금액</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.orderCode}"></td>
+            <td th:text="${order.member.userName}"></td>
+            <td th:text="${order.orderDate}"></td>
+            <td th:text="${order.orderTotalPrice}"></td>
+        </tr>
+        <tr th:if="${orders.isEmpty()}">
+            <td colspan="4" class="text-center">조회된 주문이 없습니다.</td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
-
 </body>
 </html>

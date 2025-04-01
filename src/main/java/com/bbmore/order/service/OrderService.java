@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -22,13 +23,13 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ModelMapper modelMapper;
 
-    /* findById */
-    public OrderDTO findMenuByMenuCode(int menuCode) {
-
-        Order foundMenu = orderRepository.findById(menuCode).orElseThrow(IllegalArgumentException::new);
-
-        return modelMapper.map(foundMenu, OrderDTO.class);
-    }
+//    /* findById */
+//    public OrderDTO findMenuByMenuCode(int menuCode) {
+//
+//        Order foundMenu = orderRepository.findById(menuCode).orElseThrow(IllegalArgumentException::new);
+//
+//        return modelMapper.map(foundMenu, OrderDTO.class);
+//    }
 
 
     /* findAll : Sort */
@@ -54,4 +55,10 @@ public class OrderService {
             return orderDTO;
         });
     }
+
+    public List<Order> getOrdersByUsernameAndDate(String username, LocalDate startDate, LocalDate endDate) {
+        return orderRepository.findOrdersByUsernameAndDateRange(username, startDate, endDate);
+    }
+
+
 }
