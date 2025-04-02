@@ -13,14 +13,14 @@ import java.util.Map;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/cart")
+@RequestMapping("/cart")    // "/cart" 경로로 시작하는 모든 요청 처리
 public class UserCartController {
 
     @Autowired
     private UserCartService userCartService;
 
-    //     사용자의 장바구니 목록 조회
-    @GetMapping("/cart-list")
+    // 사용자의 장바구니 목록 조회
+    @GetMapping("/cart-list")   // 실제 경로는 "/cart/cart-list"
     public String getUserCart(Model model) {
         Integer userCode = 2; // 실제 사용자 코드로 교체
         List<UserCart> cartList = userCartService.getCartListByUser(userCode);
@@ -28,13 +28,10 @@ public class UserCartController {
         return "cart/cart-list";
     }
 
-    //ver.3  null 값 처리해보기.. 4:29
+    // 장바구니 수량 변경
     @PostMapping("/cart-list/updateQuantity")
     @ResponseBody
-    //requestData
-
     public Map<String, Object> updateCartQuantity(@RequestBody Map<String, Object> requestData) {
-
 
 //        int cartCode = (int) payload.get("cartCode");
 //        int newQuantity = (int) payload.get("newQuantity");
@@ -45,19 +42,23 @@ public class UserCartController {
 //        response.put("success", success);
 
 
+        // cartCode, newQuantity 값을 가져옴
         // Optional을 사용하여 null을 안전하게 처리
         Optional<Object> cartCodeObj = Optional.ofNullable(requestData.get("cartCode"));
         Optional<Object> newQuantityObj = Optional.ofNullable(requestData.get("newQuantity"));
 
         if (cartCodeObj.isPresent() && newQuantityObj.isPresent()) {
             try {
+                // cartCode와 newQuantity가 존재하면 숫자로 변환
                 Integer cartCode = Integer.parseInt(cartCodeObj.get().toString());
                 Integer newQuantity = Integer.parseInt(newQuantityObj.get().toString());
 
-                // 장바구니 수량 업데이트
+                // 서비스 호출하여 db에 장바구니 수량 업데이트
                 userCartService.updateCartQuantity(cartCode, newQuantity);
 
+                // 성공하면
                 response.put("success", true);
+
             } catch (NumberFormatException e) {
                 response.put("success", false);
                 response.put("error", "숫자 형식이 올바르지 않습니다.");
@@ -69,8 +70,18 @@ public class UserCartController {
             response.put("error", "cartCode 또는 newQuantity가 요청에서 누락되었습니다.");
         }
 
-        return response;
+        return response;    // JSON 응답 반환
     }
+
+    // 장바구니에서 상품 제거
+    @DeleteMapping("/")
+    @ResponseBody   // JSON 응답을 반환할 수 있게 또는 메시지 텍스트를 직접 반환
+    public String deleteCartItems(@RequestParam List<Integer> cartCodes) {  //URL 파라미터로 전달된 여러 개의 cartCode를 한 번에 받습니다.
+        userCartService.deleteCartItems(cartCodes);
+        return "선택한 상품들이 장바구니에서 삭제되었습니다.";
+    }
+
+
 }
 
 
@@ -150,45 +161,6 @@ public class UserCartController {
 
 
 
-
-        //ver.2 - cartCode null 값 해결 못함
-//@PostMapping("/cart-list/updateQuantity")
-//@ResponseBody
-//public Map<String, Object> updateCartQuantity(@RequestBody UpdateCartRequest updateRequest) {
-//    Map<String, Object> response = new HashMap<>();
-//
-//    if (updateRequest.getCartCode() == null || updateRequest.getNewQuantity() == null) {
-//        throw new IllegalArgumentException("❌ cartCode 또는 newQuantity가 요청에서 누락됨!");
-//    }
-//
-//    try {
-//        Integer cartCode = updateRequest.getCartCode();
-//        Integer newQuantity = updateRequest.getNewQuantity();
-//
-//        System.out.println("✅ 업데이트 요청: cartCode = " + cartCode + ", newQuantity = " + newQuantity);
-//
-//        // 장바구니 수량 업데이트
-//        userCartService.updateCartQuantity(cartCode, newQuantity);
-//
-//        response.put("success", true);
-//    } catch (Exception e) {
-//        System.out.println("업데이트 실패: " + e.getMessage());
-//        response.put("success", false);
-//        response.put("error", e.getMessage());
-//    }
-//
-//    return response;
-//}
-
-
-        // 2. 장바구니 상품 수량 조정
-//    @PutMapping("/{cartCode}")
-//    public String updateCartQuantity(@PathVariable Integer cartCode, @RequestParam Integer quantity) {
-//        userCartService.updateCartQuantity(cartCode, quantity);
-//        return "장바구니 수량이 업데이트되었습니다.";
-//    }
-
-
         // 장바구니에 상품 추가
 //    @PostMapping("/add")
 //    public String addProductToCart(@RequestBody CartRequest cartRequest) {
@@ -196,10 +168,6 @@ public class UserCartController {
 //        return userCartService.addProductToCart(cartRequest.getProductCode(), cartRequest.getUserCode(), cartRequest.getCartProductQuantity());
 //    }
 
-        //  // 장바구니에서 상품 제거
-//    @DeleteMapping("/")
-//    public String deleteCartItems(@RequestParam List<Integer> cartCodes) {
-//        userCartService.deleteCartItems(cartCodes);
-//        return "선택한 상품들이 장바구니에서 삭제되었습니다.";
-//    }
+
+
 

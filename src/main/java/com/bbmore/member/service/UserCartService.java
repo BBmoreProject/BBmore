@@ -6,6 +6,7 @@ import com.bbmore.member.repository.MemberRepository;
 import com.bbmore.member.repository.ProductRepository;
 import com.bbmore.member.repository.UserCartRepository;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class UserCartService {
         return userCartRepository.findByMember_UserCode(userCode);
     }
 
-    // 장바구니 상품 수량 업데이트
+    /* 장바구니 상품 수량 업데이트 */
     @Transactional
     public void updateCartQuantity(Integer cartCode, Integer newQuantity) {
 
@@ -45,12 +46,12 @@ public class UserCartService {
     }
 
 
-    // 3. 장바구니에서 선택된 상품 삭제
-//    public void deleteCartItems(List<Integer> cartCodes) {
-//        for (Integer cartCode : cartCodes) {
-//            userCartRepository.deleteById(cartCode);  // 해당 장바구니 상품을 삭제
-//        }
-//    }
+    /* 장바구니에서 선택된 상품 삭제 */
+    public void deleteCartItems(List<Integer> cartCodes) {
+        for (Integer cartCode : cartCodes) {
+            userCartRepository.deleteById(cartCode);  // 해당 장바구니 상품을 삭제
+        }
+    }
 
 }
 

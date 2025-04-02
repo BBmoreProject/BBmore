@@ -3,338 +3,337 @@
 <!--잘됨-->
 
 <head>
-  <meta charset="UTF-8">
-  <title>new수정본</title>
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <title>new수정본</title>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      /* display: flex; */
-      font-family: Arial, sans-serif;
-      line-height: 1.5;
-      background-color: #f4f4f4;
-    }
-
-
-    .navbar {
-      background-color: #ff8c00;
-      padding: 20px;
-      color: white;
-      text-align: center;
-    }
-
-    .navbar ul {
-      list-style: none;
-    }
-
-    .navbar ul li {
-      display: inline;
-      margin: 0 15px;
-    }
-
-    .navbar ul li a {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    /* mypage - maindetail이랑 같은 부분 */
-    .cart {
-      /*건드리지마*/
-      display: flex;
-      width: 1300px;
-      justify-content: space-between;
-      padding: 70px 0px 0px 60px;
-      margin: 60px 0px 0px 0px;
-      /* max-width: 1200px; */
-      /* margin: 0 auto; */
-
-      border: 2px solid #c2c2c2;
-      /***삭제예정*/
-    }
-
-    /* 추가 */
-    .main-content {
-      min-height: calc(100vh - 60px);
-      /* 화면 높이에서 푸터 높이(60px)를 뺀 만큼 */
-      padding-bottom: 60px;
-      /* 푸터가 화면 하단에 고정되도록 하기 위해 추가 여백 */
-    }
-
-    .cart-items {
-      width: 70%;
-    }
-
-    .cart-item {
-      background-color: white;
-      margin-bottom: 15px;
-      padding: 20px;
-      border: 1px solid #c0c0c0;
-      border-radius: 7px;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .item-select {
-      margin-right: 20px;
-    }
-
-    .item-info {
-      display: flex;
-      align-items: center;
-    }
-
-    .item-img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      margin-right: 20px;
-    }
-
-    .item-details {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .item-price {
-      font-size: 18px;
-      color: #ff8c00;
-    }
-
-    .item-quantity {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .item-quantity input {
-      width: 50px;
-      text-align: center;
-    }
-
-    .item-total-price {
-      font-weight: bold;
-      margin-left: 20px;
-    }
-
-    .remove-item {
-      background-color: #ff8c00;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .remove-item:hover {
-      background-color: #ff6600;
-    }
-
-    .cart-summary {
-      width: 25%;
-      background-color: white;
-      padding: 20px;
-      border-radius: 5px;
-      border: 1px solid #ddd;
-    }
-
-    .summary-item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .total {
-      font-weight: bold;
-      font-size: 18px;
-      color: #ff8c00;
-    }
-
-    .checkout-btn {
-      background-color: #ff8c00;
-      color: white;
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 18px;
-    }
-
-    .checkout-btn:hover {
-      background-color: #ff6600;
-    }
-
-    .footer {
-      background-color: #222;
-      color: white;
-      text-align: center;
-      padding: 5px;
-      font-size: 10px;
-      position: fixed;
-      width: 100%;
-      bottom: 0;
-    }
-
-    /* 추가 */
-
-    .nav {
-      /* width: 1920px; */
-      width: 100%;
-      height: 60px;
-      background-color: #F28C25;
-      left: 0px;
-      top: 0px;
-      display: flex;
-      text-align: center;
-      position: fixed;
-    }
-
-    .nav a {
-      color: white;
-    }
-
-    .nav a:hover {
-      color: rgb(72, 35, 0);
-    }
-
-    #cart_img {
-      height: 33px;
-      margin: 6px 0px 0px 20px;
-    }
+        body {
+            /* display: flex; */
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            background-color: #f4f4f4;
+        }
 
 
-    /* navbar 스타일 지정 */
-    #selectMenu {
-      /* 해당 페이지 메뉴명 글씨 두껍게!! */
-      font-weight: 800;
-    }
+        .navbar {
+            background-color: #ff8c00;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
 
-    #post {
-      /* 공지사항 */
-      position: absolute;
-      width: 180px;
-      height: 20px;
-      /* padding: 20px 40px; */
-      margin: 10px 100px;
-      font-weight: 100;
-      font-size: 18px;
-      line-height: 20px;
-    }
+        .navbar ul {
+            list-style: none;
+        }
 
-    #question {
-      /* 자주묻는질문 */
-      position: absolute;
-      width: 180px;
-      height: 20px;
-      /* padding: 20px 40px; */
-      margin: 10px 230px;
-      font-weight: 100;
-      font-size: 18px;
-      line-height: 20px;
-    }
+        .navbar ul li {
+            display: inline;
+            margin: 0 15px;
+        }
 
-    #login {
-      /*  로그아웃 */
-      position: absolute;
-      width: 180px;
-      height: 20px;
-      /* padding: 20px 40px; */
-      margin: 10px 1420px;
-      font-weight: 100;
-      font-size: 18px;
-      line-height: 20px;
-    }
+        .navbar ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-    #signup {
-      /*  회원가입 */
-      position: absolute;
-      width: 180px;
-      height: 20px;
-      /* padding: 20px 40px; */
-      margin: 10px 1530px;
-      font-weight: 100;
-      font-size: 18px;
-      line-height: 20px;
-    }
+        /* mypage - maindetail이랑 같은 부분 */
+        .cart {
+            /*건드리지마*/
+            display: flex;
+            width: 1300px;
+            justify-content: space-between;
+            padding: 70px 0px 0px 60px;
+            margin: 60px 0px 0px 0px;
+            /* max-width: 1200px; */
+            /* margin: 0 auto; */
+
+            border: 2px solid #c2c2c2;
+            /***삭제예정*/
+        }
+
+        /* 추가 */
+        .main-content {
+            min-height: calc(100vh - 60px);
+            /* 화면 높이에서 푸터 높이(60px)를 뺀 만큼 */
+            padding-bottom: 60px;
+            /* 푸터가 화면 하단에 고정되도록 하기 위해 추가 여백 */
+        }
+
+        .cart-items {
+            width: 70%;
+        }
+
+        .cart-item {
+            background-color: white;
+            margin-bottom: 15px;
+            padding: 20px;
+            border: 1px solid #c0c0c0;
+            border-radius: 7px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .item-select {
+            margin-right: 20px;
+        }
+
+        .item-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .item-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-price {
+            font-size: 18px;
+            color: #ff8c00;
+        }
+
+        .item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .item-quantity input {
+            width: 50px;
+            text-align: center;
+        }
+
+        .item-total-price {
+            font-weight: bold;
+            margin-left: 20px;
+        }
+
+        .remove-item {
+            background-color: #ff8c00;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .remove-item:hover {
+            background-color: #ff6600;
+        }
+
+        .cart-summary {
+            width: 25%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+            color: #ff8c00;
+        }
+
+        .checkout-btn {
+            background-color: #ff8c00;
+            color: white;
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #ff6600;
+        }
+
+        .footer {
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            font-size: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        /* 추가 */
+
+        .nav {
+            /* width: 1920px; */
+            width: 100%;
+            height: 60px;
+            background-color: #F28C25;
+            left: 0px;
+            top: 0px;
+            display: flex;
+            text-align: center;
+            position: fixed;
+        }
+
+        .nav a {
+            color: white;
+        }
+
+        .nav a:hover {
+            color: rgb(72, 35, 0);
+        }
+
+        #cart_img {
+            height: 33px;
+            margin: 6px 0px 0px 20px;
+        }
 
 
-    /* 마이페이지 */
-    h3 {
-      font-weight: 800;
-      font-size: 35px;
-      padding: 0px 0px 30px 0px;
-    }
+        /* navbar 스타일 지정 */
+        #selectMenu {
+            /* 해당 페이지 메뉴명 글씨 두껍게!! */
+            font-weight: 800;
+        }
 
-    .menuPage {
-      /* 왼쪽 메뉴 공간 스타일 지정 */
-      width: 400px;
-      padding: 150px 0px 0px 150px;
-      margin: 60px 0px 0px 0px;
-    }
+        #post {
+            /* 공지사항 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            /* padding: 20px 40px; */
+            margin: 10px 100px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
 
-    .menuName {
-      /* 왼쪽 메뉴 이름 간격 조정 */
-      padding: 7px 0px;
-      display: block;
-      cursor: pointer;
-    }
+        #question {
+            /* 자주묻는질문 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            /* padding: 20px 40px; */
+            margin: 10px 230px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
 
-    .menuName:hover {
-      color: #F28C25;
-      font-weight: 800;
-    }
+        #login {
+            /*  로그아웃 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            /* padding: 20px 40px; */
+            margin: 10px 1420px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
 
-    .Logo {
-      display: flex;
-      padding: 200px 0px 0px 0px;
-      align-items: center;
-      /* 세로 중앙 정렬 */
-    }
-
-    #logo_img {
-      /* 왼쪽 메뉴 맨 아래 로고 이미지 */
-      width: 100px;
-    }
-
-    .main {
-      /* navbar 아래 */
-      display: flex;
-    }
-
-    /*  */
-
-    /* 장바구니 글자 */
-    .modify_page {
-      font-size: 30px;
-      font-weight: 800;
-      margin-bottom: 60px;
-
-    }
+        #signup {
+            /*  회원가입 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            /* padding: 20px 40px; */
+            margin: 10px 1530px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
 
 
+        /* 마이페이지 */
+        h3 {
+            font-weight: 800;
+            font-size: 35px;
+            padding: 0px 0px 30px 0px;
+        }
 
-    /*
-    .boxOut {
-        display: flex;
-        width: 100%;
-    } */
+        .menuPage {
+            /* 왼쪽 메뉴 공간 스타일 지정 */
+            width: 400px;
+            padding: 150px 0px 0px 150px;
+            margin: 60px 0px 0px 0px;
+        }
 
-    /* .main_detail {
-        display: block; */
-    /* width: 68%; */
-    /* width: 1300px; */
-    /* padding: 70px 0px 0px 60px;
-           margin: 60px 0px 0px 0px; }*/
-  </style>
+        .menuName {
+            /* 왼쪽 메뉴 이름 간격 조정 */
+            padding: 7px 0px;
+            display: block;
+            cursor: pointer;
+        }
+
+        .menuName:hover {
+            color: #F28C25;
+            font-weight: 800;
+        }
+
+        .Logo {
+            display: flex;
+            padding: 200px 0px 0px 0px;
+            align-items: center;
+            /* 세로 중앙 정렬 */
+        }
+
+        #logo_img {
+            /* 왼쪽 메뉴 맨 아래 로고 이미지 */
+            width: 100px;
+        }
+
+        .main {
+            /* navbar 아래 */
+            display: flex;
+        }
+
+        /*  */
+
+        /* 장바구니 글자 */
+        .modify_page {
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 60px;
+
+        }
+
+
+        /*
+        .boxOut {
+            display: flex;
+            width: 100%;
+        } */
+
+        /* .main_detail {
+            display: block; */
+        /* width: 68%; */
+        /* width: 1300px; */
+        /* padding: 70px 0px 0px 60px;
+               margin: 60px 0px 0px 0px; }*/
+    </style>
 </head>
 
 <body>
@@ -342,209 +341,253 @@
 <!-- 네비게이션 바 -->
 <!-- navbar -->
 <nav class="nav">
-  <a class="nav-link" id="post" href="#">공지사항</a>
-  <a class="nav-link" id="question" href="#">자주묻는질문</a>
-  <a class="nav-link" id="login" href="#">로그아웃</a>
-  <a class="nav-link" id="signup" href="#">회원가입</a>
-  <a class="nav-link" id="cart" href="#">
-    <img src="/img/cart.png" alt="장바구니 이미지" id="cart_img">
-  </a>
+    <a class="nav-link" id="post" href="#">공지사항</a>
+    <a class="nav-link" id="question" href="#">자주묻는질문</a>
+    <a class="nav-link" id="login" href="#">로그아웃</a>
+    <a class="nav-link" id="signup" href="#">회원가입</a>
+    <a class="nav-link" id="cart" href="#">
+        <img src="/img/cart.png" alt="장바구니 이미지" id="cart_img">
+    </a>
 </nav>
 <!-- navbar -->
 <div class="line"></div>
 <!-- 메뉴 -->
 <div class="main">
-  <div class="menuPage">
-    <div class="mypage">
-      <h3>마이페이지</h3>
+    <div class="menuPage">
+        <div class="mypage">
+            <h3>마이페이지</h3>
+        </div>
+        <div class="menu">
+            <div class="menuName" id="selectMenu" onclick="location.href='user_구매목록.html';">구매목록</div>
+            <div class="menuName">주문/배송 상태</div>
+            <div class="menuName">장바구니</div>
+            <div class="menuName">교환/반품</div>
+            <div class="menuName">교환/반품 신청 목록 이동</div>
+            <div class="menuName" onclick="location.href='user_리뷰작성.html';">리뷰 작성</div>
+            <div class="menuName" onclick="location.href='user_작성한리뷰.html';">작성한 리뷰</div>
+            <div class="menuName" onclick="location.href='user_회원정보수정.html';">회원 정보 수정</div>
+            <div class="menuName">배송지 관리</div>
+            <div class="Logo">
+                <div class="menuName">
+                    <img src="/img/b2.png" alt="BBmore 로고" id="logo_img">
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="menu">
-      <div class="menuName" id="selectMenu" onclick="location.href='user_구매목록.html';">구매목록</div>
-      <div class="menuName">주문/배송 상태</div>
-      <div class="menuName">장바구니</div>
-      <div class="menuName">교환/반품</div>
-      <div class="menuName">교환/반품 신청 목록 이동</div>
-      <div class="menuName" onclick="location.href='user_리뷰작성.html';">리뷰 작성</div>
-      <div class="menuName" onclick="location.href='user_작성한리뷰.html';">작성한 리뷰</div>
-      <div class="menuName" onclick="location.href='user_회원정보수정.html';">회원 정보 수정</div>
-      <div class="menuName">배송지 관리</div>
-      <div class="Logo">
-        <div class="menuName">
-          <img src="/img/b2.png" alt="BBmore 로고" id="logo_img">
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- 메뉴 -->
+    <!-- 메뉴 -->
 
-  <!-- <div class="main_detail"> -->
-  <!-- <div class="Modify_page">장바구니</div> -->
-  <!-- 장바구니 콘텐츠 -->
-  <main class="cart">
-    <section class="cart-items">
-      <div class="modify_page">장바구니</div>
+    <!-- <div class="main_detail"> -->
+    <!-- <div class="Modify_page">장바구니</div> -->
+    <!-- 장바구니 콘텐츠 -->
+    <main class="cart">
+        <section class="cart-items">
+            <div class="modify_page">장바구니</div>
 
-      <!-- 상품정보전체 -->
-      <div th:each="cart : ${cartList}" class="cart-item">
-        <input type="checkbox" class="item-select">
-        <!-- 상품이미지,상품명,금액 -->
-        <div class="item-info">
-          <img src="/img/p1.png" alt="상품 이미지" class="item-img">
+            <!-- 상품정보전체 -->
+            <div th:each="cart : ${cartList}" class="cart-item">
+                <!--체크박스-->
+                <input type="checkbox" class="item-select" data-cart-code="${cart.cartCode}">
+                <!-- 상품이미지,상품명,금액 -->
+                <div class="item-info">
+                    <img src="/img/p1.png" alt="상품 이미지" class="item-img">
 
-          <!-- 상품명,금액 -->
-          <div class="item-details">
-            <span th:text="${cart.product.productName}"></span>
-            <div class="item-price"><span th:text="${cart.product.productPrice}"></span></div>
-          </div>
-        </div>
+                    <!-- 상품명,금액 -->
+                    <div class="item-details">
+                        <span th:text="${cart.product.productName}"></span>
+                        <div class="item-price"><span th:text="${cart.product.productPrice}"></span></div>
+                    </div>
+                </div>
 
-        <!-- 수량부분 -->
-        <div class="item-quantity">
-          <!-- 감소버튼 -->
-          <button class="quantity-input-icon minus-button" onclick="updateQuantity(-1, this)">-</button>
-          <!-- 수량표시용 -->
-          <span id="quantity-display" class="quantity" th:text="${cart.cartProductQuantity}" th:attr="data-cart-code=${cart.cartCode}"></span>
-          <!-- <input type="number" value="1" class="quantity"> -->
-          <!-- 증가버튼 -->
-          <button class="quantity-input-icon plus-button" onclick="updateQuantity(1, this)">+</button>
-        </div>
+                <!-- 수량부분 -->
+                <div class="item-quantity">
+                    <!-- 감소버튼 -->
+                    <button class="quantity-input-icon minus-button" onclick="updateQuantity(-1, this)">-</button>
+                    <!-- 수량표시용 -->
+                    <span id="quantity-display" class="quantity" th:text="${cart.cartProductQuantity}"
+                          th:attr="data-cart-code=${cart.cartCode}"></span>
+                    <!-- <input type="number" value="1" class="quantity"> -->
+                    <!-- 증가버튼 -->
+                    <button class="quantity-input-icon plus-button" onclick="updateQuantity(1, this)">+</button>
+                </div>
 
-        <!--총금액인듯, 삭제버튼-->
-        <p class="item-total-price">총금액</p>
-        <button class="remove-item">삭제</button>
-      </div>
+                <!--총금액인듯-->
+                <p class="item-total-price">총금액</p>
+                <!--삭제버튼-->
+                <button class="remove-item" th:attr="data-cart-code=${cart.cartCode}" onclick="removeCartItem(this)">삭제</button>
+            </div>
 
-      <!-- <div class="cart-item">
-          <input type="checkbox" class="item-select">
-          <div class="item-info">
-              <img src="/img/상품2.jpg" alt="상품 이미지" class="item-img">
-              <div class="item-details">
-                  <h1>상품명 2</h1>
-                  <p class="item-price">₩30,000</p>
-              </div>
-          </div>
-          <div class="item-quantity">
-              <button>-</button>
-              <input type="number" value="1" class="quantity">
-              <button>+</button>
-          </div>
-          <p class="item-total-price">₩30,000</p>
-          <button class="remove-item">삭제</button>
-      </div> -->
-    </section>
+            <!-- 상품 여러개 담은 화면 테스트 시 사용(접어둠)-->
+            <!-- <div class="cart-item">
+                <input type="checkbox" class="item-select">
+                <div class="item-info">
+                    <img src="/img/상품2.jpg" alt="상품 이미지" class="item-img">
+                    <div class="item-details">
+                        <h1>상품명 2</h1>
+                        <p class="item-price">₩30,000</p>
+                    </div>
+                </div>
+                <div class="item-quantity">
+                    <button>-</button>
+                    <input type="number" value="1" class="quantity">
+                    <button>+</button>
+                </div>
+                <p class="item-total-price">₩30,000</p>
+                <button class="remove-item">삭제</button>
+            </div> -->
+
+        </section>
 
 
-    <!-- 결제 정보 -->
-    <section class="cart-summary">
-      <h2>결제 예시</h2>
-      <div class="summary-item">
-        <p>상품 금액</p>
-        <p>₩50,000</p>
-      </div>
-      <div class="summary-item">
-        <p>배송비</p>
-        <p>₩3,000</p>
-      </div>
-      <div class="summary-item total">
-        <p>총 결제 금액</p>
-        <p>₩53,000</p>
-      </div>
-      <button class="checkout-btn">주문하기</button>
-    </section>
+        <!-- 결제 정보 -->
+        <section class="cart-summary">
+            <h2>결제 예시</h2>
+            <div class="summary-item">
+                <p>상품 금액</p>
+                <p>₩50,000</p>
+            </div>
+            <div class="summary-item">
+                <p>배송비</p>
+                <p>₩3,000</p>
+            </div>
+            <div class="summary-item total">
+                <p>총 결제 금액</p>
+                <p>₩53,000</p>
+            </div>
+            <button class="checkout-btn">주문하기</button>
+        </section>
 
-  </main>
+    </main>
 </div>
 
 
 <!-- 푸터 -->
 <footer class="footer">
-  <p>&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고.</p>
+    <p>&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고.</p>
 </footer>
 
 
-
-
 <script>
-<!--  4.2 수량변경함수2+두번째 상품도 수량변경됨 -->
-  function updateQuantity(delta, button) {
-    var cartItem = button.closest(".cart-item");  // 현재 클릭된 상품을 찾음
-    var quantityDisplay = cartItem.querySelector(".quantity");  // 해당 상품의 수량 요소 찾기
-    var cartCode = quantityDisplay.getAttribute("data-cart-code"); // 해당 상품의 cartCode
-    var currentQuantity = parseInt(quantityDisplay.innerText);
-    var maxQuantity = 50;
-    var newQuantity = currentQuantity + delta;
+    <!--  4.2 수량변경함수2 + 두번째 상품도 수량변경됨, db 반영O -->
+    function updateQuantity(delta, button) {
+        var cartItem = button.closest(".cart-item");  // 현재 클릭된 상품을 찾음
+        var quantityDisplay = cartItem.querySelector(".quantity");  // 해당 상품의 수량 요소 찾기
+        var cartCode = quantityDisplay.getAttribute("data-cart-code"); // 해당 상품의 장바구니 코드 가져오기
+        var currentQuantity = parseInt(quantityDisplay.innerText);      // 현재 수량 가져오기
+        var maxQuantity = 50;
+        var newQuantity = currentQuantity + delta;
 
-    if (newQuantity >= 1 && newQuantity <= maxQuantity) {
-      quantityDisplay.innerText = newQuantity;
+        if (newQuantity >= 1 && newQuantity <= maxQuantity) {
+            quantityDisplay.innerText = newQuantity;  // 화면에서 수량 업데이트
 
-      // 값 들어오는지 확인
-      console.log("Sending cartCode:", cartCode, "New Quantity:", newQuantity);
+            // 값 들어오는지 확인
+            console.log("Sending cartCode:", cartCode, "New Quantity:", newQuantity);
 
-      fetch("cart-list/updateQuantity", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          cartCode: Number(cartCode),
-          newQuantity: Number(newQuantity)
-        })
-      })
-              .then(response => response.json())
-              .then(data => {
-                if (data.success) {
-                  console.log("수량 업데이트 성공");
-                } else {
-                  console.error("수량 업데이트 실패");
-                }
-              })
-              .catch(error => {
-                console.error("에러 발생:", error);
-              });
+            // 서버에 수량 업데이트 요청 (AJAX)
+            fetch("cart-list/updateQuantity", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    cartCode: Number(cartCode),
+                    newQuantity: Number(newQuantity)    // 변경할 수량
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log("수량 업데이트 성공");
+                    } else {
+                        console.error("수량 업데이트 실패");
+                    }
+                })
+                .catch(error => {
+                    console.error("에러 발생:", error);
+                });
+        }
     }
-  }
 
 
-  /* 수량 변경 함수(ver.1 - 수량 db는 불러와짐, 첫번째상품만 수정됨) */
-  // function updateQuantity(delta) {
-  //   var quantityDisplay = document.getElementById("quantity-display");
-  //   var cartCode = quantityDisplay.getAttribute("data-cart-code");   // 해당 장바구니 ID 가져오기
-  //   var currentQuantity = parseInt(quantityDisplay.innerText);  // 현재 수량 가져오기
-  //   var maxQuantity = 50;  // 최대 수량 지정
-  //   var newQuantity = currentQuantity + delta;
-  //
-  //   // 수량이 1 이상, 최대 수량 이하일 때만 변경
-  //   if (newQuantity >= 1 && newQuantity <= maxQuantity) {
-  //     // 화면에 새로운 수량 적용
-  //     quantityDisplay.innerText = newQuantity;
-  //
-  //     // 서버에 수량 업데이트 요청 (AJAX)
-  //     // fetch 경로 수정하지말것
-  //     console.log("Sending cartCode: ", cartCode);    // 로그 확인용
-  //     fetch('cart-list/updateQuantity', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({
-  //         cartCode: Number(cartCode),
-  //         newQuantity: Number(newQuantity)
-  //       })
-  //     }).then(response => response.json())
-  //             .then(data => {
-  //               if (data.success) {
-  //                 console.log("수량 업데이트 성공");
-  //               } else {
-  //                 console.error("수량 업데이트 실패");
-  //               }
-  //             }).catch(error => {
-  //       console.error("에러 발생:", error);
-  //       console.log(typeof cartCode, cartCode); // number?
-  //       console.log(typeof newQuantity, newQuantity); // number?
-  //     });
-  //   }
-  // }
 
+
+    /* 수량 변경 함수(ver.1 - 수량 db는 불러와짐, 첫번째상품만 수정됨) */
+    // function updateQuantity(delta) {
+    //   var quantityDisplay = document.getElementById("quantity-display");
+    //   var cartCode = quantityDisplay.getAttribute("data-cart-code");   // 해당 장바구니 ID 가져오기
+    //   var currentQuantity = parseInt(quantityDisplay.innerText);  // 현재 수량 가져오기
+    //   var maxQuantity = 50;  // 최대 수량 지정
+    //   var newQuantity = currentQuantity + delta;
+    //
+    //   // 수량이 1 이상, 최대 수량 이하일 때만 변경
+    //   if (newQuantity >= 1 && newQuantity <= maxQuantity) {
+    //     // 화면에 새로운 수량 적용
+    //     quantityDisplay.innerText = newQuantity;
+    //
+    //     // 서버에 수량 업데이트 요청 (AJAX)
+    //     // fetch 경로 수정하지말것
+    //     console.log("Sending cartCode: ", cartCode);    // 로그 확인용
+    //     fetch('cart-list/updateQuantity', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json'
+    //       },
+    //       body: JSON.stringify({
+    //         cartCode: Number(cartCode),
+    //         newQuantity: Number(newQuantity)
+    //       })
+    //     }).then(response => response.json())
+    //             .then(data => {
+    //               if (data.success) {
+    //                 console.log("수량 업데이트 성공");
+    //               } else {
+    //                 console.error("수량 업데이트 실패");
+    //               }
+    //             }).catch(error => {
+    //       console.error("에러 발생:", error);
+    //       console.log(typeof cartCode, cartCode); // number?
+    //       console.log(typeof newQuantity, newQuantity); // number?
+    //     });
+    //   }
+    // }
+
+
+
+
+    // 장바구니 아이템 삭제(정상 작동, db 반영O)
+    function removeCartItem(buttonElement) {
+        // buttonElement가 null인지 확인
+        if (!buttonElement) {
+            console.error("buttonElement가 null입니다.");
+            return;
+        }
+
+        const cartCode = buttonElement.getAttribute('data-cart-code'); // data-cart-code 속성에서 cartCode 값 가져오기
+
+        if (confirm('정말로 이 상품을 삭제하시겠습니까?')) {
+            // DELETE 요청을 보내기 위해 fetch 사용
+            fetch(`/cart/?cartCodes=${cartCode}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then(response => response.text())
+                .then(message => {
+                    alert(message);  // 삭제 완료 메시지
+                    // 성공적으로 삭제되면 해당 항목을 DOM에서 제거
+                    const item = buttonElement.closest('.cart-item');
+                    if (item) {
+                        item.remove();
+                    } else {
+                        console.error("삭제할 항목을 찾을 수 없습니다.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('삭제 중 오류가 발생했습니다.');
+                });
+        }
+    }
 
 
 
