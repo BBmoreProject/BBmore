@@ -29,10 +29,6 @@ public class OrderController {
 
     private final OrderService orderService;
 
-//    @GetMapping("/order-1")
-//    public String orderSearch() {
-//        return "order/order-1";
-//    }
 
     @GetMapping("/order-2")
     public String orderReturn() {

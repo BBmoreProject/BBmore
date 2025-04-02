@@ -285,8 +285,6 @@
 
         .order-searchtext {
             width: 60px;
-            height: 27px;
-            position: relative;
             top: -6%;
             left: 0%;
         }
@@ -295,7 +293,7 @@
             background: #f4f4f4;
             position: relative;
             top: 10%;
-            left: 0%;
+            left: auto;
             width: 1500px;
             height: auto;
         }
@@ -304,10 +302,10 @@
             display: flex;
             box-sizing: border-box;
             position: relative;
-            width: 1474px;
-            height: 511px;
-            top: -3%;
-            right: -1%;
+            width: 1500px;
+            height: auto;
+            top: 0%;
+            right: 0%;
             background: #ffffff;
             border: 1px solid #edf0f5;
         }
@@ -325,18 +323,6 @@
             cursor: pointer;
         }
 
-
-        .all-order {
-            display: flex;
-            box-sizing: border-box;
-            position: relative;
-            width: 1474px;
-            height: 509px;
-            top: -3%;
-            right: -1%;
-            background: #ffffff;
-            border: 1px solid #edf0f5;
-        }
 
         #paging {
             display: flex;
@@ -360,6 +346,12 @@
         .all-order-table thead {
             background-color: #fff5e2;
             font-weight: bold;
+        }
+
+        .all-order-table tbody tr td[colspan] {
+            text-align: center;
+            vertical-align: middle;
+            height: 100px; /* 높이 조정 */
         }
 
 
@@ -474,16 +466,19 @@
                 </div>
 
                 <div class="search-allday">
-                    <button id="search-day1">오늘</button>
-                    <button id="search-day2">1주일</button>
-                    <button id="search-day3">1개월</button>
-                    <button id="search-day4">3개월</button>
+                    <button id="search-day1" type="button">오늘</button>
+                    <button id="search-day2" type="button">1주일</button>
+                    <button id="search-day3" type="button">1개월</button>
+                    <button id="search-day4" type="button">3개월</button>
                 </div>
 
+
+
                 <div class="calendar">
-                    <input type="date" name="startDate" class="form-control" required/> &nbsp; ~ &nbsp; <input
-                        type="date" name="endDate" class="form-control" required/>
+                    <input type="date" name="startDate"  id="startDate" class="form-control" required/> &nbsp; ~ &nbsp; <input
+                        type="date" name="endDate" id="endDate"  class="form-control" required/>
                 </div>
+
 
                 <div class="search-write2">
                     <p>상세조건</p>
@@ -499,10 +494,15 @@
                         <div onclick="selectOption(this)">구매자명</div>
                         <div onclick="selectOption(this)">주문번호</div>
                     </div>
-                    <input type="hidden" name="searchType" id="searchType" value="전체">
+                    <input type="hidden" name="searchType1" id="searchType1" value="전체">
+                    <input type="hidden" name="searchType2" id="searchType2" value="구매자명">
                 </div>
-                <input class="searchbox-text" type="text" name="username" required placeholder="입력"/>
-                <button class="search-button" type="submit">조회</button>
+
+                <!-- 구매자명 입력란, 기본적으로 비활성화 -->
+                <input class="searchbox-text" type="text" name="username" id="username" disabled placeholder="입력" />
+
+                <!-- 조회 버튼 -->
+                <button class="search-button" type="submit" id="searchButton">조회</button>
 
 
                 <div>
@@ -514,7 +514,6 @@
 
         <div class="order-box">
             <div class="order-searchtext"><p>주문조회</p></div>
-
             <div class="all-order">
                 <table class="all-order-table">
                     <!-- 테이블 헤더 -->
@@ -542,10 +541,11 @@
                         <td th:text="${order.member.userPhoneNumber}"></td>
                         <td th:text="${order.member.userAddress}"></td>
                     </tr>
-                    <tr th:if="${orders.isEmpty()}">
-                        <td colspan="4" class="text-center">조회된 주문이 없습니다.</td>
-                    </tr>
                     </tbody>
+                    <tr th:if="${orders.isEmpty()}">
+                        <td colspan="8" class="text-center" style="text-align:center; vertical-align:middle; height:100px;">
+                            조회된 주문이 없습니다.
+                    </tr>
                 </table>
             </div>
 
@@ -604,6 +604,17 @@
             ".dropdown-toggle"
         ).innerHTML = `${selectedValue} <span class="arrow">▼</span>`;
 
+        // searchType1 값 업데이트
+        document.getElementById("searchType1").value = selectedValue;
+
+        // 구매자명 선택 시 해당 입력 필드를 활성화하고 다른 조건에서는 비활성화
+        if (selectedValue === "구매자명") {
+            document.getElementById("username").disabled = false;
+        } else {
+            document.getElementById("username").disabled = true;
+            document.getElementById("username").value = ''; // 비활성화하면 값도 초기화
+        }
+
         // 드롭다운 닫기
         toggleDropdown();
     }
@@ -616,6 +627,42 @@
             document.querySelector(".dropdown-menu").classList.remove("active");
         }
     });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        function setDateRange(days) {
+            let today = new Date();
+            let startDate = new Date();
+            startDate.setDate(today.getDate() - days);
+
+            let todayStr = today.toISOString().split("T")[0];
+            let startStr = startDate.toISOString().split("T")[0];
+
+            let startInput = document.getElementById("startDate");
+            let endInput = document.getElementById("endDate");
+
+            if (startInput && endInput) {
+                startInput.value = startStr;
+                endInput.value = todayStr;
+            } else {
+                console.error("날짜 입력 요소를 찾을 수 없습니다.");
+            }
+        }
+
+        // 버튼 클릭 이벤트 등록 (DOMContentLoaded 이후 실행)
+        let todayBtn = document.getElementById("search-day1");
+        let weekBtn = document.getElementById("search-day2");
+        let monthBtn = document.getElementById("search-day3");
+        let threeMonthBtn = document.getElementById("search-day4");
+
+        if (todayBtn) todayBtn.addEventListener("click", function () { setDateRange(0); });
+        if (weekBtn) weekBtn.addEventListener("click", function () { setDateRange(7); });
+        if (monthBtn) monthBtn.addEventListener("click", function () { setDateRange(30); });
+        if (threeMonthBtn) threeMonthBtn.addEventListener("click", function () { setDateRange(90); });
+    });
+
+
+
+
 </script>
 
 
