@@ -31,8 +31,19 @@ public class UserCartController {
     //ver.3  null 값 처리해보기.. 4:29
     @PostMapping("/cart-list/updateQuantity")
     @ResponseBody
+    //requestData
+
     public Map<String, Object> updateCartQuantity(@RequestBody Map<String, Object> requestData) {
+
+
+//        int cartCode = (int) payload.get("cartCode");
+//        int newQuantity = (int) payload.get("newQuantity");
+//
+//        boolean success = userCartService.updateCartQuantity(cartCode, newQuantity);
+
         Map<String, Object> response = new HashMap<>();
+//        response.put("success", success);
+
 
         // Optional을 사용하여 null을 안전하게 처리
         Optional<Object> cartCodeObj = Optional.ofNullable(requestData.get("cartCode"));
@@ -52,6 +63,8 @@ public class UserCartController {
                 response.put("error", "숫자 형식이 올바르지 않습니다.");
             }
         } else {
+            System.out.println("cartCode: " + cartCodeObj);
+            System.out.println("newQuantity: " + newQuantityObj);
             response.put("success", false);
             response.put("error", "cartCode 또는 newQuantity가 요청에서 누락되었습니다.");
         }
