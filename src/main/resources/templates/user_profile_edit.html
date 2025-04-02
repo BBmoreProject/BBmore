@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원정보수정</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        * {
+            font-family: "Noto Sans KR", sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body{
+            display: flex;
+            flex-direction: column; /*상하 배치*/
+        }
+
+        /* navbar 스타일 지정 */
+
+        .nav {
+            width: 100%;
+            height:60px;
+            background-color: #F28C25;
+            left: 0px;
+            top: 0px;
+            display: flex;
+            text-align: center;
+            position: fixed;
+            flex-direction: column;  /*추가*/
+            text-align: center;
+        }
+
+        .nav a {
+            color: white;
+        }
+
+        .nav a:hover {
+            color: rgb(72, 35, 0);
+        }
+
+        #cart_img {    /* navbar 장바구니 이미지 */
+            height: 33px;
+            margin: 6px 0px 0px 20px ;
+        }
+
+        /* navbar 스타일 지정 */
+
+        #selectMenu {  /* 해당 페이지 메뉴명 글씨 두껍게!! */
+            font-weight: 800;
+        }
+
+        #post{    /* 공지사항 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 10px 100px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        #question {     /* 자주묻는질문 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 10px 230px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        #login {      /*  로그아웃 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 10px 1420px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        #signup {     /*  회원가입 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 10px 1530px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        #cart{        /* 장바구니 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 0px 1600px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        h3 {      /* "마이페이지" */
+            font-weight: 800;
+            font-size: 35px;
+            padding: 0px 0px 30px 0px;
+        }
+
+        .menuPage {    /* 왼쪽 메뉴 공간 스타일 지정 */
+            width:400px;
+            padding: 150px 0px 0px 150px;
+            margin: 60px 0px 0px 0px;
+        }
+
+        .menuName {    /* 왼쪽 메뉴 이름 간격 조정 */
+            padding: 7px 0px;
+            display: block;
+            cursor: pointer;
+        }
+
+        .menuName:hover {
+            color: #F28C25;
+            font-weight: 800;
+        }
+
+        .Logo {   /* 왼쪽 메뉴 아래 로고 이미지 위치 조정 */
+            padding: 200px 0px 0px 0px ;
+        }
+
+        #logo_img { /* 왼쪽 메뉴 맨 아래 로고 이미지 */
+            width: 100px;
+        }
+
+        .main { /* navbar 아래 다 */
+            display: flex;
+            flex: 1;
+        }
+
+        .main_detail { /* navbar 아래 (왼쪽 메뉴 제외) */
+            display: block;
+            width: 1300px;
+            padding: 70px 0px 0px 300px;
+            margin: 60px 0px 0px 0px;
+        }
+
+        .page_name {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        #inputText_login,
+        #inputText_password,
+        #inputText_password_confirm,
+        #inputText_name,
+        #inputText_phone,
+        #inputText_email,
+        #inputText_address {   /* 아이디 제외 입력 칸 들 */
+            width: 600px;
+            height: 30px;
+        }
+
+        #inputText_login {  /* 아이디 입력 칸 */
+            width: 442px;
+        }
+
+        .id_check { /* 아이디 중복확인 버튼 */
+            width: 150px;
+            height: 30px;
+            background-color: #F28C25;
+            border: solid black 1px;
+            border-radius: 3px;
+            font-size: 15px;
+            text-align: center;
+            padding: 3px;
+            margin: 5px 0 0 0 ;
+            cursor: pointer;
+        }
+
+        .information { /* 아이디 ~ 반려동물 품종 입력 하는 칸 들 */
+            margin: 7px 0 0 0 ;
+        }
+
+        .pet_information {    /* 반려동물 정보 */
+            margin: 23px 0 0 0;
+        }
+
+        [type="radio"] {
+            /* accent-color: red; */
+            margin: 8px 0 0 10px;
+        }
+
+        [type="checkbox"] {
+            /* accent-color: red; */
+            margin: 8px 0 0 10px;
+        }
+
+        .small {
+            margin: 7px 0 0 0;
+        }
+
+        .bottom_button { /* 취소, 수정 버튼 2개 */
+            display: flex;
+            padding: 0px 0px 0px 130px;
+        }
+
+        .Id {     /* 아이디 입력칸 + 아이디 중복확인 버튼 */
+            display: flex;
+        }
+
+        input, #pet-select {
+            margin: 5px 10px 0 0;
+        }
+
+        .cancel, .modify {  /* 취소 , 수정하기 버튼 */
+            width: 150px;
+            height: 33px;
+            background-color: #F28C25;
+            border: solid #4a4a4a 1px;
+            border-radius: 3px;
+            text-align: center;
+            padding: 2px 0 0 0;
+            margin: 0 0 100px 10px;
+            cursor: pointer;
+        }
+
+        .cancel { /* 취소하기 버튼 */
+            background-color:rgb(163, 163, 163);
+            border: solid #4a4a4a 1px;
+        }
+
+        .UnSubscribe {      /* 회원탈퇴 메시지 + 버튼 그룹 */
+            display: flex;
+            padding: 50px 0 30px 185px;
+        }
+
+        .UnSubscribe_message {   /* 회원탈퇴 버튼 옆 메시지 */
+            font-size: 12px;
+            text-align: end;
+        }
+
+        .UnSubscribe_button {    /* 회원탈퇴 버튼 */
+            width: 100px;
+            height: 20px;
+            color:white;
+            background-color: #F28C25;
+            border: solid rgb(92, 92, 92) 1px;
+            border-radius: 3px;
+            font-size: 13px;
+            text-align: center;
+            /* padding: 3px; */
+            margin: 0 0 0 10px ;
+            cursor: pointer;
+        }
+
+        .footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            font-size: 10px;
+        }
+
+
+
+        /* 모달 스타일 */
+        .modal {
+            display: none; /* 기본적으로 숨김 */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<!-- navbar -->
+<nav class="nav">
+    <a class="nav-link" id="post" href="#">공지사항</a>
+    <a class="nav-link" id="question" href="#">자주묻는질문</a>
+    <a class="nav-link" id="login" href="#">로그아웃</a>
+    <a class="nav-link" id="signup" href="#">회원가입</a>
+    <a class="nav-link" id="cart" href="#" >
+        <img src="/image/cart_img.png" alt="장바구니 이미지" id="cart_img">
+    </a>
+</nav>
+<!-- navbar -->
+
+<div class="main"> <!-- main -->
+
+    <!-- 메뉴 -->
+    <div class= "menuPage">
+        <div class="mypage">
+            <h3>마이페이지</h3>
+        </div>
+        <div class="menu">
+            <div class="menuName" onclick="location.href='user_purchase_list.html';" >구매목록</div>
+            <div class="menuName">주문/배송 상태</div>
+            <div class="menuName">장바구니</div>
+            <div class="menuName">교환/반품</div>
+            <div class="menuName">교환/반품 신청 목록 이동</div>
+            <div class="menuName" onclick="location.href='/review/write.html';">리뷰 작성</div>
+            <div class="menuName" onclick="location.href='/review/list.html';" >작성한 리뷰</div>
+            <div class="menuName" id="selectMenu" onclick="location.href='user_profile_edit.html';" >회원 정보 수정</div>
+            <div class="menuName">배송지 관리</div>
+            <div class="Logo">
+                <div class="menuName">
+                    <img src="/image/b2.png" alt="BBmore 로고" id="logo_img">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 메뉴 -->
+
+    <div class="main_detail">
+        <div class="page_name">회원 정보 수정</div>
+
+        <form id="editForm" th:action="@{/member/edit}" method="post" th:object="${member}">
+
+        <div class="information">
+<!--            <form th:action="@{/member/edit}" method="post" th:object="${member}">-->
+                <div>아이디</div>
+                <div class="Id">
+                    <input type="text" id="inputText_login" name="userId" th:field="*{userId}" placeholder="아이디를 입력(6~20자)" required>
+                    <div class="id_check">아이디 중복확인</div> <!-- 버튼 -->
+                </div>
+
+                <div class="information">
+                    <div>비밀번호</div>
+                    <input type="password" id="inputText_password" name="userPassword" th:field="*{userPassword}" placeholder="영문, 숫자 조합으로 6~20자 이내로 입력" required>
+                </div>
+
+                <div class="information">
+                    <div>비밀번호 확인</div>
+                    <input type="password" id="inputText_password_confirm" placeholder="비밀번호 재입력" required>
+                </div>
+
+                <div class="information">
+                    <div>이름</div>
+                    <input type="text" id="inputText_name" name="userName" th:field="*{userName}" placeholder="이름 입력" required>
+                </div>
+
+                <div class="information">
+                    <div>휴대전화</div>
+                    <input type="text" id="inputText_phone" name="userPhoneNumber" th:field="*{userPhoneNumber}" placeholder="'-' 없이 숫자만 입력" required>
+                </div>
+
+                <div class="information">
+                    <div>이메일</div>
+                    <input type="email" id="inputText_email" name="userEmail" th:field="*{userEmail}" placeholder="email@example.com" required>
+                </div>
+
+                <div class="information">
+                    <div>배송지 정보</div>
+                    <input type="text" id="inputText_address" name="userAddress" th:field="*{userAddress}" placeholder="배송지 입력"required>
+                </div>
+<!--            </form>-->
+
+
+            <div class="pet_information"><b>반려동물 정보</b></div>
+
+            <div class="pet_information" >
+                <div>1. 반려동물 종류를 선택하세요</div>
+                <div>
+<!--                    <form th:action="@{/member/edit}" th:object="${member}">-->
+<!--                    <form th:action="@{/member/edit}" >-->
+                        <th:block th:each="type : ${animalTypes}">
+                            <input type="radio" th:id="${type}" name="animalType" th:field="*{animalDTO.animalType}" th:value="${type}">
+                            <label th:for="${type}" th:text="${type}"></label>
+                        </th:block>
+<!--                    </form>-->
+                </div>
+            </div>
+        </div>
+
+            <div class="pet_information">
+                <div>2. 반려동물 이름을 입력하세요.</div>
+                <div>
+<!--                    <form th:action="@{/member/edit}" th:object="${member}" method="post">-->
+                        <input type="text" name="userPetName" th:field="*{userPetName}" placeholder="반려동물 이름 입력" required>
+<!--                    </form>-->
+                </div>
+            </div>
+
+            <div class="pet_information">
+                <div>
+                    <div>3. 반려동물의 품종을 선택하세요.</div>
+                    <br>
+<!--                    <form th:action="@{/member/edit}" th:object="${member}">-->
+<!--                    <form th:action="@{/member/edit}">-->
+                        <select id="pet-select" name="animalBreed" th:field="*{animalDTO.animalBreed}">
+                            <option th:each="breed : ${animalBreeds}" name="animalBreed" th:value="${breed}" th:text="${breed}"></option>
+                        </select>
+<!--                    </form>-->
+                </div>
+            </div>
+
+            <div class="pet_information">
+                <div>4. 반려동물의 나이를 입력하세요.</div>
+                <div>
+<!--                    <form th:action="@{/member/edit}"  th:object="${member}">-->
+                    <input type="text" name="userPetAge" th:field="*{userPetAge}" placeholder="반려동물 나이 입력">세
+<!--                    </form>-->
+                </div>
+            </div>
+
+            <div class="pet_information">
+                <div>5. 반려동물의 몸무게를 선택하세요.</div>
+                <div class="small">5-1. 강아지 몸무게를 선택하세요.</div>
+                <div>
+<!--                    <form th:action="@{/member/edit}"  th:object="${member}">-->
+                        <input type="radio" id="LessThan10" name="userPetWeight" th:field="*{userPetWeight}" value="10">
+                        <label for="LessThan10">소형(10KG 미만)</label>
+
+                        <input type="radio" id="GreaterThan10" name="userPetWeight" th:field="*{userPetWeight}" value="15">
+                        <label for="GreaterThan10">소형(10KG 이상)</label><br>
+
+                        <input type="radio" id="LessThan25" name="userPetWeight" th:field="*{userPetWeight}" value="25">
+                        <label for="LessThan25">중형(25KG 미만)</label>
+
+                        <input type="radio" id="GreaterThan25" name="userPetWeight" th:field="*{userPetWeight}" value="30">
+                        <label for="GreaterThan25">중형(25KG 이상)</label><br>
+
+                        <input type="radio" id="LessThan35" name="userPetWeight" th:field="*{userPetWeight}" value="35">
+                        <label for="LessThan10">대형(35KG 미만)</label>
+
+                        <input type="radio" id="GreaterThan35" name="userPetWeight" th:field="*{userPetWeight}" value="40">
+                        <label for="GreaterThan35">대형(35KG 이상)</label>
+<!--                    </form>-->
+                </div>
+                <div  class="small">5-2. 고양이 몸무게를 선택하세요.</div>
+                <div>
+<!--                    <form th:action="@{/member/edit}" th:object="${member}">-->
+                        <input type="radio" id="kg_1" name="userPetWeight" th:field="*{userPetWeight}" value="6">
+                        <label for="kg_1">6KG 이하</label>
+
+                        <input type="radio" id="kg_2" name="userPetWeight" th:field="*{userPetWeight}" value="7">
+                        <label for="kg_2">7KG 이상</label><br>
+<!--                    </form>-->
+                </div>
+            </div>
+
+            <div class="pet_information">
+                <div>6. 반려동물의 병력을 선택하세요.</div>
+                <div>
+<!--                    <form th:action="@{/member/edit}"  action="post" th:object="${member}">-->
+                        <!-- userPetMedicalHistory를 배열로 바인딩하고, 여러 값을 받을 수 있도록 체크박스를 설정 -->
+                        <input type="checkbox" id="1" name="userPetMedicalHistory" th:field="*{userPetMedicalHistory}" value="관절염">
+                        <label for="1">관절염</label><br>
+
+                        <input type="checkbox" id="2" name="userPetMedicalHistory" th:field="*{userPetMedicalHistory}" value="피부염">
+                        <label for="2">피부염</label><br>
+
+                        <input type="checkbox" id="3" name="userPetMedicalHistory" th:field="*{userPetMedicalHistory}" value="심장질환">
+                        <label for="3">심장질환</label>
+<!--                    </form>-->
+                </div>
+            </div>
+
+            <input type="hidden" name="animalCode" id="animalCode" th:value="*{animalDTO.getAnimalCode()}" />
+        </form>
+
+            <div class="UnSubscribe">
+                <div class="UnSubscribe_message">탈퇴를 원하시면 우측의 회원탈퇴 버튼을 눌러주세요.</div>
+                <div class="UnSubscribe_button" onclick="location.href='user_profile_delete.html';">회원 탈퇴</div>
+            </div>
+
+            <div class="bottom_button">
+                <div class="cancel" id="cancel">취소하기</div>
+<!--                    <div class="modify" onclick="submitForm()">수정하기</div>-->
+                    <div class="modify">수정하기</div>
+            </div>
+    </div>
+
+
+    </div> <!-- main -->
+
+<footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
+
+<script>
+    // DOMContentLoaded 이벤트가 발생한 후 실행
+    document.addEventListener("DOMContentLoaded", function() {
+        const modifyButton = document.querySelector('.modify');
+        console.log(modifyButton);  // 이 부분을 통해 요소가 제대로 로드되었는지 확인
+
+        if (modifyButton) {
+            modifyButton.addEventListener('click', function(event) {
+                event.preventDefault(); // 기본 폼 제출 방지
+                submitForm();  // 수정된 submitForm 함수 호출
+            });
+        } else {
+            console.error('수정하기 버튼을 찾을 수 없습니다.');
+        }
+    });
+
+
+
+    function submitForm() {
+        let formData = {
+            userId: document.querySelector('input[name="userId"]').value,
+            userPassword: document.querySelector('input[name="userPassword"]').value,
+            userName: document.querySelector('input[name="userName"]').value,
+            userPhoneNumber: document.querySelector('input[name="userPhoneNumber"]').value,
+            userEmail: document.querySelector('input[name="userEmail"]').value,
+            userAddress: document.querySelector('input[name="userAddress"]').value,
+            userPetName: document.querySelector('input[name="userPetName"]').value,
+            userPetAge: document.querySelector('input[name="userPetAge"]').value,
+            userPetWeight: document.querySelector('input[name="userPetWeight"]:checked') ? document.querySelector('input[name="userPetWeight"]:checked').value : "",
+
+            // 배열을 단일 문자열로 변경
+            userPetMedicalHistory: Array.from(document.querySelectorAll('input[name="userPetMedicalHistory"]:checked'))
+                .map(cb => cb.value)  // 선택된 병력을 배열로 만듦
+                .join(', '),  // 배열을 문자열로 결합 (쉼표로 구분)
+
+
+            animalDTO: {
+                animalCode: document.querySelector('input[name="animalCode"]').value,
+                animalType: document.querySelector('input[name="animalType"]:checked') ? document.querySelector('input[name="animalType"]:checked').value : "",
+                animalBreed: document.getElementById("pet-select").value
+            }
+        };
+
+
+        // // 백엔드가 animalType + animalBreed로 animalCode를 정하는 방식이 있다면,
+        // const animalType = formData.animalDTO.animalType;
+        // const animalBreed = formData.animalDTO.animalBreed;
+        //
+        // // 여기서 animalCode를 프론트에서 계산하거나, 서버에 AJAX 요청해서 받아와야 함 (아래는 임시 예시)
+        // let animalCode = null;
+        // if (animalType === "강아지" && animalBreed === "말티즈") animalCode = 1;
+        // else if (animalType === "고양이" && animalBreed === "코리안숏헤어") animalCode = 2;
+        //
+        formData.animalCode = document.getElementById("animalCode").value;
+
+        console.log("선택된 품종:", document.getElementById("pet-select").value);
+
+        fetch(`http://localhost:8080/member/update/${formData.userId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('서버 응답 실패');
+                }
+                return response.text();
+            })
+            .then(data => {
+                alert("회원 정보가 수정되었습니다.");
+                setTimeout(() => {
+                    location.reload();
+                }, 500);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("회원 정보 수정에 실패했습니다. 다시 시도해주세요.");
+            });
+    }
+
+
+
+    // try {
+    //     const response = await fetch(`/member/update/${userId}`, {
+    //         method: "PUT",
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(body)
+    //     });
+    //
+    //     if (!response.ok) {
+    //         throw new Error("서버 응답 실패");
+    //     }
+    //
+    //     const result = await response.text();
+    //     console.log(result); // 성공 메시지 확인
+    //
+    //     // 업데이트된 데이터 반영
+    //     updateTableRow(userId, body);
+    //     closeModal();
+    // } catch (error) {
+    //     console.error("회원 정보 수정 중 오류 발생:", error);
+    //     alert("회원 정보 수정에 실패했습니다.");
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // 강아지/고양이 선택 시 품종 옵션 동적 변경
+    function updateBreedOptions(animalType) {
+        const petSelect = document.getElementById('pet-select');
+        const dogWeightOptions = document.querySelectorAll('input[name="SelectWeight"][id^="LessThan"], input[name="SelectWeight"][id^="GreaterThan"]');
+        const catWeightOptions = document.querySelectorAll('input[name="SelectWeight"][id^="kg"]');
+
+        petSelect.innerHTML = ''; // 기존 옵션을 제거
+
+        let breeds = animalType === 'dog' ? dogBreeds : catBreeds;
+
+        breeds.forEach(breed => {
+            const option = document.createElement('option');
+            option.value = breed;
+            option.textContent = breed;
+            petSelect.appendChild(option);
+        });
+
+        if (animalType === 'dog') {
+            // 강아지를 선택했을 때는 강아지 몸무게 옵션만 활성화
+            dogWeightOptions.forEach(option => option.disabled = false);
+            catWeightOptions.forEach(option => option.disabled = true);
+        } else if (animalType === 'cat') {
+            // 고양이를 선택했을 때는 고양이 몸무게 옵션만 활성화
+            dogWeightOptions.forEach(option => option.disabled = true);
+            catWeightOptions.forEach(option => option.disabled = false);
+        }
+    }
+
+    // function updateWeightOptions(animalType) {
+    //     const dogWeightOptions = ['소형(10KG 미만)', '소형(10KG 이상)', '중형(25KG 미만)', '중형(25KG 이상)', '대형(35KG 미만)', '대형(35KG 이상)'];
+    //     const catWeightOptions = ['6KG 이하', '7KG 이상'];
+    //
+    //     const weightRadioButtons = document.querySelectorAll('input[name="SelectWeight"]');
+    //     weightRadioButtons.forEach(button => {
+    //         button.disabled = true; // 모든 라디오버튼 비활성화
+    //     });
+    //
+    //     let weightOptions = animalType === 'dog' ? dogWeightOptions : catWeightOptions;
+    //
+    //     weightOptions.forEach(option => {
+    //         const matchingButton = Array.from(weightRadioButtons).find(button => button.nextSibling.textContent.trim() === option);
+    //         if (matchingButton) {
+    //             matchingButton.disabled = false; // 해당 옵션만 활성화
+    //         }
+    //     });
+    // }
+    //
+    // // 강아지 선택 시 몸무게 옵션 활성화
+    // document.getElementById('dog').onclick = function() {
+    //     updateWeightOptions('dog');
+    // };
+    //
+    // // 고양이 선택 시 몸무게 옵션 활성화
+    // document.getElementById('cat').onclick = function() {
+    //     updateWeightOptions('cat');
+    // };
+</script>
+</body>
+</html>

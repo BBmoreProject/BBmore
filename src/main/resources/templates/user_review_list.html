@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>작성한 리뷰 페이지</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        * {
+            font-family: "Noto Sans KR", sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body{
+            display: flex;
+            flex-direction: column; /*상하 배치*/
+        }
+
+        /* navbar 스타일 지정 */
+
+        .nav {
+            width: 100%;
+            height:60px;
+            background-color: #F28C25;
+            left: 0px;
+            top: 0px;
+            display: flex;
+            text-align: center;
+            position: fixed;
+            flex-direction: column;  /*추가*/
+            text-align: center;
+        }
+
+        .nav a {
+            color: white;
+        }
+
+        .nav a:hover {
+            color: rgb(72, 35, 0);
+        }
+
+        #cart_img {    /* navbar 장바구니 이미지 */
+            height: 33px;
+            margin: 6px 0px 0px 20px ;
+        }
+
+        /* navbar 스타일 지정 */
+
+        #selectMenu {  /* 해당 페이지 메뉴명 글씨 두껍게!! */
+            font-weight: 800;
+        }
+
+        #post{    /* 공지사항 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 10px 100px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        #question {     /* 자주묻는질문 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 10px 230px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        #login {      /*  로그아웃 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 10px 1420px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        #signup {     /*  회원가입 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 10px 1530px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        #cart{        /* 장바구니 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 0px 1600px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        h3 {      /* "마이페이지" */
+            font-weight: 800;
+            font-size: 35px;
+            padding: 0px 0px 30px 0px;
+        }
+
+        .menuPage {    /* 왼쪽 메뉴 공간 스타일 지정 */
+            width:400px;
+            padding: 150px 0px 0px 150px ;
+            margin: 60px 0px 0px 0px;
+        }
+
+        .menuName {    /* 왼쪽 메뉴 이름 간격 조정 */
+            padding: 7px 0px;
+            display: block;
+            cursor: pointer;
+        }
+
+        .menuName:hover {
+            color: #F28C25;
+            font-weight: 800;
+        }
+
+        .Logo {   /* 왼쪽 메뉴 아래 로고 이미지 위치 조정 */
+            padding: 200px 0px 0px 0px ;
+        }
+
+        #logo_img { /* 왼쪽 메뉴 아래 로고 이미지 */
+            width: 100px;
+        }
+
+        .main { /* navbar 아래 다 */
+            display: flex;
+            flex: 1;
+        }
+
+        .main_detail { /* navbar 아래 (왼쪽 메뉴 제외) */
+            display: block;
+            width: 1300px;
+            padding: 70px 0px 0px 60px;
+            margin: 60px 0px 0px 0px;
+        }
+
+        .page_name {
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        .date {        /* 상품 위 날짜 */
+            text-align: center;
+            margin: 20px auto;
+            font-size: 25px;
+            font-weight: 700;
+        }
+
+        .boxIn {  /* 제품 상자 */
+            width: 100%;
+            height: 200px;
+            display: flex;
+            border: 1px solid #c0c0c0;
+            border-radius: 7px;
+            padding: 20px;
+            margin: 10px 0;
+            align-items: center;
+        }
+
+        #product_img1, #product_img2 { /* 상품 사진 */
+            width: 180px;
+            margin: 30px 20px;
+            border: solid #c0c0c0 1px;
+            border-radius: 5px;
+            display: flex;
+        }
+
+        /*  */
+
+        .information { /* 제품 상태(전체 상자) */
+            height: 180px;
+            padding: 10px 0 10px 5px;
+        }
+
+        .delivery_complete { /* 배송완료 */
+            font-weight: 800;
+            margin: 0 0 10px 0;
+        }
+
+        .product_name { /* 상품 이름 */
+            margin: 0 0 25px 0;
+        }
+
+        #star, #star_on, #star1, #star_on1 {   /* 별 리뷰 */
+            display: block;
+            width:20px;
+            margin: 0 0 5px 0;
+        }
+
+        .one_line { /* 가격과 개수 */
+            display: flex;
+        }
+
+        .price { /* 가격 */
+            margin: 0 25px 0 0;
+        }
+
+        /*  */
+
+        .button { /* 리뷰 수정, 삭제 버튼 그룹*/
+            margin:  0 0 0 490px;
+        }
+
+        .button3, .modal_btn {  /* 리뷰 수정(button3), 삭제 버튼(modal_button) */
+            width: 170px;
+            height: 35px;
+            padding: 5px 0px;
+            margin: 15px;
+            font-size: 15px;
+            text-align: center;
+            border: solid #9b9b9b 1px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        #orange_button, #orange_button1 {    /* 리뷰 수정 버튼 border 색 변경 */
+            border: solid #F28C25 1px;
+        }
+
+        /* 팝업 창 */
+
+        .modal.on {
+            display: block;
+        }
+
+        /*모달 팝업 영역 스타일링*/
+        .modal {
+            /*팝업 배경*/
+            display: none; /*평소에는 보이지 않도록*/
+            position: absolute;
+            top:0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .modal .modal_popup {
+            /*팝업*/
+            position: absolute;
+            width: 470px;
+            height: 180px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 20px;
+        }
+
+        .delete_btn {
+            display: block;
+            padding: 10px 20px;
+            background-color: rgb(116, 0, 0);
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+        }
+
+        .modal .modal_popup .close_btn {
+            display: block;
+            padding: 10px 20px;
+            margin: 0 0 0 10px;
+            background-color: rgb(120, 120, 120);
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            transition: box-shadow 0.2s;
+        }
+
+        .button_location {
+            display: flex;
+            text-align: right;
+            margin: 35px 0 0 220px;
+        }
+
+        h4 {
+            font-weight: 800;
+            margin: 0 0 10px 0;
+        }
+
+        /* 팝업 창 */
+
+
+        .showMore { /* 더보기 버튼 */
+            text-align: center;
+            width: 180px;
+            height: 40px;
+            margin: 70px auto;
+            padding: 6px;
+            /* font-weight: 500; */
+            background: #D9D9D9;
+            border-radius: 5px;
+        }
+
+        .footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            font-size: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<!-- navbar -->
+<nav class="nav">
+    <a class="nav-link" id="post" href="#">공지사항</a>
+    <a class="nav-link" id="question" href="#">자주묻는질문</a>
+    <a class="nav-link" id="login" href="#">로그아웃</a>
+    <a class="nav-link" id="signup" href="#">회원가입</a>
+    <a class="nav-link" id="cart" href="#" >
+        <img src="/image/cart_img.png" alt="장바구니 이미지" id="cart_img">
+    </a>
+</nav>
+<!-- navbar -->
+
+<div class="main"> <!-- main -->
+
+    <!-- 메뉴 -->
+    <div class= "menuPage">
+        <div class="mypage">
+            <h3>마이페이지</h3>
+        </div>
+        <div class="menu">
+            <div class="menuName" onclick="location.href='/review/list';" >구매목록</div>
+            <div class="menuName">주문/배송 상태</div>
+            <div class="menuName">장바구니</div>
+            <div class="menuName">교환/반품</div>
+            <div class="menuName">교환/반품 신청 목록 이동</div>
+            <div class="menuName" onclick="location.href='/review/write';">리뷰 작성</div>
+            <div class="menuName" id="selectMenu" onclick="location.href='/review/list';" >작성한 리뷰</div>
+            <div class="menuName" onclick="location.href='user_profile_edit.html';" >회원 정보 수정</div>
+            <div class="menuName">배송지 관리</div>
+            <div class="Logo">
+                <div class="menuName">
+                    <img src="/image/b2.png" alt="BBmore 로고" id="logo_img">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 메뉴 -->
+    <div class="main_detail">
+
+        <div class="page_name">작성한 리뷰</div>
+
+        <div class="boxOut"> <!-- 상품 박스 밖 -->
+            <div class="date">2025.03.05</div>
+        </div> <!-- 상품 박스 밖 -->
+
+        <div class="boxIn"> <!-- 상품 박스 안 -->
+            <div class="product_img"> <!-- 제품 이미지 -->
+                <img src="/image/product_img.png" alt="제품2" id="product_img1">
+            </div> <!-- 제품 이미지 -->
+
+            <div class="information">
+                <div class="delivery_complete">배송완료</div>
+                <div class="product_name">로얄캐닌 독 푸들 어덜트 3kg 피모관리</div>
+                <div class="star_review">
+                    <img src="/image/star.png" alt="빈 별" id="star1">
+                    <img src="/image/star_on.png" alt="채워진 별" id="star_on1">
+                </div>
+                <div class="one_line">
+                    <div class="price">20,555원</div> <div class="num">1개</div>
+                </div>
+            </div>
+
+            <div class="button">
+                <div class="button3" id="orange_button1">리뷰 수정하기</div> <!-- 주황색 버튼 -->
+                <div class="modal_btn">리뷰 삭제하기</div>
+            </div>
+
+        </div>
+
+        <div class="boxOut"> <!-- 상품 박스 밖 -->
+            <div class="date">2025.03.05</div>
+        </div> <!-- 상품 박스 밖 -->
+
+        <div class="boxIn"> <!-- 상품 박스 안 -->
+            <div class="product_img"> <!-- 제품 이미지 -->
+                <img src="/image/product_img.png" alt="제품2" id="product_img2">
+            </div> <!-- 제품 이미지 -->
+
+            <div class="information">
+                <div class="delivery_complete">배송완료</div>
+                <div class="product_name">로얄캐닌 독 푸들 어덜트 3kg 피모관리</div>
+                <div class="star_review">
+                    <img src="/image/star.png" alt="빈 별" id="star">
+                    <img src="/image/star_on.png" alt="채워진 별" id="star_on">
+                </div>
+                <div class="one_line">
+                    <div class="price">20,555원</div> <div class="num">1개</div>
+                </div>
+            </div>
+
+            <div class="button">
+                <div class="button3" id="orange_button">리뷰 수정하기</div> <!-- 주황색 버튼 -->
+                <div class="modal_btn">리뷰 삭제하기</div>
+            </div>
+
+        </div>
+
+        <div class="modal">
+            <div class="modal_popup">
+                <h4>리뷰 삭제</h4>
+                <p>해당 리뷰를 삭제하시겠습니까?</p>
+                <div class="button_location">
+                    <button type="button" class="delete_btn">삭제하기</button>
+                    <button type="button" class="close_btn">취소하기</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+            const modal = document.querySelector('.modal');
+            const modalOpenButtons = document.querySelectorAll('.modal_btn'); // 모든 modal_btn 버튼을 선택
+            const modalClose = document.querySelector('.close_btn');
+
+            // 각 modal_btn 버튼에 클릭 이벤트 추가
+            modalOpenButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    modal.classList.add('on');
+                });
+            });
+
+            // 닫기 버튼을 눌렀을 때 모달팝업이 닫힘
+            modalClose.addEventListener('click', function() {
+                modal.classList.remove('on');
+            });
+
+        </script>
+
+
+        <div class="showMore">더보기</div>
+    </div>
+
+</div> <!-- main -->
+
+<footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
+</body>
+</html>
