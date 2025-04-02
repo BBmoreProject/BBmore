@@ -132,10 +132,15 @@
       display: flex;
       align-items: center;
     }
-    .search-box {
-      height: 120px;
-      margin: 50px 0 0 50px;
+
+    .main {
+      flex: 1;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
+
     .search-box-div {
       display: flex;
       align-items: center;
@@ -166,15 +171,16 @@
       border-style: none;
     }
     .info-container {
+      height: auto;
       width: 1600px;
       max-width: 100%;
       min-width: 1000px;
       background: white;
       border-radius: 10px;
       flex: 1;
-      padding: 30px 50px 50px 30px;
+      padding: 20px;
       background-color: #F4F4F4;
-      margin: 20px 0 0 50px;
+      margin: 20px 0 0 0;
       flex-shrink: 0;
     }
 
@@ -304,6 +310,13 @@
       cursor: pointer;
     }
 
+    .footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 5px;
+      font-size: 10px;
+    }
   </style>
 </head>
 
@@ -335,8 +348,7 @@
         <li class="menu-4">
           <a href="#">배송 관리</a>
           <ul class="submenu">
-            <li><a onclick="location.href='/members/delivery-1'">주문 조회</a></li>
-<!--            <li><a href="delivery-2.html">주문 현황</a></li>-->
+            <li><a onclick="location.href='/orders/delivery-1'">주문 조회</a></li>
           </ul>
         </li>
         <li class="menu-5">
@@ -358,14 +370,14 @@
 
 <div class="container">
   <header class="header">회원 관리</header>
-  <div class="search-box">
+  <div class="main">
     <div class="search-box-div">
       <input class="search-box-input" type="text" id="searchName" placeholder="이름">
       <input class="search-box-input" type="text" id="searchPhone" placeholder="전화번호">
       <input class="search-box-input" type="text" id="searchGrade" placeholder="등급">
       <button class="search-box-button" onclick="searchMembersByName()">검색</button>
     </div>
-  </div>
+
 
   <div class="info-container">
     <table class="info-item" >
@@ -382,7 +394,7 @@
       <tbody id="memberTableBody"></tbody>
     </table>
   </div>
-
+  </div>
   <div id="memberModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeModal()">닫기</span>
