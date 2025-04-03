@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<head>
+    <!-- CSRF 토큰 설정 - Spring Security와의 연동을 위한 메타 태그 -->
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+
+<!-- 사용자 스크립트 추가 -->
+// 사용자 스크립트 추가
+// 사용자 스크립트 추가
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        // 문서 로딩 완료 시 실행되는 함수
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOM 요소 참조 초기화
+            const countElement = document.getElementById('count');
+            const priceElement = document.getElementById('price');
+            const totalPriceElement = document.getElementById('totalPrice');
+
+            // 초기 총 가격 계산
+            calculateTotalPrice();
+
+            // 수량 변경 시 가격 재계산
+            if (countElement) {
+                countElement.addEventListener('change', calculateTotalPrice);
+            }
+        });
+
+        /**
+         * 총 가격을 계산하여 화면에 표시하는 함수
+         * 수량과 가격을 곱하여 총 결제 금액을 업데이트
+         */
+        const calculateTotalPrice = () => {
+            const countElement = document.getElementById('count');
+            const priceElement = document.getElementById('price');
+            const totalPriceElement = document.getElementById('totalPrice');
+
+            if (!countElement || !priceElement || !totalPriceElement) return;
+
+            const count = parseInt(countElement.value);
+            const price = parseInt(priceElement.value);
+
+            // 수량 유효성 검사 (OrderDTO에 정의된 @Min(1), @Max(999) 제약조건과 일치)
+            if (isNaN(count) || count < 1) {
+                countElement.value = 1;
+                const totalPrice = price * 1;
+                totalPriceElement.textContent = `${totalPrice}원`;
+                return;
+            }
+
+            if (count > 999) {
+                countElement.value = 999;
+                const totalPrice = price * 999;
+                totalPriceElement.textContent = `${totalPrice}원`;
+                return;
+            }
+
+            const totalPrice = price * count;
+            totalPriceElement.textContent = `${totalPrice}원`;
+        };
+
+        /**
+         * CSRF 헤더를 포함한 fetch 요청 옵션을 생성하는 함수
+         * @param {Object} data - 전송할 데이터 객체
+         * @returns {Object} - fetch 요청 옵션
+         */
+        const createFetchOptions = (data) => {
+            const token = document.querySelector("meta[name='_csrf']").content;
+            const header = document.querySelector("meta[name='_csrf_header']").content;
+
+            return {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    [header]: token // 동적 키 이름으로 CSRF 헤더 설정
+                },
+                body: JSON.stringify(data)
+            };
+        };
+
+        /**
+         * 주문 처리 함수
+         * fetch API를 사용하여 서버에 주문 요청을 전송
+         */
+        const order = async () => {
+            const productIdElement = document.getElementById('id');
+            const countElement = document.getElementById('count');
+
+            if (!productIdElement || !countElement) {
+                alert('필요한 정보를 찾을 수 없습니다. 페이지를 새로고침 후 다시 시도해주세요.');
+                return;
+            }
+
+            // 수량 유효성 검사 (OrderDTO에 정의된 제약조건과 일치)
+            const count = parseInt(countElement.value);
+            if (isNaN(count) || count < 1) {
+                alert('최소 1개 이상 구매해야 합니다.');
+                return;
+            }
+
+            if (count > 999) {
+                alert('최대 주문 수량은 999개입니다.');
+                return;
+            }
+
+            try {
+                const url = "/order";
+                const data = {
+                    productId: productIdElement.value,
+                    count: count
+                };
+
+                const response = await fetch(url, createFetchOptions(data));
+
+                // 응답 확인
+                if (!response.ok) {
+                    // 인증 오류 시 로그인 페이지로 이동
+                    if (response.status === 401) {
+                        alert('로그인 후 이용해주세요');
+                        window.location.href = '/members/login';
+                        return;
+                    }
+
+                    // OrderController에서 반환하는 형식(String 또는 Long)에 맞게 처리
+                    const errorText = await response.text();
+                    throw new Error(errorText);
+                }
+
+                // OrderController에서 ResponseEntity<Long>(orderId, HttpStatus.OK) 반환
+                const orderId = await response.json();
+
+                // 성공 시 처리
+                alert("주문이 완료 되었습니다.");
+                window.location.href = '/';
+
+            } catch (error) {
+                // 오류 처리
+                alert(error.message || '주문 처리 중 오류가 발생했습니다.');
+                console.error('주문 오류:', error);
+            }
+        };
+
+        /**
+         * 장바구니 추가 함수
+         * fetch API를 사용하여 서버에 장바구니 추가 요청을 전송
+         */
+        const addCart = async () => {
+            const productIdElement = document.getElementById('id');
+            const countElement = document.getElementById('count');
+
+            if (!productIdElement || !countElement) {
+                alert('필요한 정보를 찾을 수 없습니다. 페이지를 새로고침 후 다시 시도해주세요.');
+                return;
+            }
+
+            // 수량 유효성 검사
+            const count = parseInt(countElement.value);
+            if (isNaN(count) || count < 1) {
+                alert('최소 1개 이상 담아야 합니다.');
+                return;
+            }
+
+            if (count > 999) {
+                alert('최대 담을 수 있는 수량은 999개입니다.');
+                return;
+            }
+
+            try {
+                const url = "/cart";
+                const data = {
+                    productId: productIdElement.value,
+                    count: count
+                };
+
+                const response = await fetch(url, createFetchOptions(data));
+
+                // 응답 확인
+                if (!response.ok) {
+                    // 인증 오류 시 로그인 페이지로 이동
+                    if (response.status === 401) {
+                        alert('로그인 후 이용해주세요');
+                        window.location.href = '/members/login';
+                        return;
+                    }
+
+                    // 기타 HTTP 오류
+                    const errorText = await response.text();
+                    throw new Error(errorText);
+                }
+
+                // 성공 시 처리
+                alert("상품을 장바구니에 담았습니다.");
+                window.location.href = '/';
+
+            } catch (error) {
+                // 오류 처리
+                alert(error.message || '장바구니 추가 중 오류가 발생했습니다.');
+                console.error('장바구니 오류:', error);
+            }
+        };
+    </script>
+</th:block>
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        /* 여백 관련 스타일 */
+        .mgb-15 {
+            margin-bottom: 15px;
+        }
+        .mgt-30 {
+            margin-top: 30px;
+        }
+        .mgt-50 {
+            margin-top: 50px;
+        }
+
+        /* 이미지 컨테이너 스타일 */
+        .repImgDiv {
+            margin-right: 15px;
+            height: auto;
+            width: 50%;
+        }
+
+        /* 대표 이미지 스타일 */
+        .repImg {
+            width: 100%;
+            height: 400px;
+        }
+
+        /* 너비 50% 설정 */
+        .wd50 {
+            height: auto;
+            width: 50%;
+        }
+    </style>
+</th:block>
+
+<div layout:fragment="content" style="margin-left:25%;margin-right:25%">
+    <!-- 상품 ID 저장용 숨겨진 필드 -->
+    <input type="hidden" id="id" th:value="${product.id}">
+
+    <div class="d-flex">
+        <!-- 상품 대표 이미지 영역 -->
+        <div class="repImgDiv">
+            <!-- 이미지가 있는 경우 표시 -->
+            <img th:if="${not #lists.isEmpty(product.productImgDTOList) and not #strings.isEmpty(product.productImgDTOList[0].productImgUrl)}"
+                 th:src="${product.productImgDTOList[0].productImgUrl}"
+                 class="rounded repImg"
+                 th:alt="${product.productName}">
+            <!-- 이미지가 없는 경우 대체 이미지 표시 -->
+            <img th:unless="${not #lists.isEmpty(product.productImgDTOList) and not #strings.isEmpty(product.productImgDTOList[0].productImgUrl)}"
+                 src="/images/no-image.png"
+                 class="rounded repImg"
+                 alt="상품 이미지 없음">
+        </div>
+
+        <!-- 상품 정보 영역 -->
+        <div class="wd50">
+            <!-- 판매 상태에 따른 배지 표시 -->
+            <span th:if="${product.productSellStatus.name() == T(com.bbmore.product.constant.ProductSellStatus).SELL.name()}" class="badge badge-primary mgb-15">
+                판매중
+            </span>
+            <span th:unless="${product.productSellStatus.name() == T(com.bbmore.product.constant.ProductSellStatus).SELL.name()}" class="badge btn-danger mgb-15" >
+                품절
+            </span>
+
+            <!-- 상품명 표시 -->
+            <div class="h4" th:text="${product.productName}"></div>
+            <hr class="my-4">
+
+            <!-- 가격 및 수량 선택 영역 -->
+            <div class="text-right">
+                <div class="h4 text-danger text-left">
+                    <input type="hidden" th:value="${product.price}" id="price" name="price">
+                    <span th:text="${product.price}"></span>원
+                </div>
+                <div class="input-group w-50">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">수량</span>
+                    </div>
+                    <input type="number" name="count" id="count" class="form-control" value="1" min="1">
+                </div>
+            </div>
+            <hr class="my-4">
+
+            <!-- 결제 금액 표시 영역 -->
+            <div class="text-right mgt-50">
+                <h5>결제 금액</h5>
+                <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
+            </div>
+
+            <!-- 판매 상태에 따른 버튼 표시 -->
+            <div th:if="${product.productSellStatus.name() == T(com.bbmore.product.constant.ProductSellStatus).SELL.name()}" class="text-right">
+                <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCart()">장바구니 담기</button>
+                <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>
+            </div>
+            <div th:unless="${product.productSellStatus.name() == T(com.bbmore.product.constant.ProductSellStatus).SELL.name()}" class="text-right">
+                <button type="button" class="btn btn-danger btn-lg">품절</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid mgt-30">
+        <div class="container">
+            <h4 class="display-5">상품 상세 설명</h4>
+            <hr class="my-4">
+            <p class="lead" th:text="${product.productDetail}"></p>
+        </div>
+    </div>
+
+    <!-- 상품 상세 이미지 표시 -->
+    <div th:each="productImg : ${product.productImgDTOList}" class="text-center">
+        <img th:if="${not #strings.isEmpty(productImg.productImgUrl)}"
+             th:src="${productImg.productImgUrl}"
+             class="rounded mgb-15"
+             width="800">
+    </div>
+</div>
+
+</html>

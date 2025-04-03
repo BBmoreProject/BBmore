@@ -10,9 +10,6 @@ import java.util.UUID;
 @Service
 @Log
 public class FileService {
-
-
-
     public String uploadFile(String uploadPath, String originalFileName,
                              byte[] fileData) throws Exception {
 

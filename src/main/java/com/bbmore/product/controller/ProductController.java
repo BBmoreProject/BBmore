@@ -162,4 +162,12 @@ public class ProductController {
             return "error/admin-error";
         }
     }
+
+    @GetMapping(value = "/product/{id}") ///  Products/{id} 형태의 URL GET 처리
+    public String productDetail(Model model, @PathVariable(value = "id") Long id) {
+        ///  URL경로의 {id} 추출해 Long 타입의 id변수 할당
+            ProductFormDTO productFormDTO = productService.getProductDetail(id);
+            model.addAttribute("product", productFormDTO);
+            return "product/productDtl"; /// ViewResolver는 설정에 따라 이 문자열을 실제 템플릿 파일 경로로 변환
+    }
 }

@@ -81,60 +81,12 @@ public class ProductService {
             productImgDTOList.add(productImgDTO);
         }
 
-
         Product product = productRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
 
-        ///  productRepository를 사용하여 특정 ID(productId)를 가진 상품을
-        /// 데이터베이스에서 조회합니다.
-        ///  findById()는 Java 8의 Optional 을 반환합니다.
-        /**
-         * 찾은 Product 엔티티를 ProductFormDTO 객체로 변환합니다.
-         * ProductFormDTO.of()는 정적 팩토리 메소드로,
-         * 엔티티의 데이터를 DTO에 복사하는 역할을 합니다.
-         */
         ProductFormDTO productFormDTO = ProductFormDTO.of(product);
         productFormDTO.setProductImgDTOList(productImgDTOList);
-        /**
-         * 앞서 생성한 상품 이미지 DTO 리스트를 productFormDTO 객체에 설정합니다.
-         * 이로써 상품 정보와 관련 이미지 정보를 하나의 DTO 객체에 담게 됩니다.
-         *
-         * ex : JSON
-         * {
-         *   "id": 123,
-         *   "name": "맥북 프로 16인치",
-         *   "price": 3500000,
-         *   "stockNumber": 50,
-         *   "detail": "Apple M2 Max 칩, 32GB 메모리, 1TB SSD",
-         *   "status": "ACTIVE",
-         *   "category": "노트북",F
-         *   "createdAt": "2023-04-01T10:30:00",
-         *   "updatedAt": "2023-04-01T10:30:00",
-         *   "productImgDTOList": [
-         *     {
-         *       "id": 456,
-         *       "originalImageName": "macbook_front.jpg",
-         *       "savedImageName": "product123_1.jpg",
-         *       "imageUrl": "/images/product123_1.jpg",
-         *       "isRepresentative": true
-         *     },
-         *     {
-         *       "id": 457,
-         *       "originalImageName": "macbook_side.jpg",
-         *       "savedImageName": "product123_2.jpg",
-         *       "imageUrl": "/images/product123_2.jpg",
-         *       "isRepresentative": false
-         *     },
-         *     {
-         *       "id": 458,
-         *       "originalImageName": "macbook_back.jpg",
-         *       "savedImageName": "product123_3.jpg",
-         *       "imageUrl": "/images/product123_3.jpg",
-         *       "isRepresentative": false
-         *     }
-         *   ]
-         * }
-         */
+
         return productFormDTO;
 
     }
