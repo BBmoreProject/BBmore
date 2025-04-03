@@ -16,7 +16,7 @@
             width: 200px;
             height: 45px;
             top: 33%;
-            left: 465%;
+            left: 65%;
         }
 
         .dropdown-toggle {
@@ -213,7 +213,7 @@
             box-sizing: border-box;
             position: relative;
             width: 1500px;
-            height: 116px;
+            height: 200px;
             top: 3%;
             background: #f4f4f4;
             border: 1px solid #edf0f5;
@@ -232,36 +232,22 @@
         .search-write2 {
             font-weight: 350;
             font-size: 15px;
-            width: auto;
-            height: 25px;
+            width: 1000px;
+            height: 126px;
             position: absolute;
-            top: 15%;
-            left: 62%;
+            top: 40%;
+            left: 7%;
         }
 
         .search-allday {
-            width: auto;
-            height: 25px;
             position: absolute;
             top: 35%;
             left: 7%;
         }
 
-        #search-day1 {
-            width: 75px;
-            height: 35px;
-        }
-
-        #search-day2 {
-            width: 75px;
-            height: 35px;
-        }
-
-        #search-day3 {
-            width: 75px;
-            height: 35px;
-        }
-
+        #search-day1,
+        #search-day2,
+        #search-day3,
         #search-day4 {
             width: 75px;
             height: 35px;
@@ -352,6 +338,33 @@
             text-align: center;
             vertical-align: middle;
             height: 100px; /* 높이 조정 */
+        }
+
+        .search-box-input {
+            position: relative;
+            margin: 9% 0 0 10px;
+            padding: 5px;
+            left: 93px;
+            width: 210px;
+            height: 41px;
+            background-color: #F4F4F4;
+            border-radius: 7px;
+            border-style: none;
+            border: 1px solid #7a7a7a;
+        }
+
+        .search-box-button {
+            position: relative;
+            color: white;
+            cursor: pointer;
+            top: 68%;
+            left: 7%;
+            width: 100px;
+            height: 40px;
+            background-color: #F28C25;
+            border-radius: 5px;
+            border-style: none;
+            margin: 0 10px 0 0;
         }
 
 
@@ -460,55 +473,31 @@
     <header class="header">주문조회</header>
     <main class="main">
         <div class="search-box">
-            <form action="/order/order-1-data" method="get" class="mb-4">
-                <div class="search-write1">
-                    <p>조회기간</p>
-                </div>
+            <div class="search-write1">
+                <p>조회기간</p>
+            </div>
 
-                <div class="search-allday">
-                    <button id="search-day1" type="button">오늘</button>
-                    <button id="search-day2" type="button">1주일</button>
-                    <button id="search-day3" type="button">1개월</button>
-                    <button id="search-day4" type="button">3개월</button>
-                </div>
-
+            <div class="search-allday">
+                <button id="search-day1" type="button">오늘</button>
+                <button id="search-day2" type="button">1주일</button>
+                <button id="search-day3" type="button">1개월</button>
+                <button id="search-day4" type="button">3개월</button>
+            </div>
 
 
-                <div class="calendar">
-                    <input type="date" name="startDate"  id="startDate" class="form-control" required/> &nbsp; ~ &nbsp; <input
-                        type="date" name="endDate" id="endDate"  class="form-control" required/>
-                </div>
+            <div class="calendar">
+                <input type="date" name="startDate" id="startDate" class="form-control" required/> &nbsp; ~ &nbsp;
+                <input type="date" name="endDate" id="endDate" class="form-control" required/>
+            </div>
 
 
-                <div class="search-write2">
-                    <p>상세조건</p>
-                </div>
+            <input class="search-box-input" type="text" id="searchCode" placeholder="주문번호">
+            <input class="search-box-input" type="text" id="searchName" placeholder="이름">
+            <input class="search-box-input" type="text" id="searchPhone" placeholder="전화번호">
 
-                <div class="dropdown">
-                    <div class="dropdown-toggle" onclick="toggleDropdown()">
-                        상세조건
-                        <span class="arrow">▼</span>
-                    </div>
-                    <div class="dropdown-menu">
-                        <div onclick="selectOption(this)">전체</div>
-                        <div onclick="selectOption(this)">구매자명</div>
-                        <div onclick="selectOption(this)">주문번호</div>
-                    </div>
-                    <input type="hidden" name="searchType1" id="searchType1" value="전체">
-                    <input type="hidden" name="searchType2" id="searchType2" value="구매자명">
-                </div>
+            <button class="search-box-button" onclick="searchMembersByName()">검색</button>
+            <button class="search-box-button" onclick="loadAllOrders()">전체 조회</button>
 
-                <!-- 구매자명 입력란, 기본적으로 비활성화 -->
-                <input class="searchbox-text" type="text" name="username" id="username" disabled placeholder="입력" />
-
-                <!-- 조회 버튼 -->
-                <button class="search-button" type="submit" id="searchButton">조회</button>
-
-
-                <div>
-                    <button class="search-button" type="submit">조회</button>
-                </div>
-            </form>
         </div>
 
 
@@ -519,63 +508,62 @@
                     <!-- 테이블 헤더 -->
                     <thead>
                     <tr>
-                        <th>주문고유번호</th>
+                        <th>주문번호</th>
                         <th>주문날짜</th>
                         <th>제품명</th>
-                        <th>총결제금액</th>
-                        <th>주문상태</th>
-                        <th>성함</th>
+                        <th>이름</th>
                         <th>전화번호</th>
                         <th>주소</th>
                     </tr>
                     </thead>
                     <!-- 테이블 본문 -->
-                    <tbody>
-                    <tr th:each="order : ${orders}">
-                        <td th:text="${order.orderCode}"></td>
-                        <td th:text="${order.orderDate}"></td>
-                        <td th:text="${order.productName}"></td>
-                        <td th:text="${order.orderTotalPrice}"></td>
-                        <td th:text="${order.orderStatus}"></td>
-                        <td th:text="${order.member.userName}"></td>
-                        <td th:text="${order.member.userPhoneNumber}"></td>
-                        <td th:text="${order.member.userAddress}"></td>
-                    </tr>
-                    </tbody>
-                    <tr th:if="${orders.isEmpty()}">
-                        <td colspan="8" class="text-center" style="text-align:center; vertical-align:middle; height:100px;">
-                            조회된 주문이 없습니다.
-                    </tr>
+                    <tbody id="memberTableBody"></tbody>
+                    <!--                    <tr th:each="order : ${orders}">-->
+                    <!--                        <td th:text="${order.orderCode}"></td>-->
+                    <!--                        <td th:text="${order.orderDate}"></td>-->
+                    <!--                        <td th:text="${order.productName}"></td>-->
+                    <!--                        <td th:text="${order.orderTotalPrice}"></td>-->
+                    <!--                        <td th:text="${order.orderStatus}"></td>-->
+                    <!--                        <td th:text="${order.member.userName}"></td>-->
+                    <!--                        <td th:text="${order.member.userPhoneNumber}"></td>-->
+                    <!--                        <td th:text="${order.member.userAddress}"></td>-->
+                    <!--                    </tr>-->
+                    <!--                    </tbody>-->
+                    <!--                    <tr th:if="${orders.isEmpty()}">-->
+                    <!--                        <td colspan="8" class="text-center"-->
+                    <!--                            style="text-align:center; vertical-align:middle; height:100px;">-->
+                    <!--                            조회된 주문이 없습니다.-->
+                    <!--                    </tr>-->
                 </table>
             </div>
 
-            <div id="paging">
-                <!-- 맨 앞으로 이동 -->
-                <button th:onclick="|location.href='@{/order/order-1-data(page=${paging.startPage})}'|">
-                    <<
-                </button>
-                <!-- 이전 페이지로 이동 -->
-                <button th:onclick="|location.href='@{/order/order-1-data(page=${paging.currentPage - 1})}'|"
-                        th:disabled="${orderList.first}">
-                    <
-                </button>
-                <!-- 숫자 버튼 -->
-                <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
-                    <button th:onclick="|location.href='@{/order/order-1-data(page=${page})}'|"
-                            th:text="${page}"
-                            th:disabled="${paging.currentPage eq page}">
-                    </button>
-                </th:block>
-                <!-- 다음 페이지로 이동 -->
-                <button th:onclick="|location.href='@{/order/order-1-data(page=${paging.currentPage + 1})}'|"
-                        th:disabled="${orderList.last}">
-                    >
-                </button>
-                <!-- 맨 끝으로 이동 -->
-                <button th:onclick="|location.href='@{/order/order-1-data(page=${paging.endPage})}'|">
-                    >>
-                </button>
-            </div>
+            <!--            <div id="paging">-->
+            <!--                &lt;!&ndash; 맨 앞으로 이동 &ndash;&gt;-->
+            <!--                <button th:onclick="|location.href='@{/order/order-1-data(page=${paging.startPage})}'|">-->
+            <!--                    <<-->
+            <!--                </button>-->
+            <!--                &lt;!&ndash; 이전 페이지로 이동 &ndash;&gt;-->
+            <!--                <button th:onclick="|location.href='@{/order/order-1-data(page=${paging.currentPage - 1})}'|"-->
+            <!--                        th:disabled="${orderList.first}">-->
+            <!--                    <-->
+            <!--                </button>-->
+            <!--                &lt;!&ndash; 숫자 버튼 &ndash;&gt;-->
+            <!--                <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">-->
+            <!--                    <button th:onclick="|location.href='@{/order/order-1-data(page=${page})}'|"-->
+            <!--                            th:text="${page}"-->
+            <!--                            th:disabled="${paging.currentPage eq page}">-->
+            <!--                    </button>-->
+            <!--                </th:block>-->
+            <!--                &lt;!&ndash; 다음 페이지로 이동 &ndash;&gt;-->
+            <!--                <button th:onclick="|location.href='@{/order/order-1-data(page=${paging.currentPage + 1})}'|"-->
+            <!--                        th:disabled="${orderList.last}">-->
+            <!--                    >-->
+            <!--                </button>-->
+            <!--                &lt;!&ndash; 맨 끝으로 이동 &ndash;&gt;-->
+            <!--                <button th:onclick="|location.href='@{/order/order-1-data(page=${paging.endPage})}'|">-->
+            <!--                    >>-->
+            <!--                </button>-->
+            <!--            </div>-->
         </div>
 
     </main>
@@ -585,83 +573,84 @@
     </footer>
 </div>
 
+
 <script>
-    // 네이게이션 스크립트
-    function toggleDropdown() {
-        const dropdown = document.querySelector(".dropdown");
-        const menu = document.querySelector(".dropdown-menu");
-        dropdown.classList.toggle("open");
-        menu.classList.toggle("active");
+    async function searchMembersByName() {
+        const code = document.getElementById("searchCode").value;
+        const name = document.getElementById("searchName").value;
+        const phone = document.getElementById("searchPhone").value;
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+
+        const url = `/api/orders/search?code=${encodeURIComponent(code)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+
+        try {
+            const res = await fetch(url);
+            const orders = await res.json();
+            renderMembers(orders);
+        } catch (error) {
+            console.error("검색 실패:", error);
+        }
     }
 
-    // 선택한 값 출력
-    function selectOption(element) {
-        const selectedValue = element.innerText;
-        console.log("선택한 값:", selectedValue);
+    function renderMembers(orders) {
+        const tbody = document.getElementById("memberTableBody");
+        tbody.innerHTML = "";
 
-        // 선택한 값 드롭다운에 표시
-        document.querySelector(
-            ".dropdown-toggle"
-        ).innerHTML = `${selectedValue} <span class="arrow">▼</span>`;
-
-        // searchType1 값 업데이트
-        document.getElementById("searchType1").value = selectedValue;
-
-        // 구매자명 선택 시 해당 입력 필드를 활성화하고 다른 조건에서는 비활성화
-        if (selectedValue === "구매자명") {
-            document.getElementById("username").disabled = false;
-        } else {
-            document.getElementById("username").disabled = true;
-            document.getElementById("username").value = ''; // 비활성화하면 값도 초기화
-        }
-
-        // 드롭다운 닫기
-        toggleDropdown();
+        orders.forEach(order => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${order.orderCode}</td>
+                <td>${order.orderDate}</td>
+                <td>${order.productName}</td>
+                <td>${order.member ? order.member.userName : '-'}</td>
+                <td>${order.member ? order.member.userPhoneNumber : '-'}</td>
+                <td>${order.member ? order.member.userAddress : '-'}</td>
+            `;
+            tbody.appendChild(row);
+        });
     }
 
-    // 다른 곳 클릭 시 드롭다운 닫기
-    window.addEventListener("click", function (event) {
-        const dropdown = document.querySelector(".dropdown");
-        if (!dropdown.contains(event.target)) {
-            dropdown.classList.remove("open");
-            document.querySelector(".dropdown-menu").classList.remove("active");
-        }
-    });
+    function setDateRange(days) {
+        const today = new Date();
+        const startDate = new Date();
+        startDate.setDate(today.getDate() - days);
+
+        const todayStr = today.toISOString().split("T")[0];
+        const startStr = startDate.toISOString().split("T")[0];
+
+        document.getElementById("startDate").value = startStr;
+        document.getElementById("endDate").value = todayStr;
+    }
 
     document.addEventListener("DOMContentLoaded", function () {
-        function setDateRange(days) {
-            let today = new Date();
-            let startDate = new Date();
-            startDate.setDate(today.getDate() - days);
+        loadMembers();
 
-            let todayStr = today.toISOString().split("T")[0];
-            let startStr = startDate.toISOString().split("T")[0];
-
-            let startInput = document.getElementById("startDate");
-            let endInput = document.getElementById("endDate");
-
-            if (startInput && endInput) {
-                startInput.value = startStr;
-                endInput.value = todayStr;
-            } else {
-                console.error("날짜 입력 요소를 찾을 수 없습니다.");
-            }
-        }
-
-        // 버튼 클릭 이벤트 등록 (DOMContentLoaded 이후 실행)
-        let todayBtn = document.getElementById("search-day1");
-        let weekBtn = document.getElementById("search-day2");
-        let monthBtn = document.getElementById("search-day3");
-        let threeMonthBtn = document.getElementById("search-day4");
-
-        if (todayBtn) todayBtn.addEventListener("click", function () { setDateRange(0); });
-        if (weekBtn) weekBtn.addEventListener("click", function () { setDateRange(7); });
-        if (monthBtn) monthBtn.addEventListener("click", function () { setDateRange(30); });
-        if (threeMonthBtn) threeMonthBtn.addEventListener("click", function () { setDateRange(90); });
+        document.getElementById("search-day1").addEventListener("click", () => { setDateRange(0); searchMembersByName(); });
+        document.getElementById("search-day2").addEventListener("click", () => { setDateRange(7); searchMembersByName(); });
+        document.getElementById("search-day3").addEventListener("click", () => { setDateRange(30); searchMembersByName(); });
+        document.getElementById("search-day4").addEventListener("click", () => { setDateRange(90); searchMembersByName(); });
     });
 
+    async function loadMembers() {
+        try {
+            const res = await fetch("/api/orders/search");
+            const data = await res.json();
+            renderMembers(data);
+        } catch (error) {
+            console.error("초기 데이터 로딩 실패:", error);
+        }
+    }
 
-
+    async function loadAllOrders() {
+        try {
+            const res = await fetch("/api/orders/search"); // 모든 데이터 요청
+            const orders = await res.json();
+            renderMembers(orders);
+        } catch (error) {
+            console.error("전체 조회 실패:", error);
+        }
+    }
 
 </script>
 

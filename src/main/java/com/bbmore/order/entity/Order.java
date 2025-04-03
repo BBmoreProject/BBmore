@@ -11,7 +11,9 @@ import java.util.List;
 @Table(name = "tbl_order")
 @Getter
 @ToString
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 
 public class Order {
     @Id
@@ -49,6 +51,7 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails; // OrderDetail 테이블과 관계 설정
+
 
     // Getters and setters
 }
