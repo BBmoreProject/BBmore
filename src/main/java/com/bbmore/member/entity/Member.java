@@ -61,4 +61,6 @@ public class Member {
     @JoinColumn(name = "animal_code")
     private Animal animal;
 
+}
+
 
