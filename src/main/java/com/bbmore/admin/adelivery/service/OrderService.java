@@ -16,7 +16,6 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    // 검색
     public List<OrderDto> searchOrders(String code, String name, String phone, LocalDate startDate, LocalDate endDate) {
         String c = (code == null || code.isBlank()) ? null : code;
         String n = (name == null || name.isBlank()) ? null : name;

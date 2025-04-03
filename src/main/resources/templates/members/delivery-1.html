@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>배송 관리</title>
 
-  <!-- 첫 번째 코드의 스타일 (절대 변경 금지) -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
     * {
@@ -46,18 +45,15 @@
       object-fit: contain;
     }
 
-    /* 사이드바 상위 메뉴 */
     .nav ul {
       list-style: none;
     }
 
-    /* 사이드바 하위 메뉴 */
     .nav ul li {
       margin: 15px 0;
       position: relative;
     }
 
-    /* 사이드바-공지사항 관리 텍스트 */
     .nav ul li a {
       color: rgb(0, 0, 0);
       font-size: 20px;
@@ -67,7 +63,6 @@
       cursor: pointer;
     }
 
-    /* 사이드바-서브메뉴 틀 */
     .nav ul .submenu {
       display: none;
       list-style: none;
@@ -80,7 +75,6 @@
       margin: 0;
     }
 
-    /* 사이드바 하위 메뉴 텍스트(공지사항, 자주묻는질문) */
     .nav ul .submenu li a {
       padding: 10px;
       color: #ffffff;
@@ -153,7 +147,7 @@
       border-style: none;
       height: 180px;
       gap: 20px;
-      position: relative; /* 변경: absolute 요소들이 여기 기준으로 잡힘 */
+      position: relative;
     }
     .search-box-input {
       margin: 5% 0 0 0;
@@ -270,7 +264,6 @@
       left: 25%;
     }
 
-    /* 조회기간, 상세조건 레이블 */
     .search-write1 {
       position: absolute;
       top: 10%;
@@ -278,15 +271,14 @@
       font-weight: 350;
       font-size: 15px;
     }
-    .search-write2 {
-      position: absolute;
-      top: 15%;
-      left: 62%;
-      font-weight: 350;
-      font-size: 15px;
-    }
+    /*.search-write2 {*/
+    /*  position: absolute;*/
+    /*  top: 15%;*/
+    /*  left: 62%;*/
+    /*  font-weight: 350;*/
+    /*  font-size: 15px;*/
+    /*}*/
 
-    /* 조회기간 버튼 */
     .search-allday {
       position: absolute;
       top: 30%;
@@ -300,33 +292,30 @@
       height: 35px;
     }
 
-    /* 검색어 입력 */
-    .searchbox-text {
-      position: absolute;
-      top: 33%;
-      left: 76%;
-      width: auto;
-      height: 39px;
-    }
+    /*.searchbox-text {*/
+    /*  position: absolute;*/
+    /*  top: 33%;*/
+    /*  left: 76%;*/
+    /*  width: auto;*/
+    /*  height: 39px;*/
+    /*}*/
 
-    /* 조회 버튼 */
-    .search-button {
-      position: absolute;
-      top: 33%;
-      left: 88%;
-      background-color: #f28c25;
-      color: white;
-      width: 50px;
-      height: 39px;
-      border-radius: 5px;
-      border-style: none;
-      cursor: pointer;
-    }
+    /*.search-button {*/
+    /*  position: absolute;*/
+    /*  top: 33%;*/
+    /*  left: 88%;*/
+    /*  background-color: #f28c25;*/
+    /*  color: white;*/
+    /*  width: 50px;*/
+    /*  height: 39px;*/
+    /*  border-radius: 5px;*/
+    /*  border-style: none;*/
+    /*  cursor: pointer;*/
+    /*}*/
   </style>
 </head>
 
 <body>
-<!-- 첫 번째 코드의 HTML (절대 변경 금지) -->
 <nav class="nav">
   <ul>
     <li class="nav-logo" style="margin: 0;"><img id="b1" src="/b1.png" alt="로고"></li>
@@ -431,7 +420,7 @@
       });
     });
 
-    loadMembers(); // 회원 목록 로드
+    loadMembers();
   });
 
 

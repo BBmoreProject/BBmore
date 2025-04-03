@@ -408,7 +408,6 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    // 사이드바 메뉴 열기/닫기
     const menuItems = document.querySelectorAll(".nav ul li > a");
     menuItems.forEach(menu => {
       menu.addEventListener("click", function (event) {
@@ -418,7 +417,7 @@
       });
     });
 
-    loadMembers(); // 회원 목록 로드
+    loadMembers();
   });
 
   function updateTableRow(id, updatedData) {
