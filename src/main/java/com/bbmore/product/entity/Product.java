@@ -19,17 +19,17 @@ public class Product extends BaseEntity {
     ///  기본키 생성 전략 AUTO -> IDENTITY
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Column(name = "product_code")
-    private Long productId;
+    private Long id;
 
     /// 항상 값이 있어야 하는 필드는 Not Null 설정
     @Column(name = "product_name", nullable = false, length = 50)
     private String productName;
 
     @Column(name = "product_price", nullable = false)
-    private int productPrice;
+    private int price;
 
     @Column(name = "product_quantity", nullable = false)
-    private int productStock;
+    private int stockNumber;
 
     private String productDetail;
 
@@ -38,15 +38,9 @@ public class Product extends BaseEntity {
 
     public void updateProduct(ProductFormDTO productFormDTO){
         this.productName = productFormDTO.getProductName();
-        this.productPrice = productFormDTO.getPrice();
-        this.productStock = productFormDTO.getStockNumber();
+        this.price = productFormDTO.getPrice();
+        this.stockNumber = productFormDTO.getStockNumber();
         this.productDetail = productFormDTO.getProductDetail();
         this.productSellStatus = productFormDTO.getProductSellStatus();
     }
-
-
-
-
-
-
 }

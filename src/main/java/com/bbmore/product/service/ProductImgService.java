@@ -4,6 +4,7 @@ import com.bbmore.product.entity.ProductImg;
 import com.bbmore.product.repository.ProductImgRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import org.thymeleaf.util.StringUtils;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Log
 public class ProductImgService {
 
     @Value("${productImgLocation}") ///  productImgLocation 속성 값을 주입
@@ -75,10 +77,15 @@ public class ProductImgService {
             }
 
             String originalImgName = productImgFile.getOriginalFilename();
+            assert originalImgName != null;
             String productImgName = fileService.uploadFile(productImgLocation,
                     originalImgName, productImgFile.getBytes());
             String productImgUrl = "/images/products/" + productImgName;
             savedProductImg.updateProductImg(originalImgName, productImgName, productImgUrl);
+
+            log.info("새 파일명: " + productImgName);
+            log.info("저장될 URL: " + productImgUrl);
+
 
 
         }

@@ -15,7 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>,
 
     List<Product> findByProductNameOrProductDetail(String productName, String productDetail);
 
-    List<Product> findByProductPriceLessThan(Integer productPrice); /// Integer 대신 int 사용하면 null 시 에러
+    List<Product> findByPriceLessThan(Integer price); /// Integer 대신 int 사용하면 null 시 에러
 
 
 

@@ -33,5 +33,9 @@ logging:
             sql: trace
 
 # 상품 이미지 업로드 경로 설정
-uploadPath: file:///src/main/resources/static/
-productImgLocation: src/main/resources/static/images/products
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+
+productImgLocation: C:/upload/images/products

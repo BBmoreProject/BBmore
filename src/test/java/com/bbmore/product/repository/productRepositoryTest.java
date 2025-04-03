@@ -21,8 +21,6 @@
 //import java.time.LocalDateTime;
 //import java.util.List;
 //
-//import static org.junit.jupiter.api.Assertions.*;
-//
 //@SpringBootTest
 //@TestPropertySource(locations="classpath:application-test.yml")
 //class productRepositoryTest {
@@ -38,8 +36,8 @@
 //        Product product = new Product();
 //        product.setProductName("Test Product");
 //        product.setProductDetail("Test Product Detail");
-//        product.setProductPrice(1000);
-//        product.setProductStock(100);
+//        product.setPrice(1000);
+//        product.setStockNumber(100);
 //        product.setProductUpdateTime(LocalDateTime.now());
 //        product.setProductRegTime(LocalDateTime.now());
 //
@@ -52,8 +50,8 @@
 //            Product product = new Product();
 //            product.setProductName("Test Product" + i);
 //            product.setProductDetail("Test Product Detail" + i);
-//            product.setProductPrice(1000 + i);
-//            product.setProductStock(100);
+//            product.setPrice(1000 + i);
+//            product.setStockNumber(100);
 //            product.setProductUpdateTime(LocalDateTime.now());
 //            product.setProductRegTime(LocalDateTime.now());
 //            productRepository.save(product);
@@ -91,7 +89,7 @@
 //                queryFactory.selectFrom(qProduct)
 //                .where(qProduct.productSellStatus.eq(ProductSellStatus.SELL))
 //                .where(qProduct.productDetail.like("%" + "Product Detail" + "%"))
-//                .orderBy(qProduct.productPrice.asc());
+//                .orderBy(qProduct.price.asc());
 //
 //        /// query.fecth() 메서드 호출 시 : 실제 데이터베이스 쿼리 실행 -> QueryDsl이 내부적으로 JPQL 쿼리 생성(EntityManager을 통해)
 //        /// 데이터베이스로 받은 결과를 Java 객체 (Product)로 변환하여 반환
@@ -110,8 +108,8 @@
 //            Product product = new Product();
 //            product.setProductName("Test Product" + i);
 //            product.setProductDetail("Test Product Detail" + i);
-//            product.setProductPrice(1000 + i);
-//            product.setProductStock(100);
+//            product.setPrice(1000 + i);
+//            product.setStockNumber(100);
 //            product.setProductSellStatus(ProductSellStatus.SELL);
 //            product.setProductUpdateTime(LocalDateTime.now());
 //            product.setProductRegTime(LocalDateTime.now());
@@ -121,8 +119,8 @@
 //            Product product = new Product();
 //            product.setProductName("Test Product" + i);
 //            product.setProductDetail("Test Product Detail" + i);
-//            product.setProductPrice(1000 + i);
-//            product.setProductStock(100);
+//            product.setPrice(1000 + i);
+//            product.setStockNumber(100);
 //            product.setProductSellStatus(ProductSellStatus.SOLD_OUT);
 //            product.setProductUpdateTime(LocalDateTime.now());
 //            product.setProductRegTime(LocalDateTime.now());

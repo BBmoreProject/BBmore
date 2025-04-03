@@ -20,7 +20,7 @@ public class ProductImg extends BaseTimeEntity {
 
     private String productOriginalImgName;
 
-    private String productImgUrl;
+    private String imgUrl;
 
     private String representativeImg; /// 대표 이미지 여부
 
@@ -29,9 +29,9 @@ public class ProductImg extends BaseTimeEntity {
     private Product product;
 
     public void updateProductImg(String productOriginalImgName,
-                                 String productImgName, String productImgUrl) {
+                                 String productImgName, String imgUrl) {
         this.productOriginalImgName = productOriginalImgName;
         this.productImgName = productImgName;
-        this.productImgUrl = productImgUrl;
+        this.imgUrl = imgUrl;
     }
 }

@@ -3,7 +3,212 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+  <style>
+    /* 전체 페이지 스타일 */
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    /* 캐러셀 및 배너 스타일 개선 */
+    .carousel-inner > .carousel-item {
+      height: 350px;
+      overflow: hidden;
+    }
+
+    .banner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .carousel:hover .banner {
+      transform: scale(1.02);
+    }
+
+    /* 여백 및 간격 조정 */
+    .margin {
+      margin-bottom: 40px;
+    }
+
+    /* 상품 카드 디자인 개선 */
+    .card {
+      border-radius: 10px;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-img-container {
+      height: 300px;
+      overflow: hidden;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      position: relative;
+    }
+
+    .card-img-top {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-title {
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+    }
+
+    .card-text {
+      color: #6c757d;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      height: 20px;
+    }
+
+    .price-text {
+      font-weight: 700;
+      color: #dc3545;
+      font-size: 1.4rem;
+      margin-top: 0.5rem;
+    }
+
+    /* 검색 결과 제목 스타일 */
+    .search-result-title {
+      margin: 2rem 0;
+      padding-bottom: 1rem;
+      font-weight: 700;
+      color: #343a40;
+      position: relative;
+    }
+
+    .search-result-title:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background-color: #dc3545;
+    }
+
+    /* 페이지네이션 스타일 개선 */
+    .pagination {
+      margin: 3rem 0;
+    }
+
+    .page-link {
+      border-radius: 5px;
+      margin: 0 3px;
+      color: #495057;
+      border: 1px solid #dee2e6;
+      transition: all 0.2s ease;
+    }
+
+    .page-item.active .page-link {
+      background-color: #dc3545;
+      border-color: #dc3545;
+    }
+
+    .page-item:not(.active) .page-link:hover {
+      background-color: #f8f9fa;
+      color: #dc3545;
+    }
+
+    /* 중앙 정렬 */
+    .center {
+      text-align: center;
+    }
+
+    /* 링크 스타일 */
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+  </style>
+</th:block>
+
 <div layout:fragment="content">
-  <h1>메인페이지입니다</h1>
+
+  <!-- 캐러셀 배너 섹션 -->
+  <div id="carouselControls" class="carousel slide margin" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block w-100 banner" src="https://user-images.githubusercontent.com/13268420/112147492-1ab76200-8c20-11eb-8649-3d2f282c3c02.png" alt="First slide">
+        <div class="carousel-caption d-none d-md-block">
+          <h2 class="font-weight-bold">신상품 컬렉션</h2>
+          <p>최신 트렌드의 제품들을 만나보세요</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 검색 결과 표시 섹션 -->
+  <input type="hidden" name="searchQuery" th:value="${productSearchDTO.searchQuery}">
+  <div th:if="${not #strings.isEmpty(productSearchDTO.searchQuery)}" class="center">
+    <h2 class="search-result-title" th:text="${productSearchDTO.searchQuery} + ' 검색 결과'"></h2>
+  </div>
+
+  <!-- 상품 목록 표시 섹션 -->
+  <div class="row">
+    <th:block th:each="product, status: ${products.getContent()}">
+      <div class="col-lg-4 col-md-6 margin">
+        <div class="card h-100">
+          <a th:href="'/product/' +${product.id}" class="text-dark">
+            <div class="card-img-container">
+              <img th:src="${product.imgUrl}" class="card-img-top" th:alt="${product.productName}">
+            </div>
+            <div class="card-body">
+              <h4 class="card-title">[[${product.productName}]]</h4>
+              <p class="card-text">[[${product.productDetail}]]</p>
+              <p class="price-text">[[${product.price}]]원</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </th:block>
+  </div>
+
+  <!-- 페이지네이션 섹션 -->
+  <div th:with="start=${(products.number/maxPage)*maxPage + 1}, end=(${(products.totalPages == 0) ? 1 : (start + (maxPage - 1) < products.totalPages ? start + (maxPage - 1) : products.totalPages)})" >
+    <ul class="pagination justify-content-center">
+      <li class="page-item" th:classappend="${products.number eq 0}?'disabled':''">
+        <a th:href="@{'/' + '?searchQuery=' + ${productSearchDTO.searchQuery} + '&page=' + ${products.number-1}}" aria-label='Previous' class="page-link">
+          <span aria-hidden='true'>&laquo;</span>
+        </a>
+      </li>
+
+      <li class="page-item" th:each="page: ${#numbers.sequence(start, end)}" th:classappend="${products.number eq page-1}?'active':''">
+        <a th:href="@{'/' +'?searchQuery=' + ${productSearchDTO.searchQuery} + '&page=' + ${page-1}}" th:inline="text" class="page-link">[[${page}]]</a>
+      </li>
+
+      <li class="page-item" th:classappend="${products.number+1 ge products.totalPages}?'disabled':''">
+        <a th:href="@{'/' +'?searchQuery=' + ${productSearchDTO.searchQuery} + '&page=' + ${products.number+1}}" aria-label='Next' class="page-link">
+          <span aria-hidden='true'>&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
 </div>
-</html>

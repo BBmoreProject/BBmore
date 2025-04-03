@@ -1,9 +1,12 @@
 package com.bbmore.product.repository;
 
 import com.bbmore.product.constant.ProductSellStatus;
+import com.bbmore.product.dto.MainProductDTO;
 import com.bbmore.product.dto.ProductSearchDTO;
+import com.bbmore.product.dto.QMainProductDTO;
 import com.bbmore.product.entity.Product;
 import com.bbmore.product.entity.QProduct;
+import com.bbmore.product.entity.QProductImg;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
@@ -17,11 +20,12 @@ import org.thymeleaf.util.StringUtils;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.bbmore.product.entity.QProductImg.productImg;
 import static com.querydsl.core.types.ExpressionUtils.orderBy;
 
 public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
 
-    private JPAQueryFactory queryFactory;
+    private final JPAQueryFactory queryFactory;
 
     public ProductRepositoryCustomImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
@@ -79,7 +83,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
                         searchSellStatusEqual(productSearchDTO.getSearchSellStatus()),
                         searchByLike(productSearchDTO.getSearchBy(), productSearchDTO.getSearchQuery())
                 )
-                .orderBy(QProduct.product.productId.desc())
+                .orderBy(QProduct.product.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -107,6 +111,55 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom{
          * pageable: 페이지 정보
          * total: 전체 상품 수
          */
+        return new PageImpl<>(content, pageable, total);
+    }
+
+    ///  사용자가 입력한 검색어를 받아
+    /// /// 이 검색어가 어디든 표시된 모든 제품을 찾아줘! % searchQuery %
+    /// null 이거나 빈 문자열 일땐 StringUtils.isEmpty(searchQuery) 이므로 null 을 반환합니다.
+    private BooleanExpression productNameLike(String searchQuery) {
+
+        return StringUtils.isEmpty(searchQuery)
+                ? null : QProduct.product.productName.like("%" + searchQuery + "%");
+
+    }
+
+    @Override
+    ///  검색 조건을 담는 DTO 와 페이징 정보
+    public Page<MainProductDTO> getMainProductPage(ProductSearchDTO productSearchDTO, Pageable pageable) {
+        QProduct product = QProduct.product; /// Q타입 초기화
+        QProductImg productImg = QProductImg.productImg;
+
+        ///  Q 타입 객체 초기화, 테이블에 매핑되는 엔티티의 메타 정보를 담고 있음
+        List<MainProductDTO> content = queryFactory ///  쿼리를 시작하고 결과를 content List에 담음
+                .select( ///  쿼리 결과로 반환할 필드를 지정
+                        ///  productName, productDetail, productImgUrl, productPrice)을 담은 DTO 객체를 생성
+                        new QMainProductDTO(
+                                product.id,
+                                product.productName,
+                                product.productDetail,
+                                productImg.imgUrl,
+                                product.price)
+                ) ///  Querydsl 프로젝션 기능을 사용한 것으로, 쿼리 결과를 바로 DTO 변환
+                .from(productImg) ///  기본 테이블을 productImg로 설정
+                .join(productImg.product, product) ///  productImg, product 테이블 조인(productImg.product는 productImg엔티티의 product타입필드)
+                .where(productImg.representativeImg.eq("Y")) /// 대표 이미지만 필터링
+                .where(productNameLike(productSearchDTO.getSearchQuery())) ///  검색어가 포함된 레코드만 필터링
+                .orderBy(product.id.desc()) ///  내림차순 정리
+                .offset(pageable.getOffset()) /// 페이징, offset: 건너 뛸 레코드, limit: 최대 레코드 수
+                .limit(pageable.getPageSize())
+                .fetch(); /// 쿼리 실행 후 리스트 반환
+
+        long total = queryFactory ///  전체 레코드 수를 계산하는 두 번째 쿼리
+                .select(Wildcard.count) ///  Wildcard.count는 COUNT(*) SQL 문을 생성
+                .from(productImg)
+                .join(productImg.product, product)
+                .where(productImg.representativeImg.eq("Y"))
+                .where(productNameLike(productSearchDTO.getSearchQuery()))
+                .fetchOne(); /// 단일 결과 반환 (카운트 쿼리)
+
+
+        ///  Page 인터페이스 객체 생성
         return new PageImpl<>(content, pageable, total);
     }
 

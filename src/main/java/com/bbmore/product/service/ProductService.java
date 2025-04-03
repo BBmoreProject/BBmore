@@ -1,6 +1,7 @@
 package com.bbmore.product.service;
 
 
+import com.bbmore.product.dto.MainProductDTO;
 import com.bbmore.product.dto.ProductFormDTO;
 import com.bbmore.product.dto.ProductImgDTO;
 import com.bbmore.product.dto.ProductSearchDTO;
@@ -10,6 +11,7 @@ import com.bbmore.product.repository.ProductImgRepository;
 import com.bbmore.product.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Log
 @Service
 @Transactional
 @RequiredArgsConstructor ///  Lombok 어노테이션으로, final로 선언된 필드를 매개변수로 받는
@@ -57,16 +59,16 @@ public class ProductService {
             /// 모든 이미지(대표 이미지 포함)를 저장
             productImgService.saveProductImg(productImg, productImgFileList.get(i));
         }
-        return product.getProductId();
+        return product.getId();
     }
 
 
     @Transactional(readOnly = true)
     /// 상품 ID를 매개변수로 받아 ProductFormDTO 객체를 반환하는 메소드를 선언합니다.
-    public ProductFormDTO getProductDetail(Long productId){
+    public ProductFormDTO getProductDetail(Long id){
 
         List<ProductImg> productImgList =
-                productImgRepository.findByProductProductIdOrderByIdAsc(productId);
+                productImgRepository.findByProductIdOrderByIdAsc(id);
         ///  조회한 ProductImg 엔티티들을 DTO 변환하여 담을 빈 리스트를 생성합니다.
         List<ProductImgDTO> productImgDTOList = new ArrayList<>();
         for(ProductImg productImg : productImgList) {
@@ -80,7 +82,7 @@ public class ProductService {
         }
 
 
-        Product product = productRepository.findById(productId)
+        Product product = productRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
 
         ///  productRepository를 사용하여 특정 ID(productId)를 가진 상품을
@@ -105,7 +107,7 @@ public class ProductService {
          *   "stockNumber": 50,
          *   "detail": "Apple M2 Max 칩, 32GB 메모리, 1TB SSD",
          *   "status": "ACTIVE",
-         *   "category": "노트북",
+         *   "category": "노트북",F
          *   "createdAt": "2023-04-01T10:30:00",
          *   "updatedAt": "2023-04-01T10:30:00",
          *   "productImgDTOList": [
@@ -140,6 +142,9 @@ public class ProductService {
     public Long updateProduct(ProductFormDTO productFormDTO,
                               List<MultipartFile> productImgFileList) throws Exception {
 
+        log.info("업데이트할 상품 id: " + productFormDTO.getId());
+
+
         ///  product modify
         Product product = productRepository.findById(productFormDTO.getId())
                 .orElseThrow(EntityNotFoundException::new);
@@ -151,7 +156,7 @@ public class ProductService {
             productImgService.updateProductImg(productImgIdList.get(i),
                     productImgFileList.get(i));
         }
-        return product.getProductId();
+        return product.getId();
 
     }
 
@@ -159,6 +164,12 @@ public class ProductService {
     public Page<Product> getAdminProductPage(ProductSearchDTO productSearchDTO,
                                       Pageable pageable) {
         return productRepository.getAdminProductPage(productSearchDTO, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<MainProductDTO> getMainProductPage(ProductSearchDTO productSearchDTO,
+                                      Pageable pageable) {
+        return productRepository.getMainProductPage(productSearchDTO, pageable);
     }
 
 }

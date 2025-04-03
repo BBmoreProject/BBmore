@@ -1,5 +1,6 @@
 package com.bbmore.product.controller;
 
+import com.bbmore.product.constant.ProductSellStatus;
 import com.bbmore.product.dto.ProductFormDTO;
 import com.bbmore.product.dto.ProductSearchDTO;
 import com.bbmore.product.entity.Product;
@@ -7,6 +8,7 @@ import com.bbmore.product.service.ProductService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.hibernate.loader.internal.AliasConstantsHelper.get;
-
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class ProductController {
@@ -77,11 +79,16 @@ public class ProductController {
         return "/product/productForm";
     }
 
-    @GetMapping(value = "/admin/product/{productId}")
-    public String ProductDetail(@PathVariable("productId") Long ProductId, Model model) {
-
+    @GetMapping(value = "/admin/product/{id}")
+    public String ProductDetail(@PathVariable("id") Long ProductId, Model model) {
         try {
             ProductFormDTO productFormDTO = productService.getProductDetail(ProductId);
+
+            // null 체크 및 기본값 설정 추가
+            if (productFormDTO.getProductSellStatus() == null) {
+                productFormDTO.setProductSellStatus(ProductSellStatus.SELL);
+            }
+
             model.addAttribute("productFormDTO", productFormDTO);
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", "존재하지 않는 상품입니다");
@@ -99,11 +106,11 @@ public class ProductController {
      *
 
      */
-    @PostMapping(value = "/admin/product/{productId}")
+    @PostMapping(value = "/admin/product/{id}")
     public String productUpdate(@Valid ProductFormDTO productFormDTO,
                                 BindingResult bindingResult,
-                                @RequestParam("productImgFile") List<MultipartFile>
-                                productImgFileList, Model model) {
+                                @RequestParam("productImgFile") List<MultipartFile> productImgFileList,
+                                Model model) {
 
         if (bindingResult.hasErrors()) {
             return "product/productForm";
@@ -117,24 +124,42 @@ public class ProductController {
         try {
             productService.updateProduct(productFormDTO, productImgFileList);
         } catch (Exception e) {
-            model.addAttribute("errorMessage", "상품 수정 중 에러가 발생했습니다");
+            // 로그에 구체적인 에러 메시지와 스택 트레이스를 남깁니다.
+            log.error("상품 수정 중 에러가 발생했습니다", e);
+            // e.printStackTrace(); // 필요 시 콘솔에 스택 트레이스 출력
+
+            // 사용자에게 표시할 에러 메시지에 구체적인 내용 추가
+            model.addAttribute("errorMessage", "상품 수정 중 에러가 발생했습니다: " + e.toString());
             return "product/productForm";
         }
         return "redirect:/";
     }
 
     @GetMapping(value = {"/admin/products", "/admin/products/{page}"})
-    public String productManagement(ProductSearchDTO productSearchDTO,
-                                    @PathVariable("page") Optional<Integer> page,
-                                    Model model) {
+    public String productManage(ProductSearchDTO productSearchDTO,
+                                @PathVariable(value = "page", required = false) Optional<Integer> page,
+                                Model model) {
+        try {
+            Pageable pageable = PageRequest.of(page.orElse(0), 5);
+            Page<Product> products = productService.getAdminProductPage(productSearchDTO, pageable);
 
+            // 상품 상태가 null인 경우 기본값 설정
+            for (Product product : products.getContent()) {
+                if (product.getProductSellStatus() == null) {
+                    product.setProductSellStatus(ProductSellStatus.SELL);
+                }
+            }
 
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
-        Page<Product> products = productService.getAdminProductPage(productSearchDTO, pageable);
-        model.addAttribute("products", products);
-        model.addAttribute("productSearchDTO", productSearchDTO);
-        model.addAttribute("maxPage", 5);
-        return "product/productMng";
+            model.addAttribute("products", products);
+            model.addAttribute("productSearchDTO", productSearchDTO);
+            model.addAttribute("maxPage", 5);
 
+            return "product/productMng";
+        } catch (Exception e) {
+            // 로깅 추가
+            e.printStackTrace();
+            model.addAttribute("errorMessage", "상품 목록을 불러오는 중 오류가 발생했습니다.");
+            return "error/admin-error";
+        }
     }
 }

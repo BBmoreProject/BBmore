@@ -273,9 +273,9 @@
                     <div class="image-upload-box" th:each="productImgDTO, status: ${productFormDTO.productImgDTOList}">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="productImgFile">
-                            <input type="hidden" name="productImgIds" th:value="${productImgDTO.id}">
+                            <input type="hidden" name="productImgIdList" th:value="${productImgDTO.id}">
                             <label class="custom-file-label"
-                                   th:text="${not #strings.isEmpty(productImgDTO.originalImgName)} ? ${productImgDTO.originalImgName} : '상품이미지 ' + ${status.index+1}"></label>
+                                   th:text="${not #strings.isEmpty(productImgDTO.productOriginalImgName)} ? ${productImgDTO.productOriginalImgName} : '상품이미지 ' + ${status.index+1}"></label>
                         </div>
                         <!-- 기존 이미지 미리보기 영역 추가 -->
                         <div class="image-preview" th:if="${not #strings.isEmpty(productImgDTO.productImgUrl)}">
