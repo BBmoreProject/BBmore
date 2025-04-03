@@ -1,6 +1,5 @@
 package com.bbmore.member.dto;
 
-import com.bbmore.member.entity.Animal;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

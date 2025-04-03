@@ -1,8 +1,8 @@
 package com.bbmore.admin.amember.mapper;
 
-import com.bbmore.shared.entity.Member;      // 팀원꺼
-import com.bbmore.shared.entity.Animal;      // 팀원꺼
-import com.bbmore.shared.dto.MemberDTO;      // 이것도 팀원꺼
+import com.bbmore.member.entity.Member;      // 팀원꺼
+import com.bbmore.member.entity.Animal;      // 팀원꺼
+import com.bbmore.member.dto.MemberDTO;      // 이것도 팀원꺼
 
 public class MemberMapper {
 

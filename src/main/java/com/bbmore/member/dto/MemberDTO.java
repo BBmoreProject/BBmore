@@ -1,11 +1,7 @@
 package com.bbmore.member.dto;
 
-import com.bbmore.member.entity.Member;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
+
 
 @Getter
 @Setter
