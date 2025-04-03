@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=devioce-width, initial-scale=1.0" />
+    <title>교환 관리</title>
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2>주문 조회</h2>
+    <form action="/order/order-4" method="get" class="mb-4">
+        <div class="row">
+            <div class="col-md-3">
+                <label>구매자 이름</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <label>시작 날짜</label>
+                <input type="date" name="startDate" class="form-control" required>
+            </div>
+            <div class="col-md-3">
+                <label>종료 날짜</label>
+                <input type="date" name="endDate" class="form-control" required>
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary">조회</button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>주문 ID</th>
+            <th>구매자명</th>
+            <th>주문 날짜</th>
+            <th>총 금액</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.orderCode}"></td>
+            <td th:text="${order.member.userName}"></td>
+            <td th:text="${order.orderDate}"></td>
+            <td th:text="${order.orderTotalPrice}"></td>
+        </tr>
+        <tr th:if="${orders.isEmpty()}">
+            <td colspan="4" class="text-center">조회된 주문이 없습니다.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
