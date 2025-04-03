@@ -11,9 +11,9 @@ import lombok.Setter;
 public class OrderDTO {
 
     @NotNull(message = "상품 아이디는 필수 입력 값입니다")
-    private Long productId;
+private Long productId;
 
-    @Min(value = 1, message = "최소 1개 이상 구매해야 합니다")
-    @Max(value = 999, message = "최대 주문 수량은 999개입니다.")
-    private int count;
+@Min(value = 1, message = "최소 1개 이상 구매해야 합니다")
+@Max(value = 999, message = "최대 주문 수량은 999개입니다.")
+private int count;
 }

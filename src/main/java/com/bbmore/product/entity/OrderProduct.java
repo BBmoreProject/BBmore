@@ -43,6 +43,10 @@ public class OrderProduct extends BaseTimeEntity {
         return orderPrice * count;
     }
 
+    public void cancel() {
+        this.getProduct().addStock(count);
+    }
+
 
 
 
