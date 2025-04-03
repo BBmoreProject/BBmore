@@ -1,119 +1,28 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=devioce-width, initial-scale=1.0"/>
-    <title>판매관리</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배송 관리</title>
     <style>
-        @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
-
-        /* 네이게이션 스타일*/
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-            width: 200px;
-            height: 45px;
-            top: 33%;
-            left: 62%;
-        }
-
-        .dropdown-toggle {
-            width: 100%;
-            padding: 10px;
-            font-size: 12px;
-            background-color: #f5f5f5;
-            border: 1px solid #000000;
-            cursor: pointer;
-            text-align: left;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .arrow {
-            transition: transform 0.2s ease;
-        }
-
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            width: 100%;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            z-index: 10;
-        }
-
-        .dropdown-menu div {
-            padding: 10px;
-            cursor: pointer;
-            border-bottom: 1px solid #eee;
-        }
-
-        .dropdown-menu div:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-menu div:hover {
-            background-color: #f0f0f0;
-        }
-
-        .active {
-            display: block;
-        }
-
-        /* 화살표 회전 효과 */
-        .dropdown.open .arrow {
-            transform: rotate(180deg);
-        }
-
-        /* 달력 스타일 */
-
-        /* 기본 스타일 설정 */
-        input[type="date"] {
-            font-size: 16px;
-            padding: 6px 12px;
-            border: 1px solid #000000;
-            border-radius: 5px;
-            outline: none;
-            width: 180px;
-        }
-
-        /* 포커스 효과 */
-        input[type="date"]:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-        }
-
-        /* 캘린더 아이콘 커스텀 */
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            background: url("https://cdn-icons-png.flaticon.com/512/747/747310.png") no-repeat center;
-            background-size: contain;
-            cursor: pointer;
-            width: 20px;
-            height: 15px;
-        }
-
-        /* 여백 초기화 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
-        /* 폰트 변경 완료 */
         body {
             font-family: "Noto Sans KR", sans-serif;
             display: flex;
-            flex-direction: row; /* 좌우로 배치 */
+            flex-direction: row;
             min-height: 100vh;
         }
 
         /* 좌측 관리자 사이드바 */
         .nav {
             width: 200px;
-            background: #d9d9d9;
+            background: #D9D9D9;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -175,27 +84,51 @@
             color: #ffffff;
             font-size: 15px;
             display: block;
-            background-color: #9b9b9b;
+            background-color: #9B9B9B;
         }
 
         .nav ul li.active .submenu {
             display: block;
         }
 
-        /* 메인 컨텐츠 영역 */
+        li.nav-logo {
+            position: fixed;
+            width: 200px;
+            height: 160px;
+        }
+
+        li.nav-logo img {
+            width: 100%;
+            height: 100%;
+            padding: 10%;
+            object-fit: contain;
+        }
+
+        .bottom-logo {
+            position: absolute;
+            bottom: 3px;
+            margin-top: auto;
+            width: 200px;
+            height: 50px;
+            overflow: hidden;
+        }
+        .bottom-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
         .container {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             flex: 1;
         }
-
-        /* 상위 메뉴 (공지사항 관리) */
         .header {
-            background: #fff5e2;
             color: rgb(0, 0, 0);
             font-size: 20px;
             font-weight: bold;
-            padding: 50px 50px;
+            padding: 50px 0 10px 50px;
             display: flex;
             align-items: center;
         }
@@ -208,205 +141,197 @@
             align-items: center;
         }
 
-        .search-box {
+        .search-box-div {
             display: flex;
-            box-sizing: border-box;
-            position: relative;
-            width: 1500px;
-            height: 116px;
-            top: 3%;
-            background: #f4f4f4;
-            border: 1px solid #edf0f5;
+            align-items: center;
+            width: 1600px;
+            padding: 0 0 0 30px;
+            background-color: #F4F4F4;
+            border-radius: 10px;
+            border-style: none;
+            height: 180px;
+            gap: 20px;
+            position: relative; /* 변경: absolute 요소들이 여기 기준으로 잡힘 */
         }
-
-        .search-write1 {
-            font-weight: 350;
-            font-size: 15px;
-            width: auto;
-            height: 25px;
-            position: absolute;
-            top: 15%;
-            left: 7%;
+        .search-box-input {
+            margin: 5% 0 0 0;
+            padding: 5px;
+            width: 250px;
+            height: 40px;
+            background-color: #F4F4F4;
+            border-radius: 7px;
+            border-style: none;
+            border: 1px solid #7a7a7a;
         }
-
-        .search-write2 {
-            font-weight: 350;
-            font-size: 15px;
-            width: auto;
-            height: 25px;
-            position: absolute;
-            top: 15%;
-            left: 62%;
-        }
-
-        .search-allday {
-            width: auto;
-            height: 25px;
-            position: absolute;
-            top: 35%;
-            left: 7%;
-        }
-
-        #search-day1 {
-            width: 75px;
-            height: 35px;
-        }
-
-        #search-day2 {
-            width: 75px;
-            height: 35px;
-        }
-
-        #search-day3 {
-            width: 75px;
-            height: 35px;
-        }
-
-        #search-day4 {
-            width: 75px;
-            height: 35px;
-        }
-
-        .calendar {
-            width: auto;
-            height: 45px;
-            position: absolute;
-            top: 35%;
-            left: 30%;
-        }
-
-        .searchbox-text {
-            width: auto;
-            height: 39px;
-            position: absolute;
-            top: 33%;
-            left: 76%;
-        }
-
-        .order-searchtext {
-            width: 60px;
-            top: -6%;
-            left: 0%;
-        }
-
-        .order-box {
-            background: #f4f4f4;
-            position: relative;
-            top: 10%;
-            left: 0%;
-            width: 1500px;
-            height: auto;
-        }
-
-        .all-order {
-            display: flex;
-            box-sizing: border-box;
-            position: relative;
-            width: 1500px;
-            height: auto;
-            background: #ffffff;
-            border: 1px solid #edf0f5;
-        }
-
-        .search-button {
-            background-color: #f28c25;
+        .search-box-button {
+            margin: 5% 0 0 0;
             color: white;
-            width: 50px;
-            height: 39px;
-            position: absolute;
-            top: 33%;
-            left: 88%;
+            cursor: pointer;
+            width: 100px;
+            height: 40px;
+            background-color: #F28C25;
             border-radius: 5px;
             border-style: none;
-            cursor: pointer;
         }
 
-
-
-
-        #paging {
-            display: flex;
-            position: absolute;
-            top: 101%;
-            left: 44%;
+        .info-container {
+            width: 1600px;
+            height: auto;
+            max-width: 100%;
+            min-width: 1000px;
+            background: white;
+            border-radius: 10px;
+            flex: 1;
+            padding: 20px;
+            background-color: #F4F4F4;
+            margin: 20px 0 0px 0px;
+            flex-shrink: 0;
         }
 
-        .all-order-table {
+        table {
             width: 100%;
-            border-collapse: collapse;
-            text-align: center; /* 가운데 정렬 */
+            table-layout: fixed;
         }
 
-        .all-order-table th, .all-order-table td {
+        table th,
+        table td {
+            padding: 6px;
             border: 1px solid #ccc;
-            padding: 10px;
+            text-align: center;
+            border-radius: 7px;
         }
 
-        /* 테이블 헤더 스타일 */
-        .all-order-table thead {
-            background-color: #fff5e2;
-            font-weight: bold;
+        table th:nth-child(1) {
+            width: 5%;
+        }
+
+        table th:nth-child(2) {
+            width: 5%;
+        }
+        table th:nth-child(3) {
+            width: 5%;
+        }
+
+        table th:nth-child(4) {
+            width: 7%;
+        }
+
+        table th:nth-child(5) {
+            width: 10%;
+        }
+
+        table th:nth-child(6) {
+            width: 15%;
         }
 
 
-        /* 사이드바 하단 로고 틀 */
-        .bottom-logo {
-            position: absolute; /*건드리지말것*/
-            bottom: 3px; /* 하단에 고정 */
-            margin-top: auto;
-            width: 200px; /* 전체 너비 */
-            height: 50px; /* 고정된 높이 (변경가능) */
-            overflow: hidden; /*넘칠 경우 숨김 처리*/
-        }
-
-        /* 사이드바 하단 로고 이미지 */
-        .bottom-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* 바닥 사업자정보 */
         .footer {
-            background: #222;
+            background-color: #222;
             color: white;
             text-align: center;
             padding: 5px;
             font-size: 10px;
         }
-    </style>
 
-    <!-- 사이드바 하위메뉴 한 개씩 열리게하기 (메뉴가 열려있을때 다른 메뉴 열면 닫히게) -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // HTML 문서가 모두 로드된 후 실행되도록
-            const menuItems = document.querySelectorAll(".nav ul li > a"); // 모든 메뉴(1~6) 선택
-            menuItems.forEach((menu) => {
-                // a 태그의 메뉴마다 이벤트 리스너 추가
-                menu.addEventListener("click", function (event) {
-                    event.preventDefault();
-                    // 클릭할때마다 모든 메뉴의 active 클래스 제거 (기존에 열린 메뉴가 있다면 닫히게끔)
-                    document.querySelectorAll(".nav ul li").forEach((item) => {
-                        item.classList.remove("active");
-                    });
-                    // 클릭한 메뉴의 부모 요소 li에 active 클래스 추가 (해당 메뉴 열기)
-                    this.parentElement.classList.toggle("active");
-                });
-            });
-        });
-    </script>
+        .active {
+            display: block;
+        }
+        .dropdown.open .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* date input */
+        input[type="date"] {
+            /*position: absolute;*/
+            font-size: 16px;
+            padding: 6px 12px;
+            border: 1px solid #000000;
+            border-radius: 5px;
+            outline: none;
+            width: 180px;
+        }
+        input[type="date"]:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            background: url("https://cdn-icons-png.flaticon.com/512/747/747310.png") no-repeat center;
+            background-size: contain;
+            cursor: pointer;
+            width: 20px;
+            height: 15px;
+        }
+
+        .calendar {
+            position: absolute;
+            top: 30%;
+            left: 25%;
+        }
+
+        /* 조회기간, 상세조건 레이블 */
+        .search-write1 {
+            position: absolute;
+            top: 10%;
+            /*left: 7%;*/
+            font-weight: 350;
+            font-size: 15px;
+        }
+        .search-write2 {
+            position: absolute;
+            top: 15%;
+            left: 62%;
+            font-weight: 350;
+            font-size: 15px;
+        }
+
+        /* 조회기간 버튼 */
+        .search-allday {
+            position: absolute;
+            top: 30%;
+            /*left: 7%;*/
+        }
+        #search-day1,
+        #search-day2,
+        #search-day3,
+        #search-day4 {
+            width: 75px;
+            height: 35px;
+        }
+
+        /* 검색어 입력 */
+        .searchbox-text {
+            position: absolute;
+            top: 33%;
+            left: 76%;
+            width: auto;
+            height: 39px;
+        }
+
+        /* 조회 버튼 */
+        .search-button {
+            position: absolute;
+            top: 33%;
+            left: 88%;
+            background-color: #f28c25;
+            color: white;
+            width: 50px;
+            height: 39px;
+            border-radius: 5px;
+            border-style: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
+<!-- 첫 번째 코드의 HTML (절대 변경 금지) -->
 <nav class="nav">
     <ul>
-        <li class="nav-logo" style="margin: 0">
-            <img id="b1" src="/img/black-logo.png" alt="로고"/>
-        </li>
+        <li class="nav-logo" style="margin: 0;"><img id="b1" src="/b1.png" alt="로고"></li>
         <li class="menu-1">
-            <a href="#">회원 관리 </a>
+            <a href="#">회원 관리</a>
             <ul class="submenu">
-                <li><a href="user_list.html">회원 관리</a></li>
+                <li><a onclick="location.href='/members/list'">회원 관리</a></li>
             </ul>
         </li>
         <li class="menu-2">
@@ -419,16 +344,15 @@
         <li class="menu-3">
             <a href="#">판매 관리</a>
             <ul class="submenu">
-                <li><a class="nav-button1" onclick=" location.href ='/order/order-1'">주문 조회</a></li>
-                <li><a class="nav-button2" onclick=" location.href ='/order/order-2'">반품 관리</a></li>
-                <li><a class="nav-button3" onclick=" location.href ='/order/order-3'">교환 관리</a></li>
+                <li><a href="order-1.html">주문 조회</a></li>
+                <li><a href="order-2.html">반품 관리</a></li>
+                <li><a href="order-3.html">교환 관리</a></li>
             </ul>
         </li>
         <li class="menu-4">
             <a href="#">배송 관리</a>
             <ul class="submenu">
-                <li><a href="delivery-1.html">주문 조회</a></li>
-                <li><a href="delivery-2.html">주문 현황</a></li>
+                <li><a onclick="location.href='/members/delivery-1'">주문 조회</a></li>
             </ul>
         </li>
         <li class="menu-5">
@@ -438,22 +362,20 @@
             </ul>
         </li>
         <li class="menu-6">
-            <a href="#">주문조회</a>
+            <a href="#">공지사항 관리</a>
             <ul class="submenu">
                 <li><a href="notice_5.html">공지사항</a></li>
                 <li><a href="faq_5.html">자주 묻는 질문</a></li>
             </ul>
         </li>
-        <div class="bottom-logo">
-            <img id="b2" src="/img/sidebar-bottomlogo.png" alt="로고"/>
-        </div>
+        <div class="bottom-logo"><img id="b2" src="/b2.png" alt="로고"></div>
     </ul>
 </nav>
 
 <div class="container">
-    <header class="header">주문조회</header>
-    <main class="main">
-        <div class="search-box">
+    <header class="header">배송 관리</header>
+    <div class="main">
+        <div class="search-box-div">
             <div class="search-write1">
                 <p>조회기간</p>
             </div>
@@ -468,137 +390,87 @@
             <div class="calendar">
                 <input type="date"/> &nbsp; ~ &nbsp; <input type="date"/>
             </div>
-
-            <div class="search-write2">
-                <p>상세조건</p>
-            </div>
-
-            <div class="dropdown">
-                <div class="dropdown-toggle" onclick="toggleDropdown()">
-                    상세조건
-                    <span class="arrow">▼</span>
-                </div>
-                <div class="dropdown-menu">
-                    <div onclick="selectOption(this)">전체</div>
-                    <div onclick="selectOption(this)">구매자명</div>
-                    <div onclick="selectOption(this)">주문번호</div>
-
-                </div>
-            </div>
-
-            <div>
-                <input class="searchbox-text" type="text" placeholder="제목 입력"/>
-            </div>
-
-            <div>
-                <button class="search-button">조회</button>
-            </div>
+            <input class="search-box-input" type="text" id="searchCode" placeholder="주문번호">
+            <input class="search-box-input" type="text" id="searchName" placeholder="이름">
+            <input class="search-box-input" type="text" id="searchPhone" placeholder="전화번호">
+            <button class="search-box-button" onclick="searchMembersByName()">검색</button>
         </div>
 
-        <div class="order-box">
-            <div class="order-searchtext"><p>주문조회</p></div>
-
-
-            <div class="all-order">
-                <table class="all-order-table">
-                    <!-- 테이블 헤더 -->
-                    <thead>
-                    <tr>
-                        <th>주문고유번호</th>
-                        <th>주문날짜</th>
-                        <th>제품명</th>
-                        <th>총결제금액</th>
-                        <th>주문상태</th>
-                        <th>성함</th>
-                        <th>전화번호</th>
-                        <th>주소</th>
-                    </tr>
-                    </thead>
-                    <!-- 테이블 본문 -->
-                    <tbody>
-                    <tr th:each="order : ${orderList}">
-                        <td th:text="${order.orderCode}"></td>
-                        <td th:text="${order.orderDate}"></td>
-                        <td th:text="${order.productName}"></td>
-                        <td th:text="${order.orderTotalPrice}"></td>
-                        <td th:text="${order.orderStatus}"></td>
-                        <td th:text="${order.member.userName}"></td>
-                        <td th:text="${order.member.userPhoneNumber}"></td>
-                        <td th:text="${order.member.userAddress}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="paging">
-                <!-- 맨 앞으로 이동 -->
-                <button th:onclick="|location.href='@{/order/order-1(page=${paging.startPage})}'|">
-                    <<
-                </button>
-                <!-- 이전 페이지로 이동 -->
-                <button th:onclick="|location.href='@{/order/order-1(page=${paging.currentPage - 1})}'|"
-                        th:disabled="${orderList.first}">
-                    <
-                </button>
-                <!-- 숫자 버튼 -->
-                <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
-                    <button th:onclick="|location.href='@{/order/order-1(page=${page})}'|"
-                            th:text="${page}"
-                            th:disabled="${paging.currentPage eq page}">
-                    </button>
-                </th:block>
-                <!-- 다음 페이지로 이동 -->
-                <button th:onclick="|location.href='@{/order/order-1(page=${paging.currentPage + 1})}'|"
-                        th:disabled="${orderList.last}">
-                    >
-                </button>
-                <!-- 맨 끝으로 이동 -->
-                <button th:onclick="|location.href='@{/order/order-1(page=${paging.endPage})}'|">
-                    >>
-                </button>
-            </div>
+        <div class="info-container">
+            <table class="info-item">
+                <thead style="background-color: #363636">
+                <tr style="color: #f0f0f0">
+                    <th>주문번호</th>
+                    <th>주문날짜</th>
+                    <th>제품명</th>
+                    <th>이름</th>
+                    <th>전화번호</th>
+                    <th>주소</th>
+                </tr>
+                </thead>
+                <tbody id="memberTableBody"></tbody>
+            </table>
         </div>
+    </div>
 
-    </main>
-    <footer class="footer">
-        &copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234
-        주소: 서울시 종로구 어쩌고저쩌고
-    </footer>
+    <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
 </div>
-
 <script>
-    // 네이게이션 스크립트
-    function toggleDropdown() {
-        const dropdown = document.querySelector(".dropdown");
-        const menu = document.querySelector(".dropdown-menu");
-        dropdown.classList.toggle("open");
-        menu.classList.toggle("active");
-    }
+    document.addEventListener("DOMContentLoaded", function () {
+        // 사이드바 메뉴 열기/닫기
+        const menuItems = document.querySelectorAll(".nav ul li > a");
+        menuItems.forEach(menu => {
+            menu.addEventListener("click", function (event) {
+                event.preventDefault();
+                document.querySelectorAll(".nav ul li").forEach(item => item.classList.remove("active"));
+                this.parentElement.classList.toggle("active");
+            });
+        });
 
-    // 선택한 값 출력
-    function selectOption(element) {
-        const selectedValue = element.innerText;
-        console.log("선택한 값:", selectedValue);
-
-        // 선택한 값 드롭다운에 표시
-        document.querySelector(
-            ".dropdown-toggle"
-        ).innerHTML = `${selectedValue} <span class="arrow">▼</span>`;
-
-        // 드롭다운 닫기
-        toggleDropdown();
-    }
-
-    // 다른 곳 클릭 시 드롭다운 닫기
-    window.addEventListener("click", function (event) {
-        const dropdown = document.querySelector(".dropdown");
-        if (!dropdown.contains(event.target)) {
-            dropdown.classList.remove("open");
-            document.querySelector(".dropdown-menu").classList.remove("active");
-        }
+        loadMembers(); // 회원 목록 로드
     });
-</script>
 
+
+</script>
+<script>
+    async function searchMembersByName() {
+        const code = document.getElementById("searchCode").value;
+        const name = document.getElementById("searchName").value;
+        const phone = document.getElementById("searchPhone").value;
+
+        const url = `/api/orders/search?code=${encodeURIComponent(code)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}`;
+
+        const res = await fetch(url);
+        const orders = await res.json();
+
+        renderMembers(orders);
+    }
+
+    function renderMembers(orders) {
+        const tbody = document.getElementById("memberTableBody");
+        tbody.innerHTML = "";
+
+        orders.forEach(order => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+        <td>${order.orderCode}</td>
+        <td>${order.orderDate}</td>
+        <td>${order.productName}</td>
+        <td>${order.recipientName}</td>
+        <td>${order.recipientPhone}</td>
+        <td>${order.recipientAddress}</td>
+      `;
+
+            tbody.appendChild(row);
+        });
+    }
+
+    async function loadMembers() {
+        const res = await fetch("/api/orders/search"); // 초기엔 전체 주문 목록
+        const data = await res.json();
+        renderMembers(data);
+    }
+</script>
 
 </body>
 </html>

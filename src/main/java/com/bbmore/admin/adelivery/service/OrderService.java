@@ -28,7 +28,7 @@ public class OrderService {
 
 
     private OrderDto toDto(Order o) {
-        System.out.println("USER: " + o.getRecipientName() + ", PHONE: " + o.getRecipientPhone());
+//        System.out.println("USER: " + o.getRecipientName() + ", PHONE: " + o.getRecipientPhone());
 
         return OrderDto.builder()
                 .orderCode(o.getOrderCode())
