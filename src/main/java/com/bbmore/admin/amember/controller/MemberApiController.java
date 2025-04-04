@@ -48,4 +48,3 @@ public class MemberApiController {
         memberService.deleteMember(id);
         return ResponseEntity.ok().build();
     }
-}

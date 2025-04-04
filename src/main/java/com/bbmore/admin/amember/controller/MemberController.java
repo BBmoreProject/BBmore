@@ -59,4 +59,3 @@ class MemberController {
         memberService.deleteMember(id);
         return "redirect:/members/list";
     }
-}

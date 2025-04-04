@@ -1,7 +1,11 @@
 package com.bbmore.admin.amember.service;
 
 import com.bbmore.admin.amember.dto.AdminMemberDTO;
+
 import com.bbmore.admin.amember.api.MemberApi;
+
+import com.bbmore.admin.amember.mapper.MemberMapper;
+
 import com.bbmore.admin.amember.repository.MemberRepository;
 import com.bbmore.member.entity.Animal;
 import com.bbmore.member.entity.Member;
@@ -21,7 +25,11 @@ public class MemberService {
     public List<AdminMemberDTO> getAllMembers() {
         return memberRepository.findAll()
                 .stream()
+
                 .map(MemberApi::toAdminDTO)
+
+                .map(MemberMapper::toAdminDTO)
+
                 .collect(Collectors.toList());
     }
 
@@ -44,13 +52,19 @@ public class MemberService {
                 .animal(updatedAnimal)
                 .build();
 
+
         return MemberApi.toAdminDTO(memberRepository.save(updated));
+        return MemberMapper.toAdminDTO(memberRepository.save(updated));
     }
 
     public List<AdminMemberDTO> searchMembers(String name, String phone, String grade) {
         return memberRepository.findAll()
                 .stream()
+
                 .map(MemberApi::toAdminDTO)
+
+                .map(MemberMapper::toAdminDTO)
+
                 .filter(member ->
                         (name == null || name.isBlank() || member.getUserName().contains(name)) &&
                                 (phone == null || phone.isBlank() || member.getUserPhoneNumber().contains(phone)) &&
@@ -64,12 +78,19 @@ public class MemberService {
     }
 
     public void saveAdminMember(AdminMemberDTO dto) {
+
         Member member = MemberApi.toEntity(dto);
+
+        Member member = MemberMapper.toEntity(dto);
+
         memberRepository.save(member);
     }
 
     public Optional<AdminMemberDTO> getAdminMemberById(Integer id) {
         return memberRepository.findById(id)
+
                 .map(MemberApi::toAdminDTO);
+
+                .map(MemberMapper::toAdminDTO);
     }
 }
