@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 
@@ -32,7 +33,7 @@ public class AdminNoticeController {
   // @PageableDefault Pageable pageable :
   @GetMapping("/notice-list_ver1")
   public String findNoticeList(Model model, @PageableDefault Pageable pageable,
-                               @RequestParam(value = "searchKeyword", required = false)String searchKeyword) {
+                               @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
 
     // 검색어가 있을 때와 없을 때 처리
     Page<NoticeDTO> noticeList;
@@ -44,7 +45,7 @@ public class AdminNoticeController {
       noticeList = noticeService.noticeSearchList(searchKeyword, pageable);  // 검색어로 필터링
     }
 
-//    Page<NoticeDTO> noticeList = noticeService.findNoticeList(pageable);
+
 
     /* 페이징 처리 이후 */
     // {}: 위치홀더라고 생각할 것
@@ -60,7 +61,7 @@ public class AdminNoticeController {
     log.info("{}", noticeList.getNumber());
 
     // 페이지네이션 정보 추가
-    PagingButton paging = Pagenation.getPagingButtonInfo(noticeList);
+    PagingButton paging = Pagenation.getPagingButtonInfo(noticeList, searchKeyword);
 
     // 모델에 전달
     model.addAttribute("noticeList", noticeList);
@@ -70,6 +71,7 @@ public class AdminNoticeController {
 
     return "notice/notice-list_ver1"; //목록으로
   }
+
 
   // 공지사항 상세보기
   @GetMapping("/notice-view/{noticeCode}")
@@ -82,7 +84,8 @@ public class AdminNoticeController {
 
     // 조회수 증가(같은 트랜젝션 안에서 조회수 증가되도록 @Transactional 사용)
     noticeService.increaseViewCount(noticeCode);
-    
+
+
     // 조회된 공지사항을 모델에 추가
     model.addAttribute("notice", noticeDTO);
     prevNotice.ifPresent(n -> model.addAttribute("prevNotice", n)); // 이전 글 추가

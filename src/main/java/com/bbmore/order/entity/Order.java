@@ -1,5 +1,6 @@
-package com.bbmore.member.entity;
+package com.bbmore.order.entity;
 
+import com.bbmore.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 
