@@ -1,7 +1,8 @@
 package com.bbmore.admin.amember.controller;
 
+import com.bbmore.admin.amember.dto.AdminMemberDTO;
 import com.bbmore.admin.amember.service.MemberService;
-import com.bbmore.member.dto.MemberDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,21 +10,18 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/members")
+@RequiredArgsConstructor
 public class MemberApiController {
 
     private final MemberService memberService;
 
-    public MemberApiController(MemberService memberService) {
-        this.memberService = memberService;
-    }
-
     @GetMapping
-    public List<MemberDTO> getAllMembers() {
+    public List<AdminMemberDTO> getAllMembers() {
         return memberService.getAllMembers();
     }
 
     @GetMapping("/search")
-    public List<MemberDTO> searchMembers(
+    public List<AdminMemberDTO> searchMembers(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String phone,
             @RequestParam(required = false) String grade
@@ -32,17 +30,16 @@ public class MemberApiController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateMember(@PathVariable Integer id, @RequestBody MemberDTO dto) {
-        MemberDTO updated = memberService.updateMember(
-                MemberDTO.builder()
-                        .userCode(id)
-                        .userName(dto.getUserName())
-                        .userAddress(dto.getUserAddress())
-                        .userMembershipLevel(dto.getUserMembershipLevel())
-                        .userPhoneNumber(dto.getUserPhoneNumber())
-                        .animalBreed(dto.getAnimalBreed())
-                        .build()
-        );
+    public ResponseEntity<Void> updateMember(@PathVariable Integer id, @RequestBody AdminMemberDTO dto) {
+        AdminMemberDTO updatedDto = AdminMemberDTO.builder()
+                .userCode(id)
+                .userName(dto.getUserName())
+                .userAddress(dto.getUserAddress())
+                .userPhoneNumber(dto.getUserPhoneNumber())
+                .userMembershipLevel(dto.getUserMembershipLevel())
+                .animalBreed(dto.getAnimalBreed())
+                .build();
+        memberService.updateMember(updatedDto);
         return ResponseEntity.ok().build();
     }
 

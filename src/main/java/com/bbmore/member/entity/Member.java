@@ -1,15 +1,13 @@
 package com.bbmore.member.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder(toBuilder = true)
 @Table(name = "tbl_member")
 public class Member {
 
@@ -39,8 +37,8 @@ public class Member {
     @Column(name = "user_email", unique = true)
     private String userEmail;  // 회원이메일
 
-    @Column(name = "user_isdeleted")
-    private Boolean userIsdeleted; // 회원탈퇴여부
+/*    @Column(name = "user_isdeleted")
+    private Boolean userIsdeleted; // 회원탈퇴여부*/
 
     @Column(name = "user_access_level")
     private String userAccessLevel;   // 회원권한

@@ -7,6 +7,8 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MemberDTO {
 
     private Integer userCode;              // 회원고유번호

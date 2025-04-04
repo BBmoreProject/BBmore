@@ -1,89 +1,75 @@
 package com.bbmore.admin.amember.service;
 
+import com.bbmore.admin.amember.dto.AdminMemberDTO;
+import com.bbmore.admin.amember.mapper.MemberMapper;
 import com.bbmore.admin.amember.repository.MemberRepository;
-import com.bbmore.member.dto.MemberDTO;
+import com.bbmore.member.entity.Animal;
 import com.bbmore.member.entity.Member;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public MemberService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
-
-    // 모든 회원 조회
-    public List<MemberDTO> getAllMembers() {
+    public List<AdminMemberDTO> getAllMembers() {
         return memberRepository.findAll()
                 .stream()
-                .map(member -> member.toDTO())
+                .map(MemberMapper::toAdminDTO)
                 .collect(Collectors.toList());
     }
 
-    // 회원 업데이트
-    public MemberDTO updateMember(MemberDTO dto) {
-        Member existingMember = memberRepository.findById(dto.getUserCode())
+    public AdminMemberDTO updateMember(AdminMemberDTO dto) {
+        Member existing = memberRepository.findById(dto.getUserCode())
                 .orElseThrow(() -> new RuntimeException("Member not found"));
 
-        Member.MemberBuilder memberBuilder = existingMember.toBuilder()
-                .userName(dto.getUserName())
-                .userAddress(dto.getUserAddress())
-                .userMembershipLevel(dto.getUserMembershipLevel())
-                .userPhoneNumber(dto.getUserPhoneNumber());
-
+        Animal updatedAnimal = null;
         if (dto.getAnimalBreed() != null && !dto.getAnimalBreed().isEmpty()) {
-            if (existingMember.getAnimal() != null) {
-                Animal updatedAnimal = existingMember.getAnimal().toBuilder()
-                        .animalBreed(dto.getAnimalBreed())
-                        .build();
-                memberBuilder.animal(updatedAnimal);
-            } else {
-                memberBuilder.animal(
-                        Animal.builder()
-                                .animalBreed(dto.getAnimalBreed())
-                                .build()
-                );
-            }
-        } else {
-            memberBuilder.animal(existingMember.getAnimal());
+            updatedAnimal = (existing.getAnimal() != null)
+                    ? existing.getAnimal().toBuilder().animalBreed(dto.getAnimalBreed()).build()
+                    : Animal.builder().animalBreed(dto.getAnimalBreed()).build();
         }
 
-        Member updatedMember = memberBuilder.build();
-        return memberRepository.save(updatedMember).toDTO();
+        Member updated = existing.toBuilder()
+                .userName(dto.getUserName())
+                .userAddress(dto.getUserAddress())
+                .userPhoneNumber(dto.getUserPhoneNumber())
+                .userMembershipLevel(dto.getUserMembershipLevel())
+                .animal(updatedAnimal)
+                .build();
+
+        return MemberMapper.toAdminDTO(memberRepository.save(updated));
     }
 
-    // searchMembers 메서드 추가
-    public List<MemberDTO> searchMembers(String name, String phone, String grade) {
+    public List<AdminMemberDTO> searchMembers(String name, String phone, String grade) {
         return memberRepository.findAll()
                 .stream()
-                .map(Member::toDTO)
+                .map(MemberMapper::toAdminDTO)
                 .filter(member ->
-                        (name == null || name.isEmpty() || member.getUserName().contains(name)) &&
-                                (phone == null || phone.isEmpty() || member.getUserPhoneNumber().contains(phone)) &&
-                                (grade == null || grade.isEmpty() || member.getUserMembershipLevel().equalsIgnoreCase(grade))
+                        (name == null || name.isBlank() || member.getUserName().contains(name)) &&
+                                (phone == null || phone.isBlank() || member.getUserPhoneNumber().contains(phone)) &&
+                                (grade == null || grade.isBlank() || member.getUserMembershipLevel().equalsIgnoreCase(grade))
                 )
                 .collect(Collectors.toList());
     }
 
-    // deleteMember 메서드 추가
     public void deleteMember(Integer id) {
         memberRepository.deleteById(id);
     }
 
-    // 회원 저장 메서드 (신규 등록)
-    public MemberDTO saveMember(MemberDTO dto) {
-        Member member = MemberDTO.toEntity(dto);
-        return memberRepository.save(member).toDTO();
+    public void saveAdminMember(AdminMemberDTO dto) {
+        Member member = MemberMapper.toEntity(dto);
+        memberRepository.save(member);
     }
 
-    // 특정 회원 조회 메서드
-    public Optional<MemberDTO> getMemberById(Integer id) {
-        return memberRepository.findById(id).map(Member::toDTO);
+    public Optional<AdminMemberDTO> getAdminMemberById(Integer id) {
+        return memberRepository.findById(id)
+                .map(MemberMapper::toAdminDTO);
     }
-
 }

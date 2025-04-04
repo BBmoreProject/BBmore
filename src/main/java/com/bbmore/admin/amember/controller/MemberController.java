@@ -1,67 +1,62 @@
-    package com.bbmore.admin.amember.controller;
+package com.bbmore.admin.amember.controller;
 
-    import ch.qos.logback.core.model.Model;
-    import com.bbmore.admin.amember.service.MemberService;
-    import com.bbmore.member.dto.MemberDTO;
-    import org.springframework.stereotype.Controller;
-    import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import com.bbmore.admin.amember.dto.AdminMemberDTO;
+import com.bbmore.admin.amember.service.MemberService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
-    import java.util.List;
+@Controller
+@RequestMapping("/members/list")
+@RequiredArgsConstructor
+class MemberController {
 
-    @Controller
-    @RequestMapping("/members/list")
+    private final MemberService memberService;
 
-    public class MemberController {
-
-        private final MemberService memberService;
-
-        public MemberController(MemberService memberService) {
-            this.memberService = memberService;
-        }
-
-        @GetMapping
-        public String listMembers(Model model) {
-            List<MemberDTO> members = memberService.getAllMembers();
-            model.addAttribute("members", members);
-            return "members/list";
-        }
-
-        @GetMapping("/new")
-        public String createForm(Model model) {
-            model.addAttribute("member", new MemberDTO(null, null, null, null, null, null));
-            return "members/form";
-        }
-
-        @PostMapping
-        public String saveMember(@ModelAttribute MemberDTO dto) {
-            memberService.saveMember(dto);
-            return "redirect:/members";
-        }
-
-        @GetMapping("/edit/{id}")
-        public String editForm(@PathVariable Integer id, Model model) {
-            MemberDTO dto = memberService.getMemberById(id).orElseThrow();
-            model.addAttribute("member", dto);
-            return "members/form";
-        }
-
-        @PostMapping("/update/{id}")
-        public String updateMember(@PathVariable Integer id, @ModelAttribute MemberDTO dto) {
-            MemberDTO updated = MemberDTO.builder()
-                    .userCode(id)
-                    .userName(dto.getUserName())
-                    .userAddress(dto.getUserAddress())
-                    .userMembershipLevel(dto.getUserMembershipLevel())
-                    .userPhoneNumber(dto.getUserPhoneNumber())
-                    .animalBreed(dto.getAnimalBreed())  // DTO에서 받아온 animalBreed
-                    .build();
-            memberService.saveMember(updated);
-            return "redirect:/members";
-        }
-
-        @GetMapping("/delete/{id}")
-        public String deleteMember(@PathVariable Integer id) {
-            memberService.deleteMember(id);
-            return "redirect:/members";
-        }
+    @GetMapping
+    public String listMembers(Model model) {
+        model.addAttribute("members", memberService.getAllMembers());
+        return "members/list";
     }
+
+    @GetMapping("/new")
+    public String createForm(Model model) {
+        model.addAttribute("member", AdminMemberDTO.builder().build());
+        return "members/form";
+    }
+
+    @PostMapping
+    public String saveMember(@ModelAttribute AdminMemberDTO dto) {
+        memberService.saveAdminMember(dto);
+        return "redirect:/members/list";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editForm(@PathVariable Integer id, Model model) {
+        AdminMemberDTO dto = memberService.getAdminMemberById(id)
+                .orElseThrow(() -> new RuntimeException("회원이 존재하지 않습니다."));
+        model.addAttribute("member", dto);
+        return "members/form";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateMember(@PathVariable Integer id, @ModelAttribute AdminMemberDTO dto) {
+        AdminMemberDTO updated = AdminMemberDTO.builder()
+                .userCode(id)
+                .userName(dto.getUserName())
+                .userAddress(dto.getUserAddress())
+                .userMembershipLevel(dto.getUserMembershipLevel())
+                .userPhoneNumber(dto.getUserPhoneNumber())
+                .animalBreed(dto.getAnimalBreed())
+                .build();
+        memberService.updateMember(updated);
+        return "redirect:/members/list";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteMember(@PathVariable Integer id) {
+        memberService.deleteMember(id);
+        return "redirect:/members/list";
+    }
+}
