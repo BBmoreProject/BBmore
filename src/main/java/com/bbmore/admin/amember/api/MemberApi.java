@@ -1,10 +1,10 @@
-package com.bbmore.admin.amember.mapper;
+package com.bbmore.admin.amember.api;
 
 import com.bbmore.admin.amember.dto.AdminMemberDTO;
 import com.bbmore.member.entity.Member;
 import com.bbmore.member.entity.Animal;
 
-public class MemberMapper {
+public class MemberApi {
 
     public static AdminMemberDTO toAdminDTO(Member member) {
         Animal animal = member.getAnimal();
