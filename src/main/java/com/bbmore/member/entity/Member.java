@@ -1,16 +1,18 @@
 package com.bbmore.member.entity;
 
+import com.bbmore.order.entity.Order;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
+@Table(name = "tbl_member")
 @Getter
+@ToString
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "tbl_member")
 public class Member {
 
     @Id
@@ -60,6 +62,14 @@ public class Member {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_code")
     private Animal animal;
+
+    // 04.04 태민 추가
+    @ManyToOne
+    @JoinColumn(name = "membership_code", referencedColumnName = "membership_code")
+    private Membership membership; // Membership 테이블과 관계 설정
+
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders; // Order 테이블과 관계 설정
 
 
 

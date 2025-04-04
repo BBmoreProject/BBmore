@@ -1,14 +1,15 @@
 package com.bbmore.member.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "tbl_animal")
+@Getter
+@ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Animal {
 
     @Id
@@ -23,5 +24,9 @@ public class Animal {
     private String animalBreed;    // 품종
 
 
+    // 04.04 태민 추가
+    @ManyToOne
+    @JoinColumn(name = "user_code", referencedColumnName = "user_code")
+    private Member member; // Member 테이블과 관계 설정
 
 }

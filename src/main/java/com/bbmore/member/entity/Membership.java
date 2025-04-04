@@ -1,4 +1,4 @@
-package com.bbmore.order.entity;
+package com.bbmore.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

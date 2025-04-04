@@ -1,32 +1,37 @@
 package com.bbmore.order.entity;
 
+import com.bbmore.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "tbl_order_detail")
 @Getter
 @ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "tbl_order_detail")
 public class OrderDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_detail_code")
-    private int orderDetailCode;
+    private Integer orderDetailCode;
 
-    @Column(name = "order_detail_price")
-    private int orderDetailPrice;
+    @Column(name = "order_detail_price", nullable = false)
+    private Integer orderDetailPrice;
 
-    @Column(name = "order_detail_quantity")
-    private int orderDetailQuantity;
+    @Column(name = "order_detail_quantity", nullable = false)
+    private Integer orderDetailQuantity;
 
-    @ManyToOne
-    @JoinColumn(name = "order_code", referencedColumnName = "order_code")
-    private Order order; // Order 테이블과 관계 설정
+    // FK
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_code")
+    private Order order;
 
-    // Getters and setters
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_code")
+    private Product product;
+
 
 }

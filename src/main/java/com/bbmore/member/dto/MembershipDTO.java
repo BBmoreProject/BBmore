@@ -1,4 +1,4 @@
-package com.bbmore.order.dto;
+package com.bbmore.member.dto;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import lombok.ToString;
 @Builder
 public class MembershipDTO {
 
-    private int membershipCode;
+    private Integer membershipCode;
     private String membershipName;
 
 }

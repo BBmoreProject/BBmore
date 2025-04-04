@@ -1,14 +1,16 @@
 package com.bbmore.member.dto;
 
 import com.bbmore.member.entity.Animal;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+
 
 @Getter
 @Setter
 @ToString
+// 04.04 태민 추가
+@Builder
+// 04.04 태민 추가
+@AllArgsConstructor
 @NoArgsConstructor
 public class AnimalDTO {
 

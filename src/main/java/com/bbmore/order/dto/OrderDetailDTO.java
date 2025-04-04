@@ -10,8 +10,8 @@ import lombok.ToString;
 @ToString
 @Builder
 public class OrderDetailDTO {
-    private int orderDetailCode;
-    private int orderDetailPrice;
-    private int orderDetailQuantity;
-    private int orderCode;
+    private Integer orderDetailCode;
+    private Integer orderDetailPrice;
+    private Integer orderDetailQuantity;
+    private Integer orderCode;
 }

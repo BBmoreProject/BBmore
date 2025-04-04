@@ -1,6 +1,6 @@
 package com.bbmore.order.service;
 
-import com.bbmore.order.dto.MemberDTO;
+import com.bbmore.member.dto.MemberDTO;
 import com.bbmore.order.dto.OrderDTO;
 import com.bbmore.order.entity.Order;
 import com.bbmore.order.repository.OrderRepository;
@@ -37,7 +37,7 @@ public class OrderService {
                 .orderStatus(o.getOrderStatus())
                 .recipientAddress(o.getRecipientAddress())
                 .recipientPhone(o.getRecipientPhone())
-                .orderDeliveryRequest(o.getOrderDeliveryRequest())
+                .orderDeliveryRequest(o.getOrderDeliverYRequest())
                 .productQuantity(o.getProductQuantity())
                 .member(MemberDTO.builder()
                         .userName(o.getMember().getUserName())

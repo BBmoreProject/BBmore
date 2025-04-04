@@ -1,5 +1,6 @@
 package com.bbmore.order.dto;
 
+import com.bbmore.member.dto.MemberDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,18 +13,18 @@ import java.time.LocalDate;
 @ToString
 @Builder
 public class OrderDTO {
-    private int orderCode;
-    private int orderTotalPrice;
+    private Integer orderCode;
+    private Integer orderTotalPrice;
     private LocalDate orderDate;
     private String orderStatus;
     private String recipientAddress;
     private String recipientPhone;
     private String orderDeliveryRequest;
     private String productName;
-    private int productQuantity;
+    private Integer productQuantity;
 
-    private int userCode;
-    private int orderDetailCode;
+    private Integer userCode;
+    private Integer orderDetailCode;
 
     private MemberDTO member;
 
