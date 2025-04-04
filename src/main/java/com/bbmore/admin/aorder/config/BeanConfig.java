@@ -1,4 +1,4 @@
-package com.bbmore.order.config;
+package com.bbmore.admin.aorder.config;
 
 import com.bbmore.order.dto.OrderDTO;
 import com.bbmore.order.entity.Order;

@@ -1,4 +1,4 @@
-package com.bbmore.order.repository;
+package com.bbmore.admin.aorder.repository;
 
 import com.bbmore.order.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,6 +21,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
               AND (:endDate IS NULL OR o.orderDate <= :endDate)
             """)
     List<Order> searchOrders(
+
             @Param("code") String code,
             @Param("name") String name,
             @Param("phone") String phone,

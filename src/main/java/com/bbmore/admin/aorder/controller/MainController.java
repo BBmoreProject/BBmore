@@ -1,4 +1,4 @@
-package com.bbmore.order.controller;
+package com.bbmore.admin.aorder.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

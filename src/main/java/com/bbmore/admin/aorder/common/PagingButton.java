@@ -1,4 +1,4 @@
-package com.bbmore.order.common;
+package com.bbmore.admin.aorder.common;
 
 public class PagingButton {
     private int currentPage;
