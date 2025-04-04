@@ -4,7 +4,7 @@ import com.bbmore.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -20,7 +20,7 @@ public class Order {
     private Integer orderTotalPrice;    // 총 결제금액
 
     @Column(name = "order_date", nullable = false)
-    private Date orderDate;     // 주문 날짜
+    private LocalDate orderDate;     // 주문 날짜
 
     @Column(name = "order_status", nullable = false)
     private String orderStatus; // 주문 현황

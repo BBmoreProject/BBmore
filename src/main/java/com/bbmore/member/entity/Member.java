@@ -1,5 +1,7 @@
 package com.bbmore.member.entity;
 
+
+import com.bbmore.member.common.UserRole;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -40,10 +42,11 @@ public class Member {
     private String userEmail;  // 회원이메일
 
     @Column(name = "user_isdeleted")
-    private Boolean userIsdeleted; // 회원탈퇴여부
+    private int userIsdeleted; // 회원탈퇴여부
 
     @Column(name = "user_access_level")
-    private String userAccessLevel;   // 회원권한
+    @Enumerated
+    private UserRole userAccessLevel;   // 회원권한
 
     @Column(name = "user_pet_name")
     private String userPetName;
@@ -60,6 +63,7 @@ public class Member {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "animal_code")
     private Animal animal;
+
 
 }
 

@@ -34,6 +34,9 @@ public class Review {
     @JoinColumn(name = "user_code", nullable = false)
     private Member member;
 
+
+
+    // 1:1 관계 아닌가요?
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_detail_code", nullable = false)
     private OrderDetail orderDetail;

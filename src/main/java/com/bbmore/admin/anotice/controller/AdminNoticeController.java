@@ -16,9 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import java.util.Optional;
+
 
 @Slf4j
 @Controller
@@ -40,9 +41,11 @@ public class AdminNoticeController {
 
     if (searchKeyword == null || searchKeyword.trim().isEmpty()) {
       noticeList = noticeService.findNoticeList(pageable);  // 검색어가 없으면 전체 리스트 조회
+      System.out.println("검색어 없을때 noticeList:  " + noticeList);
     } else {
       // 검색어가 있을 경우 해당 검색어로 필터링하여 조회
       noticeList = noticeService.noticeSearchList(searchKeyword, pageable);  // 검색어로 필터링
+      System.out.println("검색어 있을때 noticeList: " + noticeList);
     }
 
 

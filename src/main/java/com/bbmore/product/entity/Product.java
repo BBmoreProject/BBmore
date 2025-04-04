@@ -31,9 +31,5 @@ public class Product {
     @Column(name = "product_quantity", nullable = false)
     private Integer productQuantity;    // 상품 재고
 
-    // FK
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_detail_code", nullable = false)
-    private OrderDetail orderDetail;
 }
