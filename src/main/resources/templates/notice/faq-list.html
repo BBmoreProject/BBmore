@@ -385,7 +385,7 @@
         </thead>
         <tbody>
         <tr th:each="faq : ${faqList}">
-          <td><a th:href="@{/notice/notice-view/{noticeCode}(noticeCode=${faq.noticeCode})}" th:text="${faq.noticeTitle}"></a></td>
+          <td><a th:href="@{/notice/faq-view/{noticeCode}(noticeCode=${faq.noticeCode})}" th:text="${faq.noticeTitle}"></a></td>
           <td th:text="${faq.noticeCreatedDate}"></td>
           <td th:text="${faq.noticeView}"></td>
         </tr>

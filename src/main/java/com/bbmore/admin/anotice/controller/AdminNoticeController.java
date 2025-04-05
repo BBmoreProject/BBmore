@@ -126,8 +126,11 @@ public class AdminNoticeController {
   public String viewNotice(@PathVariable Integer noticeCode, Model model) {
     // noticeCode로 공지사항 조회
     NoticeDTO noticeDTO = noticeService.findNoticeByNoticeCode(noticeCode);
-    Optional<Notice> prevNotice = noticeService.getPrevNotice(noticeCode);
-    Optional<Notice> nextNotice = noticeService.getNextNotice(noticeCode);
+
+    Optional<Notice> prevNotice = noticeService.getPrevNotice(noticeCode, "공지사항");
+    Optional<Notice> nextNotice = noticeService.getNextNotice(noticeCode, "공지사항");
+
+
 
     // 조회수 증가(같은 트랜젝션 안에서 조회수 증가되도록 @Transactional 사용)
     noticeService.increaseViewCount(noticeCode);
@@ -135,11 +138,42 @@ public class AdminNoticeController {
 
     // 조회된 공지사항을 모델에 추가
     model.addAttribute("notice", noticeDTO);
+
     prevNotice.ifPresent(n -> model.addAttribute("prevNotice", n)); // 이전 글 추가
     nextNotice.ifPresent(n -> model.addAttribute("nextNotice", n)); // 다음 글 추가
 
+
+
     return "notice/notice-view"; // 공지사항 상세보기 페이지로 이동
   }
+
+
+  @GetMapping("/faq-view/{noticeCode}")
+  @Transactional
+  public String viewFaq(@PathVariable Integer noticeCode, Model model) {
+
+    NoticeDTO faqDTO = noticeService.findNoticeByNoticeCode(noticeCode);
+
+    // FAQ 조회
+    Optional<Notice> prevFaq = noticeService.getPrevNotice(noticeCode, "자주묻는질문");
+    Optional<Notice> nextFaq = noticeService.getNextNotice(noticeCode, "자주묻는질문");
+
+    // 조회수 증가(같은 트랜젝션 안에서 조회수 증가되도록 @Transactional 사용)
+    noticeService.increaseViewCount(noticeCode);
+
+    // FAQ 관련 정보 모델에 추가
+    model.addAttribute("faq", faqDTO);
+
+    prevFaq.ifPresent(n -> model.addAttribute("prevFaq", n)); // 이전 faq 추가
+    nextFaq.ifPresent(n -> model.addAttribute("nextFaq", n)); // 다음 faq 추가
+
+    return "notice/faq-view";
+  }
+
+
+
+
+
 
 
   // 공지사항 등록 시 요청 url 이 뷰가 되도록 void 로 작성

@@ -103,15 +103,26 @@ public class NoticeService {
   }
 
 
-  // 이전글
-  public Optional<Notice> getPrevNotice(Integer noticeCode) {
-    return adminNoticeRepository.findTopByNoticeCodeLessThanOrderByNoticeCodeDesc(noticeCode);
+  // 이전글(원본)
+//  public Optional<Notice> getPrevNotice(Integer noticeCode) {
+//    return adminNoticeRepository.findTopByNoticeCodeLessThanOrderByNoticeCodeDesc(noticeCode); }
+
+
+  // 다음글(원본)
+//  public Optional<Notice> getNextNotice(Integer noticeCode) {
+//    return adminNoticeRepository.findTopByNoticeCodeGreaterThanOrderByNoticeCodeAsc(noticeCode); }
+
+  // 이전 공지사항 조회 (타입별로)
+  public Optional<Notice> getPrevNotice(Integer noticeCode, String noticeType) {
+    return adminNoticeRepository.findFirstByNoticeCodeLessThanAndNoticeTypeOrderByNoticeCodeDesc(noticeCode, noticeType);
   }
 
-  // 다음글
-  public Optional<Notice> getNextNotice(Integer noticeCode) {
-    return adminNoticeRepository.findTopByNoticeCodeGreaterThanOrderByNoticeCodeAsc(noticeCode);
+  // 다음 공지사항 조회 (타입별로)
+  public Optional<Notice> getNextNotice(Integer noticeCode, String noticeType) {
+    return adminNoticeRepository.findFirstByNoticeCodeGreaterThanAndNoticeTypeOrderByNoticeCodeAsc(noticeCode, noticeType);
   }
+
+
 
 
   /* 수정(엔티티 객체의 필드 값 변경) */

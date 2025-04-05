@@ -440,7 +440,7 @@
 </nav>
 
 <div class="container">
-    <header class="header">공지사항 관리</header>
+    <header class="header">자주묻는질문 관리</header>
 
     <main class="main">
         <div class="search-box"> <!--검색창-->
@@ -453,11 +453,11 @@
             <div class="button-group">
                 <!--수정 버튼-->
                 <button class="modify-button">
-                    <a th:href="@{/notice/modify/{id}(id= ${notice.noticeCode})}" id="modify">수정</a>
+                    <a th:href="@{/notice/modify/{id}(id= ${faq.noticeCode})}" id="modify">수정</a>
                 </button>
                 <!--삭제버튼-->
                 <form id="deleteForm" action="/notice/delete" method="post" >
-                    <input type="hidden" name="noticeCode" th:value="${notice.noticeCode}">
+                    <input type="hidden" name="noticeCode" th:value="${faq.noticeCode}">
                     <button type="submit" class="delete-button" id="delete">삭제</button>
                 </form>
             </div>
@@ -471,16 +471,16 @@
             <div class="notice-box">
                 <!--제목-->
                 <div class="title-box">
-                    <div class="title" th:text="${notice.noticeTitle}"></div>
+                    <div class="title" th:text="${faq.noticeTitle}"></div>
                 </div><!--title-box끝-->
 
                 <div class="date-box">
-                    <div class="date" th:text="${notice.noticeCreatedDate}"></div>
+                    <div class="date" th:text="${faq.noticeCreatedDate}"></div>
                 </div>
 
                 <!--내용-->
                 <div class="content-box">
-                    <div th:text="${notice.noticeContent}"></div>
+                    <div th:text="${faq.noticeContent}"></div>
                 </div>
 
                 <div class="next-title-box1">
@@ -491,8 +491,8 @@
                     <!--이전글 제목값 부분-->
                     <div class="next-content-box1">
                         <button class="next-content1">
-                            <a href="#" th:href="@{'/notice/notice-view/' + ${prevNotice.noticeCode}}"
-                               th:text="${prevNotice.noticeTitle}">이전글 제목</a>
+                            <a href="#" th:href="@{'/notice/faq-view/' + ${prevFaq.noticeCode}}"
+                               th:text="${prevFaq.noticeTitle}">이전글 제목</a>
                         </button>
                     </div>
                 </div>
@@ -505,8 +505,8 @@
                     <!--다음글 제목값 부분-->
                     <div class="next-content-box2">
                         <button class="next-content2">
-                            <a href="#" th:href="@{'/notice/notice-view/' + ${nextNotice.noticeCode}}"
-                               th:text="${nextNotice.noticeTitle}">다음글 제목</a>
+                            <a href="#" th:href="@{'/notice/faq-view/' + ${nextFaq.noticeCode}}"
+                               th:text="${nextFaq.noticeTitle}">다음글 제목</a>
                         </button>
                     </div>
                 </div>
