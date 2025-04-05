@@ -1,9 +1,12 @@
-package com.bbmore.member.entity;
+package com.bbmore.order.entity;
 
+import com.bbmore.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.Locale;
 
 @Entity
 @Getter
@@ -19,10 +22,13 @@ public class Order {
     private Integer orderTotalPrice;    // 총 결제금액
 
     @Column(name = "order_date", nullable = false)
-    private Date orderDate;     // 주문 날짜
+    private LocalDate orderDate;     // 주문 날짜
 
     @Column(name = "order_status", nullable = false)
     private String orderStatus; // 주문 현황
+
+    @Column(name = "recipient_name", nullable = false)
+    private String recipientName;
 
     @Column(name = "recipient_address", nullable = false)
     private String recipientAddress;    // 받는분 주소

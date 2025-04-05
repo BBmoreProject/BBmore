@@ -30,7 +30,7 @@ public class Member {
     private String userAddress;    // 회원주소
 
     @Column(name = "user_membership_level")
-    private String userMembershipLevel;   // 회원등급
+    private String userMemberShipLevel;   // 회원등급
 
     @Column(name = "user_phone_number")
     private String userPhoneNumber;   // 회원전화번호

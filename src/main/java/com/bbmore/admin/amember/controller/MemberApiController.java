@@ -1,7 +1,7 @@
 package com.bbmore.admin.amember.controller;
 
-import com.bbmore.admin.amember.dto.AdminMemberDTO;
 import com.bbmore.admin.amember.service.MemberService;
+import com.bbmore.member.dto.MemberDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,13 +15,15 @@ public class MemberApiController {
 
     private final MemberService memberService;
 
+    // 전체 회원 조회
     @GetMapping
-    public List<AdminMemberDTO> getAllMembers() {
+    public List<MemberDTO> getAllMembers() {
         return memberService.getAllMembers();
     }
 
+    // 회원 검색 (이름, 전화, 등급)
     @GetMapping("/search")
-    public List<AdminMemberDTO> searchMembers(
+    public List<MemberDTO> searchMembers(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String phone,
             @RequestParam(required = false) String grade
@@ -29,20 +31,17 @@ public class MemberApiController {
         return memberService.searchMembers(name, phone, grade);
     }
 
+    // 회원 수정
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateMember(@PathVariable Integer id, @RequestBody AdminMemberDTO dto) {
-        AdminMemberDTO updatedDto = AdminMemberDTO.builder()
-                .userCode(id)
-                .userName(dto.getUserName())
-                .userAddress(dto.getUserAddress())
-                .userPhoneNumber(dto.getUserPhoneNumber())
-                .userMembershipLevel(dto.getUserMembershipLevel())
-                .animalBreed(dto.getAnimalBreed())
-                .build();
-        memberService.updateMember(updatedDto);
+    public ResponseEntity<Void> updateMember(@PathVariable Integer id,
+                                             @RequestBody MemberDTO dto) {
+        // PathVariable로 받은 id를 userCode로 세팅
+        dto.setUserCode(id);
+        memberService.updateMember(dto);
         return ResponseEntity.ok().build();
     }
 
+    // 회원 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMember(@PathVariable Integer id) {
         memberService.deleteMember(id);

@@ -1,8 +1,8 @@
 package com.bbmore.admin.amember.service;
 
 import com.bbmore.admin.amember.api.MemberApi;
-import com.bbmore.admin.amember.dto.AdminMemberDTO;
 import com.bbmore.admin.amember.repository.MemberRepository;
+import com.bbmore.member.dto.MemberDTO;
 import com.bbmore.member.entity.Animal;
 import com.bbmore.member.entity.Member;
 import lombok.RequiredArgsConstructor;
@@ -18,58 +18,77 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public List<AdminMemberDTO> getAllMembers() {
+    // 전체 회원 목록
+    public List<MemberDTO> getAllMembers() {
         return memberRepository.findAll()
                 .stream()
-                .map(MemberApi::toAdminDTO)
+                .map(MemberApi::toDTO)   // Member -> MemberDTO
                 .collect(Collectors.toList());
     }
 
-    public AdminMemberDTO updateMember(AdminMemberDTO dto) {
+    // 회원 정보 업데이트
+    public MemberDTO updateMember(MemberDTO dto) {
         Member existing = memberRepository.findById(dto.getUserCode())
                 .orElseThrow(() -> new RuntimeException("Member not found"));
 
+        // 만약 Animal이 이미 있다면, 기존 Animal 정보를 업데이트
         Animal updatedAnimal = null;
-        if (dto.getAnimalBreed() != null && !dto.getAnimalBreed().isEmpty()) {
-            updatedAnimal = (existing.getAnimal() != null)
-                    ? existing.getAnimal().toBuilder().animalBreed(dto.getAnimalBreed()).build()
-                    : Animal.builder().animalBreed(dto.getAnimalBreed()).build();
+        if (dto.getAnimalDTO() != null) {
+            if (existing.getAnimal() != null) {
+                updatedAnimal = existing.getAnimal().toBuilder()
+                        .animalType(dto.getAnimalDTO().getAnimalType())
+                        .animalBreed(dto.getAnimalDTO().getAnimalBreed())
+                        .build();
+            } else {
+                updatedAnimal = Animal.builder()
+                        .animalType(dto.getAnimalDTO().getAnimalType())
+                        .animalBreed(dto.getAnimalDTO().getAnimalBreed())
+                        .build();
+            }
         }
 
+        // Member 빌더를 사용해 변경 사항만 수정
         Member updated = existing.toBuilder()
                 .userName(dto.getUserName())
                 .userAddress(dto.getUserAddress())
                 .userPhoneNumber(dto.getUserPhoneNumber())
-                .userMembershipLevel(dto.getUserMembershipLevel())
+                .userMemberShipLevel(dto.getUserMemberShipLevel())
                 .animal(updatedAnimal)
                 .build();
 
-        return MemberApi.toAdminDTO(memberRepository.save(updated));
+        Member saved = memberRepository.save(updated);
+        return MemberApi.toDTO(saved);
     }
 
-    public List<AdminMemberDTO> searchMembers(String name, String phone, String grade) {
+    // 회원 검색
+    public List<MemberDTO> searchMembers(String name, String phone, String grade) {
+        // 예: 단순 in-memory 필터링 (실무에서는 JPQL/Query Method를 쓰는 게 좋습니다)
         return memberRepository.findAll()
                 .stream()
-                .map(MemberApi::toAdminDTO)
+                .map(MemberApi::toDTO)
                 .filter(member ->
                         (name == null || name.isBlank() || member.getUserName().contains(name)) &&
                                 (phone == null || phone.isBlank() || member.getUserPhoneNumber().contains(phone)) &&
-                                (grade == null || grade.isBlank() || member.getUserMembershipLevel().equalsIgnoreCase(grade))
+                                (grade == null || grade.isBlank() ||
+                                        grade.equalsIgnoreCase(member.getUserMemberShipLevel()))
                 )
                 .collect(Collectors.toList());
     }
 
+    // 회원 삭제
     public void deleteMember(Integer id) {
         memberRepository.deleteById(id);
     }
 
-    public void saveAdminMember(AdminMemberDTO dto) {
+    // 회원 저장 (등록)
+    public void saveMember(MemberDTO dto) {
         Member member = MemberApi.toEntity(dto);
         memberRepository.save(member);
     }
 
-    public Optional<AdminMemberDTO> getAdminMemberById(Integer id) {
+    // 회원 단건 조회
+    public Optional<MemberDTO> getMemberById(Integer id) {
         return memberRepository.findById(id)
-                .map(MemberApi::toAdminDTO);
+                .map(MemberApi::toDTO);
     }
 }

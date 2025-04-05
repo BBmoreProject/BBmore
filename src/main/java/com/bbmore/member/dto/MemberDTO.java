@@ -42,6 +42,8 @@ public class MemberDTO {
     @Positive(message = "반려동물의 몸무게는 양수여야 합니다.") // int 타입에서 NotBlank는 의미 없으므로 Positive 사용
     private Integer userPetWeight;
 
+    private String userMemberShipLevel;
+
     private String userPetMedicalHistory;
 
     private AnimalDTO animalDTO; // 동물 정보 포함
