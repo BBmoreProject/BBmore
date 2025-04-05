@@ -76,6 +76,50 @@ public class AdminNoticeController {
   }
 
 
+  // 자주묻는질문 조회 가능
+  @GetMapping("/faq-list")
+  public String findFaqList(Model model, @PageableDefault Pageable pageable,
+                               @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+
+    // 검색어가 있을 때와 없을 때 처리
+    Page<NoticeTypeDTO> faqList;
+
+    if (searchKeyword == null || searchKeyword.trim().isEmpty()) {
+      faqList = noticeService.findFaqList(pageable);  // 검색어가 없으면 전체 리스트 조회
+      System.out.println("검색어 없을때 faqList:  " + faqList);
+    } else {
+      // 검색어가 있을 경우 해당 검색어로 필터링하여 조회
+      faqList = noticeService.noticeSearchList(searchKeyword, pageable);  // 검색어로 필터링
+      System.out.println("검색어 있을때 noticeList: " + faqList);
+    }
+
+
+    /* 페이징 처리 이후 */
+    // {}: 위치홀더라고 생각할 것
+    log.info("pageable: {}", pageable);
+    log.info("{}", faqList.getContent());
+    log.info("{}", faqList.getTotalPages());
+    log.info("{}", faqList.getTotalElements());
+    log.info("{}", faqList.getSize());
+    log.info("{}", faqList.getNumberOfElements());
+    log.info("{}", faqList.isFirst());
+    log.info("{}", faqList.isLast());
+    log.info("{}", faqList.getSort());
+    log.info("{}", faqList.getNumber());
+
+    // 페이지네이션 정보 추가
+    PagingButton paging = Pagenation.getPagingButtonInfo(faqList, searchKeyword);
+
+    // 모델에 전달
+    model.addAttribute("faqList", faqList);
+    model.addAttribute("paging", paging);
+    model.addAttribute("searchKeyword", searchKeyword); // 검색어도 함께 전달
+
+
+    return "notice/faq-list"; //목록으로
+  }
+
+
   // 공지사항 상세보기
   @GetMapping("/notice-view/{noticeCode}")
   @Transactional

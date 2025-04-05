@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-// 공지사항 페이지에 공지사항 찾아올때 사용하는 DTO
+// 각 페이지에 공지사항/자주묻는질문 찾아올때 사용하는 DTO
 public class NoticeTypeDTO {
 
   private Integer noticeCode;

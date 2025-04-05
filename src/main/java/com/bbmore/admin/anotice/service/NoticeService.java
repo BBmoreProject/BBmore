@@ -29,8 +29,6 @@ public class NoticeService {
   private final ModelMapper modelMapper;
 
 
-  /* findAll : Pageable 사용*/
-  // Pageable 객체 : 스프링 data domain 에서 제공
   // PageRequest.of : PageNumber, PageSize, sort 3가지 전달 필요
   // PageNumber 는 0부터
   // 공지사항 조회가능
@@ -43,6 +41,18 @@ public class NoticeService {
     Page<Notice> noticeList = adminNoticeRepository.findByNoticeType("공지사항",pageable);
     // map 함수로 notice를 하나 하나 ㅏ다 꺼내서 modelMapper.. DTO 타입으로
     return noticeList.map(notice -> modelMapper.map(notice, NoticeTypeDTO.class));
+  }
+
+
+  public Page<NoticeTypeDTO> findFaqList(Pageable pageable) {
+    pageable = PageRequest.of(
+        pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+        pageable.getPageSize(),
+        Sort.by("noticeCreatedDate").descending()
+    );
+    Page<Notice> faqList = adminNoticeRepository.findByNoticeType("자주묻는질문",pageable);
+    // map 함수로 notice를 하나 하나 ㅏ다 꺼내서 modelMapper.. DTO 타입으로
+    return faqList.map(faq -> modelMapper.map(faq, NoticeTypeDTO.class));
   }
 
 

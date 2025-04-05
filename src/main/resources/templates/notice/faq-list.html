@@ -358,7 +358,7 @@
 <div class="container">
   <header class="header">자주묻는질문 관리</header>
   <main class="main">
-    <form th:action="@{/notice/notice-list_ver1}" method="get" >
+    <form th:action="@{/notice/faq-list}" method="get" >
     <div class="search-box">
       <input type="text" placeholder="제목 입력" name="searchKeyword">
       <button class="search-button" type="submit">조회</button>
@@ -384,10 +384,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="notice : ${noticeList}">
-          <td><a th:href="@{/notice/notice-view/{noticeCode}(noticeCode=${notice.noticeCode})}" th:text="${notice.noticeTitle}"></a></td>
-          <td th:text="${notice.noticeCreatedDate}"></td>
-          <td th:text="${notice.noticeView}"></td>
+        <tr th:each="faq : ${faqList}">
+          <td><a th:href="@{/notice/notice-view/{noticeCode}(noticeCode=${faq.noticeCode})}" th:text="${faq.noticeTitle}"></a></td>
+          <td th:text="${faq.noticeCreatedDate}"></td>
+          <td th:text="${faq.noticeView}"></td>
         </tr>
         </tbody>
       </table>
@@ -471,31 +471,31 @@
     <div id="paging" >
       <!-- 맨 앞으로 이동 -->
       <button
-              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.startPage}} + '\''">
+              th:onclick="'location.href=\'/notice/faq-list?page=' + @{${paging.startPage}} + '\''">
         <<
       </button>
       <!-- 이전 페이지로 이동 -->
       <button
-              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.currentPage - 1}} + '\''"
-              th:disabled="${ noticeList.first }">
+              th:onclick="'location.href=\'/notice/faq-list?page=' + @{${paging.currentPage - 1}} + '\''"
+              th:disabled="${ faqList.first }">
         <
       </button>
       <!-- 숫자 버튼 -->
       <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">
-        <button th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${page}} + '\''"
+        <button th:onclick="'location.href=\'/notice/faq-list?page=' + @{${page}} + '\''"
                 th:text="${ page }"
                 th:disabled="${ paging.currentPage eq page }">
         </button>
       </th:block>
       <!-- 다음 페이지로 이동 -->
       <button
-              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.currentPage + 1}} + '\''"
-              th:disabled="${ noticeList.last }">
+              th:onclick="'location.href=\'/notice/faq-list?page=' + @{${paging.currentPage + 1}} + '\''"
+              th:disabled="${ faqList.last }">
         >
       </button>
       <!-- 맨 끝으로 이동 -->
       <button
-              th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.endPage}} + '\''">
+              th:onclick="'location.href=\'/notice/faq-list?page=' + @{${paging.endPage}} + '\''">
         >>
       </button>
     </div> <!--페이징 끝-->
