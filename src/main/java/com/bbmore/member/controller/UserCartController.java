@@ -22,7 +22,7 @@ public class UserCartController {
     // 사용자의 장바구니 목록 조회
     @GetMapping("/cart-list")   // 실제 경로는 "/cart/cart-list"
     public String getUserCart(Model model) {
-        Integer userCode = 2; // 실제 사용자 코드로 교체
+        Integer userCode = 3; // 실제 사용자 코드로 교체
         List<UserCart> cartList = userCartService.getCartListByUser(userCode);
         model.addAttribute("cartList", cartList);
         return "cart/cart-list";

@@ -4,6 +4,7 @@ package com.bbmore.admin.anotice.controller;
 import com.bbmore.admin.anotice.common.Pagenation;
 import com.bbmore.admin.anotice.common.PagingButton;
 import com.bbmore.admin.anotice.dto.NoticeDTO;
+import com.bbmore.admin.anotice.dto.NoticeTypeDTO;
 import com.bbmore.admin.anotice.entity.Notice;
 import com.bbmore.admin.anotice.repository.AdminNoticeRepository;
 import com.bbmore.admin.anotice.service.NoticeService;
@@ -29,15 +30,15 @@ public class AdminNoticeController {
 
   private final NoticeService noticeService;
   private final AdminNoticeRepository adminNoticeRepository;
-  
 
-  // @PageableDefault Pageable pageable :
+
+  // 공지사항 조회 가능
   @GetMapping("/notice-list_ver1")
   public String findNoticeList(Model model, @PageableDefault Pageable pageable,
                                @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
 
     // 검색어가 있을 때와 없을 때 처리
-    Page<NoticeDTO> noticeList;
+    Page<NoticeTypeDTO> noticeList;
 
     if (searchKeyword == null || searchKeyword.trim().isEmpty()) {
       noticeList = noticeService.findNoticeList(pageable);  // 검색어가 없으면 전체 리스트 조회
@@ -47,7 +48,6 @@ public class AdminNoticeController {
       noticeList = noticeService.noticeSearchList(searchKeyword, pageable);  // 검색어로 필터링
       System.out.println("검색어 있을때 noticeList: " + noticeList);
     }
-
 
 
     /* 페이징 처리 이후 */
@@ -110,18 +110,18 @@ public class AdminNoticeController {
 
     return "redirect:/notice/notice-list_ver1";
   }
-  
+
   // 공지사항 수정
   @GetMapping("/modify/{id}")
-    public String noticeModify(@PathVariable("id") Integer noticeCode, Model model) {
+  public String noticeModify(@PathVariable("id") Integer noticeCode, Model model) {
 
     model.addAttribute("notice", noticeService.findNoticeByNoticeCode(noticeCode));
 
     return "notice/noticemodify";     // 글쓰기 html과 동일
-    }
-  
-    // 공지사항 수정 진행
-    @PostMapping("/update/{id}")
+  }
+
+  // 공지사항 수정 진행
+  @PostMapping("/update/{id}")
   public String noticeUpdate(@PathVariable("id") Integer noticeCode, NoticeDTO noticedto) {
 
     NoticeDTO noticeDTO1 = noticeService.findNoticeByNoticeCode(noticeCode); // 기존내용 찾기
@@ -129,21 +129,20 @@ public class AdminNoticeController {
     noticeDTO1.setNoticeContent(noticedto.getNoticeContent());
 
     noticeService.registNotice(noticeDTO1);
-    
+
     return "redirect:/notice/notice-list_ver1";
-    }
-    
-    // 공지사항 삭제
-    @PostMapping("/delete")
-    public String deleteNotice(@RequestParam("noticeCode") Integer noticeCode) {
-      noticeService.deleteNotice(noticeCode);
-      return "redirect:/notice/notice-list_ver1";
-    }
-
-
-
   }
 
+  // 공지사항 삭제
+  @PostMapping("/delete")
+  public String deleteNotice(@RequestParam("noticeCode") Integer noticeCode) {
+    noticeService.deleteNotice(noticeCode);
+    return "redirect:/notice/notice-list_ver1";
+  }
+
+
+
+}
 
 
 

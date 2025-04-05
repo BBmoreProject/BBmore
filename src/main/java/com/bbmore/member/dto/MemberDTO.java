@@ -19,10 +19,16 @@ public class MemberDTO {
     private String userName;               // 회원이름
 
     private String userAddress;            // 회원주소
+    
+    private String userMembershipLevel;     // 회원등급 // 추가
 
     private String userPhoneNumber;        // 회원전화번호
 
     private String userEmail;              // 회원이메일
+    
+    private Boolean userIsdeleted;          // 회원탈퇴여부   // 추가
+    
+    private String userAccessLevel;         // 회원권한     // 추가
 
     private String userPetName;
 

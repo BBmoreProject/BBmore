@@ -1,15 +1,12 @@
 package com.bbmore.admin.anotice.repository;
 
-import com.bbmore.admin.anotice.dto.NoticeDTO;
 import com.bbmore.admin.anotice.entity.Notice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 //AdminNotice 엔티티로 JpaRepository를 생성한다. AdminNotice 기본키는 int다.
@@ -27,4 +24,8 @@ public interface AdminNoticeRepository extends JpaRepository<Notice, Integer> {
 
     // 검색 기능 (Notice 엔티티 반환)
     Page<Notice> findByNoticeTitleContaining(String searchKeyword, Pageable pageable);
+
+    // 게시글 타입(공지사항or자주묻는질문)찾아오기
+    Page<Notice> findByNoticeType(String noticeType, Pageable pageable); 
+    
 }
