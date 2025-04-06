@@ -172,10 +172,8 @@
         }
 
 
-
         /* 수정,삭제버튼 */
-        .modify-button
-        {
+        .modify-button {
             position: relative;
             /*notice-box기준*/
             background-color: #F28C25;
@@ -188,7 +186,7 @@
             cursor: pointer;
         }
 
-        .delete-button{
+        .delete-button {
             position: absolute;
             top: 32px;
             right: 15px;
@@ -336,7 +334,6 @@
         }
 
 
-
     </style>
 
     <script>
@@ -388,6 +385,20 @@
         });
     </script>
 
+    <script>
+        // 삭제 확인 팝업
+        function confirmDelete() {
+            var result = confirm("정말로 이 공지사항을 삭제하시겠습니까?");
+            if (result) {
+                // 사용자가 "확인"을 클릭한 경우, 폼을 제출하여 삭제를 진행
+                return true;
+            } else {
+                // 사용자가 "취소"를 클릭한 경우, 폼 제출을 막음
+                return false;
+            }
+        }
+    </script>
+
 </head>
 
 <body>
@@ -431,12 +442,14 @@
         <li class="menu-6">
             <a>공지사항 관리</a>
             <ul class="submenu">
-                <li><a onclick="location.href='/notice/notice-list_ver1'">공지사항</a></li>
-                <li><a onclick="location.href='/notice/faq-list'">자주 묻는 질문</a></li>
+<!--                <li><a onclick="location.href='/notice/notice-list_ver1'">공지사항</a></li>-->
+<!--                <li><a onclick="location.href='/notice/faq-list'">자주 묻는 질문</a></li>-->
+                <button type="button" onclick="location.href='/notice/notice-list_ver1?noticeType=공지사항'">공지사항</button>
+                <button type="button" onclick="location.href='/notice/notice-list_ver1?noticeType=자주묻는질문'">자주묻는질문</button>
             </ul>
         </li>
-        <div class="bottom-logo"><img src="/img/b2.png" alt="로고"></div>
     </ul>
+    <div class="bottom-logo"><img src="/img/b2.png" alt="로고"></div>
 </nav>
 
 <div class="container">
@@ -456,7 +469,7 @@
                     <a th:href="@{/notice/modify/{id}(id= ${notice.noticeCode})}" id="modify">수정</a>
                 </button>
                 <!--삭제버튼-->
-                <form id="deleteForm" action="/notice/delete" method="post" >
+                <form id="deleteForm" action="/notice/delete" method="post" onsubmit="return confirmDelete()">
                     <input type="hidden" name="noticeCode" th:value="${notice.noticeCode}">
                     <button type="submit" class="delete-button" id="delete">삭제</button>
                 </form>

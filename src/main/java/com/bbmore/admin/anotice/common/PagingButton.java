@@ -17,45 +17,23 @@ public class PagingButton {
         this.searchKeyword = searchKeyword;
     }
 
+
+    // Getter methods
     public int getCurrentPage() {
         return currentPage;
-    }
-
-    public void setCurrentPage(int currentPage) {
-        this.currentPage = currentPage;
     }
 
     public int getStartPage() {
         return startPage;
     }
 
-    public void setStartPage(int startPage) {
-        this.startPage = startPage;
-    }
-
     public int getEndPage() {
         return endPage;
-    }
-
-    public void setEndPage(int endPage) {
-        this.endPage = endPage;
     }
 
     public String getSearchKeyword() {
         return searchKeyword;
     }
-
-    public void setSearchKeyword(String searchKeyword) {
-        this.searchKeyword = searchKeyword;
-    }
-
-    @Override
-    public String toString() {
-        return "PagingButton{" +
-                "currentPage=" + currentPage +
-                ", startPage=" + startPage +
-                ", endPage=" + endPage +
-                ", searchKeyword='" + searchKeyword + '\'' +
-                '}';
-    }
 }
+
+

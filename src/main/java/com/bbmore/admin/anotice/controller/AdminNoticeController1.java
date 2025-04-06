@@ -189,6 +189,24 @@
 //
 //    return "notice/noticemodify";     // 글쓰기 html과 동일
 //  }
+
+
+// 공지사항 수정 진행 원본
+//  @PostMapping("/update/{id}")
+//  public String noticeUpdate(@PathVariable("id") Integer noticeCode, NoticeDTO noticedto) {
+//
+//    // noticeCode 로 수정할 공지사항 조회
+//    NoticeDTO noticeDTO1 = noticeService.findNoticeByNoticeCode(noticeCode);
+//
+//    // 수정 내용 덮어씌우기
+//    noticeDTO1.setNoticeTitle(noticedto.getNoticeTitle());  // 제목 수정..
+//    noticeDTO1.setNoticeContent(noticedto.getNoticeContent());   // 내용 수정..
+//
+//    // 수정된거 저장
+//    noticeService.registNotice(noticeDTO1);
+//
+//    return "redirect:/notice/notice-list_ver1";
+//  }
 //
 ////  // 공지사항 수정 진행
 ////  @PostMapping("/update/{id}")

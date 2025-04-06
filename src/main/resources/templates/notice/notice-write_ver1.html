@@ -297,6 +297,16 @@
     });
   </script>
 
+  <script>
+    // 취소 버튼 클릭 시 목록 페이지로 이동하는 함수
+    function goToList() {
+      // 목록 페이지로 리다이렉트
+      window.location.href = "/notice/notice-list_ver1";  // 목록 화면으로 이동하는 URL
+    }
+  </script>
+
+
+
 
 </head>
 
@@ -342,11 +352,11 @@
       <a href="#">공지사항 관리</a>
       <ul class="submenu">
         <li><a onclick="location.href='/notice/notice-list_ver1'">공지사항</a></li>
-        <li><a href="faq_5.html">자주 묻는 질문</a></li>
+        <li><a onclick="location.href='/notice/faq-list'">자주 묻는 질문</a></li>
       </ul>
     </li>
-    <div class="bottom-logo"><img src="/img/b2.png" alt="로고"> </div>
   </ul>
+  <div class="bottom-logo"><img src="/img/b2.png" alt="로고"> </div>
 </nav>
 
 <div class="container">
@@ -391,7 +401,7 @@
       </table>
 
     <div class="buttons">
-      <button type="button" id="btnCancel" >취소</button> <!-- 취소시 #id 사용하기-->
+      <button type="button" id="btnCancel"  onclick="goToList()">취소</button> <!-- 취소시 #id 사용하기-->
       <button type="submit" id="btnSave">저장</button> <!-- 저장시 #id 사용하기-->
     </div>
         </form>
