@@ -373,17 +373,17 @@
 
             <!-- 공지사항 작성 큰 틀 -->
             <div class="notice-form">
-                <form th:action="@{/notice/update/{id}(id = ${notice.noticeCode})}" method="post">
+                    <form th:action="@{/notice/update/{id}(id = ${notice.noticeCode})}" method="post">
                     <table class="notice-table">
                         <!-- 제목 행 -->
                         <tr>
                             <td class="label">제목</td>
                             <td>
                                 <select name="noticeType">
-                                    <option value="공지사항">공지사항</option>
-                                    <option value="자주묻는질문">자주묻는질문</option>
+                                    <option value="공지사항" th:selected="${notice.noticeType == '공지사항'}">공지사항</option>
+                                    <option value="자주묻는질문" th:selected="${notice.noticeType == '자주묻는질문'}">자주묻는질문</option>
                                 </select>
-                                <input type="text" id="title" name="noticeTitle" placeholder="제목을 입력하세요" th:value="${notice.noticeTitle}">
+                                <input type="text" id="title" name="noticeTitle" placeholder="제목을 입력하세요" th:value="${notice.noticeTitle}" />
                             </td>
                         </tr>
 

@@ -346,8 +346,10 @@
         <li class="menu-6">
             <a href="#">공지사항 관리</a>
             <ul class="submenu">
-                <li><a onclick="location.href='/notice/notice-list_ver1?noticeType=공지사항'">공지사항</a></li>
-                <li><a onclick="location.href='/notice/notice-list_ver1?noticeType=자주묻는질문'">자주 묻는 질문</a></li>
+                <li><a onclick="location.href='/notice/notice-list_ver1'">공지사항</a></li>
+                <li><a onclick="location.href='/notice/faq-list'">자주 묻는 질문</a></li>
+<!--                <li><a onclick="location.href='/notice/notice-list_ver1?noticeType=공지사항'">공지사항</a></li>-->
+<!--                <li><a onclick="location.href='/notice/notice-list_ver1?noticeType=자주묻는질문'">자주 묻는 질문</a></li>-->
             </ul>
         </li>
     </ul>
@@ -375,8 +377,8 @@
             </button>
 
             <div class="menu-detail">
-<!--                <p>• 공지사항 목록</p>-->
-                <p th:text="'• ' + ${noticeType} + ' 목록'"></p> <!-- 공지사항 또는 자주 묻는 질문에 따라 다르게 표시 -->
+                <p>• 공지사항 목록</p>
+<!--                <p th:text="'• ' + ${noticeType} + ' 목록'"></p> &lt;!&ndash; 공지사항 또는 자주 묻는 질문에 따라 다르게 표시 &ndash;&gt;-->
             </div>
             <table class="notice-list">
                 <thead>

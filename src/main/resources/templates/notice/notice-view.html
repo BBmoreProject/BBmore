@@ -442,10 +442,10 @@
         <li class="menu-6">
             <a>공지사항 관리</a>
             <ul class="submenu">
-<!--                <li><a onclick="location.href='/notice/notice-list_ver1'">공지사항</a></li>-->
-<!--                <li><a onclick="location.href='/notice/faq-list'">자주 묻는 질문</a></li>-->
-                <button type="button" onclick="location.href='/notice/notice-list_ver1?noticeType=공지사항'">공지사항</button>
-                <button type="button" onclick="location.href='/notice/notice-list_ver1?noticeType=자주묻는질문'">자주묻는질문</button>
+                        <li><a onclick="location.href='/notice/notice-list_ver1'">공지사항</a></li>
+                        <li><a onclick="location.href='/notice/faq-list'">자주 묻는 질문</a></li>
+<!--                <li><a onclick="location.href='/notice/notice-list_ver1?noticeType=공지사항'">공지사항</a></li>-->
+<!--                <li><a onclick="location.href='/notice/notice-list_ver1?noticeType=자주묻는질문'">자주 묻는 질문</a></li>-->
             </ul>
         </li>
     </ul>
@@ -466,7 +466,7 @@
             <div class="button-group">
                 <!--수정 버튼-->
                 <button class="modify-button">
-                    <a th:href="@{/notice/modify/{id}(id= ${notice.noticeCode})}" id="modify">수정</a>
+                    <a th:href="@{/notice/modify/notice/{id}(id= ${notice.noticeCode})}" id="modify">수정</a>
                 </button>
                 <!--삭제버튼-->
                 <form id="deleteForm" action="/notice/delete" method="post" onsubmit="return confirmDelete()">
@@ -476,7 +476,7 @@
             </div>
 
             <div class="menu-detail">
-                <p>• 공지사항</p>
+                 <p>• 공지사항</p>
             </div>
 
 
@@ -504,7 +504,7 @@
                     <!--이전글 제목값 부분-->
                     <div class="next-content-box1">
                         <button class="next-content1">
-                            <a href="#" th:href="@{'/notice/notice-view/' + ${prevNotice.noticeCode}}"
+                            <a href="#" th:href="@{'/notice/notice-view/'+ ${prevNotice.noticeCode}}"
                                th:text="${prevNotice.noticeTitle}">이전글 제목</a>
                         </button>
                     </div>
