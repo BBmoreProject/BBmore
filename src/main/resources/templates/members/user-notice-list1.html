@@ -265,20 +265,17 @@
 
 <!--        &lt;!&ndash; 검색창 &ndash;&gt;-->
 <!--        <div class="search">-->
-<!--            <input type="text" id="search_title" placeholder="제목 검색">-->
-<!--            <input type="text" id="search_content" placeholder="내용 검색">-->
+<!--            <input type="text" id="search-title" placeholder="제목 검색">-->
+<!--            <input type="text" id="search-content" placeholder="내용 검색">-->
 <!--            <button>검색</button>-->
 <!--        </div>-->
 
 <!--        &lt;!&ndash; 공지사항, 자주 묻는 질문 버튼 &ndash;&gt;-->
 <!--        <div class="tab-buttons">-->
-<!--            <a href="/members/user-notice-list?noticeType=공지사항">공지사항</a>-->
-<!--            <a href="/members/user-notice-list?noticeType=자주묻는질문" class="btn btn-secondary">자주 묻는 질문</a>-->
-
 <!--&lt;!&ndash;            <a id="notice-btn" onclick="toggleSection('notice')">공지사항</a>&ndash;&gt;-->
 <!--&lt;!&ndash;            <a id="faq-btn" onclick="toggleSection('faq')">자주 묻는 질문</a>&ndash;&gt;-->
-<!--&lt;!&ndash;            <a id="notice_btn" onclick="location.href='/notice/notice-list_ver1?noticeType=공지사항'" >공지사항</a>&ndash;&gt;-->
-<!--&lt;!&ndash;            <a href="/notice/faq-list1?noticeType=자주묻는질문" class="btn btn-secondary">자주 묻는 질문</a>&ndash;&gt;-->
+<!--            <a id="notice-btn" onclick="location.href='/notice/notice-list_ver1?noticeType=NOTICE'" >공지사항</a>-->
+<!--            <a href="/notice/faq-list1?noticeType=FAQ" class="btn btn-secondary">자주 묻는 질문</a>-->
 <!--        </div>-->
 
 
@@ -291,27 +288,21 @@
 <!--            </tr>-->
 <!--            </thead>-->
 <!--            <tbody>-->
-<!--            &lt;!&ndash; 타임리프 반복문 사용 &ndash;&gt;-->
-<!--            <tr th:each="notice : ${notices}">-->
-<!--                <td th:text="${notice.noticeTitle}">공지사항 제목</td>-->
-<!--                <td th:text="${notice.noticeCreatedDate}">2025-04-05</td>-->
-<!--                <td th:text="${notice.noticeView}">120</td>-->
+<!--            <tr>-->
+<!--                <td>공지사항 1</td>-->
+<!--                <td>2025-04-05</td>-->
+<!--                <td>120</td>-->
 <!--            </tr>-->
-<!--&lt;!&ndash;            <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>공지사항 1</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>2025-04-05</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>120</td>&ndash;&gt;-->
-<!--&lt;!&ndash;            </tr>&ndash;&gt;-->
-<!--&lt;!&ndash;            <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>공지사항 2</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>2025-04-04</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>98</td>&ndash;&gt;-->
-<!--&lt;!&ndash;            </tr>&ndash;&gt;-->
-<!--&lt;!&ndash;            <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>공지사항 3</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>2025-04-03</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>150</td>&ndash;&gt;-->
-<!--&lt;!&ndash;            </tr>&ndash;&gt;-->
+<!--            <tr>-->
+<!--                <td>공지사항 2</td>-->
+<!--                <td>2025-04-04</td>-->
+<!--                <td>98</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>공지사항 3</td>-->
+<!--                <td>2025-04-03</td>-->
+<!--                <td>150</td>-->
+<!--            </tr>-->
 <!--            </tbody>-->
 <!--        </table>-->
 <!--    </section>-->
@@ -340,23 +331,18 @@
 <!--            </tr>-->
 <!--            </thead>-->
 <!--            <tbody>-->
-<!--            <tr th:each="faq : ${faqs}">-->
-<!--                <td th:text="${faq.noticeTitle}">질문 1</td>-->
-<!--                <td th:text="${faq.noticeContent}">답변 1</td>-->
+<!--            <tr>-->
+<!--                <td>질문 1</td>-->
+<!--                <td>답변 1</td>-->
 <!--            </tr>-->
-
-<!--&lt;!&ndash;            <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>질문 1</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>답변 1</td>&ndash;&gt;-->
-<!--&lt;!&ndash;            </tr>&ndash;&gt;-->
-<!--&lt;!&ndash;            <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>질문 2</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>답변 2</td>&ndash;&gt;-->
-<!--&lt;!&ndash;            </tr>&ndash;&gt;-->
-<!--&lt;!&ndash;            <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>질문 3</td>&ndash;&gt;-->
-<!--&lt;!&ndash;                <td>답변 3</td>&ndash;&gt;-->
-<!--&lt;!&ndash;            </tr>&ndash;&gt;-->
+<!--            <tr>-->
+<!--                <td>질문 2</td>-->
+<!--                <td>답변 2</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>질문 3</td>-->
+<!--                <td>답변 3</td>-->
+<!--            </tr>-->
 <!--            </tbody>-->
 <!--        </table>-->
 <!--    </section>-->
@@ -382,75 +368,22 @@
 <!--</footer>-->
 
 <!--<script>-->
-<!--    // // 공지사항 데이터를 받아와서 테이블에 표시하는 함수-->
-<!--    // function loadNotices(noticeType) {-->
-<!--    //     fetch(`/api/notices?noticeType=${noticeType}`)-->
-<!--    //         .then(response => response.json())-->
-<!--    //         .then(data => {-->
-<!--    //             const tbody = document.querySelector("#notice tbody");-->
-<!--    //             tbody.innerHTML = ""; // 기존 테이블 내용 초기화-->
-<!--    //-->
-<!--    //             data.forEach(notice => {-->
-<!--    //                 const tr = document.createElement("tr");-->
-<!--    //                 tr.innerHTML = `-->
-<!--    //                     <td>${notice.noticeTitle}</td>-->
-<!--    //                     <td>${notice.noticeCreatedDate}</td>-->
-<!--    //                     <td>${notice.noticeView}</td>-->
-<!--    //                 `;-->
-<!--    //                 tbody.appendChild(tr);-->
-<!--    //             });-->
-<!--    //         })-->
-<!--    //         .catch(error => {-->
-<!--    //             console.error("공지사항을 불러오는 중 오류가 발생했습니다:", error);-->
-<!--    //         });-->
-<!--    // }-->
-<!--    //-->
-<!--    // // FAQ 데이터를 받아와서 테이블에 표시하는 함수-->
-<!--    // function loadFaqs() {-->
-<!--    //     fetch(`/api/faqs`)-->
-<!--    //         .then(response => response.json())-->
-<!--    //         .then(data => {-->
-<!--    //             const tbody = document.querySelector("#faq tbody");-->
-<!--    //             tbody.innerHTML = ""; // 기존 테이블 내용 초기화-->
-<!--    //-->
-<!--    //             data.forEach(faq => {-->
-<!--    //                 const tr = document.createElement("tr");-->
-<!--    //                 tr.innerHTML = `-->
-<!--    //                     <td>${faq.faqTitle}</td>-->
-<!--    //                     <td>${faq.faqContent}</td>-->
-<!--    //                 `;-->
-<!--    //                 tbody.appendChild(tr);-->
-<!--    //             });-->
-<!--    //         })-->
-<!--    //         .catch(error => {-->
-<!--    //             console.error("FAQ를 불러오는 중 오류가 발생했습니다:", error);-->
-<!--    //         });-->
-<!--    // }-->
-<!--    //-->
-<!--    // // 버튼 클릭 시 해당하는 섹션을 로드하는 함수-->
-<!--    // function toggleSection(sectionId) {-->
-<!--    //     // 모든 섹션 숨기기-->
-<!--    //     document.querySelectorAll('.content').forEach(function (section) {-->
-<!--    //         section.style.display = 'none';-->
-<!--    //     });-->
-<!--    //     // 클릭된 섹션만 보이게-->
-<!--    //     document.getElementById(sectionId).style.display = 'block';-->
-<!--    //-->
-<!--    //     // 공지사항 버튼 클릭 시 공지사항 로드-->
-<!--    //     if (sectionId === 'notice') {-->
-<!--    //         loadNotices('공지사항');  // 공지사항 로드-->
-<!--    //     }-->
-<!--    //-->
-<!--    //     // 자주 묻는 질문 버튼 클릭 시 FAQ 로드-->
-<!--    //     if (sectionId === 'faq') {-->
-<!--    //         loadFaqs();  // FAQ 로드-->
-<!--    //     }-->
-<!--    // }-->
-<!--    //-->
-<!--    // // 초기에는 공지사항을 보여줌-->
-<!--    // window.onload = function () {-->
-<!--    //     toggleSection('notice');-->
-<!--    // };-->
+<!--    function toggleSection(sectionId) {-->
+<!--        // 모든 섹션 숨기기-->
+<!--        document.querySelectorAll('.content').forEach(function (section) {-->
+<!--            section.style.display = 'none';-->
+<!--        });-->
+<!--        // 클릭된 섹션만 보이게-->
+<!--        document.getElementById(sectionId).style.display = 'block';-->
+<!--    }-->
+
+<!--    // 초기에는 공지사항을 보여줌-->
+<!--    toggleSection('notice');-->
+
+<!--    // 페이지 변경 함수-->
+<!--    function changePage(direction) {-->
+<!--        console.log("페이지 변경:", direction);-->
+<!--    }-->
 <!--</script>-->
 <!--</body>-->
 

@@ -12,3 +12,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        spring:
+          thymeleaf:
+            prefix: classpath:/templates/
+            suffix: .html
+            mode: HTML
+            encoding: UTF-8
+            cache: false
