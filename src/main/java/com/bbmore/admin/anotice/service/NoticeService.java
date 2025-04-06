@@ -127,6 +127,7 @@ public class NoticeService {
     );
   }
 
+  //------------------------------------------------------------------------------------
 
   // 조회수 증가 (가능)
   @Transactional
@@ -137,6 +138,7 @@ public class NoticeService {
     notice.setNoticeView(notice.getNoticeView() + 1); // Getter를 활용한 조회수 증가
   }
 
+  //------------------------------------------------------------------------------------
 
   // 이전 공지사항 조회 (타입별로)
   public Optional<Notice> getPrevNotice(Integer noticeCode, String noticeType) {
@@ -149,7 +151,7 @@ public class NoticeService {
   }
 
 
-
+  //------------------------------------------------------------------------------------
 
 
   /* 특정게시글 삭제 */

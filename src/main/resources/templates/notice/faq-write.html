@@ -301,8 +301,17 @@
     // 취소 버튼 클릭 시 목록 페이지로 이동하는 함수
     function goToList() {
       // 목록 페이지로 리다이렉트
-      window.location.href = "/notice/notice-list_ver1";  // 목록 화면으로 이동하는 URL
+      window.location.href = "/notice/faq-list";  // 목록 화면으로 이동하는 URL
     }
+  </script>
+
+
+  <script>
+    /*자주묻는질문 글쓰기 할때 기본 타입으로 "자주묻는질문" 설정 (공지사항은 별도로 설정X)*/
+    document.addEventListener("DOMContentLoaded", function() {
+      // "자주묻는질문"을 기본 선택값으로 설정
+      document.querySelector("select[name='noticeType']").value = "자주묻는질문";
+    });
   </script>
 
 

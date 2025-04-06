@@ -386,6 +386,19 @@
                 console.error('ID 파라미터가 존재하지 않습니다.');
             }
         });
+
+
+        // 삭제 확인 팝업
+        function confirmDelete() {
+            var result = confirm("정말로 이 자주묻는질문을 삭제하시겠습니까?");
+            if (result) {
+                // 사용자가 "확인"을 클릭한 경우, 폼을 제출하여 삭제를 진행
+                return true;
+            } else {
+                // 사용자가 "취소"를 클릭한 경우, 폼 제출을 막음
+                return false;
+            }
+        }
     </script>
 
 </head>
@@ -431,10 +444,9 @@
         <li class="menu-6">
             <a>공지사항 관리</a>
             <ul class="submenu">
-<!--                <li><a onclick="location.href='/notice/notice-list_ver1'">공지사항</a></li>-->
-<!--                <li><a onclick="location.href='/notice/faq-list'">자주 묻는 질문</a></li>-->
-                <li><a onclick="location.href='/notice/notice-list_ver1?noticeType=공지사항'">공지사항</a></li>
-                <li><a onclick="location.href='/notice/notice-list_ver1?noticeType=자주묻는질문'">자주 묻는 질문</a></li>
+                <li><a onclick="location.href='/notice/notice-list_ver1'">공지사항</a></li>
+                <li><a onclick="location.href='/notice/faq-list'">자주 묻는 질문</a></li>
+
             </ul>
         </li>
     </ul>
@@ -458,9 +470,10 @@
                     <a th:href="@{/notice/modify/faq/{id}(id= ${faq.noticeCode})}" id="modify">수정</a>
                 </button>
                 <!--삭제버튼-->
-                <form id="deleteForm" action="/notice/delete" method="post" >
+                <form id="deleteForm" action="/notice/delete" method="post" onsubmit="return confirmDelete()">
                     <input type="hidden" name="noticeCode" th:value="${faq.noticeCode}">
-                    <button type="submit" class="delete-button" id="delete">삭제</button>
+                    <input type="hidden" name="noticeType" value="faq">
+                    <button type="submit" class="delete-button" id="delete" >삭제</button>
                 </form>
             </div>
 

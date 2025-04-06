@@ -471,7 +471,8 @@
                 <!--삭제버튼-->
                 <form id="deleteForm" action="/notice/delete" method="post" onsubmit="return confirmDelete()">
                     <input type="hidden" name="noticeCode" th:value="${notice.noticeCode}">
-                    <button type="submit" class="delete-button" id="delete">삭제</button>
+                    <input type="hidden" name="noticeType" value="notice">
+                    <button type="submit" class="delete-button" id="delete" >삭제</button>
                 </form>
             </div>
 

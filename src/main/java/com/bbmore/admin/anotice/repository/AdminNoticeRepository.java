@@ -24,6 +24,7 @@ public interface AdminNoticeRepository extends JpaRepository<Notice, Integer> {
     // 게시글 타입(공지사항or자주묻는질문)찾아오기
     Page<Notice> findByNoticeType(String noticeType, Pageable pageable);
 
+
     // 타입별 이전글 조회
     // noticeCode보다 작은 값 중, 주어진 타입의 공지사항을 내림차순으로 조회
     Optional<Notice> findFirstByNoticeCodeLessThanAndNoticeTypeOrderByNoticeCodeDesc(Integer noticeCode, String noticeType);

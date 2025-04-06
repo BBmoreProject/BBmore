@@ -220,14 +220,8 @@ public class AdminNoticeController {
     return "notice/faq-modify";     // 글쓰기 html과 동일
   }
 
-  // 공지사항 수정 진행
-//  @PostMapping("/update/{id}")
-//  public String noticeUpdate(@PathVariable("id") Integer noticeCode, NoticeDTO noticedto) {
-//    // 서비스 레이어에서 수정 처리
-//    noticeService.updateNotice(noticeCode, noticedto);
-//    return "redirect:/notice/notice-list_ver1"};
-//
 
+  // 공지사항/자주묻는질문 타입별로 수정 진행
   @PostMapping("/update/{id}")
   public String updateNotice(@PathVariable("id") Integer noticeCode, NoticeDTO noticedto, @RequestParam("noticeType") String noticeType) {
     // 타입에 따라 수정 처리
@@ -245,13 +239,19 @@ public class AdminNoticeController {
 
   // 공지사항 삭제
   @PostMapping("/delete")
-  public String deleteNotice(@RequestParam("noticeCode") Integer noticeCode) {
+  public String deleteNotice(@RequestParam("noticeCode") Integer noticeCode,
+                             @RequestParam("noticeType") String noticeType) {
+
     noticeService.deleteNotice(noticeCode);
-    return "redirect:/notice/notice-list_ver1";
+
+    // 타입별 리다이렉션 경로 설정
+    if ("faq".equalsIgnoreCase(noticeType)) {
+      return "redirect:/notice/faq-list";  // 자주 묻는 질문 삭제 후 리다이렉션
+    } else {
+      return "redirect:/notice/notice-list_ver1";  // 공지사항 삭제 후 리다이렉션
+    }
+
   }
-
-
-
 
 
 }
