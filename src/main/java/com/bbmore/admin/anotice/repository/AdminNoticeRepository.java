@@ -1,5 +1,6 @@
 package com.bbmore.admin.anotice.repository;
 
+import com.bbmore.admin.anotice.dto.NoticeTypeDTO;
 import com.bbmore.admin.anotice.entity.Notice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,22 +19,35 @@ public interface AdminNoticeRepository extends JpaRepository<Notice, Integer> {
 
 
 
-    // 검색 기능 (Notice 엔티티 반환)
+    // 검색 기능 (Notice 엔티티 반환) (수정금지)
     Page<Notice> findByNoticeTitleContainingAndNoticeType(String noticeType, String searchKeyword, Pageable pageable);
 
-    // 게시글 타입(공지사항or자주묻는질문)찾아오기
+    // 게시글 타입(공지사항or자주묻는질문)찾아오기 (수정금지)
     Page<Notice> findByNoticeType(String noticeType, Pageable pageable);
 
 
-    // 타입별 이전글 조회
+
+
+
+    // 타입별 이전글 조회 (수정금지)
     // noticeCode보다 작은 값 중, 주어진 타입의 공지사항을 내림차순으로 조회
     Optional<Notice> findFirstByNoticeCodeLessThanAndNoticeTypeOrderByNoticeCodeDesc(Integer noticeCode, String noticeType);
-    // 타입별 다음글 조회
+    // 타입별 다음글 조회 (수정금지)
     Optional<Notice> findFirstByNoticeCodeGreaterThanAndNoticeTypeOrderByNoticeCodeAsc(Integer noticeCode, String noticeType);
 
 
-    // title에 검색어가 포함된 공지사항을 조회하는 메서드
+    // title에 검색어가 포함된 공지사항을 조회하는 메서드 (수정금지)
     Page<Notice> findByNoticeTitleContaining(String searchKeyword, Pageable pageable);
+
+
+
+    //--------------------------------------------------------------------------------------
+    // test중
+//    Page<NoticeTypeDTO> findByNoticeTypeAndNoticeTitleContaining(String noticeType, String searchKeyword, Pageable pageable);
+
+//    Page<NoticeTypeDTO> findByNoticeType(String noticeType, Pageable pageable);
+
+
 
 }
     

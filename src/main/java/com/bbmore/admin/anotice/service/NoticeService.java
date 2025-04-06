@@ -31,7 +31,7 @@ public class NoticeService {
 
   // PageRequest.of : PageNumber, PageSize, sort 3가지 전달 필요
   // PageNumber 는 0부터
-  // 1-1 게시글타입 - 공지사항 타입 조회해오기 (가능)
+  // 1-1 게시글타입 - 공지사항 타입 조회해오기 (수정금지)
   public Page<NoticeTypeDTO> findNoticeList(Pageable pageable) {
     pageable = PageRequest.of(
         pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
@@ -44,7 +44,7 @@ public class NoticeService {
   }
 
 
-  // 1-2 게시글타입 - 자주묻는질문조회해오기 (가능)
+  // 1-2 게시글타입 - 자주묻는질문조회해오기 (수정금지)
   public Page<NoticeTypeDTO> findFaqList(Pageable pageable) {
     pageable = PageRequest.of(
         pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
@@ -55,9 +55,11 @@ public class NoticeService {
     // map 함수로 notice를 하나 하나 ㅏ다 꺼내서 modelMapper.. DTO 타입으로
     return faqList.map(faq -> modelMapper.map(faq, NoticeTypeDTO.class));
   }
+//--------------------------------------------------------------------------------------------------------------
 
 
 
+//--------------------------------------------------------------------------------------------------------------
 
   /* 공지사항 등록 save */
   @Transactional
@@ -160,5 +162,7 @@ public class NoticeService {
 
     adminNoticeRepository.deleteById(noticeCode);
   }
+
+
 
 }

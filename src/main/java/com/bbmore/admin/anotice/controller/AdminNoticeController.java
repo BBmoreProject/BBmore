@@ -34,7 +34,7 @@ public class AdminNoticeController {
   private final AdminNoticeRepository adminNoticeRepository;
 
 
-  // 공지사항 타입만 찾아오기 (완료)
+  // 공지사항 타입만 찾아오기 (원본-수정금지)
   @GetMapping("/notice-list_ver1")
   public String findNoticeList(Model model, @PageableDefault Pageable pageable, String searchKeyword) {
 
@@ -79,7 +79,15 @@ public class AdminNoticeController {
   }
 
 
-  // 자주묻는질문 조회 (가능)
+  //------------------------------
+
+
+
+
+
+  //------------------------------
+
+  // 자주묻는질문 조회 (수정금지)
   @GetMapping("/faq-list")
   public String findFaqList(Model model, @PageableDefault Pageable pageable,
                             @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
@@ -121,10 +129,12 @@ public class AdminNoticeController {
 
 
     return "notice/faq-list";
-  }//목록으로
+  }
+
+  //-----------------------------------------------------------------------------------------------
 
 
-  // 공지사항 상세보기(가능)
+  // 공지사항 상세보기(수정금지)
   @GetMapping("/notice-view/{noticeCode}")
   @Transactional
   public String viewNotice(@PathVariable Integer noticeCode, Model model) {
@@ -174,6 +184,9 @@ public class AdminNoticeController {
   }
 
 
+  //---------------------------------------------------------------------------------------------
+
+
   // 공지사항 등록 시 요청 url 이 뷰가 되도록 void 로 작성
   @GetMapping("/notice-write_ver1")
   public void registPage() {
@@ -186,6 +199,9 @@ public class AdminNoticeController {
 
     return "redirect:/notice/notice-list_ver1";
   }
+
+
+  //---------------------------------------------------------------------------------------------
 
   // 자주묻는질문 등록 시 요청 url 이 뷰가 되도록 void 로 작성
   @GetMapping("/faq-write")
@@ -237,7 +253,9 @@ public class AdminNoticeController {
   }
 
 
-  // 공지사항 삭제
+  //---------------------------------------------------------------------------------------------
+
+  // 공지사항/자주묻는질문 삭제
   @PostMapping("/delete")
   public String deleteNotice(@RequestParam("noticeCode") Integer noticeCode,
                              @RequestParam("noticeType") String noticeType) {
@@ -252,7 +270,6 @@ public class AdminNoticeController {
     }
 
   }
-
 
 }
 
