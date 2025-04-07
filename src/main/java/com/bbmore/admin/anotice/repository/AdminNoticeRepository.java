@@ -39,6 +39,7 @@ public interface AdminNoticeRepository extends JpaRepository<Notice, Integer> {
     // title에 검색어가 포함된 공지사항을 조회하는 메서드 (수정금지)
     Page<Notice> findByNoticeTitleContaining(String searchKeyword, Pageable pageable);
 
+    Page<Notice> findByNoticeTypeAndNoticeTitleContaining(String noticeType, String searchKeyword, Pageable pageable);
 
 
     //--------------------------------------------------------------------------------------

@@ -17,10 +17,10 @@ public class Notice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer noticeCode;
 
-    @Column(name = "notice_type", nullable = false, length = 255)
+    @Column(name = "notice_type", nullable = false)
     private String noticeType;
 
-    @Column(name = "notice_title", nullable = false, length = 255)
+    @Column(name = "notice_title", nullable = false)
     private String noticeTitle;
 
     @Column(name = "notice_created_date", nullable = false, updatable = false)

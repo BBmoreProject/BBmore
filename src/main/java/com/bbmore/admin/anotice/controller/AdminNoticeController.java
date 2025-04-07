@@ -33,8 +33,9 @@ public class AdminNoticeController {
   private final NoticeService noticeService;
   private final AdminNoticeRepository adminNoticeRepository;
 
-
-  // 공지사항 타입만 찾아오기 (원본-수정금지)
+  
+  
+  // 공지사항 타입만 찾아오기(원본-수정금지)
   @GetMapping("/notice-list_ver1")
   public String findNoticeList(Model model, @PageableDefault Pageable pageable, String searchKeyword) {
 
@@ -48,7 +49,7 @@ public class AdminNoticeController {
       System.out.println("검색어 없을때 noticeList:  " + noticeList);
     } else {
       // 검색어가 있을 경우 해당 검색어로 필터링하여 조회
-      noticeList = noticeService.noticeSearchList(searchKeyword, pageable);  // 검색어로 필터링
+      noticeList = noticeService.noticeSearchList(searchKeyword, "공지사항", pageable);  // 타입+제목 검색으로 필터링
       System.out.println("검색어 있을때 noticeList: " + noticeList);
     }
 
@@ -72,6 +73,7 @@ public class AdminNoticeController {
     // 모델에 전달
     model.addAttribute("noticeList", noticeList);
     model.addAttribute("paging", paging);
+    model.addAttribute("searchKeyword", searchKeyword);
 
 
     // 목록으로
@@ -79,15 +81,11 @@ public class AdminNoticeController {
   }
 
 
-  //------------------------------
-
-
-
 
 
   //------------------------------
 
-  // 자주묻는질문 조회 (수정금지)
+  // 자주묻는질문 조회 (원본-수정금지)
   @GetMapping("/faq-list")
   public String findFaqList(Model model, @PageableDefault Pageable pageable,
                             @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
@@ -100,7 +98,7 @@ public class AdminNoticeController {
       System.out.println("검색어 없을때 faqList:  " + faqList);
     } else {
       // 검색어가 있을 경우 해당 검색어로 필터링하여 조회
-      faqList = noticeService.noticeSearchList(searchKeyword, pageable);  // 검색어로 필터링
+      faqList = noticeService.noticeSearchList(searchKeyword, "자주묻는질문",pageable);  // 검색어로 필터링
       System.out.println("검색어 있을때 noticeList: " + faqList);
     }
 

@@ -59,6 +59,7 @@ public class NoticeService {
 
 
 
+
 //--------------------------------------------------------------------------------------------------------------
 
   /* 공지사항 등록 save */
@@ -109,15 +110,17 @@ public class NoticeService {
   //------------------------------------------------------------------------------------
 
 
-  // 검색 기능: 검색어로 제목을 포함하는 공지사항 조회(원본)
-  public Page<NoticeTypeDTO> noticeSearchList(String searchKeyword, Pageable pageable) {
-    Page<Notice> notices = adminNoticeRepository.findByNoticeTitleContaining(searchKeyword, pageable);
+//  // 검색 기능: 검색어로 제목을 포함하는 공지사항 조회(원본.수정금지)
+//  public Page<NoticeTypeDTO> noticeSearchList(String searchKeyword, Pageable pageable) {
+//    Page<Notice> notices = adminNoticeRepository.findByNoticeTitleContaining(searchKeyword, pageable);
+//
+//    // Notice 엔티티를 NoticeDTO로 변환
+//    return notices.map(this::convertToDTO);
+//  }
 
-    // Notice 엔티티를 NoticeDTO로 변환
-    return notices.map(this::convertToDTO);
-  }
 
-  // Notice -> NoticeDTO 변환 메서드
+
+  // Notice -> NoticeDTO 변환 메서드(원본.수정금지)
   private NoticeTypeDTO convertToDTO(Notice notice) {
     return new NoticeTypeDTO(
         notice.getNoticeCode(),
@@ -128,6 +131,26 @@ public class NoticeService {
         notice.getNoticeContent()
     );
   }
+
+
+  //------------------------------------------------------------------------------------
+
+  // 검색 기능: 검색어로 제목을 포함하는 공지사항 조회- test  15:15
+  public Page<NoticeTypeDTO> noticeSearchList(String searchKeyword, String noticeType , Pageable pageable) {
+    pageable = PageRequest.of(
+            pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+            pageable.getPageSize(),
+            Sort.by("noticeCreatedDate").descending()
+    );
+
+    // 검색어가 제목에 포함된 게시글만 필터링
+    Page<Notice> noticeList = adminNoticeRepository.findByNoticeTypeAndNoticeTitleContaining(noticeType, searchKeyword, pageable);
+
+    // notice를 DTO로 변환
+    return noticeList.map(notice -> modelMapper.map(notice, NoticeTypeDTO.class));
+  }
+
+
 
   //------------------------------------------------------------------------------------
 
