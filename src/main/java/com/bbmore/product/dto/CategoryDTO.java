@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Category {
+public class CategoryDTO {
 
 
     private Integer categoryCode;           // 카테고리고유번호
