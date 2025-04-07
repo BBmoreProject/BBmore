@@ -5,11 +5,12 @@ import java.time.LocalDate;
 
 // 롬복이 말을 안들음 버전 다시 확인해볼 것. 조회는 됨
 
-@NoArgsConstructor
-@AllArgsConstructor //(@Getter, @Setter, @ToString)
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class NoticeDTO {
 
     private Integer noticeCode;

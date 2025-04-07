@@ -6,37 +6,37 @@ import lombok.*;
 import java.time.LocalDate;
 
 
-@Builder(toBuilder = true)  // toBuilder() 메서드 사용에 필요
-@AllArgsConstructor(access = AccessLevel.PACKAGE)   // 같은 패키지 내에서만 객체 생성
-@NoArgsConstructor(access = AccessLevel.PROTECTED)  /*생성자가 없어도 인스턴스 생성 가능 */
-@Getter
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder(toBuilder = true)
 @Table(name = "tbl_notice")
 public class Notice {
     @Id // jpa에서는 jakarta.persistence.* 선택할 것
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer noticeCode;
+    private Integer noticeCode;     // 게시글 고유번호
 
     @Column(name = "notice_type", nullable = false)
-    private String noticeType;
+    private String noticeType;      // 게시글 타입(공지사항, 자주묻는질문)
 
     @Column(name = "notice_title", nullable = false)
-    private String noticeTitle;
+    private String noticeTitle;      // 게시글 제목
 
     @Column(name = "notice_created_date", nullable = false, updatable = false)
     private LocalDate noticeCreatedDate;    // 등록일자
 
-    //    조회수
+  
     @Column(name = "notice_view" , columnDefinition = "Integer default 0", nullable = false)
-    private Integer noticeView;
+    private Integer noticeView;             // 조회수 
 
     public void setNoticeView(Integer noticeView) {  // Setter 추가
         this.noticeView = noticeView;
     }
 
 
-    @Column(nullable = false, length = 255)
-    private String noticeContent;
+    @Column(name = "notice_content", nullable = false)
+    private String noticeContent;           // 게시글 내용
 
 
 

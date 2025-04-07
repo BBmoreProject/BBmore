@@ -110,58 +110,6 @@ public class UserCartController {
 
 
 
-    // @RequestBody로 Map<String, Object> 형태로 데이터를 받을 때는
-    // 모든 값이 Object 타입으로 전달되므로, 수동으로 Integer로 변환해줘야 함
-    // ver.1 수량은 불러와짐(이게 그나마 나은 버전. 서비스 클래스 ver.2랑 같이 쓰기)
-//    @PostMapping("/cart-list/updateQuantity")
-//    @ResponseBody
-//    public Map<String, Object> updateCartQuantity(@RequestBody Map<String, Object> requestData) {
-//        Map<String, Object> response = new HashMap<>();
-//
-//
-//        // 출력되는 값이 {cartCode=123, newQuantity=5} 같은 형식이어야됨.
-//        if (!requestData.containsKey("cartCode") || !requestData.containsKey("newQuantity")) {
-//            throw new IllegalArgumentException("❌ cartCode 또는 newQuantity가 요청에서 누락됨!");
-//        }
-//
-//        // 요청 데이터 디버깅 출력
-//        System.out.println("requestDate: " + requestData);
-//        System.out.println("cartCode: " + requestData.get("cartCode"));
-//
-//        try {
-//            Object cartCodeObj = requestData.get("cartCode");
-//            Object newQuantityObj = requestData.get("newQuantity");
-//
-//            if (cartCodeObj == null || newQuantityObj == null) {
-//                throw new IllegalArgumentException("cartCode 또는 newQuantity가 요청에서 누락되었습니다.");
-//            }
-//
-//            Integer cartCode = Integer.parseInt(cartCodeObj.toString());
-//            Integer newQuantity = Integer.parseInt(newQuantityObj.toString());
-//
-//            System.out.println("✅ 업데이트 요청: cartCode = " + cartCode + ", newQuantity = " + newQuantity);
-//
-//            // 장바구니 수량 업데이트
-//            userCartService.updateCartQuantity(cartCode, newQuantity);
-//
-//            response.put("success", true);
-//        } catch (NumberFormatException e) {
-//            System.out.println("업데이트 실패: 숫자 형식이 올바르지 않습니다. " + e.getMessage());
-//            response.put("success", false);
-//            response.put("error", "숫자 형식이 올바르지 않습니다.");
-//        } catch (IllegalArgumentException e) {
-//            System.out.println("업데이트 실패: " + e.getMessage());
-//            response.put("success", false);
-//            response.put("error", e.getMessage());
-//        } catch (Exception e) {
-//            System.out.println("업데이트 실패: 알 수 없는 오류가 발생했습니다. " + e.getMessage());
-//            response.put("success", false);
-//            response.put("error", "알 수 없는 오류가 발생했습니다.");
-//        }
-//    return response;
-//    }
-
-
         // 예외처리 ver1. 정상작동
 //        try {
 //            Integer cartCode = Integer.parseInt(requestData.get("cartCode").toString());

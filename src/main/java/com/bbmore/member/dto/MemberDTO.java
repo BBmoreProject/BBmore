@@ -1,6 +1,6 @@
 package com.bbmore.member.dto;
 
-import com.bbmore.member.entity.Member;
+
 import lombok.*;
 
 
@@ -8,6 +8,8 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MemberDTO {
 
     private Integer userCode;              // 회원고유번호
@@ -19,24 +21,27 @@ public class MemberDTO {
     private String userName;               // 회원이름
 
     private String userAddress;            // 회원주소
-    
-    private String userMembershipLevel;     // 회원등급 // 추가
 
     private String userPhoneNumber;        // 회원전화번호
 
     private String userEmail;              // 회원이메일
-    
-    private Boolean userIsdeleted;          // 회원탈퇴여부   // 추가
-    
-    private String userAccessLevel;         // 회원권한     // 추가
 
-    private String userPetName;
+    private Boolean userIsdeleted;         // 회원탈퇴여부
+//
+//    private UserRole userAccessLevel;      // 회원권한
 
-    private Integer userPetAge;
+    private String userPetName;            // 회원반려이름
 
-    private Integer userPetWeight;
+    private Integer userPetAge;            // 회원반려나이
 
-    private String userPetMedicalHistory;
+    private Integer userPetWeight;         // 회원반려몸무게
+
+    private String userPetMedicalHistory;  // 회원반려병력
+
+
+    private Integer animalCode;            // fk 동물고유번호
+
+    private Integer membershipCode;        // fk 회원등급고유번호
 
 
 }

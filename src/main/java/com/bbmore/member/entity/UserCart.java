@@ -2,16 +2,15 @@ package com.bbmore.member.entity;
 
 import com.bbmore.product.entity.Product;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 
-@Getter
-@ToString
 @Entity
-@Table(name = "tbl_user_cart" )
-@NoArgsConstructor   // 기본 생성자 자동 생성
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder(toBuilder = true)
+@Table(name = "tbl_user_cart")
 public class UserCart {
 
   // 장바구니 하나에는 상품 종류는 하나만 가능(수량은 별개)
@@ -37,7 +36,7 @@ public class UserCart {
   private Member member; // FK 회원
 
 
-  @OneToOne  // 장바구니 고유번호 AI 걸어놔서 장바구니1:상품1)
+  @OneToOne  // 장바구니 고유번호 AI 걸어놔서 장바구니 고유번호 1개당 상품 1개
   @JoinColumn(name = "product_code", nullable = false)
   private Product product; // FK 상품
 
