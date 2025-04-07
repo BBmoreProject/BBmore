@@ -1,16 +1,15 @@
 package com.bbmore.member.dto;
 
-import com.bbmore.member.entity.Member;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
+import com.bbmore.member.common.UserRole;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
+
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MemberDTO {
 
     private Integer userCode;              // 회원고유번호
@@ -27,13 +26,22 @@ public class MemberDTO {
 
     private String userEmail;              // 회원이메일
 
-    private String userPetName;
+    private Boolean userIsdeleted;         // 회원탈퇴여부
 
-    private Integer userPetAge;
+    private UserRole userAccessLevel;      // 회원권한
 
-    private Integer userPetWeight;
+    private String userPetName;            // 회원반려이름
 
-    private String userPetMedicalHistory;
+    private Integer userPetAge;            // 회원반려나이
+
+    private Integer userPetWeight;         // 회원반려몸무게
+
+    private String userPetMedicalHistory;  // 회원반려병력
+
+
+    private Integer animalCode;            // fk 동물고유번호
+
+    private Integer membershipCode;        // fk 회원등급고유번호
 
 
 }
