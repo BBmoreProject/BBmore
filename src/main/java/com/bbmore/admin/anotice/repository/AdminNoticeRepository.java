@@ -19,14 +19,12 @@ public interface AdminNoticeRepository extends JpaRepository<Notice, Integer> {
 
 
 
-    // 검색 기능 (Notice 엔티티 반환) (수정금지)
-    Page<Notice> findByNoticeTitleContainingAndNoticeType(String noticeType, String searchKeyword, Pageable pageable);
-
     // 게시글 타입(공지사항or자주묻는질문)찾아오기 (수정금지)
     Page<Notice> findByNoticeType(String noticeType, Pageable pageable);
 
 
-
+    // notice타입과 제목을 기준으로 데이터 조회하는 메서드 (수정금지) - 검색창에서 제목 검색할때 사용 (메뉴타입별 게시글 출력)
+    Page<Notice> findByNoticeTypeAndNoticeTitleContaining(String noticeType, String searchKeyword, Pageable pageable);
 
 
     // 타입별 이전글 조회 (수정금지)
@@ -36,17 +34,8 @@ public interface AdminNoticeRepository extends JpaRepository<Notice, Integer> {
     Optional<Notice> findFirstByNoticeCodeGreaterThanAndNoticeTypeOrderByNoticeCodeAsc(Integer noticeCode, String noticeType);
 
 
-    // title에 검색어가 포함된 공지사항을 조회하는 메서드 (수정금지)
-    Page<Notice> findByNoticeTitleContaining(String searchKeyword, Pageable pageable);
-
-    Page<Notice> findByNoticeTypeAndNoticeTitleContaining(String noticeType, String searchKeyword, Pageable pageable);
-
-
     //--------------------------------------------------------------------------------------
-    // test중
-//    Page<NoticeTypeDTO> findByNoticeTypeAndNoticeTitleContaining(String noticeType, String searchKeyword, Pageable pageable);
 
-//    Page<NoticeTypeDTO> findByNoticeType(String noticeType, Pageable pageable);
 
 
 

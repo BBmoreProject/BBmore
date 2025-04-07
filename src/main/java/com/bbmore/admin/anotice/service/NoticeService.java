@@ -44,7 +44,7 @@ public class NoticeService {
   }
 
 
-  // 1-2 게시글타입 - 자주묻는질문조회해오기 (수정금지)
+  // 1-2 게시글타입 - 자주묻는질문 타입 조회해오기 (수정금지)
   public Page<NoticeTypeDTO> findFaqList(Pageable pageable) {
     pageable = PageRequest.of(
         pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
@@ -104,32 +104,6 @@ public class NoticeService {
     // DB에 저장
     adminNoticeRepository.save(updatedNotice);
 
-  }
-
-
-  //------------------------------------------------------------------------------------
-
-
-//  // 검색 기능: 검색어로 제목을 포함하는 공지사항 조회(원본.수정금지)
-//  public Page<NoticeTypeDTO> noticeSearchList(String searchKeyword, Pageable pageable) {
-//    Page<Notice> notices = adminNoticeRepository.findByNoticeTitleContaining(searchKeyword, pageable);
-//
-//    // Notice 엔티티를 NoticeDTO로 변환
-//    return notices.map(this::convertToDTO);
-//  }
-
-
-
-  // Notice -> NoticeDTO 변환 메서드(원본.수정금지)
-  private NoticeTypeDTO convertToDTO(Notice notice) {
-    return new NoticeTypeDTO(
-        notice.getNoticeCode(),
-        notice.getNoticeType(),
-        notice.getNoticeTitle(),
-        notice.getNoticeCreatedDate(),
-        notice.getNoticeView(),
-        notice.getNoticeContent()
-    );
   }
 
 

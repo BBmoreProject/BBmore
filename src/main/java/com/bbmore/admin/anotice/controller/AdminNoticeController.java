@@ -33,11 +33,14 @@ public class AdminNoticeController {
   private final NoticeService noticeService;
   private final AdminNoticeRepository adminNoticeRepository;
 
-  
-  
+
+
   // 공지사항 타입만 찾아오기(원본-수정금지)
   @GetMapping("/notice-list_ver1")
-  public String findNoticeList(Model model, @PageableDefault Pageable pageable, String searchKeyword) {
+  public String findNoticeList(Model model, @PageableDefault Pageable pageable,
+                               @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
+                               @RequestParam(value = "noticeType", required = false) String noticeType) {
+
 
 //    Page<NoticeTypeDTO> noticeList = noticeService.findNoticeList(pageable);
 
@@ -74,6 +77,7 @@ public class AdminNoticeController {
     model.addAttribute("noticeList", noticeList);
     model.addAttribute("paging", paging);
     model.addAttribute("searchKeyword", searchKeyword);
+    model.addAttribute("noticeType", noticeType);
 
 
     // 목록으로
@@ -82,13 +86,13 @@ public class AdminNoticeController {
 
 
 
-
   //------------------------------
 
-  // 자주묻는질문 조회 (원본-수정금지)
+  // 자주묻는질문 타입만 조회 (원본-수정금지)
   @GetMapping("/faq-list")
   public String findFaqList(Model model, @PageableDefault Pageable pageable,
-                            @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
+                            @RequestParam(value = "searchKeyword", required = false) String searchKeyword,
+                            @RequestParam(value = "noticeType", required = false) String noticeType) {
 
     // 검색어가 있을 때와 없을 때 처리
     Page<NoticeTypeDTO> faqList;
@@ -124,6 +128,7 @@ public class AdminNoticeController {
     model.addAttribute("faqList", faqList);
     model.addAttribute("paging", paging);
     model.addAttribute("searchKeyword", searchKeyword); // 검색어도 함께 전달
+    model.addAttribute("noticeType", noticeType);
 
 
     return "notice/faq-list";

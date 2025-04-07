@@ -401,28 +401,28 @@
 
         <div id="paging">
             <!-- 페이지 번호 링크 -->
-            <button th:href="@{/notice/notice-list_ver1(page=${paging.startPage}, noticeType=${noticeType})}">
+            <button th:href="@{/notice/notice-list_ver1(page=${paging.startPage},searchKeyword=${searchKeyword},  noticeType=${noticeType})}">
                 <<
             </button>
 
-            <button th:href="@{/notice/notice-list_ver1(page=${paging.currentPage - 1}, noticeType=${noticeType})}"
+            <button th:href="@{/notice/notice-list_ver1(page=${paging.currentPage - 1}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
                     th:disabled="${noticeList.first}">
                 <
             </button>
 
             <button th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
-                <a th:href="@{/notice/notice-list_ver1(page=${page}, noticeType=${noticeType})}" th:text="${page}"
+                <a th:href="@{/notice/notice-list_ver1(page=${page}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}" th:text="${page}"
                    th:disabled="${paging.currentPage eq page}">
                 </a>
 
             </button>
 
-            <button th:href="@{/notice/notice-list_ver1(page=${paging.currentPage + 1}, noticeType=${noticeType})}"
+            <button th:href="@{/notice/notice-list_ver1(page=${paging.currentPage + 1}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
                     th:disabled="${noticeList.last}">
                 >
             </button>
 
-            <button th:href="@{/notice/notice-list_ver1(page=${paging.endPage}, noticeType=${noticeType})}">
+            <button th:href="@{/notice/notice-list_ver1(page=${paging.endPage}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}">
                 >>
             </button>
         </div>
