@@ -1,8 +1,8 @@
-package com.bbmore.member.dto;
+package com.bbmore.product.dto;
 
 import com.bbmore.member.entity.Member;
-import com.bbmore.member.entity.OrderDetail;
-import com.bbmore.member.entity.Review;
+import com.bbmore.order.entity.OrderDetail;
+import com.bbmore.product.entity.Review;
 import lombok.*;
 
 import java.time.LocalDate;

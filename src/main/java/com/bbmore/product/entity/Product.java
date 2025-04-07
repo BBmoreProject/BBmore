@@ -1,4 +1,4 @@
-package com.bbmore.member.entity;
+package com.bbmore.product.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

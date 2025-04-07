@@ -1,4 +1,4 @@
-package com.bbmore.member.dto;
+package com.bbmore.order.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

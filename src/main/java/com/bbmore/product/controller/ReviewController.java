@@ -1,9 +1,9 @@
-package com.bbmore.member.controller;
+package com.bbmore.product.controller;
 
-import com.bbmore.member.dto.ReviewListDTO;
-import com.bbmore.member.dto.ReviewWriteDTO;
-import com.bbmore.member.dto.ReviewWritingDTO;
-import com.bbmore.member.service.ReviewService;
+import com.bbmore.product.dto.ReviewListDTO;
+import com.bbmore.product.dto.ReviewWriteDTO;
+import com.bbmore.product.dto.ReviewWritingDTO;
+import com.bbmore.product.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,7 +1,7 @@
-package com.bbmore.member.service;
+package com.bbmore.order.service;
 
-import com.bbmore.member.dto.PurchaseListDTO;
-import com.bbmore.member.repository.OrderRepository;
+import com.bbmore.order.dto.PurchaseListDTO;
+import com.bbmore.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

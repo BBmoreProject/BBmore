@@ -1,14 +1,14 @@
-package com.bbmore.member.service;
+package com.bbmore.product.service;
 
-import com.bbmore.member.dto.ReviewListDTO;
-import com.bbmore.member.dto.ReviewWriteDTO;
-import com.bbmore.member.dto.ReviewWritingDTO;
+import com.bbmore.product.dto.ReviewListDTO;
+import com.bbmore.product.dto.ReviewWriteDTO;
+import com.bbmore.product.dto.ReviewWritingDTO;
 import com.bbmore.member.entity.Member;
-import com.bbmore.member.entity.OrderDetail;
-import com.bbmore.member.entity.Review;
+import com.bbmore.order.entity.OrderDetail;
+import com.bbmore.product.entity.Review;
 import com.bbmore.member.repository.MemberRepository;
-import com.bbmore.member.repository.OrderDetailRepository;
-import com.bbmore.member.repository.ReviewRepository;
+import com.bbmore.order.repository.OrderDetailRepository;
+import com.bbmore.product.repository.ReviewRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

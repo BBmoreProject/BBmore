@@ -1,7 +1,7 @@
-package com.bbmore.member.controller;
+package com.bbmore.order.controller;
 
-import com.bbmore.member.dto.PurchaseListDTO;
-import com.bbmore.member.service.OrderService;
+import com.bbmore.order.dto.PurchaseListDTO;
+import com.bbmore.order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
