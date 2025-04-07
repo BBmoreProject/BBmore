@@ -24,7 +24,7 @@ public class OrderDetail {
     private Integer orderDetailPrice;    // 총 결제금액
 
     @Column(name = "order_detail_quantity", nullable = false)
-    private LocalDate orderDetailQuantity;     // 주문 날짜
+    private Integer orderDetailQuantity;     // 주문 날짜
 
 
     // FK(반품고유번호)

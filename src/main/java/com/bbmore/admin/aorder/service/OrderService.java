@@ -1,7 +1,11 @@
 package com.bbmore.admin.aorder.service;
 
 
+import com.bbmore.admin.aorder.dto.OrderSearchResultDTO;
 import com.bbmore.admin.aorder.repository.OrderRepository;
+import com.bbmore.member.dto.MemberDTO;
+import com.bbmore.order.dto.OrderDTO;
+import com.bbmore.order.entity.Order;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -15,35 +19,15 @@ import java.util.stream.Collectors;
 public class OrderService {
 
     private final OrderRepository orderRepository;
-    private final ModelMapper modelMapper;
 
-    public List<OrderDTO> searchOrders(String code, String name, String phone, LocalDate startDate, LocalDate endDate) {
+    public List<OrderSearchResultDTO> searchOrders(String code, String name, String phone, LocalDate startDate, LocalDate endDate) {
         String c = (code == null || code.isBlank()) ? null : code;
         String n = (name == null || name.isBlank()) ? null : name;
         String p = (phone == null || phone.isBlank()) ? null : phone;
 
-        List<Order> orders = orderRepository.searchOrders(c, n, p, startDate, endDate);
-        return orders.stream().map(this::toDto).collect(Collectors.toList());
+        return orderRepository.findOrderDetails(c, n, p, startDate, endDate);
     }
-
-    private OrderDTO toDto(Order o) {
-        return OrderDTO.builder()
-                .orderCode(o.getOrderCode())
-                .orderDate(o.getOrderDate())
-                .productName(o.getProductName())
-                .orderTotalPrice(o.getOrderTotalPrice())
-                .orderStatus(o.getOrderStatus())
-                .recipientAddress(o.getRecipientAddress())
-                .recipientPhone(o.getRecipientPhone())
-                .orderDeliveryRequest(o.getOrderDeliverYRequest())
-                .productQuantity(o.getProductQuantity())
-                .member(MemberDTO.builder()
-                        .userName(o.getMember().getUserName())
-                        .userPhoneNumber(o.getMember().getUserPhoneNumber())
-                        .userAddress(o.getMember().getUserAddress())
-                        .build())
-                .build();
-    }
+}
 
 
 
@@ -56,13 +40,12 @@ public class OrderService {
 //                .productName(o.getProductName())
 //                .member(MemberDTO)
 //                .build();
-////                MemberDTO.builder()
-////                .userName(o.getMember().getUserName())
-////                .userPhoneNumber(o.getMember().getUserPhoneNumber())
-////                .userAddress(o.getMember().getUserAddress())
-////                .build();
+/// /                MemberDTO.builder()
+/// /                .userName(o.getMember().getUserName())
+/// /                .userPhoneNumber(o.getMember().getUserPhoneNumber())
+/// /                .userAddress(o.getMember().getUserAddress())
+/// /                .build();
 //    }
-
 
 
 //    /* findById */
@@ -103,4 +86,3 @@ public class OrderService {
 //    }
 
 
-}

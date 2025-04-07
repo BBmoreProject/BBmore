@@ -1,5 +1,7 @@
 package com.bbmore.admin.aorder.config;
 
+import com.bbmore.order.dto.OrderDTO;
+import com.bbmore.order.entity.Order;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.context.annotation.Bean;

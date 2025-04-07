@@ -1,4 +1,4 @@
-package com.bbmore.member.dto;
+package com.bbmore.product.dto;
 
 import lombok.*;
 

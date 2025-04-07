@@ -2,8 +2,8 @@ package com.bbmore.member.common;
 
 public enum UserRole {
 
-    USER("USER"),
-    ADMIN("ADMIN");
+    ADMIN("ADMIN"),
+    MEMBER("MEMBER");
 
     private String role;
 

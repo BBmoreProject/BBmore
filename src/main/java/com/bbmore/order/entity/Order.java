@@ -2,6 +2,7 @@ package com.bbmore.order.entity;
 
 
 import com.bbmore.member.entity.Member;
+import com.bbmore.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 @Builder(toBuilder = true)
 @Table(name = "tbl_order")
 public class Order {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +48,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_code", nullable = false)
     private Member member;
+
 
 
 }

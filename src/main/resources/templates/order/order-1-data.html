@@ -602,10 +602,10 @@
             row.innerHTML = `
                 <td>${order.orderCode}</td>
                 <td>${order.orderDate}</td>
-                <td>${order.productName}</td>
-                <td>${order.member ? order.member.userName : '-'}</td>
-                <td>${order.member ? order.member.userPhoneNumber : '-'}</td>
-                <td>${order.member ? order.member.userAddress : '-'}</td>
+                <td>${order.productName || '-'}</td>
+                <td>${order.userName || '-'}</td>
+                <td>${order.userPhoneNumber || '-'}</td>
+                <td>${order.userAddress || '-'}</td>
             `;
             tbody.appendChild(row);
         });
@@ -624,7 +624,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        loadMembers();
+        loadAllOrders();
 
         document.getElementById("search-day1").addEventListener("click", () => { setDateRange(0); searchMembersByName(); });
         document.getElementById("search-day2").addEventListener("click", () => { setDateRange(7); searchMembersByName(); });
@@ -632,26 +632,15 @@
         document.getElementById("search-day4").addEventListener("click", () => { setDateRange(90); searchMembersByName(); });
     });
 
-    async function loadMembers() {
-        try {
-            const res = await fetch("/api/orders/search");
-            const data = await res.json();
-            renderMembers(data);
-        } catch (error) {
-            console.error("초기 데이터 로딩 실패:", error);
-        }
-    }
-
     async function loadAllOrders() {
         try {
-            const res = await fetch("/api/orders/search"); // 모든 데이터 요청
+            const res = await fetch("/api/orders/search");
             const orders = await res.json();
             renderMembers(orders);
         } catch (error) {
             console.error("전체 조회 실패:", error);
         }
     }
-
 </script>
 
 

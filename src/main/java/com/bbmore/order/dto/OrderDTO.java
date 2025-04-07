@@ -1,5 +1,7 @@
 package com.bbmore.order.dto;
 
+import com.bbmore.member.dto.MemberDTO;
+import com.bbmore.product.dto.ProductDTO;
 import lombok.*;
 
 
@@ -30,6 +32,10 @@ public class OrderDTO {
     private String orderDeliveryRequest;    // 배송요청사항
 
     private Integer userCode;               // fk 회원고유번호
+
+    private MemberDTO member;
+
+    private ProductDTO product;
 
 
 }
