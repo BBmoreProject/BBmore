@@ -13,12 +13,17 @@ import java.time.LocalDate;
 @Builder
 public class NoticeDTO {
 
-    private Integer noticeCode;
-    private String noticeType;
-    private String noticeTitle;
-    private LocalDate noticeCreatedDate;
-    private Integer noticeView;
-    private String noticeContent;
+    private Integer noticeCode;              // 게시글고유번호
+
+    private String noticeType;               // 게시글타입
+
+    private String noticeTitle;               // 게시글제목
+
+    private LocalDate noticeCreatedDate;     // 게시글작성일
+
+    private Integer noticeView;               // 게시글 조회수
+
+    private String noticeContent;            // 게시글 내용
 
 
 }
