@@ -1,7 +1,5 @@
 package com.bbmore.product.entity;
 
-import com.bbmore.member.entity.Member;
-import com.bbmore.order.entity.OrderDetail;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

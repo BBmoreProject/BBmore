@@ -1,6 +1,5 @@
 package com.bbmore.product.entity;
 
-import com.bbmore.order.entity.OrderDetail;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
