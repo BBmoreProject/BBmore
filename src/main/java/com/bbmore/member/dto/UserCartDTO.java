@@ -1,14 +1,13 @@
 package com.bbmore.member.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-@ToString
-@Setter
 @Getter
+@Setter
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserCartDTO {
 
     private Integer cartCode;              // 장바구니 고유번호

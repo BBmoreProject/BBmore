@@ -1,14 +1,13 @@
 package com.bbmore.member.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MembershipDTO {
 
     private Integer membershipCode;              // 회원등급고유번호
