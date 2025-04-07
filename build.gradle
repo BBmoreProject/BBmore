@@ -57,6 +57,8 @@ dependencies {
 // Thymeleaf LayOut Dialect
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
+// Thymeleaf #numbers.formatDecimal 사용?
+//    implementation 'org.thymeleaf:thymeleaf:3.0.15.RELEASE'  // 최신 버전으로 변경
 
 }
 

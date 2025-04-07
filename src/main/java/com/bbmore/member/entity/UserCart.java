@@ -37,7 +37,7 @@ public class UserCart {
   private Member member; // FK 회원
 
 
-  @OneToOne  // 하나? 여러개?의 장바구니에는 여러 개의 상품이 들어갈 수 있음 (장바구니1,상품1)
+  @OneToOne  // 장바구니 고유번호 AI 걸어놔서 장바구니1:상품1)
   @JoinColumn(name = "product_code", nullable = false)
   private Product product; // FK 상품
 

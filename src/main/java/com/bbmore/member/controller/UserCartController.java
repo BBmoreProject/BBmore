@@ -2,6 +2,7 @@ package com.bbmore.member.controller;
 
 import com.bbmore.member.entity.UserCart;
 import com.bbmore.member.service.UserCartService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,18 +14,41 @@ import java.util.Map;
 import java.util.Optional;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/cart")    // "/cart" 경로로 시작하는 모든 요청 처리
 public class UserCartController {
 
-    @Autowired
-    private UserCartService userCartService;
+
+    private final UserCartService userCartService;
 
     // 사용자의 장바구니 목록 조회
     @GetMapping("/cart-list")   // 실제 경로는 "/cart/cart-list"
     public String getUserCart(Model model) {
         Integer userCode = 3; // 실제 사용자 코드로 교체
         List<UserCart> cartList = userCartService.getCartListByUser(userCode);
+
+        // 상품 금액 계산: 각 상품의 가격 * 수량을 합산
+        int totalProductPrice = cartList.stream()
+            .mapToInt(cart -> cart.getProduct().getProductPrice() * cart.getCartProductQuantity())
+            .sum();
+
+        // 배송비 설정: 예를 들어, 배송비를 고정 값으로 설정
+        int deliveryFee = 3000; // 예시: 3000원 배송비
+
+        // 총 결제 금액 계산: 상품 금액 + 배송비
+        int totalAmount = totalProductPrice + deliveryFee;
+
+        // 디버깅
+        System.out.println("Total Product Price: " + totalProductPrice);
+        System.out.println("Delivery Fee: " + deliveryFee);
+        System.out.println("Total Amount (Total Product Price + Delivery Fee): " + totalAmount);
+
+        // Model에 장바구니 목록& 총 금액 전달
         model.addAttribute("cartList", cartList);
+        model.addAttribute("totalAmount", totalAmount);     // 주문총금액=상품총금액+배송비
+        model.addAttribute("totalProductPrice", totalProductPrice); // 상품총금액
+        model.addAttribute("deliveryFee", deliveryFee);     // 배송비
+
         return "cart/cart-list";
     }
 

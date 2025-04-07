@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--잘됨-->
-<!--4.4 nav_css변경 -->
 
 <head>
     <meta charset="UTF-8">
-    <title>new수정본</title>
+    <title>장바구니test</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
@@ -118,12 +116,11 @@
             position: absolute;
             height: 33px;
             top: 15px;
-            left:1680px;
+            left: 1680px;
             /* 아래 추가 - 중앙확인용 */
             justify-items: center;
             display: flex;
         }
-
 
 
         /* mypage - maindetail이랑 같은 부분 */
@@ -320,7 +317,6 @@
         }
 
 
-
         /*
         .boxOut {
             display: flex;
@@ -393,7 +389,8 @@
                     <!-- 상품명,금액 -->
                     <div class="item-details">
                         <span th:text="${cart.product.productName}"></span>
-                        <div class="item-price"><span th:text="${cart.product.productPrice}"></span></div>
+                        <div class="item-price">₩<span th:text="${#numbers.formatInteger(cart.product.productPrice, 3, 'COMMA')}"></span>
+                        </div>
                     </div>
                 </div>
 
@@ -402,17 +399,22 @@
                     <!-- 감소버튼 -->
                     <button class="quantity-input-icon minus-button" onclick="updateQuantity(-1, this)">-</button>
                     <!-- 수량표시용 -->
-                    <span id="quantity-display" class="quantity" th:text="${cart.cartProductQuantity}"
+                    <span id="quantity-display" class="quantity"
+                          th:text="${cart.cartProductQuantity}"
                           th:attr="data-cart-code=${cart.cartCode}"></span>
-                    <!-- <input type="number" value="1" class="quantity"> -->
                     <!-- 증가버튼 -->
                     <button class="quantity-input-icon plus-button" onclick="updateQuantity(1, this)">+</button>
                 </div>
 
                 <!--총금액인듯-->
-                <p class="item-total-price">총금액</p>
+                <p class="item-total-price"
+                   th:attr="data-price=${cart.product.productPrice} + ' ' +'data-quantity=${cart.cartProductQuantity}'">
+                    ₩<span th:text="${#numbers.formatInteger(cart.product.productPrice * cart.cartProductQuantity, 3, 'COMMA')}">0</span>
+                </p>
                 <!--삭제버튼-->
-                <button class="remove-item" th:attr="data-cart-code=${cart.cartCode}" onclick="removeCartItem(this)">삭제</button>
+                <button class="remove-item" th:attr="data-cart-code=${cart.cartCode}" onclick="removeCartItem(this)">
+                    삭제
+                </button>
             </div>
 
             <!-- 상품 여러개 담은 화면 테스트 시 사용(접어둠)-->
@@ -439,20 +441,28 @@
 
         <!-- 결제 정보 -->
         <section class="cart-summary">
-            <h2>결제 예시</h2>
+            <h2>주문 예상 금액</h2>
             <div class="summary-item">
                 <p>상품 금액</p>
-                <p>₩50,000</p>
+                <p>₩<span th:text="${#numbers.formatInteger(totalProductPrice, 3, 'COMMA')}">0</span></p>
             </div>
+
+            <!--배송비 어캄?-->
             <div class="summary-item">
                 <p>배송비</p>
-                <p>₩3,000</p>
+                <p>₩<span th:text="${#numbers.formatInteger(deliveryFee, 3, 'COMMA')}">0</span></p>  <!-- 배송비 -->
+<!--                <p>₩<span th:text="${deliveryFee}">0</span></p>  &lt;!&ndash;배송비&ndash;&gt;-->
             </div>
+
             <div class="summary-item total">
                 <p>총 결제 금액</p>
-                <p>₩53,000</p>
+                <span th:text= "${#numbers.formatInteger(totalAmount, 3, 'COMMA')}">0</span>     <!-- 총 결제 금액 -->
+
+<!--                ₩<span th:text="${totalAmount}">0</span>     &lt;!&ndash;총 결제금액&ndash;&gt;-->
             </div>
+
             <button class="checkout-btn">주문하기</button>
+
         </section>
 
     </main>
@@ -465,91 +475,125 @@
 </footer>
 
 
+<!--<script>-->
+<!--    &lt;!&ndash;  4.2 수량변경함수2 + 두번째 상품도 수량변경됨, db 반영O &ndash;&gt;-->
+<!--    function updateQuantity(delta, button) {-->
+<!--        var cartItem = button.closest(".cart-item");  // 현재 클릭된 상품을 찾음-->
+<!--        var quantityDisplay = cartItem.querySelector(".quantity");  // 해당 상품의 수량 요소 찾기-->
+<!--        var cartCode = quantityDisplay.getAttribute("data-cart-code"); // 해당 상품의 장바구니 코드 가져오기-->
+<!--        var currentQuantity = parseInt(quantityDisplay.innerText);      // 현재 수량 가져오기-->
+<!--        var maxQuantity = 50;-->
+<!--        var newQuantity = currentQuantity + delta;-->
+
+<!--        if (newQuantity >= 1 && newQuantity <= maxQuantity) {-->
+<!--            quantityDisplay.innerText = newQuantity;  // 화면에서 수량 업데이트-->
+
+<!--            // 값 들어오는지 확인-->
+<!--            console.log("Sending cartCode:", cartCode, "New Quantity:", newQuantity);-->
+
+<!--            // 서버에 수량 업데이트 요청 (AJAX)-->
+<!--            fetch("cart-list/updateQuantity", {-->
+<!--                method: "POST",-->
+<!--                headers: {-->
+<!--                    "Content-Type": "application/json"-->
+<!--                },-->
+<!--                body: JSON.stringify({-->
+<!--                    cartCode: Number(cartCode),-->
+<!--                    newQuantity: Number(newQuantity)    // 변경할 수량-->
+<!--                })-->
+<!--            })-->
+<!--                .then(response => response.json())-->
+<!--                .then(data => {-->
+<!--                    if (data.success) {-->
+<!--                        console.log("수량 업데이트 성공");-->
+<!--                    } else {-->
+<!--                        console.error("수량 업데이트 실패");-->
+<!--                    }-->
+<!--                })-->
+<!--                .catch(error => {-->
+<!--                    console.error("에러 발생:", error);-->
+<!--                });-->
+<!--        }-->
+<!--    }-->
+
+
 <script>
-    <!--  4.2 수량변경함수2 + 두번째 상품도 수량변경됨, db 반영O -->
-    function updateQuantity(delta, button) {
-        var cartItem = button.closest(".cart-item");  // 현재 클릭된 상품을 찾음
-        var quantityDisplay = cartItem.querySelector(".quantity");  // 해당 상품의 수량 요소 찾기
-        var cartCode = quantityDisplay.getAttribute("data-cart-code"); // 해당 상품의 장바구니 코드 가져오기
-        var currentQuantity = parseInt(quantityDisplay.innerText);      // 현재 수량 가져오기
-        var maxQuantity = 50;
-        var newQuantity = currentQuantity + delta;
 
-        if (newQuantity >= 1 && newQuantity <= maxQuantity) {
-            quantityDisplay.innerText = newQuantity;  // 화면에서 수량 업데이트
+    // 수량 업데이트 함수 (4/8 db반영O)
+    function updateQuantity(change, buttonElement) {
+        var quantityDisplay = buttonElement.parentElement.querySelector(".quantity");
+        var currentQuantity = parseInt(quantityDisplay.textContent);
+        var newQuantity = currentQuantity + change;
 
-            // 값 들어오는지 확인
-            console.log("Sending cartCode:", cartCode, "New Quantity:", newQuantity);
+        if (newQuantity >= 0) {
+            quantityDisplay.textContent = newQuantity;
 
-            // 서버에 수량 업데이트 요청 (AJAX)
-            fetch("cart-list/updateQuantity", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    cartCode: Number(cartCode),
-                    newQuantity: Number(newQuantity)    // 변경할 수량
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        console.log("수량 업데이트 성공");
-                    } else {
-                        console.error("수량 업데이트 실패");
-                    }
-                })
-                .catch(error => {
-                    console.error("에러 발생:", error);
-                });
+            var cartCode = quantityDisplay.getAttribute("data-cart-code");
+            var price = parseInt(buttonElement.closest(".cart-item").querySelector(".item-price span").textContent.replace(/[^\d]/g, ''));
+            var totalPriceElement = buttonElement.closest(".cart-item").querySelector(".item-total-price span");
+
+            // var price = parseInt(buttonElement.closest(".cart-item").querySelector(".item-price span").textContent);
+            // var totalPriceElement = buttonElement.closest(".cart-item").querySelector(".item-total-price span");
+
+            // 새로 계산된 총 금액
+            var totalPrice = price * newQuantity;
+
+            // 총 금액을 천 단위로 쉼표 추가하여 표시
+            totalPriceElement.textContent = '₩' + totalPrice.toLocaleString();
+
+            // 서버에 새로운 수량을 업데이트하는 요청을 보내야 할 경우 (선택사항)
+            updateCartQuantity(cartCode, newQuantity);
+            updateTotalAmount();  // 전체 금액 업데이트
         }
     }
 
 
+    // 장바구니 수량을 업데이트하는 함수 (서버와 연결)
+    function updateCartQuantity(cartCode, newQuantity) {
+        var requestData = {
+            cartCode: cartCode,
+            newQuantity: newQuantity
+        };
 
+        fetch('/cart/cart-list/updateQuantity', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log("수량 업데이트 성공");
+                } else {
+                    console.error("수량 업데이트 실패", data.error);
+                }
+            })
+            .catch(error => {
+                console.error("서버 통신 오류", error);
+            });
+    }
 
-    /* 수량 변경 함수(ver.1 - 수량 db는 불러와짐, 첫번째상품만 수정됨) */
-    // function updateQuantity(delta) {
-    //   var quantityDisplay = document.getElementById("quantity-display");
-    //   var cartCode = quantityDisplay.getAttribute("data-cart-code");   // 해당 장바구니 ID 가져오기
-    //   var currentQuantity = parseInt(quantityDisplay.innerText);  // 현재 수량 가져오기
-    //   var maxQuantity = 50;  // 최대 수량 지정
-    //   var newQuantity = currentQuantity + delta;
-    //
-    //   // 수량이 1 이상, 최대 수량 이하일 때만 변경
-    //   if (newQuantity >= 1 && newQuantity <= maxQuantity) {
-    //     // 화면에 새로운 수량 적용
-    //     quantityDisplay.innerText = newQuantity;
-    //
-    //     // 서버에 수량 업데이트 요청 (AJAX)
-    //     // fetch 경로 수정하지말것
-    //     console.log("Sending cartCode: ", cartCode);    // 로그 확인용
-    //     fetch('cart-list/updateQuantity', {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json'
-    //       },
-    //       body: JSON.stringify({
-    //         cartCode: Number(cartCode),
-    //         newQuantity: Number(newQuantity)
-    //       })
-    //     }).then(response => response.json())
-    //             .then(data => {
-    //               if (data.success) {
-    //                 console.log("수량 업데이트 성공");
-    //               } else {
-    //                 console.error("수량 업데이트 실패");
-    //               }
-    //             }).catch(error => {
-    //       console.error("에러 발생:", error);
-    //       console.log(typeof cartCode, cartCode); // number?
-    //       console.log(typeof newQuantity, newQuantity); // number?
-    //     });
-    //   }
-    // }
+    // 총 결제 금액을 업데이트하는 함수
+    function updateTotalAmount() {
+        var totalAmount = 0;
 
+        // 모든 장바구니 항목의 총 금액을 계산
+        var totalPrices = document.querySelectorAll('.item-total-price span');
+        totalPrices.forEach(function (priceElement) {
+            var price = parseInt(priceElement.textContent.replace(/[^\d]/g, ''));  // '₩'과 쉼표 제거하고 숫자만 추출
+            totalAmount += price;
+        });
 
+        // 총 결제 금액을 천 단위 쉼표 추가하여 업데이트
+        document.querySelector('.cart-summary .total p:last-child').textContent = "₩" + totalAmount.toLocaleString();
+    }
+
+    // 페이지 로드 시 총 결제 금액 계산
+    document.addEventListener("DOMContentLoaded", function () {
+        updateTotalAmount();
+    });
 
 
     // 장바구니 아이템 삭제(정상 작동, db 반영O)
@@ -580,6 +624,9 @@
                     } else {
                         console.error("삭제할 항목을 찾을 수 없습니다.");
                     }
+
+                    // 삭제 후 전체 결제 금액 업데이트
+                    updateTotalAmount();
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -587,7 +634,6 @@
                 });
         }
     }
-
 
 
 </script>
