@@ -1,7 +1,7 @@
 package com.bbmore.admin.amember.controller;
 
 import com.bbmore.admin.amember.dto.AdminMemberDTO;
-import com.bbmore.admin.amember.service.MemberService;
+import com.bbmore.admin.amember.service.adminMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +13,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberApiController {
 
-    private final MemberService memberService;
+    private final adminMemberService adminMemberService;
 
     // 전체 회원 조회
     @GetMapping
     public List<AdminMemberDTO> getAllMembers() {
-        return memberService.getAllMembers();
+        return adminMemberService.getAllMembers();
     }
 
     // 회원 검색 – 이름, 전화번호, 등급(멤버십 레벨) 기준
@@ -27,7 +27,7 @@ public class MemberApiController {
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String phone,
             @RequestParam(required = false) String grade) {
-        return memberService.searchMembers(name, phone, grade);
+        return adminMemberService.searchMembers(name, phone, grade);
     }
 
     // 회원 수정
@@ -42,14 +42,14 @@ public class MemberApiController {
                 .userMembershipLevel(dto.getUserMembershipLevel())
                 .animalBreed(dto.getAnimalBreed())
                 .build();
-        memberService.updateMember(updatedDto);
+        adminMemberService.updateMember(updatedDto);
         return ResponseEntity.ok().build();
     }
 
     // 회원 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMember(@PathVariable Integer id) {
-        memberService.deleteMember(id);
+        adminMemberService.deleteMember(id);
         return ResponseEntity.ok().build();
     }
 }

@@ -1,23 +1,23 @@
 package com.bbmore.admin.amember.controller;
 
 import com.bbmore.admin.amember.dto.AdminMemberDTO;
-import com.bbmore.admin.amember.service.MemberService;
+import com.bbmore.admin.amember.service.adminMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@Controller("adminMemberController")
 @RequestMapping("/members/list")
 @RequiredArgsConstructor
-public class MemberController {
+public class adminMemberController {
 
-    private final MemberService memberService;
+    private final adminMemberService adminMemberService;
 
     // 회원 목록 조회
     @GetMapping
     public String listMembers(Model model) {
-        model.addAttribute("members", memberService.getAllMembers());
+        model.addAttribute("members", adminMemberService.getAllMembers());
         return "members/list";
     }
 
@@ -31,14 +31,14 @@ public class MemberController {
     // 회원 등록 처리
     @PostMapping
     public String saveMember(@ModelAttribute AdminMemberDTO dto) {
-        memberService.saveMember(dto);
+        adminMemberService.saveMember(dto);
         return "redirect:/members/list";
     }
 
     // 회원 수정 화면
     @GetMapping("/edit/{id}")
     public String editForm(@PathVariable Integer id, Model model) {
-        AdminMemberDTO dto = memberService.getMemberById(id)
+        AdminMemberDTO dto = adminMemberService.getMemberById(id)
                 .orElseThrow(() -> new RuntimeException("회원이 존재하지 않습니다."));
         model.addAttribute("member", dto);
         return "members/form";
@@ -57,14 +57,14 @@ public class MemberController {
                 .userMembershipLevel(dto.getUserMembershipLevel())
                 .animalBreed(dto.getAnimalBreed())
                 .build();
-        memberService.updateMember(updatedDto);
+        adminMemberService.updateMember(updatedDto);
         return "redirect:/members/list";
     }
 
     // 회원 삭제
     @GetMapping("/delete/{id}")
     public String deleteMember(@PathVariable Integer id) {
-        memberService.deleteMember(id);
+        adminMemberService.deleteMember(id);
         return "redirect:/members/list";
     }
 }

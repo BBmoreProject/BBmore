@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface MemberRepository extends JpaRepository<Member, Integer> {
+public interface adminMemberRepository extends JpaRepository<Member, Integer> {
 
     @Query("""
            SELECT m FROM Member m

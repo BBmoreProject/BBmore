@@ -1,7 +1,7 @@
 package com.bbmore.admin.amember.service;
 
 import com.bbmore.admin.amember.dto.AdminMemberDTO;
-import com.bbmore.admin.amember.repository.MemberRepository;
+import com.bbmore.admin.amember.repository.adminMemberRepository;
 import com.bbmore.member.entity.Member;
 import com.bbmore.member.entity.Animal;
 import lombok.RequiredArgsConstructor;
@@ -13,27 +13,27 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class MemberService {
-    private final MemberRepository memberRepository;
+public class adminMemberService {
+    private final adminMemberRepository adminMemberRepository;
 
     public List<AdminMemberDTO> getAllMembers() {
-        return memberRepository.findAll().stream()
+        return adminMemberRepository.findAll().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     public List<AdminMemberDTO> searchMembers(String name, String phone, String grade) {
-        return memberRepository.searchMembers(name, phone, grade).stream()
+        return adminMemberRepository.searchMembers(name, phone, grade).stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     public void saveMember(AdminMemberDTO dto) {
-        memberRepository.save(convertToEntity(dto));
+        adminMemberRepository.save(convertToEntity(dto));
     }
 
     public AdminMemberDTO updateMember(AdminMemberDTO dto) {
-        Member existing = memberRepository.findById(dto.getUserCode())
+        Member existing = adminMemberRepository.findById(dto.getUserCode())
                 .orElseThrow(() -> new RuntimeException("Member not found"));
         Member updated = existing.toBuilder()
                 .userName(dto.getUserName())
@@ -41,15 +41,15 @@ public class MemberService {
                 .userPhoneNumber(dto.getUserPhoneNumber())
                 .animal(updateAnimal(existing.getAnimal(), dto.getAnimalBreed()))
                 .build();
-        return convertToDTO(memberRepository.save(updated));
+        return convertToDTO(adminMemberRepository.save(updated));
     }
 
     public Optional<AdminMemberDTO> getMemberById(Integer id) {
-        return memberRepository.findById(id).map(this::convertToDTO);
+        return adminMemberRepository.findById(id).map(this::convertToDTO);
     }
 
     public void deleteMember(Integer id) {
-        memberRepository.deleteById(id);
+        adminMemberRepository.deleteById(id);
     }
 
     private AdminMemberDTO convertToDTO(Member m) {
