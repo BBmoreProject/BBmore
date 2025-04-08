@@ -3,6 +3,7 @@ package com.bbmore.product.entity;
 import com.bbmore.product.config.BaseEntity;
 import com.bbmore.product.constant.ProductSellStatus;
 import com.bbmore.product.dto.ProductFormDto;
+import com.bbmore.product.exception.OutOfStockException;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -41,4 +42,16 @@ public class Product extends BaseEntity {
         this.productDetail = productFormDto.getProductDetail();
         this.productSellStatus = productFormDto.getProductSellStatus();
     }
+
+    public void removeStock (int productQuantity) {
+        int restStock = this.productQuantity - productQuantity;
+        if(restStock < 0) {
+            throw new OutOfStockException("상품의 재고가 부족합니다. (현재 재고 수량 : " +
+                    this.productQuantity + ")");
+        }
+        this.productQuantity = restStock;
+    }
+
+    public void addStock(Integer orderDetailQuantity) { this.productQuantity += productQuantity; }
+
 }

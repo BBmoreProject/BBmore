@@ -3,7 +3,8 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <div th:fragment="header">
-    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+    <!-- bg-primary를 제거하고 style 속성을 추가하여 배경색과 글자색 지정 -->
+    <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #FF8C00; color: white;">
         <button class="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -17,7 +18,7 @@
                     <a class="nav-link" href="/admin/product/new">상품 등록</a>
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
-                    <a class="nav-link" href="/admin/products/">상품 관리</a>
+                    <a class="nav-link" href="/admin/products">상품 관리</a>
                 </li>
                 <li class="nav-item" sec:authorize="isAuthenticated()">
                     <a class="nav-link" href="/cart">장바구니</a>
@@ -34,10 +35,11 @@
             </ul>
             <form class="form-inline my-2 my-lg-0" th:action="@{/}" method="get">
                 <input name="searchQuery" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <!-- 검색 버튼 테두리 색상도 흰색으로 변경 -->
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
     </nav>
 </div>
 
-</html>
+</html>ㄴㄴ

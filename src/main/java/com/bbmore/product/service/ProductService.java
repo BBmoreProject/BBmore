@@ -1,13 +1,17 @@
 package com.bbmore.product.service;
 
+import com.bbmore.product.dto.MainProductDto;
 import com.bbmore.product.dto.ProductFormDto;
 import com.bbmore.product.dto.ProductImgDto;
+import com.bbmore.product.dto.ProductSearchDto;
 import com.bbmore.product.entity.Product;
 import com.bbmore.product.entity.ProductImg;
 import com.bbmore.product.repository.ProductImgRepository;
 import com.bbmore.product.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -77,5 +81,18 @@ public class ProductService {
                     productImgFileList.get(i));
         }
         return product.getProductCode();
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Product> getAdminProductPage(ProductSearchDto productSearchDto,
+                                             Pageable pageable) {
+        return productRepository.getAdminProductPage(productSearchDto, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<MainProductDto> getMainProductPage
+            (ProductSearchDto productSearchDto,
+             Pageable pageable) {
+        return productRepository.getMainProductPage(productSearchDto, pageable);
     }
 }
