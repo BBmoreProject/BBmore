@@ -1,27 +1,38 @@
 package com.bbmore.admin.adelivery.repository;
 
+import com.bbmore.admin.aorder.dto.OrderSearchResultDTO;
 import com.bbmore.order.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-
-    // %LIKE% 말고 = :name(WHERE userName = ' ')사용하여 같아야만 검색
-    // 회원전화번호 같아야만 검색으로 변경
     @Query("""
-            SELECT o FROM Order o
-             WHERE (:code IS NULL OR CAST(o.orderCode AS string) = :code)
-               AND (:name IS NULL OR o.recipientName = :name)
-               AND (:phone IS NULL OR o.recipientPhone = :phone)
-               AND (:startDate IS NULL OR o.orderDate >= :startDate)
-               AND (:endDate IS NULL OR o.orderDate <= :endDate)
-            """)
-    List<Order> searchOrders(
+    SELECT new com.bbmore.admin.aorder.dto.OrderSearchResultDTO(
+        o.orderCode,
+        o.orderDate,
+        p.productName,
+        m.userName,
+        m.userPhoneNumber,
+        m.userAddress
+    )
+    FROM OrderDetail od
+    JOIN od.order o
+    JOIN o.member m
+    JOIN od.product p
+    WHERE (:code IS NULL OR CAST(o.orderCode AS string) = :code)
+      AND (:name IS NULL OR m.userName LIKE %:name%)
+      AND (:phone IS NULL OR m.userPhoneNumber LIKE %:phone%)
+      AND (:startDate IS NULL OR o.orderDate >= :startDate)
+      AND (:endDate IS NULL OR o.orderDate <= :endDate)
+""")
+    List<OrderSearchResultDTO> findOrderDetails(
             @Param("code") String code,
             @Param("name") String name,
             @Param("phone") String phone,
@@ -29,3 +40,4 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
             @Param("endDate") LocalDate endDate
     );
 }
+

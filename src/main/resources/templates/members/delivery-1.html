@@ -143,7 +143,7 @@
       width: 1600px;
       padding: 0 0 0 30px;
       background-color: #F4F4F4;
-      border-radius: 10px;
+      border-radius: 3px;
       border-style: none;
       height: 180px;
       gap: 20px;
@@ -155,7 +155,7 @@
       width: 250px;
       height: 40px;
       background-color: #F4F4F4;
-      border-radius: 7px;
+      border-radius: 3px;
       border-style: none;
       border: 1px solid #7a7a7a;
     }
@@ -166,7 +166,7 @@
       width: 100px;
       height: 40px;
       background-color: #F28C25;
-      border-radius: 5px;
+      border-radius: 3px;
       border-style: none;
     }
 
@@ -176,7 +176,7 @@
       max-width: 100%;
       min-width: 1000px;
       background: white;
-      border-radius: 10px;
+      border-radius: 3px;
       flex: 1;
       padding: 20px;
       background-color: #F4F4F4;
@@ -194,26 +194,26 @@
       padding: 6px;
       border: 1px solid #ccc;
       text-align: center;
-      border-radius: 7px;
+      border-radius: 3px;
     }
 
     table th:nth-child(1) {
-      width: 5%;
+      width: 3%;
     }
 
     table th:nth-child(2) {
       width: 5%;
     }
     table th:nth-child(3) {
-      width: 5%;
+      width: 10%;
     }
 
     table th:nth-child(4) {
-      width: 7%;
+      width: 5%;
     }
 
     table th:nth-child(5) {
-      width: 10%;
+      width: 8%;
     }
 
     table th:nth-child(6) {
@@ -242,7 +242,7 @@
       font-size: 16px;
       padding: 6px 12px;
       border: 1px solid #000000;
-      border-radius: 5px;
+      border-radius: 3px;
       outline: none;
       width: 180px;
     }
@@ -420,13 +420,27 @@
       });
     });
 
-    loadMembers();
+    // 날짜 버튼 이벤트 등록
+    document.getElementById("search-day1").addEventListener("click", () => { setDateRange(0); searchOrders(); });
+    document.getElementById("search-day2").addEventListener("click", () => { setDateRange(7); searchOrders(); });
+    document.getElementById("search-day3").addEventListener("click", () => { setDateRange(30); searchOrders(); });
+    document.getElementById("search-day4").addEventListener("click", () => { setDateRange(90); searchOrders(); });
+
+    // 초기 데이터 로드
+    loadOrders();
   });
 
+  async function loadOrders() {
+    try {
+      const res = await fetch("/api/orders/search");
+      const data = await res.json();
+      renderOrders(data);
+    } catch (error) {
+      console.error("초기 주문 목록 조회 실패:", error);
+    }
+  }
 
-</script>
-<script>
-  async function searchMembersByName() {
+  async function searchOrders() {
     const code = document.getElementById("searchCode").value;
     const name = document.getElementById("searchName").value;
     const phone = document.getElementById("searchPhone").value;
@@ -438,13 +452,13 @@
     try {
       const res = await fetch(url);
       const orders = await res.json();
-      renderMembers(orders);
+      renderOrders(orders);
     } catch (error) {
       console.error("검색 실패:", error);
     }
   }
 
-  function renderMembers(orders) {
+  function renderOrders(orders) {
     const tbody = document.getElementById("memberTableBody");
     tbody.innerHTML = "";
 
@@ -454,9 +468,9 @@
         <td>${order.orderCode}</td>
         <td>${order.orderDate}</td>
         <td>${order.productName}</td>
-        <td>${order.recipientName}</td>
-        <td>${order.recipientPhone}</td>
-        <td>${order.recipientAddress}</td>
+        <td>${order.userName}</td>
+        <td>${order.userPhoneNumber}</td>
+        <td>${order.userAddress}</td>
       `;
       tbody.appendChild(row);
     });
@@ -470,66 +484,9 @@
     const todayStr = today.toISOString().split("T")[0];
     const startStr = startDate.toISOString().split("T")[0];
 
-    const startInput = document.getElementById("startDate");
-    const endInput = document.getElementById("endDate");
-
-    if (startInput && endInput) {
-      startInput.value = startStr;
-      endInput.value = todayStr;
-    }
+    document.getElementById("startDate").value = startStr;
+    document.getElementById("endDate").value = todayStr;
   }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    loadMembers();
-
-    const todayBtn = document.getElementById("search-day1");
-    const weekBtn = document.getElementById("search-day2");
-    const monthBtn = document.getElementById("search-day3");
-    const threeMonthBtn = document.getElementById("search-day4");
-
-    if (todayBtn) todayBtn.addEventListener("click", () => { setDateRange(0); searchMembersByName(); });
-    if (weekBtn) weekBtn.addEventListener("click", () => { setDateRange(7); searchMembersByName(); });
-    if (monthBtn) monthBtn.addEventListener("click", () => { setDateRange(30); searchMembersByName(); });
-    if (threeMonthBtn) threeMonthBtn.addEventListener("click", () => { setDateRange(90); searchMembersByName(); });
-  });
-
-  async function loadMembers() {
-    const res = await fetch("/api/orders/search");
-    const data = await res.json();
-    renderMembers(data);
-  }
-
-  document.addEventListener("DOMContentLoaded", function () {
-    function setDateRange(days) {
-      let today = new Date();
-      let startDate = new Date();
-      startDate.setDate(today.getDate() - days);
-
-      let todayStr = today.toISOString().split("T")[0];
-      let startStr = startDate.toISOString().split("T")[0];
-
-      let startInput = document.getElementById("startDate");
-      let endInput = document.getElementById("endDate");
-
-      if (startInput && endInput) {
-        startInput.value = startStr;
-        endInput.value = todayStr;
-      } else {
-        console.error("날짜 입력 요소를 찾을 수 없습니다.");
-      }
-    }
-
-    // 버튼 클릭 이벤트 등록 (DOMContentLoaded 이후 실행)
-    let todayBtn = document.getElementById("search-day1");
-    let weekBtn = document.getElementById("search-day2");
-    let monthBtn = document.getElementById("search-day3");
-    let threeMonthBtn = document.getElementById("search-day4");
-
-    if (todayBtn) todayBtn.addEventListener("click", function () { setDateRange(0); });
-    if (weekBtn) weekBtn.addEventListener("click", function () { setDateRange(7); });
-    if (monthBtn) monthBtn.addEventListener("click", function () { setDateRange(30); });
-    if (threeMonthBtn) threeMonthBtn.addEventListener("click", function () { setDateRange(90); });
-  });
 </script>
 
 </body>
