@@ -3,6 +3,7 @@ package com.bbmore.order.entity;
 
 import com.bbmore.member.entity.Member;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -46,6 +47,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_code", nullable = false)
     private Member member;
+
 
 
 }

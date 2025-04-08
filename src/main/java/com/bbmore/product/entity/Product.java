@@ -1,6 +1,10 @@
 package com.bbmore.product.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.*;
 
 @Entity
@@ -21,6 +25,9 @@ public class Product {
 
     @Column(name = "product_price", nullable = false)
     private Integer productPrice;           // 상품금액
+
+//    @Column(name = "product_img", nullable = false)
+//    private String productImg;  // 이미지 경로
 
     @Column(name = "product_quantity", nullable = false)
     private Integer productQuantity;        // 상품재고

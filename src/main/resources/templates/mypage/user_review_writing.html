@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰작성하기 버튼을 누른 다음 페이지</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        * {
+            font-family: "Noto Sans KR", sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body{
+            display: flex;
+            flex-direction: column; /*상하 배치*/
+        }
+
+        /* navbar 스타일 지정 */
+
+        .nav {
+            width: 100%;
+            height:60px;
+            background-color: #F28C25;
+            left: 0px;
+            top: 0px;
+            display: flex;
+            text-align: center;
+            position: fixed;
+            flex-direction: column;  /*추가*/
+            text-align: center;
+        }
+
+        .nav a {
+            color: white;
+        }
+
+        .nav a:hover {
+            color: rgb(72, 35, 0);
+        }
+
+        #cart_img { /* navbar 장바구니 이미지 */
+            height: 33px;
+            margin: 6px 0px 0px 20px ;
+        }
+
+        /* navbar 스타일 지정 */
+
+        #selectMenu {  /* 해당 페이지 메뉴명 글씨 두껍게!! */
+            font-weight: 800;
+        }
+
+        #post{    /* 공지사항 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 10px 100px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        #question {     /* 자주묻는질문 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 10px 230px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+        #login {      /*  로그아웃 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 10px 1420px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        #signup {     /*  회원가입 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 10px 1530px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        #cart{        /* 장바구니 */
+            position: absolute;
+            width: 180px;
+            height: 20px;
+            margin: 0px 1600px;
+            font-weight: 100;
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        h3 {      /* "마이페이지" */
+            font-weight: 800;
+            font-size: 35px;
+            padding: 0px 0px 30px 0px;
+        }
+
+        .menuPage {    /* 왼쪽 메뉴 공간 스타일 지정 */
+            width:400px;
+            padding: 150px 0px 0px 150px ;
+            margin: 60px 0px 0px 0px;
+        }
+
+        .menuName {    /* 왼쪽 메뉴 이름 간격 조정 */
+            padding: 7px 0px;
+            display: block;
+            cursor: pointer;
+        }
+
+        .menuName:hover {
+            color: #F28C25;
+            font-weight: 800;
+        }
+
+        .Logo {   /* 왼쪽 메뉴 아래 로고 이미지 위치 조정 */
+            padding: 200px 0px 0px 0px ;
+        }
+
+        #logo_img { /* 왼쪽 메뉴 맨 아래 로고 이미지 */
+            width: 100px;
+        }
+
+        .main { /* navbar 아래 다 */
+            display: flex;
+            flex: 1;
+        }
+
+        .main_detail { /* navbar 아래 (왼쪽 메뉴 제외) */
+            display: block;
+            width: 1300px;
+            padding: 70px 0px 0px 60px;
+            margin: 60px 0px 0px 0px;
+        }
+
+        .page_name {
+            font-size: 30px;
+            font-weight: 800;
+        }
+
+        .boxIn {  /* 제품 상자 */
+            width: 100%;
+            height: 130px;
+            display: flex;
+            border: solid #c0c0c0 1px;
+            border-radius: 7px;
+            padding: 20px;
+            margin: 10px 0;
+            align-items: center;
+            text-align: left;
+        }
+
+        #product_img { /* 상품 사진 */
+            width: 100px;
+            margin: 30px 20px;
+            border: solid #c0c0c0 1px;
+            border-radius: 5px;
+            display: flex;
+        }
+
+        /* 별점 리뷰  */
+
+        #myform fieldset{
+            display: inline-block;
+            direction: rtl;
+            border:0;
+            margin: 50px 0 0 0  ;
+        }
+
+        #myform fieldset legend{
+            text-align: right;
+        }
+
+        #myform input[type=radio]{
+            display: none;
+        }
+
+        #myform label{
+            font-size: 2em;
+            color: transparent;
+            text-shadow: 0 0 0 #f0f0f0;
+        }
+
+        #myform label:hover{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+
+        #myform label:hover ~ label{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+
+        #myform input[type=radio]:checked ~ label{
+            text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+        }
+
+        #reviewContents {
+            width: 100%;
+            height: 250px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: solid 1.5px #D3D3D3;
+            border-radius: 5px;
+            font-size: 16px;
+            resize: none;
+        }
+
+        /* 별점 리뷰  */
+
+
+        .create_review { /* 등록하기 버튼 */
+            /*text-align: center;*/
+            width: 180px;
+            height: 30px;
+            margin: 80px 530px auto;
+            /*padding: 4px;*/
+            background: #F28C25;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            font-size: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<!-- navbar -->
+<nav class="nav">
+    <a class="nav-link" id="post" href="#">공지사항</a>
+    <a class="nav-link" id="question" href="#">자주묻는질문</a>
+    <a class="nav-link" id="login" href="#">로그아웃</a>
+    <a class="nav-link" id="signup" href="#">회원가입</a>
+    <a class="nav-link" id="cart" href="#" >
+        <img src="/image/cart_img.png" alt="장바구니 이미지" id="cart_img">
+    </a>
+</nav>
+<!-- navbar -->
+
+<div class="main"> <!-- main -->
+
+    <!-- 메뉴 -->
+    <div class= "menuPage">
+        <div class="mypage">
+            <h3>마이페이지</h3>
+        </div>
+        <div class="menu">
+            <div class="menuName" onclick="location.href='/user/purchaseList';" >구매목록</div>
+            <div class="menuName">주문/배송 상태</div>
+            <div class="menuName">장바구니</div>
+            <div class="menuName">교환/반품</div>
+            <div class="menuName">교환/반품 신청 목록 이동</div>
+            <div class="menuName" onclick="location.href='/review/write';">리뷰 작성</div>
+            <div class="menuName" onclick="location.href='/review/list';" >작성한 리뷰</div>
+            <div class="menuName" id="selectMenu" onclick="location.href='/member/edit';" >회원 정보 수정</div>
+            <div class="menuName">배송지 관리</div>
+            <div class="Logo">
+                <div class="menuName">
+                    <img src="/image/b2.png" alt="BBmore 로고" id="logo_img">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 메뉴 -->
+
+    <div class="main_detail">
+
+<!--        <div class="page_name" th:text="${reviewInfo.reviewCode != null} ? '리뷰 수정' : '리뷰 작성'">리뷰 작성</div>-->
+        <div class="page_name" th:text="${(reviewInfo.reviewCode != null) ? '리뷰 수정' : '리뷰 작성'}">리뷰 작성</div>
+
+        <div class="boxIn"> <!-- 상품 박스 안 -->
+                <div class="product_img"> <!-- 제품 이미지 -->
+                    <img src="/image/product_img.png" alt="제품2" id="product_img">
+                </div> <!-- 제품 이미지 -->
+
+                <div>
+<!--                    <div th:text="${reviewInfo.orderStatus == 'Y' ? '배송완료' : '배송중'}">배송완료</div>-->
+                    <div th:text="${reviewInfo.productName}">로얄캐닌 독 푸들 어덜트 3kg 피모관리</div>
+                    <div>
+                        <div th:text="${reviewInfo.orderDetailPrice + '원'}">20,555원</div>
+                        <div th:text="${reviewInfo.orderDetailQuantity + '개'}">1개</div>
+                    </div>
+                </div>
+            </div>
+
+
+        <form class="mb-3" name="myform" id="myform" method="post" th:action="@{${formAction}}" th:object="${reviewInfo}">
+            <fieldset>
+                <span class="text-bold">별점을 선택해주세요</span>
+                <input type="radio" name="reviewRating" value="5" id="rate1" th:checked="${reviewInfo.reviewRating == 5}"><label for="rate1">★</label>
+                <input type="radio" name="reviewRating" value="4" id="rate2" th:checked="${reviewInfo.reviewRating == 4}"><label for="rate2">★</label>
+                <input type="radio" name="reviewRating" value="3" id="rate3" th:checked="${reviewInfo.reviewRating == 3}"><label for="rate3">★</label>
+                <input type="radio" name="reviewRating" value="2" id="rate4" th:checked="${reviewInfo.reviewRating == 2}"><label for="rate4">★</label>
+                <input type="radio" name="reviewRating" value="1" id="rate5" th:checked="${reviewInfo.reviewRating == 1}"><label for="rate5">★</label>
+            </fieldset>
+
+<!--            유효성 검사 하면 필요한 오류 메세지 영역-->
+<!--            <div th:if="${#fields.hasErrors('reviewRating')}" th:errors="${reviewInfo.reviewRating}"></div>-->
+
+            <div>
+                <textarea class="col-auto form-control" type="text" id="reviewContents" placeholder="리뷰를 작성해주세요!" th:field="${reviewInfo.reviewContent}"></textarea>
+            </div>
+
+            <!-- ✅ userCode와 orderDetailCode도 th:field 사용해서 DTO에 자동 바인딩 -->
+            <input type="hidden" th:field="*{userCode}" />  <!-- ✅ 이걸로 바꿔줘야 DTO에 값이 들어감 -->
+            <input type="hidden" th:field="*{orderDetailCode}" />  <!-- ✅ 마찬가지로 DTO와 매핑됨 -->
+
+            <input type="hidden" th:field="*{reviewCode}" />
+
+        <button type="submit" class="create_review" th:text="${reviewInfo.reviewCode != null} ? '수정하기' : '등록하기'">등록하기</button>
+        </form>
+    </div>
+
+
+</div> <!-- main -->
+<footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
+</body>
+</html>

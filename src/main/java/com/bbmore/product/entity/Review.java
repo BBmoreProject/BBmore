@@ -4,6 +4,10 @@ import com.bbmore.member.entity.Member;
 import com.bbmore.order.entity.OrderDetail;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -40,6 +44,36 @@ public class Review {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_detail_code", nullable = false)
     private OrderDetail orderDetail;
+
+    @Builder
+    public Review(Integer reviewCode, Integer reviewRating, String reviewContent, LocalDate reviewDate, Member member, OrderDetail orderDetail) {
+        this.reviewCode = reviewCode;
+        this.reviewRating = reviewRating;
+        this.reviewContent = reviewContent;
+        this.reviewDate = reviewDate;
+        this.member = member;
+        this.orderDetail = orderDetail;
+    }
+
+    // 리뷰 수정 메서드 추가 (Setter 대신)
+    public void updateReview(Integer reviewRating, String reviewContent) {
+        this.reviewRating = reviewRating;
+        this.reviewContent = reviewContent;
+    }
+
+    public void assignMemberAndOrderDetail(Member member, OrderDetail orderDetail) {
+        this.member = member;
+        this.orderDetail = orderDetail;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.reviewDate == null) {
+            this.reviewDate = LocalDate.now();
+        }
+    }
+
+
 
 
 }

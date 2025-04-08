@@ -6,8 +6,8 @@ import lombok.*;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder(toBuilder = true)
 @Table(name = "tbl_member")
 public class Member {
@@ -38,10 +38,13 @@ public class Member {
     @Column(name = "user_isdeleted", nullable = false)
     private Boolean userIsdeleted; // 회원탈퇴여부
 
-//    @Column(name = "user_access_level", nullable = false)
-//    @Enumerated(EnumType.STRING)
-//    private UserRole userAccessLevel;   // 회원권한
+    @Column(name = "user_access_level")
+    @Embedded
+    private UserRole userAccessLevel;   // 회원권한
 
+        public enum UserRole {
+        ADMIN, MEMBER
+    }
     @Column(name = "user_pet_name", nullable = false)
     private String userPetName;     // 회원반려이름
 
@@ -66,7 +69,28 @@ public class Member {
     @JoinColumn(name = "membership_code")
     private Membership membership;
 
+    // 0402 추가!!!!!!
+    public void updateAnimal(Animal animal) {
+        this.animal = animal;
+    }
 
+    // 기존 객체의 필드를 직접 수정하는 메서드 추가
+    public void updateMemberInfo(String userId, String userPassword, String userName, String userAddress,
+                                 String userPhoneNumber, String userEmail, String userPetName,
+                                 Integer userPetAge, Integer userPetWeight, String userPetMedicalHistory,
+                                 Animal animal) {
+        this.userId = userId;
+        this.userPassword = userPassword;
+        this.userName = userName;
+        this.userAddress = userAddress;
+        this.userPhoneNumber = userPhoneNumber;
+        this.userEmail = userEmail;
+        this.userPetName = userPetName;
+        this.userPetAge = userPetAge;
+        this.userPetWeight = userPetWeight;
+        this.userPetMedicalHistory = userPetMedicalHistory;
+        this.animal = animal;
+    }
 
 
 
