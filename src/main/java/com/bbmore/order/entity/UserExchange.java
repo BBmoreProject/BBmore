@@ -27,4 +27,5 @@ public class UserExchange {
     @Column(name = "exchange_reason")
     private String exchangeReason;     // 교환사유
 
+
 }

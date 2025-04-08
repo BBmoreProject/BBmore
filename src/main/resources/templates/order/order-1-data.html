@@ -518,52 +518,8 @@
                     </thead>
                     <!-- 테이블 본문 -->
                     <tbody id="memberTableBody"></tbody>
-                    <!--                    <tr th:each="order : ${orders}">-->
-                    <!--                        <td th:text="${order.orderCode}"></td>-->
-                    <!--                        <td th:text="${order.orderDate}"></td>-->
-                    <!--                        <td th:text="${order.productName}"></td>-->
-                    <!--                        <td th:text="${order.orderTotalPrice}"></td>-->
-                    <!--                        <td th:text="${order.orderStatus}"></td>-->
-                    <!--                        <td th:text="${order.member.userName}"></td>-->
-                    <!--                        <td th:text="${order.member.userPhoneNumber}"></td>-->
-                    <!--                        <td th:text="${order.member.userAddress}"></td>-->
-                    <!--                    </tr>-->
-                    <!--                    </tbody>-->
-                    <!--                    <tr th:if="${orders.isEmpty()}">-->
-                    <!--                        <td colspan="8" class="text-center"-->
-                    <!--                            style="text-align:center; vertical-align:middle; height:100px;">-->
-                    <!--                            조회된 주문이 없습니다.-->
-                    <!--                    </tr>-->
                 </table>
             </div>
-
-            <!--            <div id="paging">-->
-            <!--                &lt;!&ndash; 맨 앞으로 이동 &ndash;&gt;-->
-            <!--                <button th:onclick="|location.href='@{/order/order-1-data(page=${paging.startPage})}'|">-->
-            <!--                    <<-->
-            <!--                </button>-->
-            <!--                &lt;!&ndash; 이전 페이지로 이동 &ndash;&gt;-->
-            <!--                <button th:onclick="|location.href='@{/order/order-1-data(page=${paging.currentPage - 1})}'|"-->
-            <!--                        th:disabled="${orderList.first}">-->
-            <!--                    <-->
-            <!--                </button>-->
-            <!--                &lt;!&ndash; 숫자 버튼 &ndash;&gt;-->
-            <!--                <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">-->
-            <!--                    <button th:onclick="|location.href='@{/order/order-1-data(page=${page})}'|"-->
-            <!--                            th:text="${page}"-->
-            <!--                            th:disabled="${paging.currentPage eq page}">-->
-            <!--                    </button>-->
-            <!--                </th:block>-->
-            <!--                &lt;!&ndash; 다음 페이지로 이동 &ndash;&gt;-->
-            <!--                <button th:onclick="|location.href='@{/order/order-1-data(page=${paging.currentPage + 1})}'|"-->
-            <!--                        th:disabled="${orderList.last}">-->
-            <!--                    >-->
-            <!--                </button>-->
-            <!--                &lt;!&ndash; 맨 끝으로 이동 &ndash;&gt;-->
-            <!--                <button th:onclick="|location.href='@{/order/order-1-data(page=${paging.endPage})}'|">-->
-            <!--                    >>-->
-            <!--                </button>-->
-            <!--            </div>-->
         </div>
 
     </main>

@@ -1,0 +1,44 @@
+package com.bbmore.admin.aorder.repository;
+
+import com.bbmore.admin.aorder.dto.ReturnSearchResultDTO;
+import com.bbmore.order.entity.UserReturn;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Repository
+public interface ReturnRepository extends JpaRepository<UserReturn, Long> {
+
+    @Query("""
+            SELECT DISTINCT new com.bbmore.admin.aorder.dto.ReturnSearchResultDTO(
+                ur.returnCode,
+                ur.returnRequestDate,
+                ur.returnStatus,
+                ur.refundAmount,
+                ur.returnReason,
+                m.userName
+            )
+            FROM OrderDetail od
+            JOIN od.userReturn ur
+            JOIN od.order o
+            JOIN o.member m
+                WHERE (:returnCode IS NULL OR CAST(ur.returnCode AS string) = :returnCode)
+                  AND (:returnStatus IS NULL OR ur.returnStatus = :returnStatus)
+                  AND (:memberName IS NULL OR m.userName LIKE %:memberName%)
+                  AND (:startDate IS NULL OR ur.returnRequestDate >= :startDate)
+                  AND (:endDate IS NULL OR ur.returnRequestDate <= :endDate)
+            """)
+    List<ReturnSearchResultDTO> findReturnDetails(
+            @Param("returnCode") String returnCode,
+            @Param("returnStatus") Boolean returnStatus,
+            @Param("memberName") String memberName,
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate
+    );
+}

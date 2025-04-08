@@ -20,7 +20,7 @@ public class UserReturn {
     private Integer returnCode;           // 반품고유번호
 
     @Column(name = "return_request_date", nullable = false)
-    private LocalDate orderDetailPrice;    // 반품신청일자
+    private LocalDate returnRequestDate;    // 반품신청일자
 
     @Column(name = "return_status", nullable = false)
     private Boolean returnStatus;     // 반품처리상태
