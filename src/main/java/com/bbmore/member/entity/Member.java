@@ -1,13 +1,14 @@
 package com.bbmore.member.entity;
 
 
+import com.bbmore.member.common.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Getter
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder(toBuilder = true)
 @Table(name = "tbl_member")
 public class Member {
