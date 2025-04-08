@@ -1,6 +1,6 @@
 package com.bbmore.admin.aorder.repository;
 
-import com.bbmore.admin.aorder.dto.OrderSearchResultDTO;
+import com.bbmore.admin.aorder.dto.aOrderSearchResultDTO;
 import com.bbmore.order.entity.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,12 +10,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, Integer> {
+public interface aOrderRepository extends JpaRepository<Order, Integer> {
     @Query(value = """
-        SELECT DISTINCT new com.bbmore.admin.aorder.dto.OrderSearchResultDTO(
+        SELECT DISTINCT new com.bbmore.admin.aorder.dto.aOrderSearchResultDTO(
             o.orderCode,
             o.orderDate,
             p.productName,
@@ -46,7 +45,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
           AND (:endDate   IS NULL OR o.orderDate <= :endDate)
         """
     )
-    Page<OrderSearchResultDTO> findOrderDetailsPage(
+    Page<aOrderSearchResultDTO> findOrderDetailsPage(
             @Param("code") String code,
             @Param("name") String name,
             @Param("phone") String phone,

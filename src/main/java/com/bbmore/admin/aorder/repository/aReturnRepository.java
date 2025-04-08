@@ -1,6 +1,6 @@
 package com.bbmore.admin.aorder.repository;
 
-import com.bbmore.admin.aorder.dto.ReturnSearchResultDTO;
+import com.bbmore.admin.aorder.dto.aReturnSearchResultDTO;
 import com.bbmore.order.entity.UserReturn;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,13 +11,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Repository
-public interface ReturnRepository extends JpaRepository<UserReturn, Long> {
+public interface aReturnRepository extends JpaRepository<UserReturn, Long> {
 
     @Query(value = """
-           SELECT DISTINCT new com.bbmore.admin.aorder.dto.ReturnSearchResultDTO(
+           SELECT DISTINCT new com.bbmore.admin.aorder.dto.aReturnSearchResultDTO(
                    ur.returnCode,
                    ur.returnRequestDate,
                    ur.returnStatus,
@@ -47,7 +46,7 @@ public interface ReturnRepository extends JpaRepository<UserReturn, Long> {
              AND (:startDate IS NULL OR ur.returnRequestDate >= :startDate)
              AND (:endDate IS NULL OR ur.returnRequestDate <= :endDate)
            """)
-    Page<ReturnSearchResultDTO> findReturnDetailsPage(
+    Page<aReturnSearchResultDTO> findReturnDetailsPage(
             @Param("returnCode") String returnCode,
             @Param("returnStatus") Boolean returnStatus,
             @Param("memberName") String memberName,

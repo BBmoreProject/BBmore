@@ -6,12 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/order")
-public class OrderViewController {
+public class aReturnViewController {
 
-
-    @GetMapping("/order-1-data")
+    @GetMapping("/order-2")
     public String deliveryPage() {
-        return "order/order-1-data";
+        return "order/order-2";
     }
-
 }

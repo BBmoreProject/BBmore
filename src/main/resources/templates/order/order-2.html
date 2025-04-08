@@ -402,17 +402,20 @@
             display: flex;
             padding: 0;
         }
+
         .pagination li {
             margin: 0 5px;
             padding: 5px 10px;
             border: 1px solid #ccc;
             cursor: pointer;
         }
+
         .pagination li.active {
             background-color: #F28C25;
             color: white;
             font-weight: bold;
         }
+
         .pagination li.disabled {
             pointer-events: none;
             opacity: 0.5;
@@ -429,9 +432,7 @@
             text-align: center;
         }
 
-        th {
-            background: #f5f5f5;
-        }
+
 
 
     </style>
@@ -514,6 +515,9 @@
     <header class="header">반품 조회</header>
     <main class="main">
         <div class="search-box">
+            <div class="search-write1">
+                <p>조회기간</p>
+            </div>
             <div class="search-allday">
                 <button id="search-day1">오늘</button>
                 <button id="search-day2">1주일</button>
@@ -538,7 +542,7 @@
         <div class="order-box">
             <div class="all-order">
 
-                <table>
+                <table class="all-order-table">
                     <thead>
                     <tr>
                         <th>반품코드</th>
@@ -556,6 +560,10 @@
 
         <ul id="pagination" class="pagination"></ul>
     </main>
+
+    <footer class="footer">
+        &copy; BBMORE | 전화번호: 02-123-4567 | 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고
+    </footer>
 </div>
 
 <script>

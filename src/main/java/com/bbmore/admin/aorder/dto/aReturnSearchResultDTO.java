@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ReturnSearchResultDTO {
+public class aReturnSearchResultDTO {
 
     private Integer returnCode;            // 반품코드
     private LocalDate returnRequestDate;   // 반품신청일자

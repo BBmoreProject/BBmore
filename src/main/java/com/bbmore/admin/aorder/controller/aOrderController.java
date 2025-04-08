@@ -1,30 +1,27 @@
 package com.bbmore.admin.aorder.controller;
 
-import com.bbmore.admin.aorder.dto.OrderSearchResultDTO;
-import com.bbmore.admin.aorder.service.OrderService;
-import com.bbmore.order.dto.OrderDTO;
+import com.bbmore.admin.aorder.dto.aOrderSearchResultDTO;
+import com.bbmore.admin.aorder.service.aOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
-public class OrderController {
+public class aOrderController {
 
-    private final OrderService orderService;
+    private final aOrderService aOrderService;
 
     @GetMapping("/search")
-    public Page<OrderSearchResultDTO> searchOrders(
+    @ResponseBody
+    public Page<aOrderSearchResultDTO> searchOrders(
             @RequestParam(required = false) String code,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String phone,
@@ -32,7 +29,7 @@ public class OrderController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
             @PageableDefault(size = 8) Pageable pageable
     ) {
-        return orderService.searchOrders(code, name, phone, startDate, endDate, pageable);
+        return aOrderService.searchOrders(code, name, phone, startDate, endDate, pageable);
     }
 }
 
