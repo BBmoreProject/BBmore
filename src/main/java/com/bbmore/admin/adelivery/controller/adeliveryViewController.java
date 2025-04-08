@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/orders")
-public class OrderViewController {
+@RequestMapping("/delivery")
+public class adeliveryViewController {
 
     @GetMapping("/delivery-1")
     public String deliveryPage() {

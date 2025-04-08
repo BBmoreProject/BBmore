@@ -1,6 +1,6 @@
 package com.bbmore.admin.adelivery.service;
 
-import com.bbmore.admin.adelivery.repository.OrderRepository;
+import com.bbmore.admin.adelivery.repository.adeliveryRepository;
 import com.bbmore.admin.aorder.dto.OrderSearchResultDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,9 +10,9 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class OrderService {
+public class adeliveryService {
 
-    private final OrderRepository orderRepository;
+    private final adeliveryRepository adeliveryRepository;
 
     public List<OrderSearchResultDTO> searchOrders(String code, String name, String phone,
                                                    LocalDate startDate, LocalDate endDate) {
@@ -20,6 +20,6 @@ public class OrderService {
         String n = (name == null || name.isBlank()) ? null : name;
         String p = (phone == null || phone.isBlank()) ? null : phone;
 
-        return orderRepository.findOrderDetails(c, n, p, startDate, endDate);
+        return adeliveryRepository.findOrderDetails(c, n, p, startDate, endDate);
     }
 }

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, Integer> {
+public interface adeliveryRepository extends JpaRepository<Order, Integer> {
 
     @Query("""
     SELECT new com.bbmore.admin.aorder.dto.OrderSearchResultDTO(

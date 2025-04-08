@@ -1,9 +1,8 @@
 package com.bbmore.admin.adelivery.controller;
 
 
-import com.bbmore.admin.adelivery.service.OrderService;
+import com.bbmore.admin.adelivery.service.adeliveryService;
 import com.bbmore.admin.aorder.dto.OrderSearchResultDTO;
-import com.bbmore.order.dto.OrderDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +17,9 @@ import java.util.List;
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
 // api
-public class OrderController {
+public class adeliveryController {
 
-    private final OrderService orderService;
+    private final adeliveryService adeliveryService;
 
     @GetMapping("/search")
     public List<OrderSearchResultDTO> searchOrders(
@@ -30,6 +29,6 @@ public class OrderController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        return orderService.searchOrders(code, name, phone, startDate, endDate);
+        return adeliveryService.searchOrders(code, name, phone, startDate, endDate);
     }
 }
