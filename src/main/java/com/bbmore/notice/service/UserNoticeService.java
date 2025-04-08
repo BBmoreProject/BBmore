@@ -50,7 +50,7 @@ public class UserNoticeService {
   }
 //--------------------------------------------------------------------------------------------------------------
 
-  
+
   // 검색 기능: 검색어로 제목을 포함하는 공지사항 조회- test  15:15
   public Page<UserNoticeDTO> noticeSearchList(String searchKeyword, String noticeType , Pageable pageable) {
     pageable = PageRequest.of(
@@ -103,11 +103,6 @@ public class UserNoticeService {
   public Optional<Notice> getNextNotice(Integer noticeCode, String noticeType) {
     return userNoticeRepository.findFirstByNoticeCodeGreaterThanAndNoticeTypeOrderByNoticeCodeAsc(noticeCode, noticeType);
   }
-
-
-
-
-
 
   }
 

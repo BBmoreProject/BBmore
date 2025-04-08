@@ -299,6 +299,8 @@
         }
 
 
+
+
         /* 사이드바 하단 로고 이미지 */
         .bottom-logo img {
             width: 100%;
@@ -460,6 +462,7 @@
                        th:href="@{'/members/user-notice-view/' + ${prevNotice.noticeCode}}"
                        th:text="${prevNotice.noticeTitle}">이전글 제목</a>
                     <a th:if="${prevNotice == null}">이전글 없음</a>
+                    <!--                        </button>-->
                 </div>
             </div>
 
