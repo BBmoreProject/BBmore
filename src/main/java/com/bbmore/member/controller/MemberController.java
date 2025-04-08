@@ -51,7 +51,7 @@ public class MemberController {
         model.addAttribute("animalTypes", animalTypes);
         model.addAttribute("animalBreeds", animalBreeds);
 
-        return "user_profile_edit"; // user_profile_edit.html로 이동
+        return "mypage/user_profile_edit"; // user_profile_edit.html로 이동
     }
 
     @GetMapping("/modify")
@@ -106,7 +106,7 @@ public class MemberController {
         model.addAttribute("animalTypes", animalTypes);      // 🔥 전체 Type 리스트
         model.addAttribute("animalBreeds", animalBreeds);    // 🔥 전체 Breed 리스트
 
-        return "user_profile_edit";
+        return "mypage/user_profile_edit";
     }
 
     // AnimalController 에 animalCode 조회용 API 추가해보기

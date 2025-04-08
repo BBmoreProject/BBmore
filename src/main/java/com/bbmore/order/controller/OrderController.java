@@ -22,7 +22,7 @@ public class OrderController {
         List<PurchaseListDTO> purchaseList = orderService.getUserPurchaseList(userCode);
 
         model.addAttribute("purchaseList", purchaseList);
-        return "user_purchase_list";
+        return "mypage/user_purchase_list";
     }
 
 }

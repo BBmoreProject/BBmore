@@ -26,7 +26,7 @@ public class ReviewController {
         List<ReviewWriteDTO> purchaseList = reviewService.getUserPurchaseList(userCode);
 
         model.addAttribute("purchaseList", purchaseList);
-        return "user_review_write";
+        return "mypage/user_review_write";
     }
 
     @GetMapping("/writing/{orderDetailCode}")
@@ -47,7 +47,7 @@ public class ReviewController {
         model.addAttribute("formAction", "/review/update");
         model.addAttribute("reviewInfo", reviewInfo);
 
-        return "user_review_writing";
+        return "mypage/user_review_writing";
     }
 
     @PostMapping("/update")   // 리뷰 등록
@@ -88,7 +88,7 @@ public class ReviewController {
 
         model.addAttribute("formAction", "/review/modify");
         model.addAttribute("reviewInfo", reviewInfo);
-        return "user_review_writing";
+        return "mypage/user_review_writing";
     }
 
 
@@ -109,7 +109,7 @@ public class ReviewController {
         reviewList.forEach(review -> System.out.println("🔎 리뷰: " + review));
 
         model.addAttribute("reviewList", reviewList);
-        return "user_review_list";
+        return "mypage/user_review_list";
     }
 
     @PostMapping("/delete/{reviewCode}")    // 리뷰 삭제
