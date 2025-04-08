@@ -393,6 +393,31 @@
             padding: 5px;
             font-size: 10px;
         }
+
+        .pagination {
+            list-style: none;
+            position: relative;
+            left: auto;
+            top: 14%;
+            display: flex;
+            padding: 0;
+        }
+        .pagination li {
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        .pagination li.active {
+            background-color: #F28C25;
+            color: white;
+            font-weight: bold;
+        }
+        .pagination li.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
     </style>
 
     <!-- 사이드바 하위메뉴 한 개씩 열리게하기 (메뉴가 열려있을때 다른 메뉴 열면 닫히게) -->
@@ -438,7 +463,7 @@
         <li class="menu-3">
             <a href="#">판매 관리</a>
             <ul class="submenu">
-                <li><a class="nav-button1" onclick=" location.href ='/order/order-1'">주문 조회</a></li>
+                <li><a class="nav-button1" onclick=" location.href ='/order/order-1-data'">주문 조회</a></li>
                 <li><a class="nav-button2" onclick=" location.href ='/order/order-2'">반품 관리</a></li>
                 <li><a class="nav-button3" onclick=" location.href ='/order/order-3'">교환 관리</a></li>
             </ul>
@@ -468,136 +493,179 @@
         </div>
     </ul>
 </nav>
-
 <div class="container">
-    <header class="header">주문조회</header>
+    <header class="header">주문 조회</header>
     <main class="main">
         <div class="search-box">
             <div class="search-write1">
                 <p>조회기간</p>
             </div>
-
             <div class="search-allday">
                 <button id="search-day1" type="button">오늘</button>
                 <button id="search-day2" type="button">1주일</button>
                 <button id="search-day3" type="button">1개월</button>
                 <button id="search-day4" type="button">3개월</button>
             </div>
-
-
             <div class="calendar">
-                <input type="date" name="startDate" id="startDate" class="form-control" required/> &nbsp; ~ &nbsp;
-                <input type="date" name="endDate" id="endDate" class="form-control" required/>
+                <input type="date" id="startDate" required/> ~
+                <input type="date" id="endDate" required/>
             </div>
-
-
-            <input class="search-box-input" type="text" id="searchCode" placeholder="주문번호">
-            <input class="search-box-input" type="text" id="searchName" placeholder="이름">
-            <input class="search-box-input" type="text" id="searchPhone" placeholder="전화번호">
-
-            <button class="search-box-button" onclick="searchMembersByName()">검색</button>
+            <input type="text" class="search-box-input" id="searchCode"  placeholder="주문번호">
+            <input type="text" class="search-box-input" id="searchName"  placeholder="이름">
+            <input type="text" class="search-box-input" id="searchPhone" placeholder="전화번호">
+            <button class="search-box-button" onclick="searchOrders()">검색</button>
+            <!-- 전체 조회: 날짜 비우고 1페이지 로드 -->
             <button class="search-box-button" onclick="loadAllOrders()">전체 조회</button>
-
         </div>
-
 
         <div class="order-box">
-            <div class="order-searchtext"><p>주문조회</p></div>
             <div class="all-order">
-                <table class="all-order-table">
-                    <!-- 테이블 헤더 -->
-                    <thead>
-                    <tr>
-                        <th>주문번호</th>
-                        <th>주문날짜</th>
-                        <th>제품명</th>
-                        <th>이름</th>
-                        <th>전화번호</th>
-                        <th>주소</th>
-                    </tr>
-                    </thead>
-                    <!-- 테이블 본문 -->
-                    <tbody id="memberTableBody"></tbody>
-                </table>
+            <table class="all-order-table">
+                <thead>
+                <tr>
+                    <th>주문번호</th>
+                    <th>주문날짜</th>
+                    <th>제품명</th>
+                    <th>이름</th>
+                    <th>전화번호</th>
+                    <th>주소</th>
+                </tr>
+                </thead>
+                <tbody id="orderTableBody"></tbody>
+            </table>
             </div>
         </div>
 
+        <ul id="pagination" class="pagination"></ul>
     </main>
+
     <footer class="footer">
-        &copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234
-        주소: 서울시 종로구 어쩌고저쩌고
+        &copy; BBMORE | 전화번호: 02-123-4567 | 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고
     </footer>
 </div>
 
-
 <script>
-    async function searchMembersByName() {
-        const code = document.getElementById("searchCode").value;
-        const name = document.getElementById("searchName").value;
-        const phone = document.getElementById("searchPhone").value;
-        const startDate = document.getElementById("startDate").value;
-        const endDate = document.getElementById("endDate").value;
-
-        const url = `/api/orders/search?code=${encodeURIComponent(code)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
-
-        try {
-            const res = await fetch(url);
-            const orders = await res.json();
-            renderMembers(orders);
-        } catch (error) {
-            console.error("검색 실패:", error);
-        }
+    // 날짜 단축 버튼용 함수
+    function setDateRange(days) {
+        const today = new Date();
+        const start = new Date();
+        start.setDate(today.getDate() - days);
+        const todayStr = today.toISOString().split("T")[0];
+        const startStr = start.toISOString().split("T")[0];
+        document.getElementById("startDate").value = startStr;
+        document.getElementById("endDate").value   = todayStr;
     }
 
-    function renderMembers(orders) {
-        const tbody = document.getElementById("memberTableBody");
-        tbody.innerHTML = "";
+    // 전체 조회: 날짜 필터 비우고 1페이지 로드
+    function loadAllOrders() {
+        document.getElementById("startDate").value = "";
+        document.getElementById("endDate").value   = "";
+        loadPage(1);
+    }
 
-        orders.forEach(order => {
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${order.orderCode}</td>
-                <td>${order.orderDate}</td>
-                <td>${order.productName || '-'}</td>
-                <td>${order.userName || '-'}</td>
-                <td>${order.userPhoneNumber || '-'}</td>
-                <td>${order.userAddress || '-'}</td>
+    // 검색 파라미터 생성
+    function buildQueryParams(page) {
+        const code      = document.getElementById("searchCode").value;
+        const name      = document.getElementById("searchName").value;
+        const phone     = document.getElementById("searchPhone").value;
+        const startDate = document.getElementById("startDate").value;
+        const endDate   = document.getElementById("endDate").value;
+
+        const params = new URLSearchParams();
+        if (code)      params.append("code", code);
+        if (name)      params.append("name", name);
+        if (phone)     params.append("phone", phone);
+        if (startDate) params.append("startDate", startDate);
+        if (endDate)   params.append("endDate", endDate);
+        // 페이지 번호: 1-based → 0-based
+        params.append("page", page - 1);
+        params.append("size", 8);
+        return params.toString();
+    }
+
+    // 해당 페이지 데이터 로드
+    async function loadPage(page) {
+        const qs  = buildQueryParams(page);
+        const res = await fetch(`/api/orders/search?${qs}`);
+        if (!res.ok) {
+            console.error("페이지 로드 실패:", res.status);
+            return;
+        }
+        const data = await res.json();
+        renderOrders(data.content);
+        renderPagination(data);
+    }
+
+    // 검색 버튼
+    function searchOrders() {
+        loadPage(1);
+    }
+
+    // 테이블 렌더링
+    function renderOrders(orders) {
+        const tbody = document.getElementById("orderTableBody");
+        tbody.innerHTML = "";
+        if (!orders || orders.length === 0) {
+            tbody.innerHTML = "<tr><td colspan='6'>조회 결과가 없습니다.</td></tr>";
+            return;
+        }
+        orders.forEach(o => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${o.orderCode}</td>
+                <td>${o.orderDate}</td>
+                <td>${o.productName || '-'}</td>
+                <td>${o.userName || '-'}</td>
+                <td>${o.userPhoneNumber || '-'}</td>
+                <td>${o.userAddress || '-'}</td>
             `;
-            tbody.appendChild(row);
+            tbody.appendChild(tr);
         });
     }
 
-    function setDateRange(days) {
-        const today = new Date();
-        const startDate = new Date();
-        startDate.setDate(today.getDate() - days);
+    // 페이지네이션 렌더링
+    function renderPagination(pageData) {
+        const ul      = document.getElementById("pagination");
+        ul.innerHTML  = "";
+        const current = pageData.number + 1;
+        const total   = pageData.totalPages;
+        const first   = pageData.first;
+        const last    = pageData.last;
 
-        const todayStr = today.toISOString().split("T")[0];
-        const startStr = startDate.toISOString().split("T")[0];
+        // 이전
+        const prev = document.createElement("li");
+        prev.textContent = "이전";
+        if (!first) prev.onclick = () => loadPage(current - 1);
+        else        prev.classList.add("disabled");
+        ul.appendChild(prev);
 
-        document.getElementById("startDate").value = startStr;
-        document.getElementById("endDate").value = todayStr;
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        loadAllOrders();
-
-        document.getElementById("search-day1").addEventListener("click", () => { setDateRange(0); searchMembersByName(); });
-        document.getElementById("search-day2").addEventListener("click", () => { setDateRange(7); searchMembersByName(); });
-        document.getElementById("search-day3").addEventListener("click", () => { setDateRange(30); searchMembersByName(); });
-        document.getElementById("search-day4").addEventListener("click", () => { setDateRange(90); searchMembersByName(); });
-    });
-
-    async function loadAllOrders() {
-        try {
-            const res = await fetch("/api/orders/search");
-            const orders = await res.json();
-            renderMembers(orders);
-        } catch (error) {
-            console.error("전체 조회 실패:", error);
+        // 페이지 번호
+        for (let i = 1; i <= total; i++) {
+            const li = document.createElement("li");
+            li.textContent = i;
+            if (i === current) li.classList.add("active");
+            else                li.onclick = () => loadPage(i);
+            ul.appendChild(li);
         }
+
+        // 다음
+        const next = document.createElement("li");
+        next.textContent = "다음";
+        if (!last) next.onclick = () => loadPage(current + 1);
+        else       next.classList.add("disabled");
+        ul.appendChild(next);
     }
+
+    // 초기 로드 및 버튼 바인딩
+    document.addEventListener("DOMContentLoaded", () => {
+        loadPage(1);
+        document.getElementById("search-day1").onclick = () => { setDateRange(0); searchOrders(); };
+        document.getElementById("search-day2").onclick = () => { setDateRange(7); searchOrders(); };
+        document.getElementById("search-day3").onclick = () => { setDateRange(30); searchOrders(); };
+        document.getElementById("search-day4").onclick = () => { setDateRange(90); searchOrders(); };
+    });
 </script>
+
 
 
 </body>

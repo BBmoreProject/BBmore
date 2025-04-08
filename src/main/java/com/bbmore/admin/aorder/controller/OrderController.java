@@ -4,6 +4,9 @@ import com.bbmore.admin.aorder.dto.OrderSearchResultDTO;
 import com.bbmore.admin.aorder.service.OrderService;
 import com.bbmore.order.dto.OrderDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,14 +24,15 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping("/search")
-    public List<OrderSearchResultDTO> searchOrders(
+    public Page<OrderSearchResultDTO> searchOrders(
             @RequestParam(required = false) String code,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String phone,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @PageableDefault(size = 8) Pageable pageable
     ) {
-        return orderService.searchOrders(code, name, phone, startDate, endDate);
+        return orderService.searchOrders(code, name, phone, startDate, endDate, pageable);
     }
 }
 
