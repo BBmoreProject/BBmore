@@ -159,6 +159,7 @@ public class AdminNoticeController {
     prevNotice.ifPresent(n -> model.addAttribute("prevNotice", n)); // 이전 글이 있을 경우만 추가
     nextNotice.ifPresent(n -> model.addAttribute("nextNotice", n)); // 다음 글이 있을 경우만 추가
 
+    // 첫번째 글 누르면 1406 에러나서 null 값인지 확인하고자 추가
     log.info("Notice DTO: {}", noticeDTO);
     log.info("Prev Notice: {}", prevNotice.orElse(null));
     log.info("Next Notice: {}", nextNotice.orElse(null));

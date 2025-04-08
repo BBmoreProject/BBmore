@@ -340,6 +340,7 @@
     </style>
 
     <script>
+        // 왼쪽 nav 메뉴 이벤트
         document.addEventListener("DOMContentLoaded", function () {  // HTML 문서가 모두 로드된 후 실행되도록
             const menuItems = document.querySelectorAll(".nav ul li > a");  // 모든 메뉴(1~6) 선택
             menuItems.forEach(menu => {     // a 태그의 메뉴마다 이벤트 리스너 추가
@@ -355,30 +356,6 @@
             });
         });
 
-
-
-        document.addEventListener("DOMContentLoaded", function () {
-            // URL에서 'id' 파라미터 값 추출
-            const urlParams = new URLSearchParams(window.location.search);
-            const currentIdStr = urlParams.get('id');  // 'id' 파라미터 값을 문자열로 가져옴
-
-            if (currentIdStr) {
-                const currentId = parseInt(currentIdStr);  // 문자열을 정수로 변환
-
-                if (!isNaN(currentId)) {
-                    // 이전 글과 다음 글 링크 동적으로 설정
-                    const prevLink = document.getElementById('prev');
-                    const nextLink = document.getElementById('next');
-
-                    prevLink.href = `notice-view.html?id=${currentId - 1}`;  // 이전 글 링크 설정
-                    nextLink.href = `notice-view.html?id=${currentId + 1}`;  // 다음 글 링크 설정
-                } else {
-                    console.error('ID 값이 유효하지 않습니다.');
-                }
-            } else {
-                console.error('ID 파라미터가 존재하지 않습니다.');
-            }
-        });
 
 
         // 삭제 확인 팝업

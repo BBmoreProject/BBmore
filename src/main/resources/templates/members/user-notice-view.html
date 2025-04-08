@@ -113,11 +113,20 @@
             align-items: center;
         }
 
+
+        /* 컨텐츠 섹션 스타일 */
+        .content {
+            /*display: block;*/
+            margin-top: 50px;
+            /*margin-top: 80px;*/
+            /* nav 고정으로 인한 여백 */
+        }
+
         /* 검색창 박스틀 (검색창,공지사항 목록 간격조절 margin) */
         .search-box {
             position: relative;
-            margin-top: 0px;
-            margin-bottom: 0px;
+            margin-top: 0;
+            margin-bottom: 0;
             width: 400px;
             display: flex;
             align-items: center;
@@ -341,6 +350,39 @@
             background-color: #e68a00;
         }
 
+        /* 공지사항, 자주 묻는 질문 버튼 스타일 - 건드리지말것*/
+        .tab-buttons {
+            display: flex;
+            /* position: relative; */
+            /* justify-content:space-evenly; */
+            gap: 10px;
+            margin-top: 20px;
+            /* 테이블과 간격을 맞추기 위한 위 여백 */
+            margin-left: 10px;
+            margin-right: 0px;
+            /* 오른쪽 여백 */
+            margin-bottom: 20px;
+            /* 아래쪽 여백 */
+        }
+
+        /* 공지사항, 자주 묻는 질문 글씨 */
+        .tab-buttons a {
+            padding: 8px 10px;
+            background-color: #F28C25;
+            color: white;
+            font-style: normal;
+            font-weight: 500;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .tab-buttons a:hover {
+            background-color: #e68a00;
+        }
+
+
 
 
     </style>
@@ -403,15 +445,17 @@
     <!-- 공지사항 섹션 -->
     <section id="notice" class="content">
 
-        <!-- 공지사항, 자주 묻는 질문 버튼 -->
-        <div class="menu-detail">
-            <p>• 공지사항</p>
-        </div>
-
+        <!-- 검색창 -->
         <div class="search">
             <input type="text" id="search-title" placeholder="제목 검색">
             <input type="text" id="search-content" placeholder="내용 검색">
             <button>검색</button>
+        </div>
+
+        <!-- 공지사항, 자주 묻는 질문 버튼 -->
+        <div class="tab-buttons">
+            <a class="notice-btn" onclick="toggleSection('notice')">공지사항</a>
+            <a class="faq-btn" onclick="toggleSection('faq')">자주 묻는 질문</a>
         </div>
 
         <!-- 공지사항 작성 큰 틀 -->

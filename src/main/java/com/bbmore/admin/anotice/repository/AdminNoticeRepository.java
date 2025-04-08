@@ -18,7 +18,6 @@ import java.util.Optional;
 public interface AdminNoticeRepository extends JpaRepository<Notice, Integer> {
 
 
-
     // 게시글 타입(공지사항or자주묻는질문)찾아오기 (수정금지)
     Page<Notice> findByNoticeType(String noticeType, Pageable pageable);
 
