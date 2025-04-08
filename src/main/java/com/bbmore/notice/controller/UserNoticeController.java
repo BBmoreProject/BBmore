@@ -50,8 +50,10 @@ public class UserNoticeController {
 //    return "members/faq-list"; // faq-list.html
 //  }
 
+  // 파일이름: user-notice-list
   // 공지사항과 자주 묻는 질문 목록 페이지 (하나의 페이지에서 관리)
-  @GetMapping("/notice-faq-list")
+//  @GetMapping("/notice-faq-list")
+  @GetMapping("/user-notice-list")
   public String getNoticesAndFaqs(@RequestParam(value = "page", defaultValue = "0") int page,
                                   @RequestParam(value = "size", defaultValue = "10") int size, Model model) {
     Page<Notice> noticePage = userNoticeService.getNotices("공지사항", page, size);  // "공지사항" 타입만 필터링
@@ -61,7 +63,8 @@ public class UserNoticeController {
     model.addAttribute("faqPage", faqPage);
     model.addAttribute("currentPage", page);
     model.addAttribute("totalPages", noticePage.getTotalPages());  // 공지사항 페이지 수 기준
-    return "members/notice-faq-list";  // 하나의 HTML 페이지로 처리
+//    return "members/notice-faq-list";  // 하나의 HTML 페이지로 처리
+    return "members/user-notice-list";  // 하나의 HTML 페이지로 처리
   }
 
 
@@ -82,8 +85,6 @@ public class UserNoticeController {
     model.addAttribute("faq", faq);
     return "members/faq-detail"; // faq-detail.html
   }
-
-
 
 
   }

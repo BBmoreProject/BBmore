@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항</title>
+    <title>공지사항(원본)</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
@@ -504,10 +504,12 @@
 
                     <!--이전글 제목값 부분-->
                     <div class="next-content-box1">
-                        <button class="next-content1">
-                            <a href="#" th:href="@{'/notice/notice-view/'+ ${prevNotice.noticeCode}}"
-                               th:text="${prevNotice.noticeTitle}">이전글 제목</a>
-                        </button>
+<!--                        <button class="next-content1">-->
+                        <a th:if="${prevNotice != null}"
+                           th:href="@{'/notice/notice-view/' + ${prevNotice.noticeCode}}"
+                           th:text="${prevNotice.noticeTitle}">이전글 제목</a>
+                        <a th:if="${prevNotice == null}">이전글 없음</a>
+<!--                        </button>-->
                     </div>
                 </div>
 
@@ -518,12 +520,18 @@
 
                     <!--다음글 제목값 부분-->
                     <div class="next-content-box2">
-                        <button class="next-content2">
-                            <a href="#" th:href="@{'/notice/notice-view/' + ${nextNotice.noticeCode}}"
-                               th:text="${nextNotice.noticeTitle}">다음글 제목</a>
-                        </button>
+<!--                        <button class="next-content2">-->
+                        <a th:if="${nextNotice != null}"
+                           th:href="@{'/notice/notice-view/' + ${nextNotice.noticeCode}}"
+                           th:text="${nextNotice.noticeTitle}">다음글 제목</a>
+                        <a th:if="${nextNotice == null}">다음글 없음</a>
+<!--                        <button>-->
+<!--                            <a href="#" th:href="@{'/notice/notice-view/' + ${nextNotice.noticeCode}}"-->
+<!--                               th:text="${nextNotice.noticeTitle}">다음글 제목</a>-->
+<!--                        </button>-->
                     </div>
                 </div>
+
             </div> <!--notice-box끝-->
         </div> <!--"• 공지사항 글쓰기" + 글쓰기 틀 끝-->
     </main>

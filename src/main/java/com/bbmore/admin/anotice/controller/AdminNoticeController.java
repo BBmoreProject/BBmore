@@ -144,6 +144,7 @@ public class AdminNoticeController {
     // noticeCode로 공지사항 조회
     NoticeDTO noticeDTO = noticeService.findNoticeByNoticeCode(noticeCode);
 
+    // 이전 글과 다음 글 조회
     Optional<Notice> prevNotice = noticeService.getPrevNotice(noticeCode, "공지사항");
     Optional<Notice> nextNotice = noticeService.getNextNotice(noticeCode, "공지사항");
 
@@ -155,9 +156,12 @@ public class AdminNoticeController {
     // 조회된 공지사항을 모델에 추가
     model.addAttribute("notice", noticeDTO);
 
-    prevNotice.ifPresent(n -> model.addAttribute("prevNotice", n)); // 이전 글 추가
-    nextNotice.ifPresent(n -> model.addAttribute("nextNotice", n)); // 다음 글 추가
+    prevNotice.ifPresent(n -> model.addAttribute("prevNotice", n)); // 이전 글이 있을 경우만 추가
+    nextNotice.ifPresent(n -> model.addAttribute("nextNotice", n)); // 다음 글이 있을 경우만 추가
 
+    log.info("Notice DTO: {}", noticeDTO);
+    log.info("Prev Notice: {}", prevNotice.orElse(null));
+    log.info("Next Notice: {}", nextNotice.orElse(null));
 
     return "notice/notice-view"; // 공지사항 상세보기 페이지로 이동
   }

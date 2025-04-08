@@ -356,13 +356,6 @@
         });
 
 
-        // URL에서 'id' 파라미터 값 추출
-        // const urlParams = new URLSearchParams(window.location.search);
-        // const currentId = parseInt(urlParams.get('id'));
-        //
-        // // 이전 글과 다음 글 링크 동적으로 설정
-        // document.getElementById('prev').href = `notice-view.html?id=${currentId - 1}`;
-        // document.getElementById('next').href = `notice-view.html?id=${currentId + 1}`;
 
         document.addEventListener("DOMContentLoaded", function () {
             // URL에서 'id' 파라미터 값 추출
@@ -506,8 +499,10 @@
                     <!--이전글 제목값 부분-->
                     <div class="next-content-box1">
                         <button class="next-content1">
-                            <a href="#" th:href="@{'/notice/faq-view/' + ${prevFaq.noticeCode}}"
+                            <a th:if="${prevFaq != null}"
+                               th:href="@{'/notice/faq-view/' + ${prevFaq.noticeCode}}"
                                th:text="${prevFaq.noticeTitle}">이전글 제목</a>
+                            <a th:if="${prevFaq == null}">이전글 없음</a>
                         </button>
                     </div>
                 </div>
@@ -520,11 +515,14 @@
                     <!--다음글 제목값 부분-->
                     <div class="next-content-box2">
                         <button class="next-content2">
-                            <a href="#" th:href="@{'/notice/faq-view/' + ${nextFaq.noticeCode}}"
+                            <a th:if="${nextFaq != null}"
+                               th:href="@{'/notice/faq-view/' + ${nextFaq.noticeCode}}"
                                th:text="${nextFaq.noticeTitle}">다음글 제목</a>
+                            <a th:if="${nextFaq == null}">다음글 없음</a>
                         </button>
                     </div>
                 </div>
+
             </div> <!--notice-box끝-->
         </div> <!--"• 공지사항 글쓰기" + 글쓰기 틀 끝-->
     </main>
