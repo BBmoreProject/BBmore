@@ -196,6 +196,7 @@
 
         .product_name { /* 상품 이름 */
             margin:0 0 75px 0;
+            width: 300px;
         }
 
         .one_line { /* 가격과 개수 */
@@ -209,7 +210,7 @@
         /*  */
 
         .button { /* 버튼 3개 그룹 */
-            margin:  0 0 0 590px;
+            margin:  0 0 0 460px;
         }
 
         .button1, .button2, .button3 {
@@ -270,14 +271,14 @@
             <h3>마이페이지</h3>
         </div>
         <div class="menu">
-            <div class="menuName" id="selectMenu" onclick="location.href='user_purchase_list.html';" >구매목록</div>
+            <div class="menuName" onclick="location.href='/user/purchaseList';" >구매목록</div>
             <div class="menuName">주문/배송 상태</div>
             <div class="menuName">장바구니</div>
             <div class="menuName">교환/반품</div>
             <div class="menuName">교환/반품 신청 목록 이동</div>
             <div class="menuName" onclick="location.href='/review/write';">리뷰 작성</div>
             <div class="menuName" onclick="location.href='/review/list';" >작성한 리뷰</div>
-            <div class="menuName" onclick="location.href='user_profile_edit.html';" >회원 정보 수정</div>
+            <div class="menuName" id="selectMenu" onclick="location.href='/member/edit';" >회원 정보 수정</div>
             <div class="menuName">배송지 관리</div>
             <div class="Logo">
                 <div class="menuName">
@@ -295,7 +296,7 @@
         <div class="product" th:each="purchase : ${purchaseList}">
             <div class="boxOut"> <!-- 상품 박스 밖 -->
 <!--                <div class="date" th:text="${#dates.format(purchaseList.orderDate, 'yyyy.MM.dd')}">2025.03.05</div>-->
-                <div class="date">2025.03.05</div>
+                <div class="date" th:text="${#temporals.format(purchase.orderDate, 'yyyy.MM.dd')}">2025.03.05</div>
             </div> <!-- 상품 박스 밖 -->
 
             <div class="boxIn"> <!-- 상품 박스 안 -->
@@ -315,36 +316,17 @@
                 <div class="button">
                     <div class="button1">주문/배송 상태</div>
                     <div class="button2">교환/반품 신청</div>
-                    <div class="button3" onclick="location.href='/review/writing';">리뷰 작성하기</div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="product" th:each="purchase : ${purchaseList}">
-            <div class="boxOut"> <!-- 상품 박스 밖 -->
-                <!--                <div class="date" th:text="${#dates.format(purchaseList.orderDate, 'yyyy.MM.dd')}">2025.03.05</div>-->
-                <div class="date">2025.03.05</div>
-            </div> <!-- 상품 박스 밖 -->
-
-            <div class="boxIn"> <!-- 상품 박스 안 -->
-                <div class="product_img"> <!-- 제품 이미지 -->
-                    <img src="/image/product_img.png" alt="제품2" id="product_img2">
-                </div> <!-- 제품 이미지 -->
-
-                <div class="information">
-                    <div class="delivery_complete" th:text="${purchase.orderStatus == 'Y' ? '배송완료' : '배송중'}">배송완료</div>
-                    <div class="product_name" th:text="${purchase.productName}">로얄캐닌 독 푸들 어덜트 3kg 피모관리</div>
-                    <div class="one_line">
-                        <div class="price" th:text="${purchase.orderDetailPrice + '원'}">20,555원</div>
-                        <div class="num" th:text="${purchase.orderDetailQuantity + '개'}">1개</div>
+<!--                    <div class="button3" onclick="location.href='/review/writing';">리뷰 작성하기</div>-->
+                    <!-- 리뷰 작성 완료 -->
+                    <div class="button3" th:if="${purchase.reviewWritten}" style="background-color: #b6b6b6; pointer-events: none;">
+                        리뷰 작성 완료
                     </div>
-                </div>
-
-                <div class="button">
-                    <div class="button1">주문/배송 상태</div>
-                    <div class="button2">교환/반품 신청</div>
-                    <div class="button3" onclick="location.href='/review/writing';">리뷰 작성하기</div>
+                    <!-- 리뷰 작성하기 -->
+                    <div class="button3"
+                         th:if="${!purchase.reviewWritten}"
+                         th:onclick="|location.href='@{/review/write(orderDetailCode=${purchase.orderDetailCode})}'|">
+                        리뷰 작성하기
+                    </div>
                 </div>
 
             </div>
