@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderSearchResultDTO {
+public class aOrderSearchResultDTO {
 
     private Integer orderCode;         // 주문번호
     private LocalDate orderDate;       // 주문날짜

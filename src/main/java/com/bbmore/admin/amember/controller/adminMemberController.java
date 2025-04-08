@@ -5,25 +5,34 @@ import com.bbmore.admin.amember.service.adminMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/members")
+@RequestMapping("/members")
 @RequiredArgsConstructor
-public class MemberApiController {
+public class adminMemberController {
 
     private final adminMemberService adminMemberService;
 
-    // 전체 회원 조회
-    @GetMapping
+    // 📄 HTML 페이지 렌더링
+    @GetMapping("/list")
+    public String listMembersPage() {
+        return "members/list"; // thymeleaf or jsp
+    }
+
+    // ✅ 전체 회원 조회 (JSON)
+    @GetMapping("/api")
+    @ResponseBody
     public List<AdminMemberDTO> getAllMembers() {
         return adminMemberService.getAllMembers();
     }
 
-    // 회원 검색 – 이름, 전화번호, 등급(멤버십 레벨) 기준
-    @GetMapping("/search")
+    // 🔍 검색 (이름, 전화번호, 등급)
+    @GetMapping("/api/search")
+    @ResponseBody
     public List<AdminMemberDTO> searchMembers(
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String phone,
@@ -31,24 +40,18 @@ public class MemberApiController {
         return adminMemberService.searchMembers(name, phone, grade);
     }
 
-    // 회원 수정
-    @PutMapping("/{id}")
+    // ✏️ 회원 수정
+    @PutMapping("/api/{id}")
+    @ResponseBody
     public ResponseEntity<Void> updateMember(@PathVariable Integer id,
                                              @RequestBody AdminMemberDTO dto) {
-        AdminMemberDTO updatedDto = AdminMemberDTO.builder()
-                .userCode(id)
-                .userName(dto.getUserName())
-                .userAddress(dto.getUserAddress())
-                .userPhoneNumber(dto.getUserPhoneNumber())
-                .userMembershipLevel(dto.getUserMembershipLevel())
-                .animalBreed(dto.getAnimalBreed())
-                .build();
-        adminMemberService.updateMember(updatedDto);
+        adminMemberService.updateMember(dto.toBuilder().userCode(id).build());
         return ResponseEntity.ok().build();
     }
 
-    // 회원 삭제
-    @DeleteMapping("/{id}")
+    // ❌ 회원 삭제
+    @DeleteMapping("/api/{id}")
+    @ResponseBody
     public ResponseEntity<Void> deleteMember(@PathVariable Integer id) {
         adminMemberService.deleteMember(id);
         return ResponseEntity.ok().build();

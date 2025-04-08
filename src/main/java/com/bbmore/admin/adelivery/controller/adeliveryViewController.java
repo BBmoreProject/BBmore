@@ -5,12 +5,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/delivery")
+@RequestMapping("/orders")
 public class adeliveryViewController {
 
     @GetMapping("/delivery-1")
     public String deliveryPage() {
-        // 뷰 템플릿 → templates/members/delivery-1.html
-        return "members/delivery-1";
+        return "members/delivery-1"; // templates/members/delivery-1.html
     }
 }
