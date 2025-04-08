@@ -7,17 +7,24 @@
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+
+    /* 여백 초기화 */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
+    /* 폰트 변경 완료 */
     body {
       font-family: "Noto Sans KR", sans-serif;
       display: flex;
-      flex-direction: row;
+      flex-direction: row; /* 좌우로 배치 */
       min-height: 100vh;
     }
+
+    /* 좌측 관리자 사이드바 */
     .nav {
       width: 200px;
       background: #D9D9D9;
@@ -26,24 +33,35 @@
       flex-direction: column;
       position: relative;
     }
-    li.nav-logo {
+
+    /* 사이드바 상단 로고틀*/
+    li.nav-logo{
       position: fixed;
       width: 200px;
-      height: 160px;
+      height: 160px; /*건드리지말것*/
+
     }
-    li.nav-logo img {
+
+    /* 사이드바 상단 로고이미지 */
+    li.nav-logo img{
       width: 100%;
       height: 100%;
-      padding: 10%;
+      padding: 10%;  /*로고크기*/
       object-fit: contain;
     }
+
+    /* 사이드바 상위 메뉴 */
     .nav ul {
       list-style: none;
     }
+
+    /* 사이드바 하위 메뉴 */
     .nav ul li {
-      /*margin: 15px 0;*/
+      margin: 15px 0;
       position: relative;
     }
+
+    /* 사이드바-공지사항 관리 텍스트 */
     .nav ul li a {
       color: rgb(0, 0, 0);
       font-size: 20px;
@@ -52,6 +70,8 @@
       padding: 8px;
       cursor: pointer;
     }
+
+    /* 사이드바-서브메뉴 틀 */
     .nav ul .submenu {
       display: none;
       list-style: none;
@@ -59,6 +79,12 @@
       background: #444;
       width: 200px;
     }
+
+    .nav ul .submenu li {
+      margin: 0;
+    }
+
+    /* 사이드바 하위 메뉴 텍스트(공지사항, 자주묻는질문) */
     .nav ul .submenu li a {
       padding: 10px;
       color: #ffffff;
@@ -66,35 +92,30 @@
       display: block;
       background-color: #9B9B9B;
     }
+
     .nav ul li.active .submenu {
       display: block;
     }
-    .bottom-logo {
-      position: absolute;
-      bottom: 3px;
-      width: 200px;
-      height: 50px;
-      overflow: hidden;
-    }
-    .bottom-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
+
+    /* 메인 컨텐츠 영역 */
     .container {
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
       flex: 1;
     }
+
+    /* 상위 메뉴 (공지사항 관리) */
     .header {
+      background: #fff5e2;
       color: rgb(0, 0, 0);
       font-size: 20px;
       font-weight: bold;
-      padding: 50px 0 10px 50px;
+      padding: 60px 70px;
       display: flex;
       align-items: center;
     }
+
+
     .main {
       flex: 1;
       padding: 30px;
@@ -147,12 +168,13 @@
       text-align: center;
       border-radius: 7px;
     }
-    table th:nth-child(1), table td:nth-child(1) { width: 10%; }
-    table th:nth-child(2), table td:nth-child(2) { width: 20%; }
-    table th:nth-child(3), table td:nth-child(3) { width: 15%; }
-    table th:nth-child(4), table td:nth-child(4) { width: 13%; }
-    table th:nth-child(5), table td:nth-child(5) { width: 10%; }
-    table th:nth-child(6), table td:nth-child(6) { width: 35%; }
+    table th:nth-child(1) { width: 10%; }
+    table th:nth-child(2) { width: 20%; }
+    table th:nth-child(3) { width: 15%; }
+    table th:nth-child(4) { width: 13%; }
+    table th:nth-child(5) { width: 10%; }
+    table th:nth-child(6) { width: 35%; }
+
     .modal {
       display: none;
       position: fixed;
@@ -230,8 +252,26 @@
       color: #666;
       cursor: pointer;
     }
+    /* 사이드바 하단 로고 틀 */
+    .bottom-logo {
+      position: absolute; /*건드리지말것*/
+      bottom: 3px;/* 하단쪽에 고정 */
+      margin-top: auto;
+      width: 200px;     /* 전체 너비 */
+      height: 50px;   /* 고정된 높이 (변경가능) */
+      overflow: hidden;   /*넘칠 경우 숨김 처리*/
+    }
+
+    /* 사이드바 하단 로고 이미지 */
+    .bottom-logo img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* 바닥 사업자정보 */
     .footer {
-      background-color: #222;
+      background: #222;
       color: white;
       text-align: center;
       padding: 5px;
