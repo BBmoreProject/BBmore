@@ -190,7 +190,7 @@
         #write {
             font-size: 12px;
             text-align: center;
-            line-height: 25px;
+            /*line-height: 25px;*/
             color: white;
         }
 
@@ -214,31 +214,45 @@
             width: 1100px;
             /*테이블 주변여백*/
             margin: 10px;
-            background-color: #f0f0f0;
+            /*background-color: #f0f0f0;*/
+        }
+
+        th,td {
+            border: 1px solid #ddd;
         }
 
         /* 공지사항 제목,작성일,조회수 */
         .notice-list th {
             font-size: 13px;
-            border-bottom: 1px solid #C2C2C2;
-            padding: 9px 9px 9px 30px;
+            background-color: #F4F4F4;
+            /*background-color: #fdf5e5;*/
+            /*border-bottom: 1px solid #C2C2C2;*/
+            padding: 9px 9px 9px 8px;
             /*칸 높이*/
         }
 
         /* 공지사항 목록 글들 */
         .notice-list td {
             font-size: 13px;
-            border-bottom: 1px solid #C2C2C2;
-            padding: 8px 8px 8px 30px;
+            /*border-bottom: 1px solid #C2C2C2;*/
+            padding: 8px 8px 8px 8px;
         }
+
+        /* 공지사항 목록 글자 */
+        .notice-list td a {
+            text-decoration-line: none;
+            color: black;
+        }
+
+
 
         /* 제목 열 너비 */
         .notice-list th:nth-child(1),
         .notice-list td:nth-child(1) {
             text-align: center;
-            width: 40%;
-        }
+            width: 50%;
 
+        }
 
         /* 작성일 열 너비 */
         .notice-list th:nth-child(2),
@@ -251,7 +265,7 @@
         .notice-list th:nth-child(3),
         .notice-list td:nth-child(3) {
             text-align: center;
-            width: 8%;
+            width: 10%;
         }
 
         /* 사이드바 하단 로고 틀 */
@@ -284,6 +298,10 @@
             padding: 5px;
             font-size: 10px;
         }
+
+
+
+
     </style>
 
     <!-- 사이드바 하위메뉴 한 개씩 열리게하기 (메뉴가 열려있을때 다른 메뉴 열면 닫히게) -->
@@ -426,42 +444,6 @@
                 >>
             </button>
         </div>
-
-
-
-        <!--페이징 시작(원본)-->
-<!--            <div id="paging" >-->
-<!--              &lt;!&ndash; 맨 앞으로 이동 &ndash;&gt;-->
-<!--              <button-->
-<!--                      th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.startPage}} + '\''">-->
-<!--                <<-->
-<!--              </button>-->
-<!--              &lt;!&ndash; 이전 페이지로 이동 &ndash;&gt;-->
-<!--              <button-->
-<!--                      th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.currentPage - 1}} + '\''"-->
-<!--                      th:disabled="${ noticeList.first }">-->
-<!--                <-->
-<!--              </button>-->
-<!--              &lt;!&ndash; 숫자 버튼 &ndash;&gt;-->
-<!--              <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">-->
-<!--                <button th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${page}} + '\''"-->
-<!--                        th:text="${ page }"-->
-<!--                        th:disabled="${ paging.currentPage eq page }">-->
-<!--                </button>-->
-<!--              </th:block>-->
-<!--              &lt;!&ndash; 다음 페이지로 이동 &ndash;&gt;-->
-<!--              <button-->
-<!--                      th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.currentPage + 1}} + '\''"-->
-<!--                      th:disabled="${ noticeList.last }">-->
-<!--                >-->
-<!--              </button>-->
-<!--              &lt;!&ndash; 맨 끝으로 이동 &ndash;&gt;-->
-<!--              <button-->
-<!--                      th:onclick="'location.href=\'/notice/notice-list_ver1?page=' + @{${paging.endPage}} + '\''">-->
-<!--                >>-->
-<!--              </button>-->
-<!--            </div> &lt;!&ndash;페이징 끝&ndash;&gt;-->
-
 
     </main>
     <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>

@@ -63,7 +63,6 @@ public class UserNoticeController {
     model.addAttribute("faqPage", faqPage);
     model.addAttribute("currentPage", page);
     model.addAttribute("totalPages", noticePage.getTotalPages());  // 공지사항 페이지 수 기준
-//    return "members/notice-faq-list";  // 하나의 HTML 페이지로 처리
     return "members/user-notice-list";  // 하나의 HTML 페이지로 처리
   }
 

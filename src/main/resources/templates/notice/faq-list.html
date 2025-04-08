@@ -214,29 +214,30 @@
       width: 1100px;
       /*테이블 주변여백*/
       margin: 10px;
-      background-color: #f0f0f0;
+      /*background-color: #f0f0f0;*/
     }
 
     /* 공지사항 제목,작성일,조회수 */
     .notice-list th {
       font-size: 13px;
-      border-bottom: 1px solid #C2C2C2;
-      padding: 9px 9px 9px 30px;
+      background-color: #F4F4F4;
+      /*border-bottom: 1px solid #C2C2C2;*/
+      padding: 9px 9px 9px 8px;
       /*칸 높이*/
     }
 
     /* 공지사항 목록 글들 */
     .notice-list td {
       font-size: 13px;
-      border-bottom: 1px solid #C2C2C2;
-      padding: 8px 8px 8px 30px;
+      /*border-bottom: 1px solid #C2C2C2;*/
+      padding: 8px 8px 8px 8px;
     }
 
     /* 제목 열 너비 */
     .notice-list th:nth-child(1),
     .notice-list td:nth-child(1) {
       text-align: center;
-      width: 40%;
+      width: 50%;
     }
 
 
@@ -251,7 +252,7 @@
     .notice-list th:nth-child(3),
     .notice-list td:nth-child(3) {
       text-align: center;
-      width: 8%;
+      width: 10%;
     }
 
     /* 사이드바 하단 로고 틀 */
@@ -283,6 +284,16 @@
       text-align: center;
       padding: 5px;
       font-size: 10px;
+    }
+
+    th,td {
+      border: 1px solid #ddd;
+    }
+
+    /* 공지사항 목록 글자 */
+    .notice-list td a {
+      text-decoration-line: none;
+      color: black;
     }
   </style>
 
