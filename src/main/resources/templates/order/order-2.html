@@ -720,6 +720,15 @@
             searchReturns();
         };
     });
+
+    document.querySelectorAll('.search-box-input').forEach(input => {
+        input.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                searchReturns();
+            }
+        });
+    });
 </script>
 
 
