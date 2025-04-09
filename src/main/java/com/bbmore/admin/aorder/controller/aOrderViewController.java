@@ -11,7 +11,7 @@ public class aOrderViewController {
 
     @GetMapping("/order-1")
     public String deliveryPage() {
-        return "order-1";
+        return "order/order-1";
     }
 
 }
