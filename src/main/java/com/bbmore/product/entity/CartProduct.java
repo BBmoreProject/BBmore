@@ -13,7 +13,7 @@ import lombok.Setter;
 public class CartProduct extends BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cart_product_code")
     private Integer cartProductCode;
 

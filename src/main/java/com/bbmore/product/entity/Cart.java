@@ -15,7 +15,7 @@ public class Cart extends BaseEntity {
 
     @Id
     @Column(name = "cart_code")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cartCode;
 
     @OneToOne

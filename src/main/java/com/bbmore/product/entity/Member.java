@@ -18,7 +18,7 @@ public class Member {
 
     @Id
     @Column(name= "user_code")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userCode;
 
     private String userName;
@@ -42,7 +42,7 @@ public class Member {
                 .userEmail(memberFormDto.getUserEmail())
                 .userAddress(memberFormDto.getUserAddress())
                 .userPassword(passwordEncoder.encode(memberFormDto.getUserPassword()))
-                .role(Role.ADMIN)
+                .role(Role.USER)
                 .build();
     }
 }

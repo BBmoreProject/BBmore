@@ -77,6 +77,5 @@ class ProductServiceTest {
         assertEquals(productFormDto.getProductQuantity(), product.getProductQuantity());
         assertEquals(multipartFileList.get(0).getOriginalFilename(),
                 productImgList.get(0).getProductImgOriName());
-
     }
 }

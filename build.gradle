@@ -40,6 +40,9 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.modelmapper:modelmapper:3.1.1'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
 
     // QueryDSL JPA 명시적 버전으로 설정
     implementation "com.querydsl:querydsl-jpa:${querydslVersion}:jakarta"

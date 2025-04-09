@@ -6,19 +6,19 @@ spring:
     active: test
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/bbmoredb
+    url: jdbc:mysql://localhost:3306/bbmoredb?serverTimezone=UTC&characterEncoding=UTF-8
     username: bbmore
     password: bbmore
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
         show_sql: true
         format_sql: true
         default_batch_fetch_size: 1000
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
   devtools:
     livereload:
       enabled: true
@@ -41,4 +41,4 @@ logging:
 productImgLocation: /Users/kimdonghyeon/shop/item
 uploadPath: file:///Users/kimdonghyeon/shop/
 #itemImgLocation: C:/shop/item
-#uploadPath: file:///C:/shop/
+#uploadPath: file:///C:/shop/ㄴ
