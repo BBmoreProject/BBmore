@@ -472,7 +472,7 @@
   });
 
   async function loadMembers() {
-    const res = await fetch("/api/orders/search");
+    const res = await fetch("/api/delivery/search");
     const data = await res.json();
     renderMembers(data);
   }

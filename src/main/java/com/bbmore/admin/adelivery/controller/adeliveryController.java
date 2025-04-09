@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/api/orders")
+@RequestMapping("/api/delivery")
 @RequiredArgsConstructor
 public class adeliveryController {
 
