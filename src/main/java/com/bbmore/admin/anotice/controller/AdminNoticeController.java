@@ -44,7 +44,7 @@ public class AdminNoticeController {
 
 //    Page<NoticeTypeDTO> noticeList = noticeService.findNoticeList(pageable);
 
-    //    // 검색어가 있을 때와 없을 때 처리
+    // 검색어가 있을 때와 없을 때 처리
     Page<NoticeTypeDTO> noticeList;
 
     if (searchKeyword == null || searchKeyword.trim().isEmpty()) {
@@ -257,7 +257,6 @@ public class AdminNoticeController {
       return "redirect:/notice/faq-list";  // 자주 묻는 질문 리스트로 리다이렉트
     }
     return "redirect:/notice/faq-list";
-//    return "redirect:/notice/notice-list_ver1";  // 기본 리다이렉트 경로 (예: 공지사항 기본 리스트)
   }
 
 

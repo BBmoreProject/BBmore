@@ -302,34 +302,6 @@
         justify-content: center;
     }
 
-    /* 검색하는 입력창 */
-    .search-box input {
-        position: absolute;
-        margin: 10px;
-        padding-left: 10px;
-        width: 380px;
-        height: 40px;
-        background-color: #F4F4F4;
-        border-style: none;
-    }
-
-    /* 검색-조회버튼 */
-    .search-button {
-        position: relative;
-        width: 60px;
-        height: 25px;
-        margin: 10px;
-        background-color: #F28C25;
-        color: white;
-        left: 230px;
-        border-radius: 5px;
-        border-style: none;
-        cursor: pointer;
-    }
-
-    .search-button:hover {
-        background: #ea7f00;
-    }
 
 
 </style>
@@ -358,13 +330,20 @@
 <main>
 
     <!--• 공지사항 목록-->
-    <form th:action="@{/members/user-notice-list}" method="get">
+    <form th:action="@{/members/user-faq-list}" method="get">
         <div class="search-box">
             <input type="text" placeholder="제목 입력" name="searchKeyword">
             <button class="search-button" type="submit">조회</button>
         </div>
     </form>
 
+
+<!--        &lt;!&ndash; 검색창 &ndash;&gt;-->
+<!--        <div class="search">-->
+<!--            <input type="text" class="search-title" placeholder="제목 검색">-->
+<!--            <input type="text" class="search-content" placeholder="내용 검색">-->
+<!--            <button>검색</button>-->
+<!--        </div>-->
 
         <!-- 공지사항, 자주 묻는 질문 버튼 -->
         <div class="tab-buttons">
@@ -381,42 +360,39 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="notice : ${noticeList}">
-                <td><a th:href="@{/members/user-notice-view/{noticeCode}(noticeCode=${notice.noticeCode})}"
-                       th:text="${notice.noticeTitle}"></a></td>
-                <td th:text="${notice.noticeCreatedDate}"></td>
-                <td th:text="${notice.noticeView}"></td>
+            <tr th:each="faq : ${faqList}">
+                <td><a th:href="@{/members/user-faq-view/{noticeCode}(noticeCode=${faq.noticeCode})}"
+                       th:text="${faq.noticeTitle}"></a></td>
+                <td th:text="${faq.noticeCreatedDate}"></td>
+                <td th:text="${faq.noticeView}"></td>
             </tr>
             </tbody>
         </table>
 
-    <!--TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT-->
-
-
     <div id="paging">
         <!-- 페이지 번호 링크 -->
-        <button th:href="@{/members/user-notice-list(page=${paging.startPage},searchKeyword=${searchKeyword},  noticeType=${noticeType})}">
+        <button th:href="@{/members/user-faq-list(page=${paging.startPage},searchKeyword=${searchKeyword},  noticeType=${noticeType})}">
             <<
         </button>
 
-        <button th:href="@{/members/user-notice-list(page=${paging.currentPage - 1}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
-                th:disabled="${noticeList.first}">
+        <button th:href="@{/members/user-faq-list(page=${paging.currentPage - 1}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
+                th:disabled="${faqList.first}">
             <
         </button>
 
         <button th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
-            <a th:href="@{/members/user-notice-list(page=${page}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}" th:text="${page}"
+            <a th:href="@{/members/user-faq-list(page=${page}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}" th:text="${page}"
                th:disabled="${paging.currentPage eq page}">
             </a>
 
         </button>
 
-        <button th:href="@{/members/user-notice-list(page=${paging.currentPage + 1}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
-                th:disabled="${noticeList.last}">
+        <button th:href="@{/members/user-faq-list(page=${paging.currentPage + 1}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
+                th:disabled="${faqList.last}">
             >
         </button>
 
-        <button th:href="@{/members/user-notice-list(page=${paging.endPage}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}">
+        <button th:href="@{/members/user-faq-list(page=${paging.endPage}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}">
             >>
         </button>
     </div>

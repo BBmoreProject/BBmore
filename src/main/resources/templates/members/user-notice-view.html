@@ -299,8 +299,6 @@
         }
 
 
-
-
         /* 사이드바 하단 로고 이미지 */
         .bottom-logo img {
             width: 100%;
@@ -382,39 +380,23 @@
             background-color: #e68a00;
         }
 
+        .back-button {
+            border-radius: 5px;
+            border-style: none;
+            color: black;
+            background-color: #F28C25;
+            padding: 8px;
+        }
+
+        #back {
+            text-decoration-line: none;
+            color: #F4F4F4;
+            font-weight: bold;
+        }
 
 
 
     </style>
-
-<!--    <script>-->
-<!--        -->
-
-<!--        document.addEventListener("DOMContentLoaded", function () {-->
-<!--            // URL에서 'id' 파라미터 값 추출-->
-<!--            const urlParams = new URLSearchParams(window.location.search);-->
-<!--            const currentIdStr = urlParams.get('id');  // 'id' 파라미터 값을 문자열로 가져옴-->
-
-<!--            if (currentIdStr) {-->
-<!--                const currentId = parseInt(currentIdStr);  // 문자열을 정수로 변환-->
-
-<!--                if (!isNaN(currentId)) {-->
-<!--                    // 이전 글과 다음 글 링크 동적으로 설정-->
-<!--                    const prevLink = document.getElementById('prev');-->
-<!--                    const nextLink = document.getElementById('next');-->
-
-<!--                    prevLink.href = `notice-view.html?id=${currentId - 1}`;  // 이전 글 링크 설정-->
-<!--                    nextLink.href = `notice-view.html?id=${currentId + 1}`;  // 다음 글 링크 설정-->
-<!--                } else {-->
-<!--                    console.error('ID 값이 유효하지 않습니다.');-->
-<!--                }-->
-<!--            } else {-->
-<!--                console.error('ID 파라미터가 존재하지 않습니다.');-->
-<!--            }-->
-<!--        });-->
-<!--    </script>-->
-
-
 </head>
 
 <body>
@@ -447,8 +429,8 @@
 
         <!-- 공지사항, 자주 묻는 질문 버튼 -->
         <div class="tab-buttons">
-            <a class="notice-btn" onclick="toggleSection('notice')">공지사항</a>
-            <a class="faq-btn" onclick="toggleSection('faq')">자주 묻는 질문</a>
+            <a class="notice-btn" id="noticeButton" onclick="toggleSection('notice')">공지사항</a>
+            <a class="faq-btn" id="faqButton" onclick="toggleSection('faq')">자주 묻는 질문</a>
         </div>
 
         <!-- 공지사항 작성 큰 틀 -->
@@ -479,7 +461,6 @@
                        th:href="@{'/members/user-notice-view/' + ${prevNotice.noticeCode}}"
                        th:text="${prevNotice.noticeTitle}">이전글 제목</a>
                     <a th:if="${prevNotice == null}">이전글 없음</a>
-                    <!--                        </button>-->
                 </div>
             </div>
 
@@ -495,20 +476,49 @@
                        th:href="@{'/members/user-notice-view/' + ${nextNotice.noticeCode}}"
                        th:text="${nextNotice.noticeTitle}">다음글 제목</a>
                     <a th:if="${nextNotice == null}">다음글 없음</a>
-                    <!--                        <button>-->
-                    <!--                            <a href="#" th:href="@{'/notice/notice-view/' + ${nextNotice.noticeCode}}"-->
-                    <!--                               th:text="${nextNotice.noticeTitle}">다음글 제목</a>-->
-                    <!--                        </button>-->
                 </div>
             </div>
         </div>
     </section>
+        <div id="back">
+        <button onclick="history.back()" class="back-button" >목록으로 돌아가기</button>
+        </div>
 
-        </div> <!--notice-box끝-->
-    </div> <!--"• 공지사항 글쓰기" + 글쓰기 틀 끝-->
 </main>
 <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
 
+<!--<script>-->
+<!--    // 섹션을 토글하는 함수-->
+<!--    function toggleSection(sectionId) {-->
+<!--        // 모든 섹션 숨기기-->
+<!--        document.querySelectorAll('.content').forEach(function (section) {-->
+<!--            section.style.display = 'none';-->
+<!--        });-->
+<!--        // 클릭된 섹션만 보이게-->
+<!--        document.getElementById(sectionId).style.display = 'block';-->
+<!--    }-->
+
+<!--    // 초기에는 공지사항을 보여줌-->
+<!--    toggleSection('notice');-->
+
+<!--    // 버튼 클릭 시 토글 처리-->
+<!--    document.getElementById("noticeButton").addEventListener("click", function () {-->
+<!--        toggleSection('notice');-->
+<!--        this.classList.add("active");-->
+<!--        document.getElementById("faqButton").classList.remove("active");-->
+<!--    });-->
+
+<!--    document.getElementById("faqButton").addEventListener("click", function () {-->
+<!--        toggleSection('faq');-->
+<!--        this.classList.add("active");-->
+<!--        document.getElementById("noticeButton").classList.remove("active");-->
+<!--    });-->
+
+<!--    // 기본적으로 공지사항 섹션을 먼저 보이도록 설정-->
+<!--    document.getElementById("notice").style.display = 'block';-->
+<!--    document.getElementById("faq").style.display = 'none';-->
+<!--    document.getElementById("noticeButton").classList.add("active");-->
+<!--</script>-->
 
 </body>
 </html>
