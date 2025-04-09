@@ -321,7 +321,7 @@
     <li class="menu-4">
       <a href="#">배송 관리</a>
       <ul class="submenu">
-        <li><a onclick="location.href='/delivery/delivery-1'">주문 조회</a></li>
+        <li><a onclick="location.href='/orders/delivery-1'">주문 조회</a></li>
       </ul>
     </li>
     <li class="menu-5">
@@ -411,7 +411,7 @@
     const startDate = document.getElementById("startDate").value;
     const endDate = document.getElementById("endDate").value;
 
-    const url = `/api/orders/search?code=${encodeURIComponent(code)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+    const url = `/api/delivery/search?code=${encodeURIComponent(code)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
 
     try {
       const res = await fetch(url);
@@ -507,6 +507,15 @@
     if (weekBtn) weekBtn.addEventListener("click", function () { setDateRange(7); });
     if (monthBtn) monthBtn.addEventListener("click", function () { setDateRange(30); });
     if (threeMonthBtn) threeMonthBtn.addEventListener("click", function () { setDateRange(90); });
+  });
+
+  document.querySelectorAll('.search-box-input').forEach(input => {
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        searchMembersByName();
+      }
+    });
   });
 </script>
 

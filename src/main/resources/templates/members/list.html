@@ -462,6 +462,15 @@
     renderMembers(data);
   }
 
+  document.querySelectorAll('.search-box-input').forEach(input => {
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        searchMembersByName();
+      }
+    });
+  });
+
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") closeModal();
   });
