@@ -10,11 +10,11 @@ import java.util.List;
 public interface adminMemberRepository extends JpaRepository<Member, Integer> {
 
     @Query("""
-           SELECT m FROM Member m
-           WHERE (:name IS NULL OR :name = '' OR m.userName LIKE %:name%)
-             AND (:phone IS NULL OR :phone = '' OR m.userPhoneNumber = :phone)
-             AND (:grade IS NULL OR :grade = '' OR m.membership.membershipName = :grade)
-           """)
+        SELECT m FROM Member m
+        WHERE (:name IS NULL OR :name = '' OR m.userName LIKE %:name%)
+          AND (:phone IS NULL OR :phone = '' OR m.userPhoneNumber = :phone)
+          AND (:grade IS NULL OR :grade = '' OR m.membership.membershipName = :grade)
+    """)
     List<Member> searchMembers(@Param("name") String name,
                                @Param("phone") String phone,
                                @Param("grade") String grade);

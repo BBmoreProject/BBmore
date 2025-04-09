@@ -8,15 +8,19 @@
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+    /* 여백 초기화 */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
+    /* 폰트 변경 완료 */
     body {
       font-family: "Noto Sans KR", sans-serif;
       display: flex;
-      flex-direction: row;
+      flex-direction: row; /* 좌우로 배치 */
       min-height: 100vh;
     }
 
@@ -31,29 +35,33 @@
     }
 
     /* 사이드바 상단 로고틀*/
-    li.nav-logo {
+    li.nav-logo{
       position: fixed;
       width: 200px;
       height: 160px; /*건드리지말것*/
+
     }
 
     /* 사이드바 상단 로고이미지 */
-    li.nav-logo img {
+    li.nav-logo img{
       width: 100%;
       height: 100%;
-      padding: 10%; /*로고크기*/
+      padding: 10%;  /*로고크기*/
       object-fit: contain;
     }
 
+    /* 사이드바 상위 메뉴 */
     .nav ul {
       list-style: none;
     }
 
+    /* 사이드바 하위 메뉴 */
     .nav ul li {
       margin: 15px 0;
       position: relative;
     }
 
+    /* 사이드바-공지사항 관리 텍스트 */
     .nav ul li a {
       color: rgb(0, 0, 0);
       font-size: 20px;
@@ -63,6 +71,7 @@
       cursor: pointer;
     }
 
+    /* 사이드바-서브메뉴 틀 */
     .nav ul .submenu {
       display: none;
       list-style: none;
@@ -75,6 +84,7 @@
       margin: 0;
     }
 
+    /* 사이드바 하위 메뉴 텍스트(공지사항, 자주묻는질문) */
     .nav ul .submenu li a {
       padding: 10px;
       color: #ffffff;
@@ -87,45 +97,20 @@
       display: block;
     }
 
-    li.nav-logo {
-      position: fixed;
-      width: 200px;
-      height: 160px;
-    }
-
-    li.nav-logo img {
-      width: 100%;
-      height: 100%;
-      padding: 10%;
-      object-fit: contain;
-    }
-
-    .bottom-logo {
-      position: absolute;
-      bottom: 3px;
-      margin-top: auto;
-      width: 200px;
-      height: 50px;
-      overflow: hidden;
-    }
-    .bottom-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
+    /* 메인 컨텐츠 영역 */
     .container {
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
       flex: 1;
     }
+
+    /* 상위 메뉴 (공지사항 관리) */
     .header {
       background: #fff5e2;
       color: rgb(0, 0, 0);
       font-size: 20px;
       font-weight: bold;
-      padding: 50px 50px;
+      padding: 60px 70px;
       display: flex;
       align-items: center;
     }
@@ -144,7 +129,7 @@
       width: 1600px;
       padding: 0 0 0 30px;
       background-color: #F4F4F4;
-      border-radius: 3px;
+      border-radius: 10px;
       border-style: none;
       height: 180px;
       gap: 20px;
@@ -156,7 +141,7 @@
       width: 250px;
       height: 40px;
       background-color: #F4F4F4;
-      border-radius: 3px;
+      border-radius: 7px;
       border-style: none;
       border: 1px solid #7a7a7a;
     }
@@ -167,7 +152,7 @@
       width: 100px;
       height: 40px;
       background-color: #F28C25;
-      border-radius: 3px;
+      border-radius: 5px;
       border-style: none;
     }
 
@@ -177,7 +162,7 @@
       max-width: 100%;
       min-width: 1000px;
       background: white;
-      border-radius: 3px;
+      border-radius: 10px;
       flex: 1;
       padding: 20px;
       background-color: #F4F4F4;
@@ -190,53 +175,42 @@
       table-layout: fixed;
     }
 
-    table th {
-      padding: 6px;
-      text-align: center;
-      border-radius: 3px;
-    }
+    table th,
     table td {
       padding: 6px;
       border: 1px solid #ccc;
       text-align: center;
-      border-radius: 3px;
+      border-radius: 7px;
     }
 
     table th:nth-child(1) {
-      width: 3%;
+      width: 2%;
     }
 
     table th:nth-child(2) {
-      width: 5%;
+      width: 3%;
     }
     table th:nth-child(3) {
-      width: 10%;
-    }
-
-    table th:nth-child(4) {
-      width: 5%;
-    }
-
-    table th:nth-child(5) {
       width: 8%;
     }
 
+    table th:nth-child(4) {
+      width: 3%;
+    }
+
+    table th:nth-child(5) {
+      width: 5%;
+    }
+
     table th:nth-child(6) {
-      width: 15%;
+      width: 10%;
     }
 
 
-    .footer {
-      background-color: #222;
-      color: white;
-      text-align: center;
-      padding: 5px;
-      font-size: 10px;
-    }
+    /*.active {*/
+    /*  display: block;*/
+    /*}*/
 
-    .active {
-      display: block;
-    }
     .dropdown.open .arrow {
       transform: rotate(180deg);
     }
@@ -247,7 +221,7 @@
       font-size: 16px;
       padding: 6px 12px;
       border: 1px solid #000000;
-      border-radius: 3px;
+      border-radius: 5px;
       outline: none;
       width: 180px;
     }
@@ -272,22 +246,15 @@
     .search-write1 {
       position: absolute;
       top: 10%;
-      /*left: 7%;*/
+
       font-weight: 350;
       font-size: 15px;
     }
-    /*.search-write2 {*/
-    /*  position: absolute;*/
-    /*  top: 15%;*/
-    /*  left: 62%;*/
-    /*  font-weight: 350;*/
-    /*  font-size: 15px;*/
-    /*}*/
 
     .search-allday {
       position: absolute;
       top: 30%;
-      /*left: 7%;*/
+
     }
     #search-day1,
     #search-day2,
@@ -297,33 +264,39 @@
       height: 35px;
     }
 
-    /*.searchbox-text {*/
-    /*  position: absolute;*/
-    /*  top: 33%;*/
-    /*  left: 76%;*/
-    /*  width: auto;*/
-    /*  height: 39px;*/
-    /*}*/
+    /* 사이드바 하단 로고 틀 */
+    .bottom-logo {
+      position: absolute; /*건드리지말것*/
+      bottom: 3px;/* 하단쪽에 고정 */
+      margin-top: auto;
+      width: 200px;     /* 전체 너비 */
+      height: 50px;   /* 고정된 높이 (변경가능) */
+      overflow: hidden;   /*넘칠 경우 숨김 처리*/
+    }
 
-    /*.search-button {*/
-    /*  position: absolute;*/
-    /*  top: 33%;*/
-    /*  left: 88%;*/
-    /*  background-color: #f28c25;*/
-    /*  color: white;*/
-    /*  width: 50px;*/
-    /*  height: 39px;*/
-    /*  border-radius: 5px;*/
-    /*  border-style: none;*/
-    /*  cursor: pointer;*/
-    /*}*/
+    /* 사이드바 하단 로고 이미지 */
+    .bottom-logo img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* 바닥 사업자정보 */
+    .footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 5px;
+      font-size: 10px;
+    }
+
   </style>
 </head>
 
 <body>
 <nav class="nav">
   <ul>
-    <li class="nav-logo" style="margin: 0;"><img id="b1" src="/b1.png" alt="로고"></li>
+    <li class="nav-logo"><img src="/b1.png" alt="로고"></li>
     <li class="menu-1">
       <a href="#">회원 관리</a>
       <ul class="submenu">
@@ -425,27 +398,13 @@
       });
     });
 
-    // 날짜 버튼 이벤트 등록
-    document.getElementById("search-day1").addEventListener("click", () => { setDateRange(0); searchOrders(); });
-    document.getElementById("search-day2").addEventListener("click", () => { setDateRange(7); searchOrders(); });
-    document.getElementById("search-day3").addEventListener("click", () => { setDateRange(30); searchOrders(); });
-    document.getElementById("search-day4").addEventListener("click", () => { setDateRange(90); searchOrders(); });
-
-    // 초기 데이터 로드
-    loadOrders();
+    loadMembers();
   });
 
-  async function loadOrders() {
-    try {
-      const res = await fetch("/api/orders/search");
-      const data = await res.json();
-      renderOrders(data);
-    } catch (error) {
-      console.error("초기 주문 목록 조회 실패:", error);
-    }
-  }
 
-  async function searchOrders() {
+</script>
+<script>
+  async function searchMembersByName() {
     const code = document.getElementById("searchCode").value;
     const name = document.getElementById("searchName").value;
     const phone = document.getElementById("searchPhone").value;
@@ -457,13 +416,13 @@
     try {
       const res = await fetch(url);
       const orders = await res.json();
-      renderOrders(orders);
+      renderMembers(orders);
     } catch (error) {
       console.error("검색 실패:", error);
     }
   }
 
-  function renderOrders(orders) {
+  function renderMembers(orders) {
     const tbody = document.getElementById("memberTableBody");
     tbody.innerHTML = "";
 
@@ -473,9 +432,9 @@
         <td>${order.orderCode}</td>
         <td>${order.orderDate}</td>
         <td>${order.productName}</td>
-        <td>${order.userName}</td>
-        <td>${order.userPhoneNumber}</td>
-        <td>${order.userAddress}</td>
+        <td>${order.recipientName}</td>
+        <td>${order.recipientPhone}</td>
+        <td>${order.recipientAddress}</td>
       `;
       tbody.appendChild(row);
     });
@@ -489,9 +448,66 @@
     const todayStr = today.toISOString().split("T")[0];
     const startStr = startDate.toISOString().split("T")[0];
 
-    document.getElementById("startDate").value = startStr;
-    document.getElementById("endDate").value = todayStr;
+    const startInput = document.getElementById("startDate");
+    const endInput = document.getElementById("endDate");
+
+    if (startInput && endInput) {
+      startInput.value = startStr;
+      endInput.value = todayStr;
+    }
   }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    loadMembers();
+
+    const todayBtn = document.getElementById("search-day1");
+    const weekBtn = document.getElementById("search-day2");
+    const monthBtn = document.getElementById("search-day3");
+    const threeMonthBtn = document.getElementById("search-day4");
+
+    if (todayBtn) todayBtn.addEventListener("click", () => { setDateRange(0); searchMembersByName(); });
+    if (weekBtn) weekBtn.addEventListener("click", () => { setDateRange(7); searchMembersByName(); });
+    if (monthBtn) monthBtn.addEventListener("click", () => { setDateRange(30); searchMembersByName(); });
+    if (threeMonthBtn) threeMonthBtn.addEventListener("click", () => { setDateRange(90); searchMembersByName(); });
+  });
+
+  async function loadMembers() {
+    const res = await fetch("/api/orders/search");
+    const data = await res.json();
+    renderMembers(data);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    function setDateRange(days) {
+      let today = new Date();
+      let startDate = new Date();
+      startDate.setDate(today.getDate() - days);
+
+      let todayStr = today.toISOString().split("T")[0];
+      let startStr = startDate.toISOString().split("T")[0];
+
+      let startInput = document.getElementById("startDate");
+      let endInput = document.getElementById("endDate");
+
+      if (startInput && endInput) {
+        startInput.value = startStr;
+        endInput.value = todayStr;
+      } else {
+        console.error("날짜 입력 요소를 찾을 수 없습니다.");
+      }
+    }
+
+    // 버튼 클릭 이벤트 등록 (DOMContentLoaded 이후 실행)
+    let todayBtn = document.getElementById("search-day1");
+    let weekBtn = document.getElementById("search-day2");
+    let monthBtn = document.getElementById("search-day3");
+    let threeMonthBtn = document.getElementById("search-day4");
+
+    if (todayBtn) todayBtn.addEventListener("click", function () { setDateRange(0); });
+    if (weekBtn) weekBtn.addEventListener("click", function () { setDateRange(7); });
+    if (monthBtn) monthBtn.addEventListener("click", function () { setDateRange(30); });
+    if (threeMonthBtn) threeMonthBtn.addEventListener("click", function () { setDateRange(90); });
+  });
 </script>
 
 </body>
