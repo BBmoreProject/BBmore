@@ -1,18 +1,18 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${faq.noticeTitle}">자주 묻는 질문 상세</title>
-</head>
-<body>
-<h1 th:text="${faq.noticeTitle}"></h1>
-<p>등록일: <span th:text="${faq.noticeCreatedDate}"></span></p>
-<p th:text="${faq.noticeContent}"></p>
+<!--<!DOCTYPE html>-->
+<!--<html lang="ko">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title th:text="${faq.noticeTitle}">자주 묻는 질문 상세</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1 th:text="${faq.noticeTitle}"></h1>-->
+<!--<p>등록일: <span th:text="${faq.noticeCreatedDate}"></span></p>-->
+<!--<p th:text="${faq.noticeContent}"></p>-->
 
-<!-- 목록으로 돌아가기 버튼 -->
-<a th:href="@{/members/notice-faq-list?noticetype=">목록으로 돌아가기</a>
-<!--<a th:href="@{/members/notice-faq-list?noticeType=${faq.noticeType != null ? faq.noticeType : '자주묻는질문'}}">목록으로 돌아가기</a>-->
+<!--&lt;!&ndash; 목록으로 돌아가기 버튼 &ndash;&gt;-->
+<!--<a th:href="@{/members/notice-faq-list?noticetype=">목록으로 돌아가기</a>-->
+<!--&lt;!&ndash;<a th:href="@{/members/notice-faq-list?noticeType=${faq.noticeType != null ? faq.noticeType : '자주묻는질문'}}">목록으로 돌아가기</a>&ndash;&gt;-->
 
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->

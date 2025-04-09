@@ -299,8 +299,6 @@
         }
 
 
-
-
         /* 사이드바 하단 로고 이미지 */
         .bottom-logo img {
             width: 100%;
@@ -383,36 +381,34 @@
         }
 
 
-
-
     </style>
 
-<!--    <script>-->
-<!--        -->
+    <!--    <script>-->
+    <!--        -->
 
-<!--        document.addEventListener("DOMContentLoaded", function () {-->
-<!--            // URL에서 'id' 파라미터 값 추출-->
-<!--            const urlParams = new URLSearchParams(window.location.search);-->
-<!--            const currentIdStr = urlParams.get('id');  // 'id' 파라미터 값을 문자열로 가져옴-->
+    <!--        document.addEventListener("DOMContentLoaded", function () {-->
+    <!--            // URL에서 'id' 파라미터 값 추출-->
+    <!--            const urlParams = new URLSearchParams(window.location.search);-->
+    <!--            const currentIdStr = urlParams.get('id');  // 'id' 파라미터 값을 문자열로 가져옴-->
 
-<!--            if (currentIdStr) {-->
-<!--                const currentId = parseInt(currentIdStr);  // 문자열을 정수로 변환-->
+    <!--            if (currentIdStr) {-->
+    <!--                const currentId = parseInt(currentIdStr);  // 문자열을 정수로 변환-->
 
-<!--                if (!isNaN(currentId)) {-->
-<!--                    // 이전 글과 다음 글 링크 동적으로 설정-->
-<!--                    const prevLink = document.getElementById('prev');-->
-<!--                    const nextLink = document.getElementById('next');-->
+    <!--                if (!isNaN(currentId)) {-->
+    <!--                    // 이전 글과 다음 글 링크 동적으로 설정-->
+    <!--                    const prevLink = document.getElementById('prev');-->
+    <!--                    const nextLink = document.getElementById('next');-->
 
-<!--                    prevLink.href = `notice-view.html?id=${currentId - 1}`;  // 이전 글 링크 설정-->
-<!--                    nextLink.href = `notice-view.html?id=${currentId + 1}`;  // 다음 글 링크 설정-->
-<!--                } else {-->
-<!--                    console.error('ID 값이 유효하지 않습니다.');-->
-<!--                }-->
-<!--            } else {-->
-<!--                console.error('ID 파라미터가 존재하지 않습니다.');-->
-<!--            }-->
-<!--        });-->
-<!--    </script>-->
+    <!--                    prevLink.href = `notice-view.html?id=${currentId - 1}`;  // 이전 글 링크 설정-->
+    <!--                    nextLink.href = `notice-view.html?id=${currentId + 1}`;  // 다음 글 링크 설정-->
+    <!--                } else {-->
+    <!--                    console.error('ID 값이 유효하지 않습니다.');-->
+    <!--                }-->
+    <!--            } else {-->
+    <!--                console.error('ID 파라미터가 존재하지 않습니다.');-->
+    <!--            }-->
+    <!--        });-->
+    <!--    </script>-->
 
 
 </head>
@@ -455,16 +451,16 @@
         <div class="notice-box">
             <!--제목-->
             <div class="title-box">
-                <div class="title" th:text="${notice.noticeTitle}"></div>
+                <div class="title" th:text="${faq.noticeTitle}"></div>
             </div><!--title-box끝-->
 
             <div class="date-box">
-                <div class="date" th:text="${notice.noticeCreatedDate}"></div>
+                <div class="date" th:text="${faq.noticeCreatedDate}"></div>
             </div>
 
             <!--내용-->
             <div class="content-box">
-                <div th:text="${notice.noticeContent}"></div>
+                <div th:text="${faq.noticeContent}"></div>
             </div>
 
             <div class="next-title-box1">
@@ -475,10 +471,10 @@
                 <!--이전글 제목값 부분-->
                 <div class="next-content-box1">
                     <!--                        <button class="next-content1">-->
-                    <a th:if="${prevNotice != null}"
-                       th:href="@{'/members/user-notice-view/' + ${prevNotice.noticeCode}}"
-                       th:text="${prevNotice.noticeTitle}">이전글 제목</a>
-                    <a th:if="${prevNotice == null}">이전글 없음</a>
+                    <a th:if="${prevFaq != null}"
+                       th:href="@{'/members/user-faq-view/' + ${prevFaq.noticeCode}}"
+                       th:text="${prevFaq.noticeTitle}">이전글 제목</a>
+                    <a th:if="${prevFaq == null}">이전글 없음</a>
                     <!--                        </button>-->
                 </div>
             </div>
@@ -491,10 +487,10 @@
                 <!--다음글 제목값 부분-->
                 <div class="next-content-box2">
                     <!--                        <button class="next-content2">-->
-                    <a th:if="${nextNotice != null}"
-                       th:href="@{'/members/user-notice-view/' + ${nextNotice.noticeCode}}"
-                       th:text="${nextNotice.noticeTitle}">다음글 제목</a>
-                    <a th:if="${nextNotice == null}">다음글 없음</a>
+                    <a th:if="${nextFaq != null}"
+                       th:href="@{'/members/user-faq-view/' + ${nextFaq.noticeCode}}"
+                       th:text="${nextFaq.noticeTitle}">다음글 제목</a>
+                    <a th:if="${nextFaq == null}">다음글 없음</a>
                     <!--                        <button>-->
                     <!--                            <a href="#" th:href="@{'/notice/notice-view/' + ${nextNotice.noticeCode}}"-->
                     <!--                               th:text="${nextNotice.noticeTitle}">다음글 제목</a>-->
@@ -503,9 +499,7 @@
             </div>
         </div>
     </section>
-
-        </div> <!--notice-box끝-->
-    </div> <!--"• 공지사항 글쓰기" + 글쓰기 틀 끝-->
+    <!--notice-box끝-->
 </main>
 <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
 

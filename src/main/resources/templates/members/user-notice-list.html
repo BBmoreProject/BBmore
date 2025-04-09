@@ -319,8 +319,8 @@
 
         <!-- 검색창 -->
         <div class="search">
-            <input type="text" id="search-title" placeholder="제목 검색">
-            <input type="text" id="search-content" placeholder="내용 검색">
+            <input type="text" class="search-title" placeholder="제목 검색">
+            <input type="text" class="search-content" placeholder="내용 검색">
             <button>검색</button>
         </div>
 
@@ -340,7 +340,7 @@
             </thead>
             <tbody>
             <tr th:each="notice : ${noticePage.content}">
-                <td><a th:href="@{/members/notice-detail/{noticeCode}(noticeCode=${notice.noticeCode})}"
+                <td><a th:href="@{/members/user-notice-view/{noticeCode}(noticeCode=${notice.noticeCode})}"
                        th:text="${notice.noticeTitle}"></a></td>
                 <td th:text="${notice.noticeCreatedDate}"></td>
                 <td th:text="${notice.noticeView}"></td>
@@ -387,7 +387,7 @@
 
             <tbody>
             <tr th:each="notice : ${faqPage.content}">
-                <td><a th:href="@{/members/faq-detail/{noticeCode}(noticeCode=${notice.noticeCode})}"
+                <td><a th:href="@{/members/user-faq-view/{noticeCode}(noticeCode=${notice.noticeCode})}"
                        th:text="${notice.noticeTitle}"></a></td>
                 <td th:text="${notice.noticeCreatedDate}"></td>
                 <td th:text="${notice.noticeView}"></td>
