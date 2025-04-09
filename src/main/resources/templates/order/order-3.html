@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=devioce-width, initial-scale=1.0"/>
-    <title>판매관리</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>교환관리</title>
 
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
@@ -437,20 +437,13 @@
 
     </style>
 
-    <!-- 사이드바 하위메뉴 한 개씩 열리게하기 (메뉴가 열려있을때 다른 메뉴 열면 닫히게) -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // HTML 문서가 모두 로드된 후 실행되도록
-            const menuItems = document.querySelectorAll(".nav ul li > a"); // 모든 메뉴(1~6) 선택
-            menuItems.forEach((menu) => {
-                // a 태그의 메뉴마다 이벤트 리스너 추가
+            const menuItems = document.querySelectorAll(".nav ul li > a");
+            menuItems.forEach(menu => {
                 menu.addEventListener("click", function (event) {
                     event.preventDefault();
-                    // 클릭할때마다 모든 메뉴의 active 클래스 제거 (기존에 열린 메뉴가 있다면 닫히게끔)
-                    document.querySelectorAll(".nav ul li").forEach((item) => {
-                        item.classList.remove("active");
-                    });
-                    // 클릭한 메뉴의 부모 요소 li에 active 클래스 추가 (해당 메뉴 열기)
+                    document.querySelectorAll(".nav ul li").forEach(item => item.classList.remove("active"));
                     this.parentElement.classList.toggle("active");
                 });
             });
@@ -512,12 +505,10 @@
 </nav>
 
 <div class="container">
-    <header class="header">반품 조회</header>
+    <header class="header">교환 조회</header>
     <main class="main">
         <div class="search-box">
-            <div class="search-write1">
-                <p>조회기간</p>
-            </div>
+            <div class="search-write1"><p>조회기간</p></div>
             <div class="search-allday">
                 <button id="search-day1">오늘</button>
                 <button id="search-day2">1주일</button>
@@ -528,32 +519,30 @@
                 <input type="date" id="startDate"/> ~
                 <input type="date" id="endDate"/>
             </div>
-            <input type="text" class="search-box-input" id="searchReturnCode" placeholder="반품코드">
+            <input type="text" class="search-box-input" id="searchExchangeCode" placeholder="교환코드">
             <input type="text" class="search-box-input" id="searchMemberName" placeholder="회원이름">
-            <select id="searchReturnStatus" class="search-box-input">
+            <select id="searchExchangeStatus" class="search-box-input">
                 <option value="">전체상태</option>
                 <option value="true">처리됨</option>
                 <option value="false">처리대기</option>
             </select>
-            <button class="search-box-button" onclick="searchReturns()">검색</button>
-            <button class="search-box-button" onclick="loadAllReturns()">전체 조회</button>
+            <button class="search-box-button" onclick="searchExchanges()">검색</button>
+            <button class="search-box-button" onclick="loadAllExchanges()">전체 조회</button>
         </div>
 
         <div class="order-box">
             <div class="all-order">
-
                 <table class="all-order-table">
                     <thead>
                     <tr>
-                        <th>반품코드</th>
+                        <th>교환코드</th>
                         <th>신청일자</th>
                         <th>처리상태</th>
-                        <th>환불금액</th>
-                        <th>반품사유</th>
+                        <th>교환사유</th>
                         <th>회원이름</th>
                     </tr>
                     </thead>
-                    <tbody id="returnTableBody"></tbody>
+                    <tbody id="exchangeTableBody"></tbody>
                 </table>
             </div>
         </div>
@@ -569,7 +558,6 @@
 <script>
     let currentPage = 1;
 
-    // 날짜 단축 버튼용 함수
     function setDateRange(days) {
         const today = new Date();
         const start = new Date();
@@ -580,29 +568,27 @@
         document.getElementById("endDate").value = to;
     }
 
-    // 전체 조회: 날짜 및 필터 초기화 후 1페이지 로드
-    function loadAllReturns() {
+    function loadAllExchanges() {
         document.getElementById("startDate").value = "";
         document.getElementById("endDate").value = "";
-        document.getElementById("searchReturnStatus").value = "";
-        document.getElementById("searchReturnCode").value = "";
+        document.getElementById("searchExchangeStatus").value = "";
+        document.getElementById("searchExchangeCode").value = "";
         document.getElementById("searchMemberName").value = "";
         currentPage = 1;
         loadPage(1);
     }
 
-    // 쿼리스트링 빌드
     function buildQueryParams(page) {
-        const code = document.getElementById("searchReturnCode").value;
+        const code = document.getElementById("searchExchangeCode").value;
         const member = document.getElementById("searchMemberName").value;
-        const status = document.getElementById("searchReturnStatus").value;
+        const status = document.getElementById("searchExchangeStatus").value;
         const start = document.getElementById("startDate").value;
         const end = document.getElementById("endDate").value;
 
         const params = new URLSearchParams();
-        if (code) params.append("returnCode", code);
+        if (code) params.append("exchangeCode", code);
         if (member) params.append("memberName", member);
-        if (status) params.append("returnStatus", status);
+        if (status) params.append("exchangeStatus", status);
         if (start) params.append("startDate", start);
         if (end) params.append("endDate", end);
         params.append("page", page - 1);
@@ -610,53 +596,46 @@
         return params.toString();
     }
 
-    // 페이지 데이터 로드
     async function loadPage(page) {
         currentPage = page;
         const qs = buildQueryParams(page);
-        const res = await fetch(`/api/returns/search?${qs}`);
+        const res = await fetch(`/api/exchanges/search?${qs}`);
         if (!res.ok) return console.error("로드 실패:", res.status);
         const data = await res.json();
-        renderReturns(data.content);
+        renderExchanges(data.content);
         renderPagination(data);
     }
 
-    // 검색 버튼
-    function searchReturns() {
+    function searchExchanges() {
         loadPage(1);
     }
 
-    // 테이블 렌더링 (상태 변경 드롭다운 포함)
-    function renderReturns(list) {
-        const tbody = document.getElementById("returnTableBody");
+    function renderExchanges(list) {
+        const tbody = document.getElementById("exchangeTableBody");
         tbody.innerHTML = "";
         if (!list.length) {
-            tbody.innerHTML = "<tr><td colspan='6'>조회 결과가 없습니다.</td></tr>";
+            tbody.innerHTML = "<tr><td colspan='5'>조회 결과가 없습니다.</td></tr>";
             return;
         }
         list.forEach(item => {
             const tr = document.createElement("tr");
             const selectHtml = `
-          <select onchange="updateStatus(${item.returnCode}, this.value)">
-            <option value="false"${!item.returnStatus ? ' selected' : ''}>처리대기</option>
-            <option value="true"${item.returnStatus ? ' selected' : ''}>처리됨</option>
-          </select>
-        `;
+              <select onchange="updateExchangeStatus(${item.exchangeCode}, this.value)">
+                <option value="false"${!item.exchangeStatus ? ' selected' : ''}>처리대기</option>
+                <option value="true"${item.exchangeStatus ? ' selected' : ''}>처리됨</option>
+              </select>`;
             tr.innerHTML = `
-          <td>${item.returnCode}</td>
-          <td>${item.returnRequestDate}</td>
-          <td>${selectHtml}</td>
-          <td>${item.refundAmount}</td>
-          <td>${item.returnReason || '-'}</td>
-          <td>${item.memberName || '-'}</td>
-        `;
+              <td>${item.exchangeCode}</td>
+              <td>${item.exchangeRequestDate}</td>
+              <td>${selectHtml}</td>
+              <td>${item.exchangeReason || '-'}</td>
+              <td>${item.memberName || '-'}</td>`;
             tbody.appendChild(tr);
         });
     }
 
-    // 상태 변경 API 호출
-    async function updateStatus(returnCode, status) {
-        const res = await fetch(`/api/returns/${returnCode}/status?status=${status}`, {
+    async function updateExchangeStatus(exchangeCode, status) {
+        const res = await fetch(`/api/exchanges/${exchangeCode}/status?status=${status}`, {
             method: 'PUT'
         });
         if (res.ok) {
@@ -667,7 +646,6 @@
         }
     }
 
-    // 페이지네이션 렌더링
     function renderPagination(pageData) {
         const ul = document.getElementById("pagination");
         ul.innerHTML = "";
@@ -676,14 +654,12 @@
         const first = pageData.first;
         const last = pageData.last;
 
-        // 이전 버튼
         const prev = document.createElement("li");
         prev.textContent = "이전";
         if (!first) prev.onclick = () => loadPage(curr - 1);
         else prev.classList.add("disabled");
         ul.appendChild(prev);
 
-        // 번호 버튼
         for (let i = 1; i <= total; i++) {
             const li = document.createElement("li");
             li.textContent = i;
@@ -692,7 +668,6 @@
             ul.appendChild(li);
         }
 
-        // 다음 버튼
         const next = document.createElement("li");
         next.textContent = "다음";
         if (!last) next.onclick = () => loadPage(curr + 1);
@@ -700,37 +675,22 @@
         ul.appendChild(next);
     }
 
-    // 초기 바인딩
     document.addEventListener("DOMContentLoaded", () => {
         loadPage(1);
-        document.getElementById("search-day1").onclick = () => {
-            setDateRange(0);
-            searchReturns();
-        };
-        document.getElementById("search-day2").onclick = () => {
-            setDateRange(7);
-            searchReturns();
-        };
-        document.getElementById("search-day3").onclick = () => {
-            setDateRange(30);
-            searchReturns();
-        };
-        document.getElementById("search-day4").onclick = () => {
-            setDateRange(90);
-            searchReturns();
-        };
-    });
+        document.getElementById("search-day1").onclick = () => { setDateRange(0); searchExchanges(); };
+        document.getElementById("search-day2").onclick = () => { setDateRange(7); searchExchanges(); };
+        document.getElementById("search-day3").onclick = () => { setDateRange(30); searchExchanges(); };
+        document.getElementById("search-day4").onclick = () => { setDateRange(90); searchExchanges(); };
 
-    document.querySelectorAll('.search-box-input').forEach(input => {
-        input.addEventListener("keydown", function (e) {
-            if (e.key === "Enter") {
-                e.preventDefault();
-                searchReturns();
-            }
+        document.querySelectorAll('.search-box-input').forEach(input => {
+            input.addEventListener("keydown", function (e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    searchExchanges();
+                }
+            });
         });
     });
 </script>
-
-
 </body>
 </html>
