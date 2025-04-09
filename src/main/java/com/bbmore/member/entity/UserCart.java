@@ -41,5 +41,4 @@ public class UserCart {
   private Product product; // FK 상품
 
 
-
 }

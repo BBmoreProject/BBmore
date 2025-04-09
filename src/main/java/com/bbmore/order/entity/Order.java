@@ -1,7 +1,7 @@
 package com.bbmore.order.entity;
 
-
 import com.bbmore.member.entity.Member;
+import com.bbmore.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.*;
@@ -42,6 +42,11 @@ public class Order {
     @Column(name = "order_delivery_request")
     private String orderDeliverYRequest; // 배송요청사항
 
+    @Column(name = "product_name", nullable = false)
+    private String productName; // 제품명
+
+    @Column(name = "product_quantity", nullable = false)
+    private Integer productQuantity;    // 주문 상품 개수
 
     // FK(회원고유번호)
     @ManyToOne(fetch = FetchType.LAZY)

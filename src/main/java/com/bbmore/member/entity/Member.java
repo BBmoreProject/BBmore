@@ -1,6 +1,5 @@
 package com.bbmore.member.entity;
 
-
 import com.bbmore.member.common.UserRole;
 import jakarta.persistence.*;
 import lombok.*;

@@ -26,9 +26,9 @@ public class Notice {
     @Column(name = "notice_created_date", nullable = false, updatable = false)
     private LocalDate noticeCreatedDate;    // 등록일자
 
-  
+
     @Column(name = "notice_view" , columnDefinition = "Integer default 0", nullable = false)
-    private Integer noticeView;             // 조회수 
+    private Integer noticeView;             // 조회수
 
     public void setNoticeView(Integer noticeView) {  // Setter 추가
         this.noticeView = noticeView;
