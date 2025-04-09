@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class aOrderViewController {
 
 
-    @GetMapping("/order-1-data")
+    @GetMapping("/order-1")
     public String deliveryPage() {
-        return "order/order-1-data";
+        return "order-1";
     }
 
 }
