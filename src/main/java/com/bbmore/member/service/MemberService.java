@@ -46,37 +46,6 @@ public class MemberService {
     */
 
 
-//    @Transactional      // modifyMember() 내부의 모든 DB 작업이 성공해야 최종 반영됨.
-//    public void modifyMember(MemberUpdateDTO memberUpdateDTO){   // memberUpdateDTO : 사용자의 수정 정보를 담고 있는 DTO 객체
-//        Member member = memberUpRepository.findByUserId(memberUpdateDTO.getUserId());   // 기존 회원 정보를 userId 로 DB 에서 조회
-//
-//
-//        Animal animal = convertToRegistry(memberUpdateDTO.getAnimalBreed()); // 동물 정보 변환
-//        // memberUpdateDTO.getAnimalBreed() -> 사용자가 선택한 동물 품종 정보(문자열)
-//        // convertToRegistry() 메서드를 호출해서 Animal 객체로 변환
-//
-//        System.out.println("Received animalBreed: " + memberUpdateDTO.getAnimalBreed()); // 디버깅용 로그 추가
-//
-//        if (memberUpdateDTO.getAnimalBreed() == null || memberUpdateDTO.getAnimalBreed().trim().isEmpty()) {
-//            throw new IllegalArgumentException("animalBreed 값이 null이거나 비어 있습니다.");
-//        }
-//
-//
-//        member.updateMemberInfo(    // 사용자의 수정 정보를 담고 있는 DTO 객체
-//                memberUpdateDTO.getUserId(),
-//                memberUpdateDTO.getUserPassword(),
-//                memberUpdateDTO.getUserName(),
-//                memberUpdateDTO.getUserAddress(),
-//                memberUpdateDTO.getUserPhoneNumber(),
-//                memberUpdateDTO.getUserEmail(),
-//                memberUpdateDTO.getUserPetName(),
-//                memberUpdateDTO.getUserPetAge(),
-//                memberUpdateDTO.getUserPetWeight(),
-//                memberUpdateDTO.getUserPetMedicalHistory(),
-//                animal // 사용자의 반려동물 정보도 함께 변경
-//        ); // 프론트에서 받은 데이터를 이 DTO 객체로 전달받음
-//    }
-
 
     /*
     * tbl_member 를 수정하면 데이터베이스에 저장이 되지만
