@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class adminMemberService {
+
     private final adminMemberRepository adminMemberRepository;
 
     public List<AdminMemberDTO> getAllMembers() {
@@ -35,12 +36,14 @@ public class adminMemberService {
     public AdminMemberDTO updateMember(AdminMemberDTO dto) {
         Member existing = adminMemberRepository.findById(dto.getUserCode())
                 .orElseThrow(() -> new RuntimeException("Member not found"));
+
         Member updated = existing.toBuilder()
                 .userName(dto.getUserName())
                 .userAddress(dto.getUserAddress())
                 .userPhoneNumber(dto.getUserPhoneNumber())
                 .animal(updateAnimal(existing.getAnimal(), dto.getAnimalBreed()))
                 .build();
+
         return convertToDTO(adminMemberRepository.save(updated));
     }
 
@@ -68,9 +71,11 @@ public class adminMemberService {
                 .userName(dto.getUserName())
                 .userAddress(dto.getUserAddress())
                 .userPhoneNumber(dto.getUserPhoneNumber());
+
         if (dto.getAnimalBreed() != null) {
             builder.animal(Animal.builder().animalBreed(dto.getAnimalBreed()).build());
         }
+
         return builder.build();
     }
 

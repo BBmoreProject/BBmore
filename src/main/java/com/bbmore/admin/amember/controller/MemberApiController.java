@@ -4,11 +4,12 @@ import com.bbmore.admin.amember.dto.AdminMemberDTO;
 import com.bbmore.admin.amember.service.adminMemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/members")
 @RequiredArgsConstructor
 public class MemberApiController {
