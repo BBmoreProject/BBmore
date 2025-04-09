@@ -664,6 +664,17 @@
         document.getElementById("search-day3").onclick = () => { setDateRange(30); searchOrders(); };
         document.getElementById("search-day4").onclick = () => { setDateRange(90); searchOrders(); };
     });
+
+    document.querySelectorAll('.search-box-input').forEach(input => {
+        input.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                searchOrders();
+            }
+        });
+    });
+
+
 </script>
 
 
