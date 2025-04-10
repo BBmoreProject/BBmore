@@ -7,7 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-  // 상품 코드로 상품 조회
-  Product findByProductCode(Integer productCode);
 
 }

@@ -148,7 +148,6 @@
     }
 
 
-
     /* 검색창 스타일 */
     .search {
         display: flex; /*gap 주려고*/
@@ -168,39 +167,37 @@
         border-style: none;
         border-radius: 5px;
         /* margin-top: 50px; */
-        }
+    }
 
 
-        .search input[type="text"] {
-            padding: 8px;
-            font-size: 16px;
-            width: 200px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
+    .search input[type="text"] {
+        padding: 8px;
+        font-size: 16px;
+        width: 200px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
 
     /* 검색-조회버튼 */
-        .search-button {
-            position: relative;
-            width: 60px;
-            height: 25px;
-            margin: 10px;
-            background-color: #F28C25;
-            color: white;
-            left: 20px;
-            border-radius: 5px;
-            border-style: none;
-            cursor: pointer;
-        }
+    .search-button {
+        position: relative;
+        width: 60px;
+        height: 25px;
+        margin: 10px;
+        background-color: #F28C25;
+        color: white;
+        left: 20px;
+        border-radius: 5px;
+        border-style: none;
+        cursor: pointer;
+    }
 
-        .search-button:hover {
-            background-color: #e68a00;
-        }
-
-
+    .search-button:hover {
+        background-color: #e68a00;
+    }
 
 
-        /* 테이블 스타일 */
+    /* 테이블 스타일 */
     table {
         /* width: 100%; */
         width: 1120px;
@@ -238,7 +235,11 @@
         color: white;
         border-radius: 5px;
         cursor: pointer;
+    }
 
+    #paging button a {
+        color: white;
+        text-decoration-line: none;
     }
 
     /* 페이징 스타일  */
@@ -338,7 +339,6 @@
     }
 
 
-
 </style>
 
 <body>
@@ -354,7 +354,7 @@
         <div class="right">
             <a class="nav-link" id="login" href="#">로그인</a>
             <a class="nav-link" id="signup" href="#">회원가입</a>
-            <a class="nav-link" id="cart" href="#">
+            <a class="nav-link" id="cart" onclick="location.href='/cart/cart-list'">
                 <img src="/img/cart.png" alt="장바구니 이미지" id="cart_img"></a>
         </div>
     </nav>
@@ -371,29 +371,29 @@
     </form>
 
 
-        <!-- 공지사항, 자주 묻는 질문 버튼 -->
-        <div class="tab-buttons">
-            <a onclick="location.href='/members/user-notice-list'">공지사항</a>
-            <a onclick="location.href='/members/user-faq-list'">자주 묻는 질문</a>
-        </div>
+    <!-- 공지사항, 자주 묻는 질문 버튼 -->
+    <div class="tab-buttons">
+        <a onclick="location.href='/members/user-notice-list'">공지사항</a>
+        <a onclick="location.href='/members/user-faq-list'">자주 묻는 질문</a>
+    </div>
 
-        <table class="notice-list">
-            <thead>
-            <tr>
-                <th>제목</th>
-                <th>등록일</th>
-                <th>조회수</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="faq : ${faqList}">
-                <td><a th:href="@{/members/user-faq-view/{noticeCode}(noticeCode=${faq.noticeCode})}"
-                       th:text="${faq.noticeTitle}"></a></td>
-                <td th:text="${faq.noticeCreatedDate}"></td>
-                <td th:text="${faq.noticeView}"></td>
-            </tr>
-            </tbody>
-        </table>
+    <table class="notice-list">
+        <thead>
+        <tr>
+            <th>제목</th>
+            <th>등록일</th>
+            <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="faq : ${faqList}">
+            <td><a th:href="@{/members/user-faq-view/{noticeCode}(noticeCode=${faq.noticeCode})}"
+                   th:text="${faq.noticeTitle}"></a></td>
+            <td th:text="${faq.noticeCreatedDate}"></td>
+            <td th:text="${faq.noticeView}"></td>
+        </tr>
+        </tbody>
+    </table>
 
     <div id="paging">
         <!-- 페이지 번호 링크 -->
@@ -407,7 +407,8 @@
         </button>
 
         <button th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
-            <a th:href="@{/members/user-faq-list(page=${page}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}" th:text="${page}"
+            <a th:href="@{/members/user-faq-list(page=${page}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
+               th:text="${page}"
                th:disabled="${paging.currentPage eq page}">
             </a>
 

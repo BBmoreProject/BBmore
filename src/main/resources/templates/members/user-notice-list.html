@@ -192,6 +192,10 @@
         /*background-color: #f4f4f4;*/
     }
 
+    td a {
+        text-decoration-line: none;
+    }
+
     /* 페이징 스타일  */
     #paging {
         text-align: center;
@@ -297,7 +301,7 @@
 
     /* 검색창 박스틀 (검색창, •공지사항 목록 간격조절 margin) */
     .search-box {
-         position: relative;
+        position: relative;
         /* margin-top: 0px; */
         /* margin-bottom: 0px; */
         /* width: 10px; */
@@ -337,6 +341,11 @@
     }
 
 
+    #paging button a {
+        color: white;
+        text-decoration-line: none;
+    }
+
 </style>
 
 <body>
@@ -352,7 +361,7 @@
         <div class="right">
             <a class="nav-link" id="login" href="#">로그인</a>
             <a class="nav-link" id="signup" href="#">회원가입</a>
-            <a class="nav-link" id="cart" href="#">
+            <a class="nav-link" id="cart" onclick="location.href='/cart/cart-list'">
                 <img src="/img/cart.png" alt="장바구니 이미지" id="cart_img"></a>
         </div>
     </nav>
@@ -369,29 +378,29 @@
     </form>
 
 
-        <!-- 공지사항, 자주 묻는 질문 버튼 -->
-        <div class="tab-buttons">
-            <a onclick="location.href='/members/user-notice-list'">공지사항</a>
-            <a onclick="location.href='/members/user-faq-list'">자주 묻는 질문</a>
-        </div>
+    <!-- 공지사항, 자주 묻는 질문 버튼 -->
+    <div class="tab-buttons">
+        <a onclick="location.href='/members/user-notice-list'">공지사항</a>
+        <a onclick="location.href='/members/user-faq-list'">자주 묻는 질문</a>
+    </div>
 
-        <table class="notice-list">
-            <thead>
-            <tr>
-                <th>제목</th>
-                <th>등록일</th>
-                <th>조회수</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="notice : ${noticeList}">
-                <td><a th:href="@{/members/user-notice-view/{noticeCode}(noticeCode=${notice.noticeCode})}"
-                       th:text="${notice.noticeTitle}"></a></td>
-                <td th:text="${notice.noticeCreatedDate}"></td>
-                <td th:text="${notice.noticeView}"></td>
-            </tr>
-            </tbody>
-        </table>
+    <table class="notice-list">
+        <thead>
+        <tr>
+            <th>제목</th>
+            <th>등록일</th>
+            <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="notice : ${noticeList}">
+            <td><a th:href="@{/members/user-notice-view/{noticeCode}(noticeCode=${notice.noticeCode})}"
+                   th:text="${notice.noticeTitle}"></a></td>
+            <td th:text="${notice.noticeCreatedDate}"></td>
+            <td th:text="${notice.noticeView}"></td>
+        </tr>
+        </tbody>
+    </table>
 
     <!--TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT-->
 
@@ -408,7 +417,8 @@
         </button>
 
         <button th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
-            <a th:href="@{/members/user-notice-list(page=${page}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}" th:text="${page}"
+            <a th:href="@{/members/user-notice-list(page=${page}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
+               th:text="${page}"
                th:disabled="${paging.currentPage eq page}">
             </a>
 

@@ -398,8 +398,6 @@
     </style>
 
 
-
-
 </head>
 
 <body>
@@ -413,7 +411,7 @@
         <div class="right">
             <a class="nav-link" id="login" href="#">로그인</a>
             <a class="nav-link" id="signup" href="#">회원가입</a>
-            <a class="nav-link" id="cart" href="#">
+            <a class="nav-link" id="cart" onclick="location.href='/cart/cart-list'">
                 <img src="/img/cart.png" alt="장바구니 이미지" id="cart_img"></a>
         </div>
     </nav>
@@ -424,11 +422,11 @@
     <section id="notice" class="content">
 
         <!-- 검색창 -->
-<!--        <div class="search">-->
-<!--            <input type="text" id="search-title" placeholder="제목 검색">-->
-<!--            <input type="text" id="search-content" placeholder="내용 검색">-->
-<!--            <button>검색</button>-->
-<!--        </div>-->
+        <!--        <div class="search">-->
+        <!--            <input type="text" id="search-title" placeholder="제목 검색">-->
+        <!--            <input type="text" id="search-content" placeholder="내용 검색">-->
+        <!--            <button>검색</button>-->
+        <!--        </div>-->
 
         <!-- 공지사항, 자주 묻는 질문 버튼 -->
         <div class="tab-buttons">
@@ -484,7 +482,7 @@
         </div>
     </section>
     <div id="back">
-        <button onclick="history.back()" class="back-button" >목록으로 돌아가기</button>
+        <button onclick="history.back()" class="back-button">목록으로 돌아가기</button>
     </div>
 
 </main>

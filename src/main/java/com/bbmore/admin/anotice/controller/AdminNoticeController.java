@@ -42,8 +42,6 @@ public class AdminNoticeController {
                                @RequestParam(value = "noticeType", required = false) String noticeType) {
 
 
-//    Page<NoticeTypeDTO> noticeList = noticeService.findNoticeList(pageable);
-
     // 검색어가 있을 때와 없을 때 처리
     Page<NoticeTypeDTO> noticeList;
 
@@ -56,7 +54,7 @@ public class AdminNoticeController {
       System.out.println("검색어 있을때 noticeList: " + noticeList);
     }
 
-    //    /* 페이징 처리 이후 */
+    /* 페이징 처리 이후 */
     //    // {}: 위치홀더라고 생각할 것
     log.info("pageable: {}", pageable);
     log.info("{}", noticeList.getContent());
@@ -247,7 +245,8 @@ public class AdminNoticeController {
 
   // 공지사항/자주묻는질문 타입별로 수정 진행
   @PostMapping("/update/{id}")
-  public String updateNotice(@PathVariable("id") Integer noticeCode, NoticeDTO noticedto, @RequestParam("noticeType") String noticeType) {
+  public String updateNotice(@PathVariable("id") Integer noticeCode, NoticeDTO noticedto,
+                             @RequestParam("noticeType") String noticeType) {
     // 타입에 따라 수정 처리
     if ("공지사항".equals(noticeType)) {
       noticeService.updateNotice(noticeCode, noticedto, "공지사항");
@@ -256,7 +255,8 @@ public class AdminNoticeController {
       noticeService.updateNotice(noticeCode, noticedto, "자주묻는질문");
       return "redirect:/notice/faq-list";  // 자주 묻는 질문 리스트로 리다이렉트
     }
-    return "redirect:/notice/faq-list";
+    // 기본값: 공지사항 목록
+    return "redirect:/notice/notice-list_ver1";
   }
 
 

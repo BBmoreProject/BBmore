@@ -15,6 +15,7 @@ public interface UserCartRepository extends JpaRepository<UserCart, Integer> {
   // 특정 사용자에 대한 장바구니 목록 조회
   List<UserCart> findByMember_UserCode(Integer userCode);
 
+  // 장바구니 수량 업데이트
   @Modifying
   @Query("UPDATE UserCart c SET c.cartProductQuantity = :newQuantity WHERE c.cartCode = :cartCode")
   void updateQuantity(@Param("cartCode") Integer cartCode, @Param("newQuantity") Integer newQuantity);

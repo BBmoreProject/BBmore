@@ -166,7 +166,7 @@
             margin: 10px;
         }
 
-        .write-box{
+        .write-box {
             margin-top: 20px;
         }
 
@@ -225,8 +225,7 @@
 
         /* 조회,저장 버튼 */
         .buttons #btnCancel,
-        .buttons #btnSave
-        {
+        .buttons #btnSave {
             width: 52px;
             height: 25px;
             border: none;
@@ -337,13 +336,6 @@
             <a href="#">배송 관리</a>
             <ul class="submenu">
                 <li><a href="delivery-1.html">주문 조회</a></li>
-                <li><a href="delivery-2.html">주문 현황</a></li>
-            </ul>
-        </li>
-        <li class="menu-5">
-            <a href="#">리뷰 관리</a>
-            <ul class="submenu">
-                <li><a href="notice_5.html">리뷰 목록</a></li>
             </ul>
         </li>
         <li class="menu-6">
@@ -353,16 +345,16 @@
                 <li><a onclick="location.href='/notice/faq-list'">자주 묻는 질문</a></li>
             </ul>
         </li>
-        <div class="bottom-logo"><img src="/img/b2.png" alt="로고"> </div>
     </ul>
+    <div class="bottom-logo"><img src="/img/b2.png" alt="로고"></div>
 </nav>
 
 <div class="container">
     <header class="header">공지사항 관리</header>
     <main class="main">
-        <div class="search-box"> <!--검색창-->
-            <input type="text" placeholder="제목 입력" name="noticeTitle">
-            <button class="search-button" type="submit">조회</button>
+        <div class="search-box"> <!--검색창 필요없음-->
+            <!--            <input type="text" placeholder="제목 입력" name="noticeTitle">-->
+            <!--            <button class="search-button" type="submit">조회</button>-->
         </div>
 
         <!--" write-box •공지사항 글쓰기" + 글쓰기 틀-->
@@ -373,7 +365,7 @@
 
             <!-- 공지사항 작성 큰 틀 -->
             <div class="notice-form">
-                    <form th:action="@{/notice/update/{id}(id = ${notice.noticeCode})}" method="post">
+                <form th:action="@{/notice/update/{id}(id = ${notice.noticeCode})}" method="post">
                     <table class="notice-table">
                         <!-- 제목 행 -->
                         <tr>
@@ -381,9 +373,11 @@
                             <td>
                                 <select name="noticeType">
                                     <option value="공지사항" th:selected="${notice.noticeType == '공지사항'}">공지사항</option>
-                                    <option value="자주묻는질문" th:selected="${notice.noticeType == '자주묻는질문'}">자주묻는질문</option>
+                                    <option value="자주묻는질문" th:selected="${notice.noticeType == '자주묻는질문'}">자주묻는질문
+                                    </option>
                                 </select>
-                                <input type="text" id="title" name="noticeTitle" placeholder="제목을 입력하세요" th:value="${notice.noticeTitle}" />
+                                <input type="text" id="title" name="noticeTitle" placeholder="제목을 입력하세요"
+                                       th:value="${notice.noticeTitle}"/>
                             </td>
                         </tr>
 
@@ -392,14 +386,15 @@
                             <td class="label">내용</td>
                             <td>
                                 <!--textarea 는 th:text=로 넣어주기-->
-                                <textarea id="content" rows="8" name="noticeContent" placeholder="내용을 입력하세요" th:text="${notice.noticeContent}"></textarea>
+                                <textarea id="content" rows="8" name="noticeContent" placeholder="내용을 입력하세요"
+                                          th:text="${notice.noticeContent}"></textarea>
                             </td>
                         </tr>
                     </table>
 
                     <div class="buttons">
-                             <button type="button" id="btnCancel" onclick="goToList()">취소</button>
-                            <button type="submit" id="btnSave">수정</button>
+                        <button type="button" id="btnCancel" onclick="goToList()">취소</button>
+                        <button type="submit" id="btnSave">수정</button>
                     </div>
 
                 </form>

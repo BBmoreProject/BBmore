@@ -94,7 +94,7 @@ public class NoticeService {
     Notice notice = adminNoticeRepository.findById(noticeCode)
         .orElseThrow(() -> new IllegalArgumentException("해당" + noticeType + "을 찾을 수 없습니다."));
 
-// Builder 패턴을 사용하여 수정된 값으로 새로운 객체 생성
+    // Builder 패턴을 사용하여 수정된 값으로 새로운 객체 생성
     Notice updatedNotice = notice.toBuilder()  // 기존 객체에서 Builder로 변경
         .noticeTitle(noticedto.getNoticeTitle())  // 수정된 제목
         .noticeContent(noticedto.getNoticeContent())  // 수정된 내용

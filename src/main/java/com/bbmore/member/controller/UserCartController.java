@@ -29,8 +29,8 @@ public class UserCartController {
 
         // 상품 금액 계산: 각 상품의 가격 * 수량을 합산
         int totalProductPrice = cartList.stream()
-            .mapToInt(cart -> cart.getProduct().getProductPrice() * cart.getCartProductQuantity())
-            .sum();
+                .mapToInt(cart -> cart.getProduct().getProductPrice() * cart.getCartProductQuantity())
+                .sum();
 
         // 배송비 설정: 예를 들어, 배송비를 고정 값으로 설정
         int deliveryFee = 3000; // 예시: 3000원 배송비
@@ -57,14 +57,7 @@ public class UserCartController {
     @ResponseBody
     public Map<String, Object> updateCartQuantity(@RequestBody Map<String, Object> requestData) {
 
-//        int cartCode = (int) payload.get("cartCode");
-//        int newQuantity = (int) payload.get("newQuantity");
-//
-//        boolean success = userCartService.updateCartQuantity(cartCode, newQuantity);
-
         Map<String, Object> response = new HashMap<>();
-//        response.put("success", success);
-
 
         // cartCode, newQuantity 값을 가져옴
         // Optional을 사용하여 null을 안전하게 처리
@@ -93,7 +86,6 @@ public class UserCartController {
             response.put("success", false);
             response.put("error", "cartCode 또는 newQuantity가 요청에서 누락되었습니다.");
         }
-
         return response;    // JSON 응답 반환
     }
 
@@ -105,40 +97,7 @@ public class UserCartController {
         return "선택한 상품들이 장바구니에서 삭제되었습니다.";
     }
 
-
 }
-
-
-
-        // 예외처리 ver1. 정상작동
-//        try {
-//            Integer cartCode = Integer.parseInt(requestData.get("cartCode").toString());
-//            Integer newQuantity = Integer.parseInt(requestData.get("newQuantity").toString());
-//
-//            System.out.println("✅ 업데이트 요청: cartCode = " + cartCode + ", newQuantity = " + newQuantity);
-////            Integer cartCode = (Integer) requestData.get("cartCode");
-////            Integer newQuantity = (Integer) requestData.get("newQuantity");
-//
-//            // 장바구니 수량 업데이트
-//            userCartService.updateCartQuantity(cartCode, newQuantity); // 서비스 호출
-//
-//            response.put("success", true);
-//        } catch (Exception e) {
-//            System.out.println("업데이트 실패: " + e.getMessage());   // 인텔리제이 콘솔창에 오류 내용 보여주기
-//            response.put("success", false);
-//            response.put("error", e.getMessage());
-//        }
-//
-//        return response;
-
-
-
-        // 장바구니에 상품 추가
-//    @PostMapping("/add")
-//    public String addProductToCart(@RequestBody CartRequest cartRequest) {
-//        // 서비스 호출
-//        return userCartService.addProductToCart(cartRequest.getProductCode(), cartRequest.getUserCode(), cartRequest.getCartProductQuantity());
-//    }
 
 
 
