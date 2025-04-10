@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>장바구니(최종)</title>
+    <title>장바구니</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
@@ -354,9 +354,9 @@
             <h3>마이페이지</h3>
         </div>
         <div class="menu">
-            <div class="menuName" id="selectMenu" onclick="location.href='user_구매목록.html';">구매목록</div>
+            <div class="menuName"  onclick="location.href='user_구매목록.html';">구매목록</div>
             <div class="menuName">주문/배송 상태</div>
-            <div class="menuName">장바구니</div>
+            <div class="menuName" id="selectMenu" onclick="location.href='cart-list';" >장바구니</div>
             <div class="menuName">교환/반품</div>
             <div class="menuName">교환/반품 신청 목록 이동</div>
             <div class="menuName" onclick="location.href='user_리뷰작성.html';">리뷰 작성</div>
@@ -473,49 +473,6 @@
 <footer class="footer">
     <p>&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고.</p>
 </footer>
-
-
-<!--<script>-->
-<!--    &lt;!&ndash;  4.2 수량변경함수2 + 두번째 상품도 수량변경됨, db 반영O &ndash;&gt;-->
-<!--    function updateQuantity(delta, button) {-->
-<!--        var cartItem = button.closest(".cart-item");  // 현재 클릭된 상품을 찾음-->
-<!--        var quantityDisplay = cartItem.querySelector(".quantity");  // 해당 상품의 수량 요소 찾기-->
-<!--        var cartCode = quantityDisplay.getAttribute("data-cart-code"); // 해당 상품의 장바구니 코드 가져오기-->
-<!--        var currentQuantity = parseInt(quantityDisplay.innerText);      // 현재 수량 가져오기-->
-<!--        var maxQuantity = 50;-->
-<!--        var newQuantity = currentQuantity + delta;-->
-
-<!--        if (newQuantity >= 1 && newQuantity <= maxQuantity) {-->
-<!--            quantityDisplay.innerText = newQuantity;  // 화면에서 수량 업데이트-->
-
-<!--            // 값 들어오는지 확인-->
-<!--            console.log("Sending cartCode:", cartCode, "New Quantity:", newQuantity);-->
-
-<!--            // 서버에 수량 업데이트 요청 (AJAX)-->
-<!--            fetch("cart-list/updateQuantity", {-->
-<!--                method: "POST",-->
-<!--                headers: {-->
-<!--                    "Content-Type": "application/json"-->
-<!--                },-->
-<!--                body: JSON.stringify({-->
-<!--                    cartCode: Number(cartCode),-->
-<!--                    newQuantity: Number(newQuantity)    // 변경할 수량-->
-<!--                })-->
-<!--            })-->
-<!--                .then(response => response.json())-->
-<!--                .then(data => {-->
-<!--                    if (data.success) {-->
-<!--                        console.log("수량 업데이트 성공");-->
-<!--                    } else {-->
-<!--                        console.error("수량 업데이트 실패");-->
-<!--                    }-->
-<!--                })-->
-<!--                .catch(error => {-->
-<!--                    console.error("에러 발생:", error);-->
-<!--                });-->
-<!--        }-->
-<!--    }-->
-
 
 <script>
 

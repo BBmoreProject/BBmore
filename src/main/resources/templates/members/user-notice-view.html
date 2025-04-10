@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>U 공지사항 상세테스트중</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* body 스타일 */
+        body {
+            font-family: "Noto Sans KR", sans-serif;
+            line-height: 1.6;
+            padding-top: 60px;
+            /* nav 고정으로 인한 여백 */
+        }
+
+        /* 상단 네비게이션 스타일 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #F28C25;
+            color: white;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav .left,
+        nav .right {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            /* 버튼들의 높이를 맞추기 위한 설정 */
+        }
+
+        nav .center {
+            flex-grow: 1;
+        }
+
+        /* 각 버튼 스타일 */
+        nav a {
+            background-color: #F28C25;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            /* 버튼 높이를 동일하게 설정 */
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            color: rgb(72, 35, 0);
+        }
+
+        /* nav 내부 이미지 스타일 (장바구니) */
+        #cart_img {
+            width: 30px;
+            /* 원하는 크기 설정 */
+            height: 30px;
+            /* 원하는 크기 설정 */
+            object-fit: contain;
+            /* 이미지 비율 유지 */
+        }
+
+
+        /*.container {*/
+        /*    display: flex;*/
+        /*    flex-direction: column;*/
+        /*    flex: 1;*/
+        /*}*/
+
+        /*.header {*/
+        /*  background: #fff5e2;*/
+        /*  !* 영역구분을 위해 색상 설정 (변경해도됨)*!*/
+        /*  color: rgb(0, 0, 0);*/
+        /*  font-size: 20px;*/
+        /*  font-weight: bold;*/
+        /*  padding: 50px 50px;*/
+        /*  !*상하,좌우*!*/
+        /*  display: flex;*/
+        /*  align-items: center;*/
+        /*}*/
+
+        .main {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+        /* 컨텐츠 섹션 스타일 */
+        .content {
+            /*display: block;*/
+            margin-top: 50px;
+            /*margin-top: 80px;*/
+            /* nav 고정으로 인한 여백 */
+        }
+
+        /* 검색창 박스틀 (검색창,공지사항 목록 간격조절 margin) */
+        .search-box {
+            position: relative;
+            margin-top: 0;
+            margin-bottom: 0;
+            width: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 검색하는 입력창 */
+        .search-box input {
+            position: absolute;
+            margin: 10px;
+            padding-left: 10px;
+            width: 380px;
+            height: 40px;
+            background-color: #F4F4F4;
+            border-style: none;
+        }
+
+        /* 검색-조회버튼 */
+        .search-button {
+            position: relative;
+            width: 60px;
+            height: 25px;
+            margin: 10px;
+            background-color: #F28C25;
+            color: white;
+            left: 230px;
+            border-radius: 5px;
+            border-style: none;
+            cursor: pointer;
+        }
+
+        /* 좌측 "• 공지사항 글쓰기" */
+        .menu-detail {
+            margin: 10px;
+        }
+
+        .write-box {
+            margin-top: 20px;
+            position: relative;
+        }
+
+
+        /* 수정,삭제버튼 */
+        .modify-button {
+            position: relative;
+            /*notice-box기준*/
+            background-color: #F28C25;
+            top: 30px;
+            width: 70px;
+            height: 25px;
+            left: 85%;
+            border-radius: 5px;
+            border-style: none;
+            cursor: pointer;
+        }
+
+        .delete-button {
+            position: absolute;
+            top: 32px;
+            right: 15px;
+            background-color: #F28C25;
+            width: 70px;
+            height: 25px;
+            border-radius: 5px;
+            border-style: none;
+            cursor: pointer;
+        }
+
+        .modify-button:hover,
+        .delete-button:hover {
+            background-color: darkorange;
+        }
+
+        /* 글쓰기 텍스트 (버튼박스 높이와 동일하게 지정하면 가운데정렬됨)*/
+        #modify,
+        #delete {
+            font-size: 12px;
+            text-align: center;
+            line-height: 25px;
+            color: white;
+        }
+
+
+        /* 체크박스 + 중요공지사항으로 등록 틀 */
+        input {
+            min-width: 2%;
+            border: 1px solid #C2C2C2;
+        }
+
+        /* 공지사항 제목~다음글 전체 틀 */
+        .notice-box {
+            width: 1100px;
+            margin: 10px;
+            border: 1px solid #ddd;
+        }
+
+        /* 제목,날짜,내용,다음글 틀 */
+        .title-box,
+        .date-box,
+        .content-box {
+            width: 100%;
+            padding: 10px;
+            margin: 0;
+            background: #f1f1f1;
+        }
+
+        /* 제목 */
+        .title {
+            font-size: 15px;
+            height: 30px;
+        }
+
+        /* 날짜 */
+        .date-box {
+            font-size: 13px;
+        }
+
+        /* 날짜,내용 아래 선 */
+        .date-box,
+        .content-box {
+            border-bottom: 1px solid #ddd;
+        }
+
+        .date {
+            font-size: 13px;
+        }
+
+        /* 불러와지는 내용 틀 */
+        .content-box {
+            width: 100%;
+            height: 300px;
+            font-size: 15px;
+
+        }
+
+        /* 다음글 행 수평 정렬 */
+        .next-title-box1,
+        .next-title-box2 {
+            display: flex;
+            width: 100%;
+            background: #f1f1f1;
+            font-size: 13px;
+        }
+
+
+        /* 이전글(1),다음글(2) 행*/
+        .next-box1,
+        .next-box2,
+        .next-content-box1,
+        .next-content-box2 {
+            height: 100%;
+            padding: 10px;
+        }
+
+        /* 이전글(1),다음글(2) 틀 */
+        .next-box1,
+        .next-box2 {
+            border-right: 1px solid #ddd;
+        }
+
+        /* 이전글(1),다음글(2) 제목 */
+        .next-content1,
+        .next-content2 {
+            width: 100%;
+            border-style: none;
+        }
+
+        .next-title-box1 {
+            border-bottom: 1px solid #ddd;
+        }
+
+
+        /* 사이드바 하단 로고 이미지 */
+        .bottom-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* 바닥 사업자정보 */
+        .footer {
+            font-size: 10px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #222;
+            color: white;
+            text-align: center;
+            padding: 5px;
+        }
+
+        /* 검색창 스타일 */
+        .search {
+            display: flex; /*gap 주려고*/
+            position: relative;
+            gap: 10px;
+            top: 65px;
+            left: 650px;
+        }
+
+        .search input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            width: 200px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .search button {
+            padding: 8px 12px;
+            background-color: #F28C25;
+            border: none;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .search button:hover {
+            background-color: #e68a00;
+        }
+
+        /* 공지사항, 자주 묻는 질문 버튼 스타일 - 건드리지말것*/
+        .tab-buttons {
+            display: flex;
+            /* position: relative; */
+            /* justify-content:space-evenly; */
+            gap: 10px;
+            margin-top: 20px;
+            /* 테이블과 간격을 맞추기 위한 위 여백 */
+            margin-left: 10px;
+            margin-right: 0px;
+            /* 오른쪽 여백 */
+            margin-bottom: 20px;
+            /* 아래쪽 여백 */
+        }
+
+        /* 공지사항, 자주 묻는 질문 글씨 */
+        .tab-buttons a {
+            padding: 8px 10px;
+            background-color: #F28C25;
+            color: white;
+            font-style: normal;
+            font-weight: 500;
+            text-align: center;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .tab-buttons a:hover {
+            background-color: #e68a00;
+        }
+
+        .back-button {
+            border-radius: 5px;
+            border-style: none;
+            color: black;
+            background-color: #F28C25;
+            padding: 8px;
+        }
+
+        #back {
+            text-decoration-line: none;
+            color: #F4F4F4;
+            font-weight: bold;
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+<header>
+    <nav class="nav">
+        <div class="left">
+            <a onclick="location.href='/members/user-notice-list'">공지사항</a>
+            <a onclick="location.href='/members/user-faq-list'">자주묻는질문</a>
+        </div>
+        <div class="center"></div>
+        <div class="right">
+            <a class="nav-link" id="login" href="#">로그인</a>
+            <a class="nav-link" id="signup" href="#">회원가입</a>
+            <a class="nav-link" id="cart" href="#">
+                <img src="/img/cart.png" alt="장바구니 이미지" id="cart_img"></a>
+        </div>
+    </nav>
+</header>
+
+<main class="main">
+    <!-- 공지사항 섹션 -->
+    <section id="notice" class="content">
+
+        <!-- 검색창 -->
+<!--        <div class="search">-->
+<!--            <input type="text" id="search-title" placeholder="제목 검색">-->
+<!--            <input type="text" id="search-content" placeholder="내용 검색">-->
+<!--            <button>검색</button>-->
+<!--        </div>-->
+
+        <!-- 공지사항, 자주 묻는 질문 버튼 -->
+        <div class="tab-buttons">
+            <a onclick="location.href='/members/user-notice-list'">공지사항</a>
+            <a onclick="location.href='/members/user-faq-list'">자주묻는질문</a>
+        </div>
+
+        <!-- 공지사항 작성 큰 틀 -->
+        <div class="notice-box">
+            <!--제목-->
+            <div class="title-box">
+                <div class="title" th:text="${notice.noticeTitle}"></div>
+            </div><!--title-box끝-->
+
+            <div class="date-box">
+                <div class="date" th:text="${notice.noticeCreatedDate}"></div>
+            </div>
+
+            <!--내용-->
+            <div class="content-box">
+                <div th:text="${notice.noticeContent}"></div>
+            </div>
+
+            <div class="next-title-box1">
+                <div class="next-box1">
+                    <div class="next">이전글</div>
+                </div>
+
+                <!--이전글 제목값 부분-->
+                <div class="next-content-box1">
+                    <!--                        <button class="next-content1">-->
+                    <a th:if="${prevNotice != null}"
+                       th:href="@{'/members/user-notice-view/' + ${prevNotice.noticeCode}}"
+                       th:text="${prevNotice.noticeTitle}">이전글 제목</a>
+                    <a th:if="${prevNotice == null}">이전글 없음</a>
+                </div>
+            </div>
+
+            <div class="next-title-box2">
+                <div class="next-box2">
+                    <div class="next">다음글</div>
+                </div>
+
+                <!--다음글 제목값 부분-->
+                <div class="next-content-box2">
+                    <a th:if="${nextNotice != null}"
+                       th:href="@{'/members/user-notice-view/' + ${nextNotice.noticeCode}}"
+                       th:text="${nextNotice.noticeTitle}">다음글 제목</a>
+                    <a th:if="${nextNotice == null}">다음글 없음</a>
+                </div>
+            </div>
+        </div>
+    </section>
+        <div id="back">
+        <button onclick="history.back()" class="back-button" >목록으로 돌아가기</button>
+        </div>
+
+</main>
+<footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
+
+
+</body>
+</html>

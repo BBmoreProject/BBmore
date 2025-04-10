@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항</title>
+    <title>0408사용자 공지테스트</title>
     <!--    <link rel="stylesheet" href="style.css">-->
 </head>
 <style>
@@ -136,6 +136,19 @@
     }
 
 
+    /* 검색창 박스틀 (검색창, •공지사항 목록 간격조절 margin) */
+    .search-box {
+        position: relative;
+        /* margin-top: 0px; */
+        /* margin-bottom: 0px; */
+        /* width: 10px; */
+        display: flex;
+        top: 70px;
+        left: 350px;
+    }
+
+
+
     /* 검색창 스타일 */
     .search {
         display: flex; /*gap 주려고*/
@@ -145,31 +158,49 @@
         left: 650px;
     }
 
-    .search input[type="text"] {
-        padding: 8px;
-        font-size: 16px;
-        width: 200px;
+    .search-box input {
+        /* position: absolute; */
+        /* margin: 10px; */
+        padding-left: 10px;
+        width: 250px;
+        height: 40px;
+        background-color: #F4F4F4;
+        border-style: none;
         border-radius: 5px;
-        border: 1px solid #ccc;
-    }
+        /* margin-top: 50px; */
+        }
 
-    .search button {
-        padding: 8px 12px;
-        background-color: #F28C25;
-        border: none;
-        color: white;
-        border-radius: 5px;
-    }
 
-    .search button:hover {
-        background-color: #e68a00;
-    }
+        .search input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            width: 200px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
 
-    .search-box {
+    /* 검색-조회버튼 */
+        .search-button {
+            position: relative;
+            width: 60px;
+            height: 25px;
+            margin: 10px;
+            background-color: #F28C25;
+            color: white;
+            left: 20px;
+            border-radius: 5px;
+            border-style: none;
+            cursor: pointer;
+        }
 
-    }
+        .search-button:hover {
+            background-color: #e68a00;
+        }
 
-    /* 테이블 스타일 */
+
+
+
+        /* 테이블 스타일 */
     table {
         /* width: 100%; */
         width: 1120px;
@@ -297,44 +328,15 @@
 
     /* 검색창 박스틀 (검색창, •공지사항 목록 간격조절 margin) */
     .search-box {
-         position: relative;
-        /* margin-top: 0px; */
-        /* margin-bottom: 0px; */
-        /* width: 10px; */
-        display: flex;
-        top: 70px;
-        left: 350px;
-    }
-
-    .search-box input {
-        /* position: absolute; */
-        /* margin: 10px; */
-        padding-left: 10px;
-        width: 250px;
-        height: 40px;
-        background-color: #F4F4F4;
-        border-style: none;
-        border-radius: 5px;
-        /* margin-top: 50px; */
-    }
-
-    /* 검색-조회버튼 */
-    .search-button {
         position: relative;
-        width: 60px;
-        height: 25px;
-        margin: 10px;
-        background-color: #F28C25;
-        color: white;
-        left: 20px;
-        border-radius: 5px;
-        border-style: none;
-        cursor: pointer;
+        margin-top: 0px;
+        margin-bottom: 0px;
+        width: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
-    .search-button:hover {
-        background: #ea7f00;
-    }
 
 
 </style>
@@ -346,8 +348,8 @@
         <div class="left">
             <a onclick="location.href='/members/user-notice-list'">공지사항</a>
             <a onclick="location.href='/members/user-faq-list'">자주묻는질문</a>
-        </div>
 
+        </div>
         <div class="center"></div>
         <div class="right">
             <a class="nav-link" id="login" href="#">로그인</a>
@@ -361,7 +363,7 @@
 <main>
 
     <!--• 공지사항 목록-->
-    <form th:action="@{/members/user-notice-list}" method="get">
+    <form th:action="@{/members/user-faq-list}" method="get">
         <div class="search-box">
             <input type="text" placeholder="제목 입력" name="searchKeyword">
             <button class="search-button" type="submit">조회</button>
@@ -384,42 +386,39 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="notice : ${noticeList}">
-                <td><a th:href="@{/members/user-notice-view/{noticeCode}(noticeCode=${notice.noticeCode})}"
-                       th:text="${notice.noticeTitle}"></a></td>
-                <td th:text="${notice.noticeCreatedDate}"></td>
-                <td th:text="${notice.noticeView}"></td>
+            <tr th:each="faq : ${faqList}">
+                <td><a th:href="@{/members/user-faq-view/{noticeCode}(noticeCode=${faq.noticeCode})}"
+                       th:text="${faq.noticeTitle}"></a></td>
+                <td th:text="${faq.noticeCreatedDate}"></td>
+                <td th:text="${faq.noticeView}"></td>
             </tr>
             </tbody>
         </table>
 
-    <!--TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT-->
-
-
     <div id="paging">
         <!-- 페이지 번호 링크 -->
-        <button th:href="@{/members/user-notice-list(page=${paging.startPage},searchKeyword=${searchKeyword},  noticeType=${noticeType})}">
+        <button th:href="@{/members/user-faq-list(page=${paging.startPage},searchKeyword=${searchKeyword},  noticeType=${noticeType})}">
             <<
         </button>
 
-        <button th:href="@{/members/user-notice-list(page=${paging.currentPage - 1}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
-                th:disabled="${noticeList.first}">
+        <button th:href="@{/members/user-faq-list(page=${paging.currentPage - 1}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
+                th:disabled="${faqList.first}">
             <
         </button>
 
         <button th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
-            <a th:href="@{/members/user-notice-list(page=${page}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}" th:text="${page}"
+            <a th:href="@{/members/user-faq-list(page=${page}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}" th:text="${page}"
                th:disabled="${paging.currentPage eq page}">
             </a>
 
         </button>
 
-        <button th:href="@{/members/user-notice-list(page=${paging.currentPage + 1}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
-                th:disabled="${noticeList.last}">
+        <button th:href="@{/members/user-faq-list(page=${paging.currentPage + 1}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
+                th:disabled="${faqList.last}">
             >
         </button>
 
-        <button th:href="@{/members/user-notice-list(page=${paging.endPage}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}">
+        <button th:href="@{/members/user-faq-list(page=${paging.endPage}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}">
             >>
         </button>
     </div>

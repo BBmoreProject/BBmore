@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-<!--이전글,다음글 적용 완료. 수정,삭제 버튼 적용전-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -184,6 +183,7 @@
             border-radius: 5px;
             border-style: none;
             cursor: pointer;
+            text-decoration-line: none;
         }
 
         .delete-button {
@@ -353,36 +353,7 @@
         });
 
 
-        // URL에서 'id' 파라미터 값 추출
-        // const urlParams = new URLSearchParams(window.location.search);
-        // const currentId = parseInt(urlParams.get('id'));
-        //
-        // // 이전 글과 다음 글 링크 동적으로 설정
-        // document.getElementById('prev').href = `notice-view.html?id=${currentId - 1}`;
-        // document.getElementById('next').href = `notice-view.html?id=${currentId + 1}`;
 
-        document.addEventListener("DOMContentLoaded", function () {
-            // URL에서 'id' 파라미터 값 추출
-            const urlParams = new URLSearchParams(window.location.search);
-            const currentIdStr = urlParams.get('id');  // 'id' 파라미터 값을 문자열로 가져옴
-
-            if (currentIdStr) {
-                const currentId = parseInt(currentIdStr);  // 문자열을 정수로 변환
-
-                if (!isNaN(currentId)) {
-                    // 이전 글과 다음 글 링크 동적으로 설정
-                    const prevLink = document.getElementById('prev');
-                    const nextLink = document.getElementById('next');
-
-                    prevLink.href = `notice-view.html?id=${currentId - 1}`;  // 이전 글 링크 설정
-                    nextLink.href = `notice-view.html?id=${currentId + 1}`;  // 다음 글 링크 설정
-                } else {
-                    console.error('ID 값이 유효하지 않습니다.');
-                }
-            } else {
-                console.error('ID 파라미터가 존재하지 않습니다.');
-            }
-        });
     </script>
 
     <script>
@@ -457,8 +428,8 @@
 
     <main class="main">
         <div class="search-box"> <!--검색창-->
-            <input type="text" placeholder="제목 입력" name="noticeTitle">
-            <button class="search-button" type="submit">조회</button>
+<!--            <input type="text" placeholder="제목 입력" name="noticeTitle">-->
+<!--            <button class="search-button" type="submit">조회</button>-->
         </div>
 
         <!--"• 공지사항 글쓰기" + 글쓰기 틀-->
@@ -504,10 +475,12 @@
 
                     <!--이전글 제목값 부분-->
                     <div class="next-content-box1">
-                        <button class="next-content1">
-                            <a href="#" th:href="@{'/notice/notice-view/'+ ${prevNotice.noticeCode}}"
-                               th:text="${prevNotice.noticeTitle}">이전글 제목</a>
-                        </button>
+<!--                        <button class="next-content1">-->
+                        <a th:if="${prevNotice != null}"
+                           th:href="@{'/notice/notice-view/' + ${prevNotice.noticeCode}}"
+                           th:text="${prevNotice.noticeTitle}">이전글 제목</a>
+                        <a th:if="${prevNotice == null}">이전글 없음</a>
+<!--                        </button>-->
                     </div>
                 </div>
 
@@ -518,10 +491,12 @@
 
                     <!--다음글 제목값 부분-->
                     <div class="next-content-box2">
-                        <button class="next-content2">
-                            <a href="#" th:href="@{'/notice/notice-view/' + ${nextNotice.noticeCode}}"
-                               th:text="${nextNotice.noticeTitle}">다음글 제목</a>
-                        </button>
+<!--                        <button class="next-content2">-->
+                        <a th:if="${nextNotice != null}"
+                           th:href="@{'/notice/notice-view/' + ${nextNotice.noticeCode}}"
+                           th:text="${nextNotice.noticeTitle}">다음글 제목</a>
+                        <a th:if="${nextNotice == null}">다음글 없음</a>
+
                     </div>
                 </div>
             </div> <!--notice-box끝-->
