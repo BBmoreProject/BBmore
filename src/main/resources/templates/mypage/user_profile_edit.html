@@ -168,9 +168,9 @@
             height: 30px;
         }
 
-        #inputText_login {  /* 아이디 입력 칸 */
-            width: 442px;
-        }
+        /*#inputText_login {  !* 아이디 입력 칸 *!*/
+        /*    width: 442px;*/
+        /*}*/
 
         .id_check { /* 아이디 중복확인 버튼 */
             width: 150px;
@@ -228,37 +228,13 @@
             border-radius: 3px;
             text-align: center;
             padding: 2px 0 0 0;
-            margin: 0 0 100px 10px;
+            margin: 70px 0 100px 10px;
             cursor: pointer;
         }
 
         .cancel { /* 취소하기 버튼 */
             background-color:rgb(163, 163, 163);
             border: solid #4a4a4a 1px;
-        }
-
-        .UnSubscribe {      /* 회원탈퇴 메시지 + 버튼 그룹 */
-            display: flex;
-            padding: 50px 0 30px 185px;
-        }
-
-        .UnSubscribe_message {   /* 회원탈퇴 버튼 옆 메시지 */
-            font-size: 12px;
-            text-align: end;
-        }
-
-        .UnSubscribe_button {    /* 회원탈퇴 버튼 */
-            width: 100px;
-            height: 20px;
-            color:white;
-            background-color: #F28C25;
-            border: solid rgb(92, 92, 92) 1px;
-            border-radius: 3px;
-            font-size: 13px;
-            text-align: center;
-            /* padding: 3px; */
-            margin: 0 0 0 10px ;
-            cursor: pointer;
         }
 
         .footer {
@@ -269,28 +245,6 @@
             font-size: 10px;
         }
 
-
-
-        /* 모달 스타일 */
-        .modal {
-            display: none; /* 기본적으로 숨김 */
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 30%;
-            text-align: center;
-        }
 
     </style>
 </head>
@@ -317,7 +271,7 @@
         <div class="menu">
             <div class="menuName" onclick="location.href='/user/purchaseList';" >구매목록</div>
             <div class="menuName">주문/배송 상태</div>
-            <div class="menuName">장바구니</div>
+            <div class="menuName" onclick="location.href='/cart/cart-list';">장바구니</div>
             <div class="menuName">교환/반품</div>
             <div class="menuName">교환/반품 신청 목록 이동</div>
             <div class="menuName" onclick="location.href='/review/write';">리뷰 작성</div>
@@ -343,7 +297,7 @@
                 <div>아이디</div>
                 <div class="Id">
                     <input type="text" id="inputText_login" name="userId" th:field="*{userId}" placeholder="아이디를 입력(6~20자)" required>
-                    <div class="id_check">아이디 중복확인</div> <!-- 버튼 -->
+<!--                    <div class="id_check">아이디 중복확인</div> &lt;!&ndash; 버튼 &ndash;&gt;-->
                 </div>
 
                 <div class="information">
@@ -486,10 +440,10 @@
             <input type="hidden" name="animalCode" id="animalCode" th:value="*{animalDTO.getAnimalCode()}" />
 
 
-            <div class="UnSubscribe">
-                <div class="UnSubscribe_message">탈퇴를 원하시면 우측의 회원탈퇴 버튼을 눌러주세요.</div>
-                <div class="UnSubscribe_button" onclick="location.href='user_profile_delete.html';">회원 탈퇴</div>
-            </div>
+<!--            <div class="UnSubscribe">-->
+<!--                <div class="UnSubscribe_message">탈퇴를 원하시면 우측의 회원탈퇴 버튼을 눌러주세요.</div>-->
+<!--                <div class="UnSubscribe_button" onclick="location.href='user_profile_delete.html';">회원 탈퇴</div>-->
+<!--            </div>-->
 
             <div class="bottom_button">
                 <div class="cancel" id="cancel">취소하기</div>

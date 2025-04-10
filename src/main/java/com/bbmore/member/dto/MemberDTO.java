@@ -94,7 +94,8 @@ public class MemberDTO {
         this.userPetWeight = member.getUserPetWeight();
         this.userPetMedicalHistory = member.getUserPetMedicalHistory();
         this.animalDTO = new AnimalDTO(member.getAnimal());  // AnimalDTO로 변환하여 전달
-
     }
+
+
 
 }
