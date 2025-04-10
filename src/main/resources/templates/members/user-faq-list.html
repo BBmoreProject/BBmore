@@ -2,11 +2,12 @@
 <html lang="ko">
 
 <!--4/8 3:17 최종본-->
+<!--4/11 3:17 최종본-->
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>0408사용자 공지테스트</title>
+    <title>공지사항</title>
     <!--    <link rel="stylesheet" href="style.css">-->
 </head>
 <style>
@@ -43,7 +44,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        max-width: 1200px;
+        max-width: 1700px;
         margin: 0 auto;
         padding: 0 20px;
     }
@@ -75,6 +76,8 @@
         height: 40px;
         /* 버튼 높이를 동일하게 설정 */
         border-radius: 5px;
+        text-decoration-line: none;
+        font-weight: 100;
     }
 
     nav a:hover {
@@ -143,8 +146,8 @@
         /* margin-bottom: 0px; */
         /* width: 10px; */
         display: flex;
-        top: 70px;
-        left: 350px;
+        top: 80px;
+        left: 370px;
     }
 
 
@@ -165,7 +168,7 @@
         height: 40px;
         background-color: #F4F4F4;
         border-style: none;
-        border-radius: 5px;
+        border-radius: 20px;
         /* margin-top: 50px; */
     }
 
@@ -186,7 +189,7 @@
         margin: 10px;
         background-color: #F28C25;
         color: white;
-        left: 20px;
+        /*left: 20px;*/
         border-radius: 5px;
         border-style: none;
         cursor: pointer;
@@ -218,6 +221,11 @@
     /*제목,등록일 조회수 부분*/
     th {
         /*background-color: #f4f4f4;*/
+    }
+
+    td a {
+        text-decoration-line: none;
+        color: black;
     }
 
     /* 페이징 스타일  */
@@ -326,18 +334,6 @@
         text-align: center;
         width: 10%;
     }
-
-    /* 검색창 박스틀 (검색창, •공지사항 목록 간격조절 margin) */
-    .search-box {
-        position: relative;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        width: 400px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
 
 </style>
 

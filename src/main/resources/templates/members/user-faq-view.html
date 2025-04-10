@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 
+<!--4/11 3:17 최종본-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>U 공지사항 상세테스트중</title>
+    <title>자주묻는질문</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
 
@@ -38,7 +39,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
+            max-width: 1700px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -70,6 +71,8 @@
             height: 40px;
             /* 버튼 높이를 동일하게 설정 */
             border-radius: 5px;
+            text-decoration-line: none;
+            font-weight: 100;
         }
 
         nav a:hover {
@@ -163,52 +166,6 @@
             margin: 10px;
         }
 
-        .write-box {
-            margin-top: 20px;
-            position: relative;
-        }
-
-
-        /* 수정,삭제버튼 */
-        .modify-button {
-            position: relative;
-            /*notice-box기준*/
-            background-color: #F28C25;
-            top: 30px;
-            width: 70px;
-            height: 25px;
-            left: 85%;
-            border-radius: 5px;
-            border-style: none;
-            cursor: pointer;
-        }
-
-        .delete-button {
-            position: absolute;
-            top: 32px;
-            right: 15px;
-            background-color: #F28C25;
-            width: 70px;
-            height: 25px;
-            border-radius: 5px;
-            border-style: none;
-            cursor: pointer;
-        }
-
-        .modify-button:hover,
-        .delete-button:hover {
-            background-color: darkorange;
-        }
-
-        /* 글쓰기 텍스트 (버튼박스 높이와 동일하게 지정하면 가운데정렬됨)*/
-        #modify,
-        #delete {
-            font-size: 12px;
-            text-align: center;
-            line-height: 25px;
-            color: white;
-        }
-
 
         /* 체크박스 + 중요공지사항으로 등록 틀 */
         input {
@@ -279,6 +236,12 @@
         .next-content-box2 {
             height: 100%;
             padding: 10px;
+        }
+
+        .next-content-box1 a,
+        .next-content-box2 a {
+            text-decoration-line: none;
+            color: black;
         }
 
         /* 이전글(1),다음글(2) 틀 */
@@ -354,12 +317,7 @@
             /* position: relative; */
             /* justify-content:space-evenly; */
             gap: 10px;
-            margin-top: 20px;
-            /* 테이블과 간격을 맞추기 위한 위 여백 */
-            margin-left: 10px;
-            margin-right: 0px;
-            /* 오른쪽 여백 */
-            margin-bottom: 20px;
+            margin: 20px 0 20px 10px;
             /* 아래쪽 여백 */
         }
 
@@ -383,15 +341,17 @@
         .back-button {
             border-radius: 5px;
             border-style: none;
-            color: black;
+            color: white;
             background-color: #F28C25;
             padding: 8px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         #back {
             text-decoration-line: none;
             color: #F4F4F4;
-            font-weight: bold;
+
         }
 
 

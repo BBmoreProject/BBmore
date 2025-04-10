@@ -4,6 +4,8 @@ import com.bbmore.member.entity.UserCart;
 import com.bbmore.member.service.UserCartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -96,6 +99,9 @@ public class UserCartController {
         userCartService.deleteCartItems(cartCodes);
         return "선택한 상품들이 장바구니에서 삭제되었습니다.";
     }
+
+
+
 
 }
 
