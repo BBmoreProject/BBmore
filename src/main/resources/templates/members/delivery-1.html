@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>배송 관리</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+    /* 여백 초기화 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* 폰트 변경 완료 */
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      display: flex;
+      flex-direction: row; /* 좌우로 배치 */
+      min-height: 100vh;
+    }
+
+    /* 좌측 관리자 사이드바 */
+    .nav {
+      width: 200px;
+      background: #D9D9D9;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* 사이드바 상단 로고틀*/
+    li.nav-logo{
+      position: fixed;
+      width: 200px;
+      height: 160px; /*건드리지말것*/
+
+    }
+
+    /* 사이드바 상단 로고이미지 */
+    li.nav-logo img{
+      width: 100%;
+      height: 100%;
+      padding: 10%;  /*로고크기*/
+      object-fit: contain;
+    }
+
+    /* 사이드바 상위 메뉴 */
+    .nav ul {
+      list-style: none;
+    }
+
+    /* 사이드바 하위 메뉴 */
+    .nav ul li {
+      margin: 15px 0;
+      position: relative;
+    }
+
+    /* 사이드바-공지사항 관리 텍스트 */
+    .nav ul li a {
+      color: rgb(0, 0, 0);
+      font-size: 20px;
+      text-decoration: none;
+      display: block;
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    /* 사이드바-서브메뉴 틀 */
+    .nav ul .submenu {
+      display: none;
+      list-style: none;
+      padding: 0;
+      background: #444;
+      width: 200px;
+    }
+
+    .nav ul .submenu li {
+      margin: 0;
+    }
+
+    /* 사이드바 하위 메뉴 텍스트(공지사항, 자주묻는질문) */
+    .nav ul .submenu li a {
+      padding: 10px;
+      color: #ffffff;
+      font-size: 15px;
+      display: block;
+      background-color: #9B9B9B;
+    }
+
+    .nav ul li.active .submenu {
+      display: block;
+    }
+
+    /* 메인 컨텐츠 영역 */
+    .container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    /* 상위 메뉴 (공지사항 관리) */
+    .header {
+      background: #fff5e2;
+      color: rgb(0, 0, 0);
+      font-size: 20px;
+      font-weight: bold;
+      padding: 60px 70px;
+      display: flex;
+      align-items: center;
+    }
+
+    .main {
+      flex: 1;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .search-box-div {
+      display: flex;
+      align-items: center;
+      width: 1600px;
+      padding: 0 0 0 30px;
+      background-color: #F4F4F4;
+      border-radius: 10px;
+      border-style: none;
+      height: 180px;
+      gap: 20px;
+      position: relative;
+    }
+    .search-box-input {
+      margin: 5% 0 0 0;
+      padding: 5px;
+      width: 250px;
+      height: 40px;
+      background-color: #F4F4F4;
+      border-radius: 7px;
+      border-style: none;
+      border: 1px solid #7a7a7a;
+    }
+    .search-box-button {
+      margin: 5% 0 0 0;
+      color: white;
+      cursor: pointer;
+      width: 100px;
+      height: 40px;
+      background-color: #F28C25;
+      border-radius: 5px;
+      border-style: none;
+    }
+
+    .info-container {
+      width: 1600px;
+      height: auto;
+      max-width: 100%;
+      min-width: 1000px;
+      background: white;
+      border-radius: 10px;
+      flex: 1;
+      padding: 20px;
+      background-color: #F4F4F4;
+      margin: 20px 0 0px 0px;
+      flex-shrink: 0;
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+    }
+
+    table th,
+    table td {
+      padding: 6px;
+      border: 1px solid #ccc;
+      text-align: center;
+      border-radius: 7px;
+    }
+
+    table th:nth-child(1) {
+      width: 2%;
+    }
+
+    table th:nth-child(2) {
+      width: 3%;
+    }
+    table th:nth-child(3) {
+      width: 8%;
+    }
+
+    table th:nth-child(4) {
+      width: 3%;
+    }
+
+    table th:nth-child(5) {
+      width: 5%;
+    }
+
+    table th:nth-child(6) {
+      width: 10%;
+    }
+
+
+    /*.active {*/
+    /*  display: block;*/
+    /*}*/
+
+    .dropdown.open .arrow {
+      transform: rotate(180deg);
+    }
+
+    /* date input */
+    input[type="date"] {
+      /*position: absolute;*/
+      font-size: 16px;
+      padding: 6px 12px;
+      border: 1px solid #000000;
+      border-radius: 5px;
+      outline: none;
+      width: 180px;
+    }
+    input[type="date"]:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      background: url("https://cdn-icons-png.flaticon.com/512/747/747310.png") no-repeat center;
+      background-size: contain;
+      cursor: pointer;
+      width: 20px;
+      height: 15px;
+    }
+
+    .calendar {
+      position: absolute;
+      top: 30%;
+      left: 25%;
+    }
+
+    .search-write1 {
+      position: absolute;
+      top: 10%;
+
+      font-weight: 350;
+      font-size: 15px;
+    }
+
+    .search-allday {
+      position: absolute;
+      top: 30%;
+
+    }
+    #search-day1,
+    #search-day2,
+    #search-day3,
+    #search-day4 {
+      width: 75px;
+      height: 35px;
+    }
+
+    /* 사이드바 하단 로고 틀 */
+    .bottom-logo {
+      position: absolute; /*건드리지말것*/
+      bottom: 3px;/* 하단쪽에 고정 */
+      margin-top: auto;
+      width: 200px;     /* 전체 너비 */
+      height: 50px;   /* 고정된 높이 (변경가능) */
+      overflow: hidden;   /*넘칠 경우 숨김 처리*/
+    }
+
+    /* 사이드바 하단 로고 이미지 */
+    .bottom-logo img{
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* 바닥 사업자정보 */
+    .footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 5px;
+      font-size: 10px;
+    }
+
+  </style>
+</head>
+
+<body>
+<nav class="nav">
+  <ul>
+    <li class="nav-logo"><img src="/b1.png" alt="로고"></li>
+    <li class="menu-1">
+      <a href="#">회원 관리</a>
+      <ul class="submenu">
+        <li><a onclick="location.href='/members/list'">회원 관리</a></li>
+      </ul>
+    </li>
+    <li class="menu-2">
+      <a href="#">상품 관리</a>
+      <ul class="submenu">
+        <li><a href="product-1.html">상품 등록</a></li>
+        <li><a href="product_2.html">상품 조회</a></li>
+      </ul>
+    </li>
+    <li class="menu-3">
+      <a href="#">판매 관리</a>
+      <ul class="submenu">
+        <li><a href="order-1.html">주문 조회</a></li>
+        <li><a href="order-2.html">반품 관리</a></li>
+        <li><a href="order-3.html">교환 관리</a></li>
+      </ul>
+    </li>
+    <li class="menu-4">
+      <a href="#">배송 관리</a>
+      <ul class="submenu">
+        <li><a onclick="location.href='/orders/delivery-1'">주문 조회</a></li>
+      </ul>
+    </li>
+    <li class="menu-5">
+      <a href="#">리뷰 관리</a>
+      <ul class="submenu">
+        <li><a href="notice_5.html">리뷰 목록</a></li>
+      </ul>
+    </li>
+    <li class="menu-6">
+      <a href="#">공지사항 관리</a>
+      <ul class="submenu">
+        <li><a href="notice_5.html">공지사항</a></li>
+        <li><a href="faq_5.html">자주 묻는 질문</a></li>
+      </ul>
+    </li>
+    <div class="bottom-logo"><img id="b2" src="/b2.png" alt="로고"></div>
+  </ul>
+</nav>
+
+<div class="container">
+  <header class="header">배송 관리</header>
+  <div class="main">
+    <div class="search-box-div">
+      <div class="search-write1">
+        <p>조회기간</p>
+      </div>
+
+      <div class="search-allday">
+        <button id="search-day1">오늘</button>
+        <button id="search-day2">1주일</button>
+        <button id="search-day3">1개월</button>
+        <button id="search-day4">3개월</button>
+      </div>
+
+      <div class="calendar">
+        <input type="date" name="startDate"  id="startDate" class="form-control" required/> &nbsp; ~ &nbsp; <input
+              type="date" name="endDate" id="endDate"  class="form-control" required/>
+      </div>
+
+      <input class="search-box-input" type="text" id="searchCode" placeholder="주문번호">
+      <input class="search-box-input" type="text" id="searchName" placeholder="이름">
+      <input class="search-box-input" type="text" id="searchPhone" placeholder="전화번호">
+      <button class="search-box-button" onclick="searchMembersByName()">검색</button>
+    </div>
+
+    <div class="info-container">
+      <table class="info-item">
+        <thead style="background-color: #363636">
+        <tr style="color: #f0f0f0">
+          <th>주문번호</th>
+          <th>주문날짜</th>
+          <th>제품명</th>
+          <th>이름</th>
+          <th>전화번호</th>
+          <th>주소</th>
+        </tr>
+        </thead>
+        <tbody id="memberTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // 사이드바 메뉴 열기/닫기
+    const menuItems = document.querySelectorAll(".nav ul li > a");
+    menuItems.forEach(menu => {
+      menu.addEventListener("click", function (event) {
+        event.preventDefault();
+        document.querySelectorAll(".nav ul li").forEach(item => item.classList.remove("active"));
+        this.parentElement.classList.toggle("active");
+      });
+    });
+
+    loadMembers();
+  });
+
+
+</script>
+<script>
+  async function searchMembersByName() {
+    const code = document.getElementById("searchCode").value;
+    const name = document.getElementById("searchName").value;
+    const phone = document.getElementById("searchPhone").value;
+    const startDate = document.getElementById("startDate").value;
+    const endDate = document.getElementById("endDate").value;
+
+    const url = `/api/delivery/search?code=${encodeURIComponent(code)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+
+    try {
+      const res = await fetch(url);
+      const orders = await res.json();
+      renderMembers(orders);
+    } catch (error) {
+      console.error("검색 실패:", error);
+    }
+  }
+
+  function renderMembers(orders) {
+    const tbody = document.getElementById("memberTableBody");
+    tbody.innerHTML = "";
+
+    orders.forEach(order => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${order.orderCode}</td>
+        <td>${order.orderDate}</td>
+        <td>${order.productName}</td>
+        <td>${order.recipientName}</td>
+        <td>${order.recipientPhone}</td>
+        <td>${order.recipientAddress}</td>
+      `;
+      tbody.appendChild(row);
+    });
+  }
+
+  function setDateRange(days) {
+    const today = new Date();
+    const startDate = new Date();
+    startDate.setDate(today.getDate() - days);
+
+    const todayStr = today.toISOString().split("T")[0];
+    const startStr = startDate.toISOString().split("T")[0];
+
+    const startInput = document.getElementById("startDate");
+    const endInput = document.getElementById("endDate");
+
+    if (startInput && endInput) {
+      startInput.value = startStr;
+      endInput.value = todayStr;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    loadMembers();
+
+    const todayBtn = document.getElementById("search-day1");
+    const weekBtn = document.getElementById("search-day2");
+    const monthBtn = document.getElementById("search-day3");
+    const threeMonthBtn = document.getElementById("search-day4");
+
+    if (todayBtn) todayBtn.addEventListener("click", () => { setDateRange(0); searchMembersByName(); });
+    if (weekBtn) weekBtn.addEventListener("click", () => { setDateRange(7); searchMembersByName(); });
+    if (monthBtn) monthBtn.addEventListener("click", () => { setDateRange(30); searchMembersByName(); });
+    if (threeMonthBtn) threeMonthBtn.addEventListener("click", () => { setDateRange(90); searchMembersByName(); });
+  });
+
+  async function loadMembers() {
+    const res = await fetch("/api/delivery/search");
+    const data = await res.json();
+    renderMembers(data);
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    function setDateRange(days) {
+      let today = new Date();
+      let startDate = new Date();
+      startDate.setDate(today.getDate() - days);
+
+      let todayStr = today.toISOString().split("T")[0];
+      let startStr = startDate.toISOString().split("T")[0];
+
+      let startInput = document.getElementById("startDate");
+      let endInput = document.getElementById("endDate");
+
+      if (startInput && endInput) {
+        startInput.value = startStr;
+        endInput.value = todayStr;
+      } else {
+        console.error("날짜 입력 요소를 찾을 수 없습니다.");
+      }
+    }
+
+    // 버튼 클릭 이벤트 등록 (DOMContentLoaded 이후 실행)
+    let todayBtn = document.getElementById("search-day1");
+    let weekBtn = document.getElementById("search-day2");
+    let monthBtn = document.getElementById("search-day3");
+    let threeMonthBtn = document.getElementById("search-day4");
+
+    if (todayBtn) todayBtn.addEventListener("click", function () { setDateRange(0); });
+    if (weekBtn) weekBtn.addEventListener("click", function () { setDateRange(7); });
+    if (monthBtn) monthBtn.addEventListener("click", function () { setDateRange(30); });
+    if (threeMonthBtn) threeMonthBtn.addEventListener("click", function () { setDateRange(90); });
+  });
+
+  document.querySelectorAll('.search-box-input').forEach(input => {
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        searchMembersByName();
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

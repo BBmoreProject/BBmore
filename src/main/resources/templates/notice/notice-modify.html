@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 글쓰기</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 폰트 변경 완료 */
+        body {
+            font-family: "Noto Sans KR", sans-serif;
+            display: flex;
+            flex-direction: row;
+            /* 좌우로 배치 */
+            min-height: 100vh;
+        }
+
+        /* 좌측 관리자 사이드바 */
+        .nav {
+            width: 200px;
+            background: #D9D9D9;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* 사이드바 상단 로고틀*/
+        li.nav-logo {
+            position: fixed;
+            width: 200px;
+            height: 160px;
+            /*건드리지말것*/
+        }
+
+
+        /* 사이드바 상단 로고이미지 */
+        li.nav-logo img {
+            width: 100%;
+            height: 100%;
+            padding: 10%;
+            /*로고크기*/
+            object-fit: contain;
+        }
+
+        /* 사이드바 상위 메뉴 */
+        .nav ul {
+            list-style: none;
+            padding-top: 10px;
+        }
+
+        /* 사이드바 하위 메뉴 */
+        .nav ul li {
+            margin: 15px 0;
+            position: relative;
+        }
+
+        /* 사이드바-공지사항 관리 텍스트 */
+        .nav ul li a {
+            color: rgb(0, 0, 0);
+            font-size: 20px;
+            text-decoration: none;
+            display: block;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        /* 사이드바-서브메뉴 틀 */
+        .nav ul .submenu {
+            display: none;
+            list-style: none;
+            padding: 0;
+            background: #444;
+            width: 100%;
+        }
+
+        .nav ul .submenu li {
+            margin: 0;
+        }
+
+        /* 사이드바 하위 메뉴 텍스트(공지사항, 자주묻는질문) */
+        .nav ul .submenu li a {
+            padding: 10px;
+            color: #ffffff;
+            font-size: 15px;
+            display: block;
+            background-color: #9B9B9B;
+        }
+
+        .nav ul li.active .submenu {
+            display: block;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .header {
+            background: #fff5e2;
+            /* 영역구분을 위해 색상 설정 (변경해도됨)*/
+            color: rgb(0, 0, 0);
+            font-size: 20px;
+            font-weight: bold;
+            padding: 50px 50px;
+            /*상하,좌우*/
+            display: flex;
+            align-items: center;
+        }
+
+        .main {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 검색창 박스틀 (검색창,공지사항 목록 간격조절 margin) */
+        .search-box {
+            position: relative;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            width: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 검색하는 입력창 */
+        .search-box input {
+            position: absolute;
+            margin: 10px;
+            padding-left: 10px;
+            width: 380px;
+            height: 40px;
+            background-color: #F4F4F4;
+            border-style: none;
+        }
+
+        /* 검색-조회버튼 */
+        .search-button {
+            position: relative;
+            width: 60px;
+            height: 25px;
+            margin: 10px;
+            background-color: #F28C25;
+            color: white;
+            left: 230px;
+            border-radius: 5px;
+            border-style: none;
+            cursor: pointer;
+        }
+
+        /* 좌측 "• 공지사항 글쓰기" */
+        .menu-detail {
+            margin: 10px;
+        }
+
+        .write-box{
+            margin-top: 20px;
+        }
+
+        /* 체크박스 + 중요공지사항으로 등록 틀 */
+        input {
+            min-width: 2%;
+            border: 1px solid #C2C2C2;
+            font-size: 15px;
+        }
+
+        /* 제목 입력창 */
+        #title {
+            width: 100%;
+            /* 건드리지말것*/
+            padding: 10px;
+            /*입력창 크기 건드리지말것*/
+            border: 1px solid #C2C2C2;
+            font-size: 15px;
+        }
+
+        /* 내용 입력창 */
+        #content {
+            width: 100%;
+            height: 250px;
+            border: 1px solid #C2C2C2;
+            font-size: 15px;
+            padding: 10px;
+        }
+
+        /*  추가부분 */
+
+        /* 공지사항 글쓰기 틀 */
+        .notice-table {
+            width: 1100px;
+            border-collapse: collapse;
+            margin: 10px;
+        }
+
+        .notice-table td {
+            border: 1px solid #ddd;
+            padding: 15px;
+        }
+
+        /* 제목,내용 틀 */
+        .notice-table .label {
+            width: 150px;
+            background: #f1f1f1;
+            text-align: center;
+        }
+
+        /* 취소, 저장 버튼들 */
+        .buttons {
+            text-align: center;
+            padding: 30px;
+        }
+
+        /* 조회,저장 버튼 */
+        .buttons #btnCancel,
+        .buttons #btnSave
+        {
+            width: 52px;
+            height: 25px;
+            border: none;
+            border-radius: 5px;
+            background: #F28C25;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* 취소,저장 버튼 (색반전) - 글쓰기 화면에 안썼음 */
+        #btnSave:hover,
+        #btnCancel:hover,
+        .search-button:hover {
+            background: #ea7f00;
+        }
+
+        /* 사이드바 하단 로고 틀 */
+        .bottom-logo {
+            position: absolute;
+            /*건드리지말것*/
+            bottom: 3px;
+            /* 하단쪽에 고정 */
+            margin-top: auto;
+            width: 200px;
+            /* 전체 너비 */
+            height: 50px;
+            /* 고정된 높이 (변경가능) */
+            overflow: hidden;
+            /*넘칠 경우 숨김 처리*/
+        }
+
+
+        /* 사이드바 하단 로고 이미지 */
+        .bottom-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* 바닥 사업자정보 */
+        .footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            font-size: 10px;
+        }
+
+
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {  // HTML 문서가 모두 로드된 후 실행되도록
+            const menuItems = document.querySelectorAll(".nav ul li > a");  // 모든 메뉴(1~6) 선택
+            menuItems.forEach(menu => {     // a 태그의 메뉴마다 이벤트 리스너 추가
+                menu.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    // 클릭할때마다 모든 메뉴의 active 클래스 제거 (기존에 열린 메뉴가 있다면 닫히게끔)
+                    document.querySelectorAll(".nav ul li").forEach(item => {
+                        item.classList.remove("active");
+                    });
+                    // 클릭한 메뉴의 부모 요소 li에 active 클래스 추가 (해당 메뉴 열기)
+                    this.parentElement.classList.toggle("active");
+                });
+            });
+        });
+    </script>
+
+    <script>
+        // 취소 버튼 클릭 시 목록 페이지로 이동하는 함수
+        function goToList() {
+            // 목록 페이지로 리다이렉트
+            window.location.href = "/notice/notice-list_ver1";  // 목록 화면으로 이동하는 URL
+        }
+    </script>
+
+
+</head>
+
+<body>
+<nav class="nav">
+    <ul>
+        <li class="nav-logo" style="margin: 0;"><img src="/img/b1.png" alt="로고"></li>
+        <li class="menu-1">
+            <a href="#">회원 관리 </a>
+            <ul class="submenu">
+                <li><a href="user_list.html">회원 관리</a></li>
+            </ul>
+        </li>
+        <li class="menu-2">
+            <a href="#">상품 관리</a>
+            <ul class="submenu">
+                <li><a href="product-1.html">상품 등록</a></li>
+                <li><a href="product_2.html">상품 조회</a></li>
+            </ul>
+        </li>
+        <li class="menu-3">
+            <a href="#">판매 관리</a>
+            <ul class="submenu">
+                <li><a href="order-1.html">주문 조회</a></li>
+                <li><a href="order-2.html">반품 관리</a></li>
+                <li><a href="order-3.html">교환 관리</a></li>
+            </ul>
+        </li>
+        <li class="menu-4">
+            <a href="#">배송 관리</a>
+            <ul class="submenu">
+                <li><a href="delivery-1.html">주문 조회</a></li>
+                <li><a href="delivery-2.html">주문 현황</a></li>
+            </ul>
+        </li>
+        <li class="menu-5">
+            <a href="#">리뷰 관리</a>
+            <ul class="submenu">
+                <li><a href="notice_5.html">리뷰 목록</a></li>
+            </ul>
+        </li>
+        <li class="menu-6">
+            <a href="#">공지사항 관리</a>
+            <ul class="submenu">
+                <li><a onclick="location.href='/notice/notice-list_ver1'">공지사항</a></li>
+                <li><a onclick="location.href='/notice/faq-list'">자주 묻는 질문</a></li>
+            </ul>
+        </li>
+        <div class="bottom-logo"><img src="/img/b2.png" alt="로고"> </div>
+    </ul>
+</nav>
+
+<div class="container">
+    <header class="header">공지사항 관리</header>
+    <main class="main">
+        <div class="search-box"> <!--검색창-->
+            <input type="text" placeholder="제목 입력" name="noticeTitle">
+            <button class="search-button" type="submit">조회</button>
+        </div>
+
+        <!--" write-box •공지사항 글쓰기" + 글쓰기 틀-->
+        <div class="write-box">
+            <div class="menu-detail">
+                <p>• 공지사항 글쓰기</p>
+            </div>
+
+            <!-- 공지사항 작성 큰 틀 -->
+            <div class="notice-form">
+                    <form th:action="@{/notice/update/{id}(id = ${notice.noticeCode})}" method="post">
+                    <table class="notice-table">
+                        <!-- 제목 행 -->
+                        <tr>
+                            <td class="label">제목</td>
+                            <td>
+                                <select name="noticeType">
+                                    <option value="공지사항" th:selected="${notice.noticeType == '공지사항'}">공지사항</option>
+                                    <option value="자주묻는질문" th:selected="${notice.noticeType == '자주묻는질문'}">자주묻는질문</option>
+                                </select>
+                                <input type="text" id="title" name="noticeTitle" placeholder="제목을 입력하세요" th:value="${notice.noticeTitle}" />
+                            </td>
+                        </tr>
+
+                        <!-- 내용 행 -->
+                        <tr>
+                            <td class="label">내용</td>
+                            <td>
+                                <!--textarea 는 th:text=로 넣어주기-->
+                                <textarea id="content" rows="8" name="noticeContent" placeholder="내용을 입력하세요" th:text="${notice.noticeContent}"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="buttons">
+                             <button type="button" id="btnCancel" onclick="goToList()">취소</button>
+                            <button type="submit" id="btnSave">수정</button>
+                    </div>
+
+                </form>
+            </div> <!--" write-box •공지사항 글쓰기" + 글쓰기 틀 끝-->
+        </div>
+    </main>
+    <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
+</div>
+</body>
+</html>
