@@ -39,7 +39,7 @@ public class MemberController {
         // ✅ userPetMedicalHistory 가 null 이거나 비어있으면 "해당없음" 설정
         if (member.getUserPetMedicalHistory() == null || member.getUserPetMedicalHistory().trim().isEmpty()) {
             member.setUserPetMedicalHistory("해당없음");
-            log.info("🚨 조회한 회원의 의료기록이 없어 '해당없음'으로 세팅했습니다.");
+            log.info(" 입력된 반려동물 병력이 없어 '해당없음'으로 설정했습니다.");
         }
 
         List<Animal> animal = animalService.getAllAnimal(); // 전체 동물 목록 조회
@@ -65,60 +65,59 @@ public class MemberController {
         log.info("✏️ 회원 수정 요청: {}", memberUpdateDTO);
 
 
-        // ✅ userPetMedicalHistory 가 null 이거나 비어있으면 "해당없음"으로 설정
+        //  userPetMedicalHistory 가 null 이거나 비어있으면 "해당없음"으로 설정
         if (memberUpdateDTO.getUserPetMedicalHistory() == null || memberUpdateDTO.getUserPetMedicalHistory().trim().isEmpty()) {
             memberUpdateDTO.setUserPetMedicalHistory("해당없음");
-            log.info("🚨 입력된 의료기록이 없어 '해당없음'으로 설정했습니다.");
+            log.info(" 입력된 반려동물 병력이 없어 '해당없음'으로 설정했습니다.");
         }
-
 
         if (memberUpdateDTO.getAnimalDTO() != null) {
             String selectedType = memberUpdateDTO.getAnimalDTO().getAnimalType();
             String selectedBreed = memberUpdateDTO.getAnimalDTO().getAnimalBreed();
 
-            log.info("🐶 선택한 Type: {}", selectedType);
-            log.info("🐾 선택한 Breed: {}", selectedBreed);
+            log.info(" 선택한 Type: {}", selectedType);
+            log.info(" 선택한 Breed: {}", selectedBreed);
 
-            // ✅ animalType + animalBreed 기준으로 animalCode 직접 조회해서 DTO에 설정
+            //  animalType + animalBreed 기준으로 animalCode 직접 조회해서 DTO에 설정
             animalRepository.findByAnimalTypeAndAnimalBreed(selectedType, selectedBreed)
                     .ifPresent(animal -> {
                         memberUpdateDTO.setAnimalCode(animal.getAnimalCode());
-                        log.info("🔄 변경할 animalCode: {}", animal.getAnimalCode());
+                        log.info(" 변경할 animalCode: {}", animal.getAnimalCode());
                     });
 
         } else {
             log.warn("❌ AnimalDTO가 null입니다!");
         }
 
-        // ✅ 회원 정보 수정
+        //  회원 정보 수정
         memberService.modifyMember(memberUpdateDTO);
 
-        // ✅ 수정 후 최신 회원 정보 다시 조회
+        //  수정 후 최신 회원 정보 다시 조회
         MemberDTO updatedMember = memberService.getMemberByUserId(DEFAULT_USER_ID);
-        model.addAttribute("member", updatedMember); // 🔥 수정 후 회원 정보 갱신
+        model.addAttribute("member", updatedMember); //  수정 후 회원 정보 갱신
 
-        // ✅ 전체 동물 목록/타입/품종 다시 모델에 담기 (수정 후에도 선택 가능하게!)
+        //  전체 동물 목록/타입/품종 다시 모델에 담기 (수정 후에도 선택 가능하게!)
         List<Animal> animalList = animalService.getAllAnimal();
         List<String> animalTypes = animalService.getAllAnimalTypes();
         List<String> animalBreeds = animalService.getAllAnimalBreeds();
 
-        model.addAttribute("animal", animalList);            // 🔥 전체 Animal 리스트
-        model.addAttribute("animalTypes", animalTypes);      // 🔥 전체 Type 리스트
-        model.addAttribute("animalBreeds", animalBreeds);    // 🔥 전체 Breed 리스트
+        model.addAttribute("animal", animalList);            //  전체 Animal 리스트
+        model.addAttribute("animalTypes", animalTypes);      //  전체 Type 리스트
+        model.addAttribute("animalBreeds", animalBreeds);    //  전체 Breed 리스트
 
         return "mypage/user_profile_edit";
     }
 
-    // AnimalController 에 animalCode 조회용 API 추가해보기
-    @GetMapping("/code")
-    public ResponseEntity<Integer> getAnimalCode(
-            @RequestParam String animalType,
-            @RequestParam String animalBreed) {
-
-        return animalRepository.findByAnimalTypeAndAnimalBreed(animalType, animalBreed)
-                .map(animal -> ResponseEntity.ok(animal.getAnimalCode()))
-                .orElse(ResponseEntity.notFound().build());
-    }
+    // AnimalController 에 animalCode 조회용 API 추가해보기 <- 없어도 되듯
+//    @GetMapping("/code")
+//    public ResponseEntity<Integer> getAnimalCode(
+//            @RequestParam String animalType,
+//            @RequestParam String animalBreed) {
+//
+//        return animalRepository.findByAnimalTypeAndAnimalBreed(animalType, animalBreed)
+//                .map(animal -> ResponseEntity.ok(animal.getAnimalCode()))
+//                .orElse(ResponseEntity.notFound().build());
+//    }
 
 }
 

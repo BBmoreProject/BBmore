@@ -12,7 +12,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class AnimalDTO {
 
-    private String userId; // 왜 추가하신거지..????
+    private String userId;
 
     private Integer animalCode;     // 동물 고유 코드
     private String animalType;  // 반려동물 종류 (강아지/고양이 등)
