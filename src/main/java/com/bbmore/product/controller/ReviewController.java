@@ -36,7 +36,7 @@ public class ReviewController {
 
         ReviewWritingDTO reviewInfo = reviewService.getReviewInfo(userCode, orderDetailCode);
 
-        // 📌 reviewInfo가 null일 경우 처리
+        //  reviewInfo가 null일 경우 처리
         if (reviewInfo == null) {
             reviewInfo = new ReviewWritingDTO(); // 빈 객체 생성
             reviewInfo.setOrderDetailCode(orderDetailCode); // orderDetailCode는 넣어줌
@@ -52,30 +52,17 @@ public class ReviewController {
 
     @PostMapping("/update")   // 리뷰 등록
     public String updateReview(@ModelAttribute ReviewWritingDTO reviewDTO) {
-        // ✅ 여기에 확인 코드 추가!
-        System.out.println("✅ userCode: " + reviewDTO.getUserCode());
-        System.out.println("✅ orderDetailCode: " + reviewDTO.getOrderDetailCode());
-        System.out.println("✅ reviewCode: " + reviewDTO.getReviewCode());
-        System.out.println("✅ reviewRating: " + reviewDTO.getReviewRating());
-        System.out.println("✅ reviewContent: " + reviewDTO.getReviewContent());
+        // 여기에 확인 코드 추가
+        System.out.println("userCode: " + reviewDTO.getUserCode());
+        System.out.println("orderDetailCode: " + reviewDTO.getOrderDetailCode());
+        System.out.println("reviewCode: " + reviewDTO.getReviewCode());
+        System.out.println("reviewRating: " + reviewDTO.getReviewRating());
+        System.out.println("reviewContent: " + reviewDTO.getReviewContent());
 
         reviewService.saveReview(reviewDTO);
         return "redirect:/review/list";
     }
 
-//    @PostMapping("/update") // 리뷰 등록
-//    public String updateReview(@Valid @ModelAttribute ReviewWritingDTO reviewDTO,
-//                               BindingResult bindingResult,
-//                               Model model) {
-//        if (bindingResult.hasErrors()) {
-//            model.addAttribute("formAction", "/review/update");
-//            model.addAttribute("reviewInfo", reviewDTO); // 사용자가 입력한 값을 다시 보여줌
-//            return "user_review_writing"; // 검증 실패 시 다시 작성 페이지로
-//        }
-//
-//        reviewService.saveReview(reviewDTO);
-//        return "redirect:/review/list";
-//    }
 
     @GetMapping("/modify/{orderDetailCode}")
     public String modifyReviewForm(@PathVariable Integer orderDetailCode, Model model) {
@@ -91,8 +78,6 @@ public class ReviewController {
         return "mypage/user_review_writing";
     }
 
-
-
     @PostMapping("/modify")   // 리뷰 수정
     public String modifyReview(@ModelAttribute ReviewWritingDTO reviewDTO) {
 
@@ -106,7 +91,7 @@ public class ReviewController {
 
         List<ReviewListDTO> reviewList = reviewService.getUserReviewList(userCode);
 
-        reviewList.forEach(review -> System.out.println("🔎 리뷰: " + review));
+        reviewList.forEach(review -> System.out.println("리뷰: " + review));
 
         model.addAttribute("reviewList", reviewList);
         return "mypage/user_review_list";

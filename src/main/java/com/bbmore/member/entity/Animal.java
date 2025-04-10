@@ -33,12 +33,6 @@ public class Animal {
         this.animalBreed = animalBreed;
     }
 
-    // 기존 객체의 필드를 직접 수정하는 메서드 추가
-    public void updateAnimalInfo(Integer animalCode, String animalType, String animalBreed) {
-        this.animalCode = animalCode;
-        this.animalType = animalType;
-        this.animalBreed = animalBreed;
-    }
 
 
 }

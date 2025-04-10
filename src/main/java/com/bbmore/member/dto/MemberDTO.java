@@ -53,13 +53,6 @@ public class MemberDTO {
 
     private AnimalDTO animalDTO; // 동물 정보 포함
 
-//    public AnimalDTO getAnimalDTO() {
-//        return animalDTO;
-//    }
-//
-//    public void setAnimalDTO(AnimalDTO animalDTO) {
-//        this.animalDTO = animalDTO;
-//    }
 
     private Integer animalCode;            // fk 동물고유번호
 

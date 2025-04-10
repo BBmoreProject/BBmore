@@ -69,7 +69,6 @@ public class Member {
     @JoinColumn(name = "membership_code")
     private Membership membership;
 
-    // 0402 추가!!!!!!
     public void updateAnimal(Animal animal) {
         this.animal = animal;
     }

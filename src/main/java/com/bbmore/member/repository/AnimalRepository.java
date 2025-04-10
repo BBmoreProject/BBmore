@@ -25,7 +25,7 @@ public interface AnimalRepository extends JpaRepository<Animal, Integer> {
 
     Optional<Animal> findByAnimalTypeAndAnimalBreed(String animalType, String animalBreed);
 
-    // 🟢 새로 추가한 메서드
+    // 새로 추가한 메서드
     Optional<Animal> findByAnimalBreed(String animalBreed);
 
 }

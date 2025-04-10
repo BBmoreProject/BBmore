@@ -28,7 +28,7 @@ public class MemberUpdateDTO {
 
     private String animalBreed; // 동물 품종 업데이트
 
-    private AnimalDTO animalDTO; // ✅ AnimalDTO 추가
+    private AnimalDTO animalDTO; // AnimalDTO 추가
 
 
     public Integer getAnimalCode() {

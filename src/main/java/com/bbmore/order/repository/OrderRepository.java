@@ -12,16 +12,6 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-//    @Query("SELECT new com.bbmore.order.dto.PurchaseListDTO" +
-//            "(o.orderTotalPrice, o.orderDate, o.orderStatus, " +
-//            "p.productName, od.orderDetailPrice, od.orderDetailQuantity) " +
-//            "FROM Order o " +
-//            "JOIN o.member m " +
-//            "JOIN OrderDetail od ON o.orderCode = od.order.orderCode " +
-//            "JOIN Product p ON od.product.productCode = p.productCode " +
-//            "WHERE m.userCode = :userCode")
-//    List<PurchaseListDTO> findUserPurchaseList(@Param("userCode") Integer userCode);
-
     @Query("""
     SELECT new com.bbmore.order.dto.PurchaseListDTO(
         o.orderTotalPrice, o.orderDate, o.orderStatus,

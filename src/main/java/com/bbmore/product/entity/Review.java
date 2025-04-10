@@ -61,10 +61,6 @@ public class Review {
         this.reviewContent = reviewContent;
     }
 
-    public void assignMemberAndOrderDetail(Member member, OrderDetail orderDetail) {
-        this.member = member;
-        this.orderDetail = orderDetail;
-    }
 
     @PrePersist
     protected void onCreate() {

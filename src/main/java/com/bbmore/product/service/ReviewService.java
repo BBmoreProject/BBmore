@@ -49,19 +49,12 @@ public class ReviewService {
     }
 
 
-    /*
-    * - 각 주문상세(orderDetail)는 하나의 리뷰(review)만 가질수있음. -> 단일 객체 반환
-    * - findReviewByUserAndOrderDetail 은 ReviewWritingDTO 한개만 반환하도록 수정
-    * - getReviewInfo 의 반환 타입도 ReviewWritingDTO 로 변경
-    * */
-
-
     // 리뷰 저장 (등록)
     @Transactional
     public void saveReview(ReviewWritingDTO reviewDTO) {
 
 
-        // ✅ 이미 같은 orderDetail에 리뷰가 있는지 확인
+        // 이미 같은 orderDetail 에 리뷰가 있는지 확인
         Optional<Review> existingReview = reviewRepository.findByOrderDetail_OrderDetailCode(reviewDTO.getOrderDetailCode());
         if (existingReview.isPresent()) {
             throw new IllegalStateException("이미 리뷰가 작성된 주문입니다.");
@@ -76,33 +69,20 @@ public class ReviewService {
 
         Review review = reviewDTO.toEntity(member, orderDetail);
 
-//        review.assignMemberAndOrderDetail(member, orderDetail);
-
         reviewRepository.save(review);
     }
-    /*
-    * ReviewWritingDTO(DTO) -> Review(Entity) 변환
-    * JpaRepository 의 save 호출 => SQL INSERT 문 실행
-    * ==> 신규 객체이면 INSERT, 기존 객체라면 UPDATE 수행
-    * */
+
 
     // 리뷰 수정
     @Transactional
     public void updateReview(ReviewWritingDTO reviewDTO) {
-        System.out.println("수정 요청된 리뷰 코드: " + reviewDTO.getReviewCode()); // 확인용
+        System.out.println("수정 요청된 리뷰 코드: " + reviewDTO.getReviewCode());
 
         Review review = reviewRepository.findById(reviewDTO.getReviewCode())
                 .orElseThrow(() -> new IllegalArgumentException("해당 리뷰가 존재하지 않습니다."));
         review.updateReview(reviewDTO.getReviewRating(), reviewDTO.getReviewContent());
     }
-    /*
-    * findById(reviewDTO.getReviewCode()) => reviewCode 로 리뷰 조회 (없으면 예외처리)
-    * review.updateReview(...) =? Review 엔티티에 정의된 updateReview(커스텀 메서드)를 호출해서 필드 값을 변경
-    * => 이 변경이 자동으로 DB 에 반영됨
-    *
-    * 💡 왜 save()를 안 써도 될까?
-    * JPA 는 **영속성 컨텍스트(Persistence Context)**를 사용해서, @Transactional 안에서 조회한 엔티티의 값이 변경되면 자동으로 UPDATE가 수행됨(더티 체킹, Dirty Checking).
-    * */
+
 
 
     // user_review_list
@@ -117,11 +97,6 @@ public class ReviewService {
         System.out.println("🔥 삭제 요청 도착! reviewCode = " + reviewCode);
         reviewRepository.deleteById(reviewCode);
     }
-    /*
-    * deleteById(reviewCode);
-    * => JPA가 reviewCode를 기준으로 해당 리뷰를 DELETE.
-    * => 내부적으로 SQL DELETE FROM tbl_review WHERE review_code = ? 실행됨.
-    * */
 
 
 }
