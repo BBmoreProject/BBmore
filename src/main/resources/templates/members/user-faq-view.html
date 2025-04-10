@@ -406,8 +406,8 @@
 <header>
     <nav class="nav">
         <div class="left">
-            <a class="nav-link" id="post" onclick="toggleSection('notice')">공지사항</a>
-            <a class="nav-link" id="question" onclick="toggleSection('faq')">자주묻는질문</a>
+            <a onclick="location.href='/members/user-notice-list'">공지사항</a>
+            <a onclick="location.href='/members/user-faq-list'">자주묻는질문</a>
         </div>
         <div class="center"></div>
         <div class="right">
@@ -424,16 +424,16 @@
     <section id="notice" class="content">
 
         <!-- 검색창 -->
-        <div class="search">
-            <input type="text" id="search-title" placeholder="제목 검색">
-            <input type="text" id="search-content" placeholder="내용 검색">
-            <button>검색</button>
-        </div>
+<!--        <div class="search">-->
+<!--            <input type="text" id="search-title" placeholder="제목 검색">-->
+<!--            <input type="text" id="search-content" placeholder="내용 검색">-->
+<!--            <button>검색</button>-->
+<!--        </div>-->
 
         <!-- 공지사항, 자주 묻는 질문 버튼 -->
         <div class="tab-buttons">
-            <a class="notice-btn" id="noticeButton" onclick="toggleSection('notice')">공지사항</a>
-            <a class="faq-btn" id="faqButton" onclick="toggleSection('faq')">자주 묻는 질문</a>
+            <a onclick="location.href='/members/user-notice-list'">공지사항</a>
+            <a onclick="location.href='/members/user-faq-list'">자주묻는질문</a>
         </div>
 
         <!-- 공지사항 작성 큰 틀 -->
@@ -489,42 +489,6 @@
 
 </main>
 <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
-
-<script>
-    // 섹션을 토글하는 함수
-    function toggleSection(sectionId) {
-        // 모든 섹션 숨기기
-        document.querySelectorAll('.content').forEach(function (section) {
-            section.style.display = 'none';
-        });
-        // 클릭된 섹션만 보이게
-        document.getElementById(sectionId).style.display = 'block';
-    }
-
-    // 초기에는 공지사항을 보여줌
-    toggleSection('notice');
-
-    // 버튼 클릭 시 토글 처리
-    document.getElementById("noticeButton").addEventListener("click", function () {
-        toggleSection('notice');
-        this.classList.add("active");
-        document.getElementById("faqButton").classList.remove("active");
-    });
-
-    document.getElementById("faqButton").addEventListener("click", function () {
-        toggleSection('faq');
-        this.classList.add("active");
-        document.getElementById("noticeButton").classList.remove("active");
-    });
-
-    // 기본적으로 공지사항 섹션을 먼저 보이도록 설정
-    document.getElementById("notice").style.display = 'block';
-    document.getElementById("faq").style.display = 'none';
-    document.getElementById("noticeButton").classList.add("active");
-</script>
-
-
-
 
 </body>
 </html>

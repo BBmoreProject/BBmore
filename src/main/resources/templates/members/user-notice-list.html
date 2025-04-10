@@ -165,6 +165,10 @@
         background-color: #e68a00;
     }
 
+    .search-box {
+
+    }
+
     /* 테이블 스타일 */
     table {
         /* width: 100%; */
@@ -219,8 +223,8 @@
         gap: 10px;
         margin-top: 20px;
         /* 테이블과 간격을 맞추기 위한 위 여백 */
-        margin-left: 10px;
-        margin-right: 0px;
+        margin-left: 0px;
+        margin-right: 880px;
         /* 오른쪽 여백 */
         margin-bottom: 20px;
         /* 아래쪽 여백 */
@@ -293,24 +297,25 @@
 
     /* 검색창 박스틀 (검색창, •공지사항 목록 간격조절 margin) */
     .search-box {
-        position: relative;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        width: 400px;
+         position: relative;
+        /* margin-top: 0px; */
+        /* margin-bottom: 0px; */
+        /* width: 10px; */
         display: flex;
-        align-items: center;
-        justify-content: center;
+        top: 70px;
+        left: 350px;
     }
 
-    /* 검색하는 입력창 */
     .search-box input {
-        position: absolute;
-        margin: 10px;
+        /* position: absolute; */
+        /* margin: 10px; */
         padding-left: 10px;
-        width: 380px;
+        width: 250px;
         height: 40px;
         background-color: #F4F4F4;
         border-style: none;
+        border-radius: 5px;
+        /* margin-top: 50px; */
     }
 
     /* 검색-조회버튼 */
@@ -321,7 +326,7 @@
         margin: 10px;
         background-color: #F28C25;
         color: white;
-        left: 230px;
+        left: 20px;
         border-radius: 5px;
         border-style: none;
         cursor: pointer;
@@ -341,10 +346,8 @@
         <div class="left">
             <a onclick="location.href='/members/user-notice-list'">공지사항</a>
             <a onclick="location.href='/members/user-faq-list'">자주묻는질문</a>
-<!--            <a class="nav-link" id="post" onclick="toggleSection('notice')">공지사항</a>-->
-<!--            <a class="nav-link" id="question" onclick="toggleSection('faq')">자주묻는질문</a>-->
-
         </div>
+
         <div class="center"></div>
         <div class="right">
             <a class="nav-link" id="login" href="#">로그인</a>

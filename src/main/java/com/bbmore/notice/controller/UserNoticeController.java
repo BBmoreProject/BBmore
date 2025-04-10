@@ -186,29 +186,6 @@ public class UserNoticeController {
   }
 
 
-
-  // 공지사항 상세 페이지
-//  @GetMapping("/user-notice-view/{noticeCode}")
-//  public String getNoticeDetail(@PathVariable Integer noticeCode, Model model, String noticeType) {
-//    Notice notice = userNoticeService.getNoticeDetail(noticeCode, noticeType);
-//    model.addAttribute("notice", notice);
-//
-//    // 조회된 공지사항을 모델에 추가
-//    model.addAttribute("notice", notice );
-//
-//
-//    return "members/user-notice-view"; // notice-detail.html
-//  }
-
-  // 자주 묻는 질문 상세 페이지
-//  @GetMapping("/user-faq-view/{noticeCode}")
-//  public String getFaqDetail(@PathVariable Integer noticeCode, Model model, String noticeType) {
-//    Notice faq = userNoticeService.getNoticeDetail(noticeCode, noticeType);
-//    model.addAttribute("faq", faq);
-//    return "members/user-faq-view"; // faq-detail.html
-//  }
-
-
   }
 
 

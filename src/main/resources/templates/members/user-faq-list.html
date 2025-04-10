@@ -136,6 +136,19 @@
     }
 
 
+    /* 검색창 박스틀 (검색창, •공지사항 목록 간격조절 margin) */
+    .search-box {
+        position: relative;
+        /* margin-top: 0px; */
+        /* margin-bottom: 0px; */
+        /* width: 10px; */
+        display: flex;
+        top: 70px;
+        left: 350px;
+    }
+
+
+
     /* 검색창 스타일 */
     .search {
         display: flex; /*gap 주려고*/
@@ -145,27 +158,49 @@
         left: 650px;
     }
 
-    .search input[type="text"] {
-        padding: 8px;
-        font-size: 16px;
-        width: 200px;
+    .search-box input {
+        /* position: absolute; */
+        /* margin: 10px; */
+        padding-left: 10px;
+        width: 250px;
+        height: 40px;
+        background-color: #F4F4F4;
+        border-style: none;
         border-radius: 5px;
-        border: 1px solid #ccc;
-    }
+        /* margin-top: 50px; */
+        }
 
-    .search button {
-        padding: 8px 12px;
-        background-color: #F28C25;
-        border: none;
-        color: white;
-        border-radius: 5px;
-    }
 
-    .search button:hover {
-        background-color: #e68a00;
-    }
+        .search input[type="text"] {
+            padding: 8px;
+            font-size: 16px;
+            width: 200px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
 
-    /* 테이블 스타일 */
+    /* 검색-조회버튼 */
+        .search-button {
+            position: relative;
+            width: 60px;
+            height: 25px;
+            margin: 10px;
+            background-color: #F28C25;
+            color: white;
+            left: 20px;
+            border-radius: 5px;
+            border-style: none;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #e68a00;
+        }
+
+
+
+
+        /* 테이블 스타일 */
     table {
         /* width: 100%; */
         width: 1120px;
@@ -219,8 +254,8 @@
         gap: 10px;
         margin-top: 20px;
         /* 테이블과 간격을 맞추기 위한 위 여백 */
-        margin-left: 10px;
-        margin-right: 0px;
+        margin-left: 0px;
+        margin-right: 880px;
         /* 오른쪽 여백 */
         margin-bottom: 20px;
         /* 아래쪽 여백 */
@@ -313,8 +348,6 @@
         <div class="left">
             <a onclick="location.href='/members/user-notice-list'">공지사항</a>
             <a onclick="location.href='/members/user-faq-list'">자주묻는질문</a>
-<!--            <a class="nav-link" id="post" onclick="toggleSection('notice')">공지사항</a>-->
-<!--            <a class="nav-link" id="question" onclick="toggleSection('faq')">자주묻는질문</a>-->
 
         </div>
         <div class="center"></div>
@@ -337,13 +370,6 @@
         </div>
     </form>
 
-
-<!--        &lt;!&ndash; 검색창 &ndash;&gt;-->
-<!--        <div class="search">-->
-<!--            <input type="text" class="search-title" placeholder="제목 검색">-->
-<!--            <input type="text" class="search-content" placeholder="내용 검색">-->
-<!--            <button>검색</button>-->
-<!--        </div>-->
 
         <!-- 공지사항, 자주 묻는 질문 버튼 -->
         <div class="tab-buttons">

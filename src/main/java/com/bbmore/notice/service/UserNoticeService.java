@@ -67,15 +67,6 @@ public class UserNoticeService {
   }
 
 
-
-  //------------------------------------------------------------------------------------
-
-  // 안씀
-//  public Page<Notice> getNotices(String noticeType, int page, int size) {
-//    Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("noticeCreatedDate")));
-//    return userNoticeRepository.findByNoticeType(noticeType, pageable);
-//  }
-
   //------------------------------------------------------------------------------------
 
 

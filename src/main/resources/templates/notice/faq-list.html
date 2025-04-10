@@ -295,6 +295,23 @@
       text-decoration-line: none;
       color: black;
     }
+
+    #paging button {
+      border: 1px solid #ccc;
+      cursor: pointer;
+      background-color: #F28C25;
+      color: white;
+      padding: 5px 10px;
+
+    }
+    #paging button a{
+      text-decoration-line: none;
+      color: white;
+      font-weight: bold;
+
+    }
+
+
   </style>
 
   <!-- 사이드바 하위메뉴 한 개씩 열리게하기 (메뉴가 열려있을때 다른 메뉴 열면 닫히게) -->
@@ -431,41 +448,6 @@
         >>
       </button>
     </div>
-
-
-
-    <!--페이징 시작(원본)-->
-<!--    <div id="paging" >-->
-<!--      &lt;!&ndash; 맨 앞으로 이동 &ndash;&gt;-->
-<!--      <button-->
-<!--              th:onclick="'location.href=\'/notice/faq-list?page=' + @{${paging.startPage}} + '\''">-->
-<!--        <<-->
-<!--      </button>-->
-<!--      &lt;!&ndash; 이전 페이지로 이동 &ndash;&gt;-->
-<!--      <button-->
-<!--              th:onclick="'location.href=\'/notice/faq-list?page=' + @{${paging.currentPage - 1}} + '\''"-->
-<!--              th:disabled="${ faqList.first }">-->
-<!--        <-->
-<!--      </button>-->
-<!--      &lt;!&ndash; 숫자 버튼 &ndash;&gt;-->
-<!--      <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">-->
-<!--        <button th:onclick="'location.href=\'/notice/faq-list?page=' + @{${page}} + '\''"-->
-<!--                th:text="${ page }"-->
-<!--                th:disabled="${ paging.currentPage eq page }">-->
-<!--        </button>-->
-<!--      </th:block>-->
-<!--      &lt;!&ndash; 다음 페이지로 이동 &ndash;&gt;-->
-<!--      <button-->
-<!--              th:onclick="'location.href=\'/notice/faq-list?page=' + @{${paging.currentPage + 1}} + '\''"-->
-<!--              th:disabled="${ faqList.last }">-->
-<!--        >-->
-<!--      </button>-->
-<!--      &lt;!&ndash; 맨 끝으로 이동 &ndash;&gt;-->
-<!--      <button-->
-<!--              th:onclick="'location.href=\'/notice/faq-list?page=' + @{${paging.endPage}} + '\''">-->
-<!--        >>-->
-<!--      </button>-->
-<!--    </div> &lt;!&ndash;페이징 끝&ndash;&gt;-->
 
   </main>
   <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
