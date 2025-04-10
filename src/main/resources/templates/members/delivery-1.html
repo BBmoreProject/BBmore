@@ -407,13 +407,11 @@
 
     const url = `/api/delivery/search?code=${encodeURIComponent(code)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
 
-    try {
-      const res = await fetch(url);
-      const orders = await res.json();
-      renderMembers(orders);
-    } catch (error) {
-      console.error("검색 실패:", error);
-    }
+    const res = await fetch(url);
+    if (!res.ok) return;
+
+    const orders = await res.json();
+    renderMembers(orders);
   }
 
   function renderMembers(orders) {

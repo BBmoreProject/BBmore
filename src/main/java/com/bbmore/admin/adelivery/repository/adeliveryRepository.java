@@ -15,24 +15,24 @@ import java.util.List;
 public interface adeliveryRepository extends JpaRepository<OrderDetail, Long> {
 
     @Query("""
-  SELECT new com.bbmore.admin.aorder.dto.aOrderSearchResultDTO(
-    o.orderCode,
-    o.orderDate,
-    p.productName,
-    m.userName,
-    m.userPhoneNumber,
-    m.userAddress
-  )
-  FROM OrderDetail od
-  JOIN od.order o
-  JOIN o.member m
-  JOIN od.product p
-  WHERE (:code IS NULL OR o.orderCode = :code)
-    AND (:name IS NULL OR m.userName LIKE CONCAT('%', :name, '%'))
-    AND (:phone IS NULL OR m.userPhoneNumber LIKE CONCAT('%', :phone, '%'))
-    AND (:startDate IS NULL OR o.orderDate >= :startDate)
-    AND (:endDate IS NULL OR o.orderDate <= :endDate)
-""")
+              SELECT new com.bbmore.admin.aorder.dto.aOrderSearchResultDTO(
+                o.orderCode,
+                o.orderDate,
+                p.productName,
+                m.userName,
+                m.userPhoneNumber,
+                m.userAddress
+              )
+              FROM OrderDetail od
+              JOIN od.order o
+              JOIN o.member m
+              JOIN od.product p
+              WHERE (:code IS NULL OR o.orderCode = :code)
+                AND (:name IS NULL OR m.userName LIKE CONCAT('%', :name, '%'))
+                AND (:phone IS NULL OR m.userPhoneNumber LIKE CONCAT('%', :phone, '%'))
+                AND (:startDate IS NULL OR o.orderDate >= :startDate)
+                AND (:endDate IS NULL OR o.orderDate <= :endDate)
+            """)
     List<aOrderSearchResultDTO> findOrderDetails(
             @Param("code") Integer code,
             @Param("name") String name,

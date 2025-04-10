@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,19 +16,23 @@ public class adeliveryService {
 
     private final adeliveryRepository adeliveryRepository;
 
-    public List<aOrderSearchResultDTO> searchOrders(String code, String name, String phone,
-                                                    LocalDate startDate, LocalDate endDate) {
+    public List<aOrderSearchResultDTO> searchOrders(
+            String code, String name, String phone,
+            LocalDate startDate, LocalDate endDate) {
+
         Integer parsedCode = null;
+
         if (code != null && !code.trim().isEmpty()) {
             try {
                 parsedCode = Integer.parseInt(code.trim());
             } catch (NumberFormatException e) {
-                // 로그만 남기고 무시하거나 예외 처리 가능
-                throw new IllegalArgumentException("잘못된 주문번호 형식입니다. 숫자만 입력해주세요.");
+
+                return new ArrayList<>();
             }
         }
 
-        return adeliveryRepository.findOrderDetails(parsedCode, name, phone, startDate, endDate);
+        return adeliveryRepository.findOrderDetails
+                (parsedCode, name, phone, startDate, endDate);
     }
 
 }

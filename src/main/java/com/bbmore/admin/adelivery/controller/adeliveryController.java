@@ -35,7 +35,8 @@ public class adeliveryController {
             @RequestParam(required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
-        List<aOrderSearchResultDTO> dtoList = adeliveryService.searchOrders(code, name, phone, startDate, endDate);
+        List<aOrderSearchResultDTO> dtoList = adeliveryService.searchOrders(
+                code, name, phone, startDate, endDate);
 
         return dtoList.stream().map(dto -> {
             Map<String, Object> map = new HashMap<>();
@@ -43,7 +44,6 @@ public class adeliveryController {
             map.put("orderDate", dto.getOrderDate());
             map.put("productName", dto.getProductName());
 
-            // 프론트에서 요구하는 키에 맞게 매핑
             map.put("recipientName", dto.getUserName());
             map.put("recipientPhone", dto.getUserPhoneNumber());
             map.put("recipientAddress", dto.getUserAddress());
