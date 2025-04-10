@@ -41,7 +41,7 @@ public class ReviewService {
             review = reviewRepository.findProductInfoForReview(userCode, orderDetailCode);
         }
 
-        // ⭐️ userCode와 orderDetailCode를 DTO에 직접 세팅
+        // userCode와 orderDetailCode를 DTO에 직접 세팅
         review.setUserCode(userCode);
         review.setOrderDetailCode(orderDetailCode);
 
@@ -94,7 +94,7 @@ public class ReviewService {
     // 리뷰 삭제
     @Transactional
     public void deleteReview(Integer reviewCode) {
-        System.out.println("🔥 삭제 요청 도착! reviewCode = " + reviewCode);
+        System.out.println("삭제 요청 도착! reviewCode = " + reviewCode);
         reviewRepository.deleteById(reviewCode);
     }
 

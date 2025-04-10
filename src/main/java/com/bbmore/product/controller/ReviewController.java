@@ -106,13 +106,4 @@ public class ReviewController {
     }
 
 
-    // 로그인 기능을 추가했을때의 리뷰 삭제 메서드
-//    @PostMapping("/delete/{reviewCode}")
-//    public String deleteReview(@PathVariable("reviewCode") Integer reviewCode,
-//                               Principal principal) {
-//        String loggedInUserId = principal.getName(); // 또는 Authentication에서 꺼냄
-//        reviewService.deleteReviewForUser(reviewCode, loggedInUserId);
-//        return "redirect:/review/list";
-//    }
-
 }
