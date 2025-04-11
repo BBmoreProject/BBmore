@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=devioce-width, initial-scale=1.0"/>
+    <title>판매관리</title>
+
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap");
+
+        /* 네이게이션 스타일*/
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            width: 200px;
+            height: 45px;
+            top: 33%;
+            left: 65%;
+        }
+
+        .dropdown-toggle {
+            width: 100%;
+            padding: 10px;
+            font-size: 12px;
+            background-color: #f5f5f5;
+            border: 1px solid #000000;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .arrow {
+            transition: transform 0.2s ease;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            width: 100%;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            z-index: 10;
+        }
+
+        .dropdown-menu div {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+        .dropdown-menu div:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu div:hover {
+            background-color: #f0f0f0;
+        }
+
+        .active {
+            display: block;
+        }
+
+        /* 화살표 회전 효과 */
+        .dropdown.open .arrow {
+            transform: rotate(180deg);
+        }
+
+        /* 달력 스타일 */
+
+        /* 기본 스타일 설정 */
+        input[type="date"] {
+            font-size: 16px;
+            padding: 6px 12px;
+            border: 1px solid #000000;
+            border-radius: 5px;
+            outline: none;
+            width: 180px;
+        }
+
+        /* 포커스 효과 */
+        input[type="date"]:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        /* 캘린더 아이콘 커스텀 */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            background: url("https://cdn-icons-png.flaticon.com/512/747/747310.png") no-repeat center;
+            background-size: contain;
+            cursor: pointer;
+            width: 20px;
+            height: 15px;
+        }
+
+        /* 여백 초기화 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 폰트 변경 완료 */
+        body {
+            font-family: "Noto Sans KR", sans-serif;
+            display: flex;
+            flex-direction: row; /* 좌우로 배치 */
+            min-height: 100vh;
+        }
+
+        /* 좌측 관리자 사이드바 */
+        .nav {
+            width: 200px;
+            background: #d9d9d9;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* 사이드바 상단 로고틀*/
+        li.nav-logo {
+            position: fixed;
+            width: 200px;
+            height: 160px; /*건드리지말것*/
+        }
+
+        /* 사이드바 상단 로고이미지 */
+        li.nav-logo img {
+            width: 100%;
+            height: 100%;
+            padding: 10%; /*로고크기*/
+            object-fit: contain;
+        }
+
+        /* 사이드바 상위 메뉴 */
+        .nav ul {
+            list-style: none;
+        }
+
+        /* 사이드바 하위 메뉴 */
+        .nav ul li {
+            margin: 15px 0;
+            position: relative;
+        }
+
+        /* 사이드바-공지사항 관리 텍스트 */
+        .nav ul li a {
+            color: rgb(0, 0, 0);
+            font-size: 20px;
+            text-decoration: none;
+            display: block;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        /* 사이드바-서브메뉴 틀 */
+        .nav ul .submenu {
+            display: none;
+            list-style: none;
+            padding: 0;
+            background: #444;
+            width: 200px;
+        }
+
+        .nav ul .submenu li {
+            margin: 0;
+        }
+
+        /* 사이드바 하위 메뉴 텍스트(공지사항, 자주묻는질문) */
+        .nav ul .submenu li a {
+            padding: 10px;
+            color: #ffffff;
+            font-size: 15px;
+            display: block;
+            background-color: #9b9b9b;
+        }
+
+        .nav ul li.active .submenu {
+            display: block;
+        }
+
+        /* 메인 컨텐츠 영역 */
+        .container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        /* 상위 메뉴 (공지사항 관리) */
+        .header {
+            background: #fff5e2;
+            color: rgb(0, 0, 0);
+            font-size: 20px;
+            font-weight: bold;
+            padding: 50px 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .main {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .search-box {
+            display: flex;
+            box-sizing: border-box;
+            position: relative;
+            width: 1500px;
+            height: 200px;
+            top: 3%;
+            background: #f4f4f4;
+            border: 1px solid #edf0f5;
+        }
+
+        .search-write1 {
+            font-weight: 350;
+            font-size: 15px;
+            width: auto;
+            height: 25px;
+            position: absolute;
+            top: 15%;
+            left: 7%;
+        }
+
+        .search-write2 {
+            font-weight: 350;
+            font-size: 15px;
+            width: 1000px;
+            height: 126px;
+            position: absolute;
+            top: 40%;
+            left: 7%;
+        }
+
+        .search-allday {
+            position: absolute;
+            top: 35%;
+            left: 7%;
+        }
+
+        #search-day1,
+        #search-day2,
+        #search-day3,
+        #search-day4 {
+            width: 75px;
+            height: 35px;
+        }
+
+        .calendar {
+            width: auto;
+            height: 45px;
+            position: absolute;
+            top: 35%;
+            left: 30%;
+        }
+
+        .searchbox-text {
+            width: auto;
+            height: 39px;
+            position: absolute;
+            top: 33%;
+            left: 76%;
+        }
+
+        .order-searchtext {
+            width: 60px;
+            top: -6%;
+            left: 0%;
+        }
+
+        .order-box {
+            background: #f4f4f4;
+            position: relative;
+            top: 10%;
+            left: auto;
+            width: 1500px;
+            height: auto;
+        }
+
+        .all-order {
+            display: flex;
+            box-sizing: border-box;
+            position: relative;
+            width: 1500px;
+            height: auto;
+            top: 0%;
+            right: 0%;
+            background: #ffffff;
+            border: 1px solid #edf0f5;
+        }
+
+        .search-button {
+            background-color: #f28c25;
+            color: white;
+            width: 50px;
+            height: 39px;
+            position: absolute;
+            top: 33%;
+            left: 88%;
+            border-radius: 5px;
+            border-style: none;
+            cursor: pointer;
+        }
+
+
+        #paging {
+            display: flex;
+            position: absolute;
+            top: 101%;
+            left: 44%;
+        }
+
+        .all-order-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center; /* 가운데 정렬 */
+        }
+
+        .all-order-table th, .all-order-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        /* 테이블 헤더 스타일 */
+        .all-order-table thead {
+            background-color: #fff5e2;
+            font-weight: bold;
+        }
+
+        .all-order-table tbody tr td[colspan] {
+            text-align: center;
+            vertical-align: middle;
+            height: 100px; /* 높이 조정 */
+        }
+
+        .search-box-input {
+            position: relative;
+            margin: 9% 0 0 10px;
+            padding: 5px;
+            left: 93px;
+            width: 210px;
+            height: 41px;
+            background-color: #F4F4F4;
+            border-radius: 7px;
+            border-style: none;
+            border: 1px solid #7a7a7a;
+        }
+
+        .search-box-button {
+            position: relative;
+            color: white;
+            cursor: pointer;
+            top: 68%;
+            left: 7%;
+            width: 100px;
+            height: 40px;
+            background-color: #F28C25;
+            border-radius: 5px;
+            border-style: none;
+            margin: 0 10px 0 0;
+        }
+
+
+        /* 사이드바 하단 로고 틀 */
+        .bottom-logo {
+            position: absolute; /*건드리지말것*/
+            bottom: 3px; /* 하단에 고정 */
+            margin-top: auto;
+            width: 200px; /* 전체 너비 */
+            height: 50px; /* 고정된 높이 (변경가능) */
+            overflow: hidden; /*넘칠 경우 숨김 처리*/
+        }
+
+        /* 사이드바 하단 로고 이미지 */
+        .bottom-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* 바닥 사업자정보 */
+        .footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 5px;
+            font-size: 10px;
+        }
+
+        .pagination {
+            list-style: none;
+            position: relative;
+            left: auto;
+            top: 14%;
+            display: flex;
+            padding: 0;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .pagination li.active {
+            background-color: #F28C25;
+            color: white;
+            font-weight: bold;
+        }
+
+        .pagination li.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+
+
+
+
+    </style>
+
+    <!-- 사이드바 하위메뉴 한 개씩 열리게하기 (메뉴가 열려있을때 다른 메뉴 열면 닫히게) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // HTML 문서가 모두 로드된 후 실행되도록
+            const menuItems = document.querySelectorAll(".nav ul li > a"); // 모든 메뉴(1~6) 선택
+            menuItems.forEach((menu) => {
+                // a 태그의 메뉴마다 이벤트 리스너 추가
+                menu.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    // 클릭할때마다 모든 메뉴의 active 클래스 제거 (기존에 열린 메뉴가 있다면 닫히게끔)
+                    document.querySelectorAll(".nav ul li").forEach((item) => {
+                        item.classList.remove("active");
+                    });
+                    // 클릭한 메뉴의 부모 요소 li에 active 클래스 추가 (해당 메뉴 열기)
+                    this.parentElement.classList.toggle("active");
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+<nav class="nav">
+    <ul>
+        <li class="nav-logo" style="margin: 0">
+            <img id="b1" src="/img/black-logo.png" alt="로고"/>
+        </li>
+        <li class="menu-1">
+            <a href="#">회원 관리 </a>
+            <ul class="submenu">
+                <li><a class="nav-button1" onclick=" location.href ='/members/list'">회원 관리</a></li>
+            </ul>
+        </li>
+        <li class="menu-2">
+            <a href="#">상품 관리</a>
+            <ul class="submenu">
+                <li><a href="product-1.html">상품 등록</a></li>
+                <li><a href="product_2.html">상품 조회</a></li>
+            </ul>
+        </li>
+        <li class="menu-3">
+            <a href="#">판매 관리</a>
+            <ul class="submenu">
+                <li><a class="nav-button1" onclick=" location.href ='/order/order-1'">주문 조회</a></li>
+                <li><a class="nav-button2" onclick=" location.href ='/order/order-2'">반품 관리</a></li>
+                <li><a class="nav-button3" onclick=" location.href ='/order/order-3'">교환 관리</a></li>
+            </ul>
+        </li>
+        <li class="menu-4">
+            <a href="#">배송 관리</a>
+            <ul class="submenu">
+                <li><a onclick="location.href='/orders/delivery-1'">주문 조회</a></li>
+            </ul>
+        </li>
+        <li class="menu-6">
+            <a href="#">공지사항 관리</a>
+            <ul class="submenu">
+                <li><a href="notice_5.html">공지사항</a></li>
+                <li><a href="faq_5.html">자주 묻는 질문</a></li>
+            </ul>
+        </li>
+        <div class="bottom-logo">
+            <img id="b2" src="/img/sidebar-bottomlogo.png" alt="로고"/>
+        </div>
+    </ul>
+</nav>
+
+<div class="container">
+    <header class="header">반품 조회</header>
+    <main class="main">
+        <div class="search-box">
+            <div class="search-write1">
+                <p>조회기간</p>
+            </div>
+            <div class="search-allday">
+                <button id="search-day1">오늘</button>
+                <button id="search-day2">1주일</button>
+                <button id="search-day3">1개월</button>
+                <button id="search-day4">3개월</button>
+            </div>
+            <div class="calendar">
+                <input type="date" id="startDate"/> ~
+                <input type="date" id="endDate"/>
+            </div>
+            <input type="text" class="search-box-input" id="searchReturnCode" placeholder="반품코드">
+            <input type="text" class="search-box-input" id="searchMemberName" placeholder="회원이름">
+            <select id="searchReturnStatus" class="search-box-input">
+                <option value="">전체상태</option>
+                <option value="true">처리됨</option>
+                <option value="false">처리대기</option>
+            </select>
+            <button class="search-box-button" onclick="searchReturns()">검색</button>
+            <button class="search-box-button" onclick="loadAllReturns()">전체 조회</button>
+        </div>
+
+        <div class="order-box">
+            <div class="all-order">
+
+                <table class="all-order-table">
+                    <thead>
+                    <tr>
+                        <th>반품코드</th>
+                        <th>신청일자</th>
+                        <th>처리상태</th>
+                        <th>환불금액</th>
+                        <th>반품사유</th>
+                        <th>회원이름</th>
+                    </tr>
+                    </thead>
+                    <tbody id="returnTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <ul id="pagination" class="pagination"></ul>
+    </main>
+
+    <footer class="footer">
+        &copy; BBMORE | 전화번호: 02-123-4567 | 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고
+    </footer>
+</div>
+
+<script>
+    let currentPage = 1;
+
+    // 날짜 단축 버튼용 함수
+    function setDateRange(days) {
+        const today = new Date();
+        const start = new Date();
+        start.setDate(today.getDate() - days);
+        const to = today.toISOString().split("T")[0];
+        const from = start.toISOString().split("T")[0];
+        document.getElementById("startDate").value = from;
+        document.getElementById("endDate").value = to;
+    }
+
+    // 전체 조회: 날짜 및 필터 초기화 후 1페이지 로드
+    function loadAllReturns() {
+        document.getElementById("startDate").value = "";
+        document.getElementById("endDate").value = "";
+        document.getElementById("searchReturnStatus").value = "";
+        document.getElementById("searchReturnCode").value = "";
+        document.getElementById("searchMemberName").value = "";
+        currentPage = 1;
+        loadPage(1);
+    }
+
+    // 쿼리스트링 빌드
+    function buildQueryParams(page) {
+        const code = document.getElementById("searchReturnCode").value;
+        const member = document.getElementById("searchMemberName").value;
+        const status = document.getElementById("searchReturnStatus").value;
+        const start = document.getElementById("startDate").value;
+        const end = document.getElementById("endDate").value;
+
+        const params = new URLSearchParams();
+        if (code) params.append("returnCode", code);
+        if (member) params.append("memberName", member);
+        if (status) params.append("returnStatus", status);
+        if (start) params.append("startDate", start);
+        if (end) params.append("endDate", end);
+        params.append("page", page - 1);
+        params.append("size", 8);
+        return params.toString();
+    }
+
+    // 페이지 데이터 로드
+    async function loadPage(page) {
+        currentPage = page;
+        const qs = buildQueryParams(page);
+        const res = await fetch(`/api/returns/search?${qs}`);
+        if (!res.ok) return console.error("로드 실패:", res.status);
+        const data = await res.json();
+        renderReturns(data.content);
+        renderPagination(data);
+    }
+
+    // 검색 버튼
+    function searchReturns() {
+        loadPage(1);
+    }
+
+    // 테이블 렌더링 (상태 변경 드롭다운 포함)
+    function renderReturns(list) {
+        const tbody = document.getElementById("returnTableBody");
+        tbody.innerHTML = "";
+        if (!list.length) {
+            tbody.innerHTML = "<tr><td colspan='6'>조회 결과가 없습니다.</td></tr>";
+            return;
+        }
+        list.forEach(item => {
+            const tr = document.createElement("tr");
+            const selectHtml = `
+          <select onchange="updateStatus(${item.returnCode}, this.value)">
+            <option value="false"${!item.returnStatus ? ' selected' : ''}>처리대기</option>
+            <option value="true"${item.returnStatus ? ' selected' : ''}>처리됨</option>
+          </select>
+        `;
+            tr.innerHTML = `
+          <td>${item.returnCode}</td>
+          <td>${item.returnRequestDate}</td>
+          <td>${selectHtml}</td>
+          <td>${item.refundAmount}</td>
+          <td>${item.returnReason || '-'}</td>
+          <td>${item.memberName || '-'}</td>
+        `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    // 상태 변경 API 호출
+    async function updateStatus(returnCode, status) {
+        const res = await fetch(`/api/returns/${returnCode}/status?status=${status}`, {
+            method: 'PUT'
+        });
+        if (res.ok) {
+            alert("처리상태가 변경되었습니다.");
+            loadPage(currentPage);
+        } else {
+            alert("변경에 실패했습니다.");
+        }
+    }
+
+    // 페이지네이션 렌더링
+    function renderPagination(pageData) {
+        const ul = document.getElementById("pagination");
+        ul.innerHTML = "";
+        const curr = pageData.number + 1;
+        const total = pageData.totalPages;
+        const first = pageData.first;
+        const last = pageData.last;
+
+        // 이전 버튼
+        const prev = document.createElement("li");
+        prev.textContent = "이전";
+        if (!first) prev.onclick = () => loadPage(curr - 1);
+        else prev.classList.add("disabled");
+        ul.appendChild(prev);
+
+        // 번호 버튼
+        for (let i = 1; i <= total; i++) {
+            const li = document.createElement("li");
+            li.textContent = i;
+            if (i === curr) li.classList.add("active");
+            else li.onclick = () => loadPage(i);
+            ul.appendChild(li);
+        }
+
+        // 다음 버튼
+        const next = document.createElement("li");
+        next.textContent = "다음";
+        if (!last) next.onclick = () => loadPage(curr + 1);
+        else next.classList.add("disabled");
+        ul.appendChild(next);
+    }
+
+    // 초기 바인딩
+    document.addEventListener("DOMContentLoaded", () => {
+        loadPage(1);
+        document.getElementById("search-day1").onclick = () => {
+            setDateRange(0);
+            searchReturns();
+        };
+        document.getElementById("search-day2").onclick = () => {
+            setDateRange(7);
+            searchReturns();
+        };
+        document.getElementById("search-day3").onclick = () => {
+            setDateRange(30);
+            searchReturns();
+        };
+        document.getElementById("search-day4").onclick = () => {
+            setDateRange(90);
+            searchReturns();
+        };
+    });
+
+    document.querySelectorAll('.search-box-input').forEach(input => {
+        input.addEventListener("keydown", function (e) {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                searchReturns();
+            }
+        });
+    });
+</script>
+
+
+</body>
+</html>
