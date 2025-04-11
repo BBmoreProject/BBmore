@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<!--4/8 3:17 최종본-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항</title>
+    <!--    <link rel="stylesheet" href="style.css">-->
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+    /* 전체 스타일 초기화 */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* body 스타일 */
+    body {
+        font-family: "Noto Sans KR", sans-serif;
+        line-height: 1.6;
+        padding-top: 60px;
+        /* nav 고정으로 인한 여백 */
+    }
+
+    /* 상단 네비게이션 스타일 */
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: #F28C25;
+        color: white;
+        padding: 10px 0;
+        z-index: 1000;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    nav .left,
+    nav .right {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        /* 버튼들의 높이를 맞추기 위한 설정 */
+    }
+
+    nav .center {
+        flex-grow: 1;
+    }
+
+    /* 각 버튼 스타일 */
+    nav a {
+        background-color: #F28C25;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+        text-align: center;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        /* 버튼 높이를 동일하게 설정 */
+        border-radius: 5px;
+    }
+
+    nav a:hover {
+        color: rgb(72, 35, 0);
+    }
+
+    /* nav 내부 이미지 스타일 (장바구니) */
+    #cart_img {
+        width: 30px;
+        /* 원하는 크기 설정 */
+        height: 30px;
+        /* 원하는 크기 설정 */
+        object-fit: contain;
+        /* 이미지 비율 유지 */
+    }
+
+    main {
+        /* flex: 1; */
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* 컨텐츠 섹션 스타일 */
+    .content {
+        display: none;
+        margin-top: 50px;
+        /*margin-top: 80px;*/
+        /* nav 고정으로 인한 여백 */
+    }
+
+    .content ul {
+        list-style-type: none;
+    }
+
+    .content ul li {
+        margin-bottom: 10px;
+    }
+
+    footer {
+        font-size: 10px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #222;
+        color: white;
+        text-align: center;
+        padding: 5px;
+    }
+
+    /* 목록, 버튼을 감싸는 div 스타일 */
+    .buttons {
+        display: flex;
+        justify-content: flex-start;
+        gap: 20px;
+        margin: 20px;
+    }
+
+
+    /* 검색창 스타일 */
+    .search {
+        display: flex; /*gap 주려고*/
+        position: relative;
+        gap: 10px;
+        top: 65px;
+        left: 650px;
+    }
+
+    .search input[type="text"] {
+        padding: 8px;
+        font-size: 16px;
+        width: 200px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    .search button {
+        padding: 8px 12px;
+        background-color: #F28C25;
+        border: none;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .search button:hover {
+        background-color: #e68a00;
+    }
+
+    .search-box {
+
+    }
+
+    /* 테이블 스타일 */
+    table {
+        /* width: 100%; */
+        width: 1120px;
+        max-width: 1120px;
+        /* 최대 길이 1120px */
+        margin: 0 auto;
+        /* 가운데 정렬 */
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    /*제목,등록일 조회수 부분*/
+    th {
+        /*background-color: #f4f4f4;*/
+    }
+
+    /* 페이징 스타일  */
+    #paging {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* 페이징 스타일  */
+    #paging button {
+        padding: 8px 12px;
+        margin: 5px;
+        background-color: #F28C25;
+        border: none;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+
+    }
+
+    /* 페이징 스타일  */
+    #paging button:hover {
+        background-color: #e68a00;
+    }
+
+    /* 공지사항, 자주 묻는 질문 버튼 스타일 - 건드리지말것*/
+    .tab-buttons {
+        display: flex;
+        /* position: relative; */
+        /* justify-content:space-evenly; */
+        gap: 10px;
+        margin-top: 20px;
+        /* 테이블과 간격을 맞추기 위한 위 여백 */
+        margin-left: 0px;
+        margin-right: 880px;
+        /* 오른쪽 여백 */
+        margin-bottom: 20px;
+        /* 아래쪽 여백 */
+    }
+
+    /* 공지사항, 자주 묻는 질문 글씨 */
+    .tab-buttons a {
+        padding: 8px 10px;
+        background-color: #F28C25;
+        color: white;
+        font-style: normal;
+        font-weight: 500;
+        text-align: center;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .tab-buttons a:hover {
+        background-color: #e68a00;
+    }
+
+    /*4/8 추가------------------------------------------*/
+
+    .notice-list {
+        border-collapse: collapse;
+        /*길이*/
+        width: 1100px;
+        /*테이블 주변여백*/
+        margin: 10px;
+        background-color: #f0f0f0;
+    }
+
+    /* 공지사항 제목,작성일,조회수 */
+    .notice-list th {
+        font-size: 13px;
+        border-bottom: 1px solid #C2C2C2;
+        padding: 9px 9px 9px 8px;
+        /*칸 높이*/
+    }
+
+    /* 공지사항 목록 글들 */
+    .notice-list td {
+        font-size: 13px;
+        border-bottom: 1px solid #C2C2C2;
+        padding: 8px 8px 8px 8px;
+    }
+
+    /* 제목 열 너비 */
+    .notice-list th:nth-child(1),
+    .notice-list td:nth-child(1) {
+        text-align: center;
+        width: 50%;
+    }
+
+
+    /* 작성일 열 너비 */
+    .notice-list th:nth-child(2),
+    .notice-list td:nth-child(2) {
+        text-align: center;
+        width: 10%;
+    }
+
+    /* 조회수 열 너비 */
+    .notice-list th:nth-child(3),
+    .notice-list td:nth-child(3) {
+        text-align: center;
+        width: 10%;
+    }
+
+    /* 검색창 박스틀 (검색창, •공지사항 목록 간격조절 margin) */
+    .search-box {
+         position: relative;
+        /* margin-top: 0px; */
+        /* margin-bottom: 0px; */
+        /* width: 10px; */
+        display: flex;
+        top: 70px;
+        left: 350px;
+    }
+
+    .search-box input {
+        /* position: absolute; */
+        /* margin: 10px; */
+        padding-left: 10px;
+        width: 250px;
+        height: 40px;
+        background-color: #F4F4F4;
+        border-style: none;
+        border-radius: 5px;
+        /* margin-top: 50px; */
+    }
+
+    /* 검색-조회버튼 */
+    .search-button {
+        position: relative;
+        width: 60px;
+        height: 25px;
+        margin: 10px;
+        background-color: #F28C25;
+        color: white;
+        left: 20px;
+        border-radius: 5px;
+        border-style: none;
+        cursor: pointer;
+    }
+
+    .search-button:hover {
+        background: #ea7f00;
+    }
+
+
+</style>
+
+<body>
+<header>
+    <nav>
+
+        <div class="left">
+            <a onclick="location.href='/members/user-notice-list'">공지사항</a>
+            <a onclick="location.href='/members/user-faq-list'">자주묻는질문</a>
+        </div>
+
+        <div class="center"></div>
+        <div class="right">
+            <a class="nav-link" id="login" href="#">로그인</a>
+            <a class="nav-link" id="signup" href="#">회원가입</a>
+            <a class="nav-link" id="cart" onclick="location.href='/cart/cart-list'">
+                <img src="/img/cart.png" alt="장바구니 이미지" id="cart_img"></a>
+        </div>
+    </nav>
+</header>
+
+<main>
+
+    <!--• 공지사항 목록-->
+    <form th:action="@{/members/user-notice-list}" method="get">
+        <div class="search-box">
+            <input type="text" placeholder="제목 입력" name="searchKeyword">
+            <button class="search-button" type="submit">조회</button>
+        </div>
+    </form>
+
+
+        <!-- 공지사항, 자주 묻는 질문 버튼 -->
+        <div class="tab-buttons">
+            <a onclick="location.href='/members/user-notice-list'">공지사항</a>
+            <a onclick="location.href='/members/user-faq-list'">자주 묻는 질문</a>
+        </div>
+
+        <table class="notice-list">
+            <thead>
+            <tr>
+                <th>제목</th>
+                <th>등록일</th>
+                <th>조회수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="notice : ${noticeList}">
+                <td><a th:href="@{/members/user-notice-view/{noticeCode}(noticeCode=${notice.noticeCode})}"
+                       th:text="${notice.noticeTitle}"></a></td>
+                <td th:text="${notice.noticeCreatedDate}"></td>
+                <td th:text="${notice.noticeView}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+    <!--TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT-->
+
+
+    <div id="paging">
+        <!-- 페이지 번호 링크 -->
+        <button th:href="@{/members/user-notice-list(page=${paging.startPage},searchKeyword=${searchKeyword},  noticeType=${noticeType})}">
+            <<
+        </button>
+
+        <button th:href="@{/members/user-notice-list(page=${paging.currentPage - 1}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
+                th:disabled="${noticeList.first}">
+            <
+        </button>
+
+        <button th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+            <a th:href="@{/members/user-notice-list(page=${page}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}" th:text="${page}"
+               th:disabled="${paging.currentPage eq page}">
+            </a>
+
+        </button>
+
+        <button th:href="@{/members/user-notice-list(page=${paging.currentPage + 1}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
+                th:disabled="${noticeList.last}">
+            >
+        </button>
+
+        <button th:href="@{/members/user-notice-list(page=${paging.endPage}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}">
+            >>
+        </button>
+    </div>
+
+
+</main>
+
+<footer>
+    <p>© 2025 사이트 이름. All rights reserved.</p>
+</footer>
+
+</body>
+
+</html>

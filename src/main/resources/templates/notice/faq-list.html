@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>자주묻는질문</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+    /* 여백 초기화 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* 폰트 변경 완료 */
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      display: flex;
+      flex-direction: row;
+      /* 좌우로 배치 */
+      min-height: 100vh;
+    }
+
+    /* 좌측 관리자 사이드바 */
+    .nav {
+      width: 200px;
+      background: #D9D9D9;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* 사이드바 상단 로고틀*/
+    li.nav-logo {
+      position: fixed;
+      width: 200px;
+      height: 160px;
+      /*건드리지말것*/
+
+    }
+
+    /* 사이드바 상단 로고이미지 */
+    li.nav-logo img {
+      width: 100%;
+      height: 100%;
+      padding: 10%;
+      /*로고크기*/
+      object-fit: contain;
+    }
+
+    /* 사이드바 상위 메뉴 */
+    .nav ul {
+      list-style: none;
+      padding-top: 10px;
+    }
+
+    /* 사이드바 하위 메뉴 */
+    .nav ul li {
+      margin: 15px 0;
+      position: relative;
+    }
+
+    /* 사이드바-공지사항 관리 텍스트 */
+    .nav ul li a {
+      color: rgb(0, 0, 0);
+      font-size: 20px;
+      text-decoration: none;
+      display: block;
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    /* 사이드바-서브메뉴 틀 */
+    .nav ul .submenu {
+      display: none;
+      list-style: none;
+      padding: 0;
+      background: #444;
+      width: 200px;
+    }
+
+    .nav ul .submenu li {
+      margin: 0;
+    }
+
+    /* 사이드바 하위 메뉴 텍스트(공지사항, 자주묻는질문) */
+    .nav ul .submenu li a {
+      padding: 10px;
+      color: #ffffff;
+      font-size: 15px;
+      display: block;
+      background-color: #9B9B9B;
+    }
+
+    .nav ul li.active .submenu {
+      display: block;
+    }
+
+    /* 메인 컨텐츠 영역 */
+    .container {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    /* 상위 메뉴 (공지사항 관리) */
+    .header {
+      background: #fff5e2;
+      /*영역구분을 위해 색상설정 (나중에 삭제 예정임)*/
+      color: rgb(0, 0, 0);
+      font-size: 20px;
+      font-weight: bold;
+      /* 0319 수정 */
+      padding: 50px 50px;
+      display: flex;
+      align-items: center;
+    }
+
+    .main {
+      flex: 1;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* 검색창 박스틀 (검색창, •공지사항 목록 간격조절 margin) */
+    .search-box {
+      position: relative;
+      margin-top: 0px;
+      margin-bottom: 0px;
+      width: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 검색하는 입력창 */
+    .search-box input {
+      position: absolute;
+      margin: 10px;
+      padding-left: 10px;
+      width: 380px;
+      height: 40px;
+      background-color: #F4F4F4;
+      border-style: none;
+    }
+
+    /* 검색-조회버튼 */
+    .search-button {
+      position: relative;
+      width: 60px;
+      height: 25px;
+      margin: 10px;
+      background-color: #F28C25;
+      color: white;
+      left: 230px;
+      border-radius: 5px;
+      border-style: none;
+      cursor: pointer;
+    }
+
+    .search-button:hover{
+      background: #ea7f00;
+    }
+
+    /* 글쓰기 버튼 */
+    .write-button {
+      position: relative;
+      /*notice-box기준*/
+      background-color: #F28C25;
+      top: 30px;
+      width: 70px;
+      height: 25px;
+      left: 92%;
+      border-radius: 5px;
+      border-style: none;
+      cursor: pointer; /*보더 */
+    }
+
+    .write-button:hover{
+      background: #ea7f00;
+    }
+
+    /* 글쓰기 텍스트 (버튼박스 높이와 동일하게 지정하면 가운데정렬됨)*/
+    #write {
+      font-size: 12px;
+      text-align: center;
+      line-height: 25px;
+      color: white;
+    }
+
+    /* 좌측 상단 • 공지사항 목록 */
+    /* 03-19 수정 */
+    .menu-detail {
+      margin: 10px;
+    }
+
+    .notice-box{
+      margin-top: 20px;
+    }
+
+
+    /* 공지사항 목록 테이블(글쓰기 버튼 포함)
+(공지사항 목록, 테이블 간격 margin으로 조절)*/
+    /* 03-19  */
+    .notice-list {
+      border-collapse: collapse;
+      /*길이*/
+      width: 1100px;
+      /*테이블 주변여백*/
+      margin: 10px;
+      /*background-color: #f0f0f0;*/
+    }
+
+    /* 공지사항 제목,작성일,조회수 */
+    .notice-list th {
+      font-size: 13px;
+      background-color: #F4F4F4;
+      /*border-bottom: 1px solid #C2C2C2;*/
+      padding: 9px 9px 9px 8px;
+      /*칸 높이*/
+    }
+
+    /* 공지사항 목록 글들 */
+    .notice-list td {
+      font-size: 13px;
+      /*border-bottom: 1px solid #C2C2C2;*/
+      padding: 8px 8px 8px 8px;
+    }
+
+    /* 제목 열 너비 */
+    .notice-list th:nth-child(1),
+    .notice-list td:nth-child(1) {
+      text-align: center;
+      width: 50%;
+    }
+
+
+    /* 작성일 열 너비 */
+    .notice-list th:nth-child(2),
+    .notice-list td:nth-child(2) {
+      text-align: center;
+      width: 10%;
+    }
+
+    /* 조회수 열 너비 */
+    .notice-list th:nth-child(3),
+    .notice-list td:nth-child(3) {
+      text-align: center;
+      width: 10%;
+    }
+
+    /* 사이드바 하단 로고 틀 */
+    .bottom-logo {
+      position: absolute;
+      /*건드리지말것*/
+      bottom: 3px;
+      /* 하단쪽에 고정 */
+      margin-top: auto;
+      width: 200px;
+      /* 전체 너비 */
+      height: 50px;
+      /* 고정된 높이 (변경가능) */
+      overflow: hidden;
+      /*넘칠 경우 숨김 처리*/
+    }
+
+    /* 사이드바 하단 로고 이미지 */
+    .bottom-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* 바닥 사업자정보 */
+    .footer {
+      background: #222;
+      color: white;
+      text-align: center;
+      padding: 5px;
+      font-size: 10px;
+    }
+
+    th,td {
+      border: 1px solid #ddd;
+    }
+
+    /* 공지사항 목록 글자 */
+    .notice-list td a {
+      text-decoration-line: none;
+      color: black;
+    }
+
+    #paging button {
+      border: 1px solid #ccc;
+      cursor: pointer;
+      background-color: #F28C25;
+      color: white;
+      padding: 5px 10px;
+
+    }
+    #paging button a{
+      text-decoration-line: none;
+      color: white;
+      font-weight: bold;
+
+    }
+
+
+  </style>
+
+  <!-- 사이드바 하위메뉴 한 개씩 열리게하기 (메뉴가 열려있을때 다른 메뉴 열면 닫히게) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {  // HTML 문서가 모두 로드된 후 실행되도록
+      const menuItems = document.querySelectorAll(".nav ul li > a");  // 모든 메뉴(1~6) 선택
+      menuItems.forEach(menu => {     // a 태그의 메뉴마다 이벤트 리스너 추가
+        menu.addEventListener("click", function (event) {
+          event.preventDefault();
+          // 클릭할때마다 모든 메뉴의 active 클래스 제거 (기존에 열린 메뉴가 있다면 닫히게끔)
+          document.querySelectorAll(".nav ul li").forEach(item => {
+            item.classList.remove("active");
+          });
+          // 클릭한 메뉴의 부모 요소 li에 active 클래스 추가 (해당 메뉴 열기)
+          this.parentElement.classList.toggle("active");
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+<nav class="nav">
+  <ul>
+    <li class="nav-logo" style="margin: 0;"><img id="b1" src="/img/b1.png" alt="로고"></li>
+    <li class="menu-1">
+      <a href="#">회원 관리 </a>
+      <ul class="submenu">
+        <li><a onclick="location.href='/members/list'">회원 관리</a></li>
+      </ul>
+    </li>
+    <li class="menu-2">
+      <a href="#">상품 관리</a>
+      <ul class="submenu">
+        <li><a href="">상품 등록</a></li>
+        <li><a href="">상품 조회</a></li>
+      </ul>
+    </li>
+    <li class="menu-3">
+      <a href="#">판매 관리</a>
+      <ul class="submenu">
+        <li><a onclick="location.href='/order/order-1'">주문 조회</a></li>
+        <li><a onclick="location.href='/order/order-2'">반품 관리</a></li>
+        <li><a onclick="location.href='/order/order-3'">교환 관리</a></li>
+      </ul>
+    </li>
+    <li class="menu-4">
+      <a href="#">배송 관리</a>
+      <ul class="submenu">
+        <li><a onclick="location.href='/orders/delivery-1'">주문 조회</a></li>
+      </ul>
+    </li>
+    <li class="menu-6">
+      <a href="#">공지사항 관리</a>
+      <ul class="submenu">
+        <li><a onclick="location.href='/notice/notice-list_ver1'">공지사항</a></li>
+        <li><a onclick="location.href='/notice/faq-list'">자주 묻는 질문</a></li>
+      </ul>
+    </li>
+    <div class="bottom-logo"><img id="b2" src="/img/b2.png" alt="로고">
+    </div>
+  </ul>
+</nav>
+
+<div class="container">
+  <header class="header">자주묻는질문 관리</header>
+  <main class="main">
+    <form th:action="@{/notice/faq-list}" method="get" >
+    <div class="search-box">
+      <input type="text" placeholder="제목 입력" name="searchKeyword">
+      <button class="search-button" type="submit">조회</button>
+    </div>
+    </form>
+
+    <!--• 공지사항 목록-->
+    <div class="notice-box">
+      <!--글쓰기버튼-->
+      <button class="write-button" onclick="location.href='/notice/faq-write'">
+        <p id="write">글쓰기</p>
+      </button>
+
+      <div class="menu-detail">
+        <p>• 자주묻는질문 목록</p>
+      </div>
+      <table class="notice-list">
+        <thead>
+        <tr>
+          <th>제목</th>
+          <th>등록일</th>
+          <th>조회수</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="faq : ${faqList}">
+          <td><a th:href="@{/notice/faq-view/{noticeCode}(noticeCode=${faq.noticeCode})}" th:text="${faq.noticeTitle}"></a></td>
+          <td th:text="${faq.noticeCreatedDate}"></td>
+          <td th:text="${faq.noticeView}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="paging">
+      <!-- 페이지 번호 링크 -->
+      <button th:href="@{/notice/faq-list(page=${paging.startPage},searchKeyword=${searchKeyword},  noticeType=${noticeType})}">
+        <<
+      </button>
+
+      <button th:href="@{/notice/faq-list(page=${paging.currentPage - 1}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
+              th:disabled="${faqList.first}">
+        <
+      </button>
+
+      <button th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+        <a th:href="@{/notice/faq-list(page=${page}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}" th:text="${page}"
+           th:disabled="${paging.currentPage eq page}">
+        </a>
+
+      </button>
+
+      <button th:href="@{/notice/faq-list(page=${paging.currentPage + 1}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}"
+              th:disabled="${faqList.last}">
+        >
+      </button>
+
+      <button th:href="@{/notice/faq-list(page=${paging.endPage}, searchKeyword=${searchKeyword}, noticeType=${noticeType})}">
+        >>
+      </button>
+    </div>
+
+
+
+    <!--페이징 시작(원본)-->
+<!--    <div id="paging" >-->
+<!--      &lt;!&ndash; 맨 앞으로 이동 &ndash;&gt;-->
+<!--      <button-->
+<!--              th:onclick="'location.href=\'/notice/faq-list?page=' + @{${paging.startPage}} + '\''">-->
+<!--        <<-->
+<!--      </button>-->
+<!--      &lt;!&ndash; 이전 페이지로 이동 &ndash;&gt;-->
+<!--      <button-->
+<!--              th:onclick="'location.href=\'/notice/faq-list?page=' + @{${paging.currentPage - 1}} + '\''"-->
+<!--              th:disabled="${ faqList.first }">-->
+<!--        <-->
+<!--      </button>-->
+<!--      &lt;!&ndash; 숫자 버튼 &ndash;&gt;-->
+<!--      <th:block th:each="page : ${ #numbers.sequence(paging.startPage, paging.endPage)}">-->
+<!--        <button th:onclick="'location.href=\'/notice/faq-list?page=' + @{${page}} + '\''"-->
+<!--                th:text="${ page }"-->
+<!--                th:disabled="${ paging.currentPage eq page }">-->
+<!--        </button>-->
+<!--      </th:block>-->
+<!--      &lt;!&ndash; 다음 페이지로 이동 &ndash;&gt;-->
+<!--      <button-->
+<!--              th:onclick="'location.href=\'/notice/faq-list?page=' + @{${paging.currentPage + 1}} + '\''"-->
+<!--              th:disabled="${ faqList.last }">-->
+<!--        >-->
+<!--      </button>-->
+<!--      &lt;!&ndash; 맨 끝으로 이동 &ndash;&gt;-->
+<!--      <button-->
+<!--              th:onclick="'location.href=\'/notice/faq-list?page=' + @{${paging.endPage}} + '\''">-->
+<!--        >>-->
+<!--      </button>-->
+<!--    </div> &lt;!&ndash;페이징 끝&ndash;&gt;-->
+
+  </main>
+  <footer class="footer">&copy; 회사명: BBMORE 전화번호: 02-123-4567 사업자번호: 123-456-1234 주소: 서울시 종로구 어쩌고저쩌고</footer>
+</div>
+</body>
+</html>
