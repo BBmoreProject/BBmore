@@ -379,7 +379,7 @@
                     <!-- 상품명,금액 -->
                     <div class="item-details">
                         <span th:text="${cart.product.productName}"></span>
-                        <div class="item-price">₩<span th:text="'₩' +${#numbers.formatInteger(cart.product.productPrice, 3, 'COMMA')}"></span>
+                        <div class="item-price"><span th:text="'₩' +${#numbers.formatInteger(cart.product.productPrice, 3, 'COMMA')}"></span>
                         </div>
                     </div>
                 </div>
